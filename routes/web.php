@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/demo',function () {
+    return view('layouts.admin.layout');
+});
