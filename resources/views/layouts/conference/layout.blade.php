@@ -11,6 +11,8 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('conference/plugins/OwlCarousel2-2.2.1/owl.carousel.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('conference/plugins/OwlCarousel2-2.2.1/owl.theme.default.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('conference/plugins/OwlCarousel2-2.2.1/animate.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('conference/styles/main_styles.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('conference/styles/responsive.css') }}">
 @yield('css')
 </head>
 <body>
@@ -278,6 +280,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="{{ asset('conference/plugins/OwlCarousel2-2.2.1/owl.carousel.js') }}"></script>
 <script src="{{ asset('conference/plugins/easing/easing.js') }}"></script>
 <script src="{{ asset('conference/plugins/parallax-js-master/parallax.min.js') }}"></script>
+<script src="{{ asset('conference/js/custom.js') }}"></script>
 @yield('js')
 </body>
 </html>

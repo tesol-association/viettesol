@@ -14,6 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/demo',function () {
+Route::get('/demo-conference',function () {
+    return view('layouts.conference.layout');
+});
+Route::get('/demo-admin',function () {
     return view('layouts.admin.layout');
+});
+Route::get('/demo-main',function () {
+    return view('layouts.main.layout');
 });
