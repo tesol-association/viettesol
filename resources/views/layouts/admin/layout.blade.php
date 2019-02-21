@@ -32,6 +32,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  @yield('css')      
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -285,10 +286,7 @@ desired effect
       <h1>
         @yield('page-header')
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
+     
     </section>
 
     <!-- Main content -->
@@ -405,5 +403,6 @@ desired effect
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+ @yield('js')    
 </body>
 </html>
