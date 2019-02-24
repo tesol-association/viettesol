@@ -23,3 +23,6 @@ Route::get('/demo-admin',function () {
 Route::get('/demo-main',function () {
     return view('layouts.main.layout');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
