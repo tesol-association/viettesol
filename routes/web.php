@@ -20,6 +20,14 @@ Route::get('/demo-conference',function () {
 Route::get('/demo-admin',function () {
     return view('layouts.admin.layout');
 });
-Route::get('/demo-main',function () {
-    return view('layouts.main.layout');
+Route::get('/demo-home',function () {
+    return view('layouts.home.layout');
 });
+
+Route::group(['prefix'=>'admin'],function(){
+        
+    //menu
+    Route::get('/menu/list','Admin\MenuController@index')->name('admin_menu_list');    
+
+});
+
