@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.home.layout');
 });
 Route::get('/demo-conference',function () {
     return view('layouts.conference.layout');
@@ -23,6 +23,7 @@ Route::get('/demo-admin',function () {
 Route::get('/demo-home',function () {
     return view('layouts.home.layout');
 });
+<<<<<<< HEAD
 
 Route::group(['prefix'=>'admin'],function(){
         
@@ -31,3 +32,6 @@ Route::group(['prefix'=>'admin'],function(){
 
 });
 
+=======
+Auth::routes();
+>>>>>>> 7407b93459303c9dc86e06260c6637097841ae70
