@@ -23,15 +23,10 @@ Route::get('/demo-admin',function () {
 Route::get('/demo-home',function () {
     return view('layouts.home.layout');
 });
-<<<<<<< HEAD
 
-Route::group(['prefix'=>'admin'],function(){
+Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
         
     //menu
     Route::get('/menu/list','Admin\MenuController@index')->name('admin_menu_list');    
-
 });
-
-=======
 Auth::routes();
->>>>>>> 7407b93459303c9dc86e06260c6637097841ae70
