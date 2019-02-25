@@ -23,10 +23,13 @@ Route::get('/demo-admin',function () {
 Route::get('/demo-home',function () {
     return view('layouts.home.layout');
 });
-
-Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
+//'middleware'=>'auth'
+Route::group(['prefix'=>'admin'],function(){
         
     //menu
-    Route::get('/menu/list','Admin\MenuController@index')->name('admin_menu_list');    
+    Route::get('/menu/list','Admin\MenuController@index')->name('admin_menu_list');
+
+    Route::get('/menu/create','Admin\MenuController@create')->name('admin_menu_create');
+    Route::post('/menu/store','Admin\MenuController@store')->name('admin_menu_store');   
 });
 Auth::routes();

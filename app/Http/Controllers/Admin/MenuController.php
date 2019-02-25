@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Menu;
 
 class MenuController extends Controller
 {
@@ -13,7 +15,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        return view('layouts.admin.list_menu');
+        return view('layouts.admin.menu.list');
     }
 
     /**
@@ -23,7 +25,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        return view('layouts.admin.menu.create');
     }
 
     /**
@@ -34,7 +36,19 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $this->validate($request,[
+        //    'name'       => 'required'
+        //    'description' => 'required',
+        //    'creator_id'     => 'required'
+        // ]);
+        //dd($request->all());
+        Menu::create([
+            'name'        => $request->name,
+            'url'         => $request->url,
+            'description' => $request->description,
+            'created_by'  => $request->creator_id,
+            'parent_id'   => $request->parent_id
+        ]);
     }
 
     /**
