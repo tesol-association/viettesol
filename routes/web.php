@@ -21,7 +21,7 @@ Route::get('/demo-admin',function () {
     return view('layouts.admin.layout');
 });
 Route::get('/demo-main',function () {
-    return view('layouts.main.layout');
+    return view('layouts.home.layout');
 });
 Auth::routes();
 
