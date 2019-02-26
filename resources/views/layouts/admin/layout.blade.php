@@ -21,7 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="{{ asset('admin/dist/css/skins/skin-blue.min.css') }}">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -260,17 +260,229 @@ desired effect
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+<!--         <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Menu Management</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
+            <li><a href="{{ route('admin_menu_list') }}">List</a></li>
+            <li><a href="{{ route('admin_menu_create') }}">Create</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Banner Management</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#">List</a></li>
+            <li><a href="#">Create</a></li>
+          </ul>
+        </li> -->
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Site Management</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('admin_menu_list') }}">Menu Management</a></li>
+            <li><a href="">Banner Management</a></li>
+            <li><a href="">Adv Management</a></li>
+            <li><a href="">Partner Management</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Comment Management</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#">List</a></li>
+            <li><a href="#">Create</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Content Management</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#">News Management</a></li>
+            <li><a href="#">Events Management</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Category Management</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#">List</a></li>
+            <li><a href="#">Create</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>User Management</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#">List</a></li>
+            <li><a href="#">Create</a></li>
+            <li><a href="#">Role Management</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Conference Management</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#">List</a></li>
+            <li><a href="#">Create</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Conference 1</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#">Announcement</a></li>
+            <li><a href="#">Fee</a></li>
+            <li><a href="#">Track</a></li>
+            <li class="treeview">
+                <a href="#"> <span>Review Form</span>
+                  <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
+                 <ul class="treeview-menu">
+                     <li><a href="#">Critea Review</a></li>
+                 </ul>
+            </li>
+            <li><a href="#">Prepaired email</a></li>
+            <li><a href="#">Registration</a></li>
+            <li><a href="#">Speaker</a></li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-link"></i> <span>Paper Management</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#">List Paper</a></li>
+                <li><a href="#">Paper File</a></li>
+                <li><a href="#">Paper author</a></li>
+                <li><a href="#">Review Assignment</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-link"></i> <span>Schedule Management</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#">Schedule</a></li>
+                <li><a href="#">Time Block</a></li>
+                <li><a href="#">Room</a></li>
+                <li><a href="#">Building</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-link"></i> <span>Conference Role</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-link"></i> <span>Special Event</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-link"></i> <span>Payment</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-link"></i> <span>Conference Gallery</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Proceeding Management</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#">List Issue</a></li>
+            <li><a href="#">Create Issue</a></li>
+          </ul>
+        </li>        
+
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>ISSUE 1</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#">Announcement</a></li>
+            <li><a href="#">Sections</a></li>
+            <li class="treeview">
+                <a href="#"> <span>Review Form</span>
+                  <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
+                 <ul class="treeview-menu">
+                     <li><a href="#">Critea Review</a></li>
+                 </ul>
+            </li>
+            <li><a href="#">Prepaired email</a></li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-link"></i> <span>Paper Management</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#">List Paper</a></li>
+                <li><a href="#">Paper File</a></li>
+                <li><a href="#">Paper author</a></li>
+                <li><a href="#">Review Assignment</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-link"></i> <span>ISSUE Role</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
@@ -399,10 +611,21 @@ desired effect
 <script src="{{ asset('admin/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('admin/dist/js/adminlte.min.js') }}"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+
+<script>
+        @if(Session::has('success'))
+           toastr.success('{{ Session::get("success") }}');
+           // <?php  //session()->forget('success'); ?>
+        @endif
+        @if(Session::has('error'))
+           toastr.info('{{ Session::get("error") }}');
+           // <?php  //session()->forget('info'); ?>
+        @endif
+</script>
  @yield('js')    
 </body>
 </html>

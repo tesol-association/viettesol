@@ -13,13 +13,13 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CMuli:400,700" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('main/css/bootstrap.min.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('home/css/bootstrap.min.css') }}" />
 
     <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="{{ asset('main/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('home/css/font-awesome.min.css') }}">
 
     <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('main/css/style.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('home/css/style.css') }}" />
 @yield('css')
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,7 +40,7 @@
             <div class="container">
                 <!-- logo -->
                 <div class="nav-logo">
-                    <a href="index.html" class="logo"><img src="{{ asset('main/img/banner.jpg') }}" alt=""></a>
+                    <a href="index.html" class="logo"><img src="{{ asset('home/img/banner.jpg') }}" alt=""></a>
                 </div>
                 <!-- /logo -->
 
@@ -106,205 +106,81 @@
                             </div>
                         </div>
                     </li>
-                    <li class="has-dropdown megamenu">
-                        <a href="#">Lifestyle</a>
-                        <div class="dropdown tab-dropdown">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <ul class="tab-nav">
-                                        <li class="active"><a data-toggle="tab" href="#tab1">Lifestyle</a></li>
-                                        <li><a data-toggle="tab" href="#tab2">Fashion</a></li>
-                                        <li><a data-toggle="tab" href="#tab1">Health</a></li>
-                                        <li><a data-toggle="tab" href="#tab2">Travel</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-10">
-                                    <div class="dropdown-body tab-content">
-                                        <!-- tab1 -->
-                                        <div id="tab1" class="tab-pane fade in active">
-                                            <div class="row">
-                                                <!-- post -->
-                                                <div class="col-md-4">
-                                                    <div class="post post-sm">
-                                                        <a class="post-img" href="blog-post.html"><img src="./img/post-10.jpg" alt=""></a>
-                                                        <div class="post-body">
-                                                            <div class="post-category">
-                                                                <a href="category.html">Travel</a>
-                                                            </div>
-                                                            <h3 class="post-title title-sm"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-                                                            <ul class="post-meta">
-                                                                <li><a href="author.html">John Doe</a></li>
-                                                                <li>20 April 2018</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- /post -->
-
-                                                <!-- post -->
-                                                <div class="col-md-4">
-                                                    <div class="post post-sm">
-                                                        <a class="post-img" href="blog-post.html"><img src="./img/post-13.jpg" alt=""></a>
-                                                        <div class="post-body">
-                                                            <div class="post-category">
-                                                                <a href="category.html">Travel</a>
-                                                                <a href="category.html">Lifestyle</a>
-                                                            </div>
-                                                            <h3 class="post-title title-sm"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-                                                            <ul class="post-meta">
-                                                                <li><a href="author.html">John Doe</a></li>
-                                                                <li>20 April 2018</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- /post -->
-
-                                                <!-- post -->
-                                                <div class="col-md-4">
-                                                    <div class="post post-sm">
-                                                        <a class="post-img" href="blog-post.html"><img src="./img/post-12.jpg" alt=""></a>
-                                                        <div class="post-body">
-                                                            <div class="post-category">
-                                                                <a href="category.html">Lifestyle</a>
-                                                            </div>
-                                                            <h3 class="post-title title-sm"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-                                                            <ul class="post-meta">
-                                                                <li><a href="author.html">John Doe</a></li>
-                                                                <li>20 April 2018</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- /post -->
-                                            </div>
-                                        </div>
-                                        <!-- /tab1 -->
-
-                                        <!-- tab2 -->
-                                        <div id="tab2" class="tab-pane fade in">
-                                            <div class="row">
-                                                <!-- post -->
-                                                <div class="col-md-4">
-                                                    <div class="post post-sm">
-                                                        <a class="post-img" href="blog-post.html"><img src="./img/post-5.jpg" alt=""></a>
-                                                        <div class="post-body">
-                                                            <div class="post-category">
-                                                                <a href="category.html">Lifestyle</a>
-                                                            </div>
-                                                            <h3 class="post-title title-sm"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-                                                            <ul class="post-meta">
-                                                                <li><a href="author.html">John Doe</a></li>
-                                                                <li>20 April 2018</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- /post -->
-
-                                                <!-- post -->
-                                                <div class="col-md-4">
-                                                    <div class="post post-sm">
-                                                        <a class="post-img" href="blog-post.html"><img src="./img/post-8.jpg" alt=""></a>
-                                                        <div class="post-body">
-                                                            <div class="post-category">
-                                                                <a href="category.html">Fashion</a>
-                                                                <a href="category.html">Lifestyle</a>
-                                                            </div>
-                                                            <h3 class="post-title title-sm"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-                                                            <ul class="post-meta">
-                                                                <li><a href="author.html">John Doe</a></li>
-                                                                <li>20 April 2018</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- /post -->
-
-                                                <!-- post -->
-                                                <div class="col-md-4">
-                                                    <div class="post post-sm">
-                                                        <a class="post-img" href="blog-post.html"><img src="./img/post-9.jpg" alt=""></a>
-                                                        <div class="post-body">
-                                                            <div class="post-category">
-                                                                <a href="category.html">Lifestyle</a>
-                                                            </div>
-                                                            <h3 class="post-title title-sm"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-                                                            <ul class="post-meta">
-                                                                <li><a href="author.html">John Doe</a></li>
-                                                                <li>20 April 2018</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- /post -->
-                                            </div>
-                                        </div>
-                                        <!-- /tab2 -->
-
-                                        <!-- /tab3 tab4 .. -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="has-dropdown megamenu">
-                        <a href="#">Fashion</a>
+                    <li class="has-dropdown">
+                        <a href="index.html">Home</a>
                         <div class="dropdown">
                             <div class="dropdown-body">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <h4 class="dropdown-heading">Categories</h4>
-                                        <ul class="dropdown-list">
-                                            <li><a href="#">Lifestyle</a></li>
-                                            <li><a href="#">Fashion</a></li>
-                                            <li><a href="#">Technology</a></li>
-                                            <li><a href="#">Health</a></li>
-                                            <li><a href="#">Travel</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <h4 class="dropdown-heading">Lifestyle</h4>
-                                        <ul class="dropdown-list">
-                                            <li><a href="#">Lifestyle</a></li>
-                                            <li><a href="#">Fashion</a></li>
-                                            <li><a href="#">Health</a></li>
-                                        </ul>
-                                        <h4 class="dropdown-heading">Technology</h4>
-                                        <ul class="dropdown-list">
-                                            <li><a href="#">Lifestyle</a></li>
-                                            <li><a href="#">Travel</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <h4 class="dropdown-heading">Fashion</h4>
-                                        <ul class="dropdown-list">
-                                            <li><a href="#">Fashion</a></li>
-                                            <li><a href="#">Technology</a></li>
-                                        </ul>
-                                        <h4 class="dropdown-heading">Travel</h4>
-                                        <ul class="dropdown-list">
-                                            <li><a href="#">Lifestyle</a></li>
-                                            <li><a href="#">Healtth</a></li>
-                                            <li><a href="#">Fashion</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <h4 class="dropdown-heading">Health</h4>
-                                        <ul class="dropdown-list">
-                                            <li><a href="#">Technology</a></li>
-                                            <li><a href="#">Fashion</a></li>
-                                            <li><a href="#">Health</a></li>
-                                            <li><a href="#">Travel</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                <ul class="dropdown-list">
+                                    <li><a href="category.html">Category page</a></li>
+                                    <li><a href="blog-post.html">Post page</a></li>
+                                    <li><a href="author.html">Author page</a></li>
+                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="contact.html">Contacts</a></li>
+                                    <li><a href="blank.html">Regular</a></li>
+                                </ul>
                             </div>
                         </div>
                     </li>
-                    <li><a href="#">Technology</a></li>
-                    <li><a href="#">Health</a></li>
-                    <li><a href="#">Travel</a></li>
+                    <li class="has-dropdown">
+                        <a href="index.html">Home</a>
+                        <div class="dropdown">
+                            <div class="dropdown-body">
+                                <ul class="dropdown-list">
+                                    <li><a href="category.html">Category page</a></li>
+                                    <li><a href="blog-post.html">Post page</a></li>
+                                    <li><a href="author.html">Author page</a></li>
+                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="contact.html">Contacts</a></li>
+                                    <li><a href="blank.html">Regular</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="index.html">Home</a>
+                        <div class="dropdown">
+                            <div class="dropdown-body">
+                                <ul class="dropdown-list">
+                                    <li><a href="category.html">Category page</a></li>
+                                    <li><a href="blog-post.html">Post page</a></li>
+                                    <li><a href="author.html">Author page</a></li>
+                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="contact.html">Contacts</a></li>
+                                    <li><a href="blank.html">Regular</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="index.html">Home</a>
+                        <div class="dropdown">
+                            <div class="dropdown-body">
+                                <ul class="dropdown-list">
+                                    <li><a href="category.html">Category page</a></li>
+                                    <li><a href="blog-post.html">Post page</a></li>
+                                    <li><a href="author.html">Author page</a></li>
+                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="contact.html">Contacts</a></li>
+                                    <li><a href="blank.html">Regular</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="index.html">Home</a>
+                        <div class="dropdown">
+                            <div class="dropdown-body">
+                                <ul class="dropdown-list">
+                                    <li><a href="category.html">Category page</a></li>
+                                    <li><a href="blog-post.html">Post page</a></li>
+                                    <li><a href="author.html">Author page</a></li>
+                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="contact.html">Contacts</a></li>
+                                    <li><a href="blank.html">Regular</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
                 <!-- /nav -->
             </div>
@@ -361,7 +237,7 @@
                 <!-- ad widget-->
                 <div class="aside-widget text-center">
                     <a href="#" style="display: inline-block;margin: auto;">
-                        <img class="img-responsive" src="{{ asset('main/img/ad-3.jpg') }}" alt="">
+                        <img class="img-responsive" src="{{ asset('home/img/ad-3.jpg') }}" alt="">
                     </a>
                 </div>
                 <!-- /ad widget -->
@@ -369,7 +245,7 @@
                 <!-- ad widget-->
                 <div class="aside-widget text-center">
                     <a href="#" style="display: inline-block;margin: auto;">
-                        <img class="img-responsive" src="{{ asset('main/img/ad-3.jpg') }}" alt="">
+                        <img class="img-responsive" src="{{ asset('home/img/ad-3.jpg') }}" alt="">
                     </a>
                 </div>
                 <!-- /ad widget -->
@@ -377,7 +253,7 @@
                 <!-- ad widget-->
                 <div class="aside-widget text-center">
                     <a href="#" style="display: inline-block;margin: auto;">
-                        <img class="img-responsive" src="{{ asset('main/img/ad-3.jpg') }}" alt="">
+                        <img class="img-responsive" src="{{ asset('home/img/ad-3.jpg') }}" alt="">
                     </a>
                 </div>
                 <!-- /ad widget -->
@@ -385,14 +261,14 @@
                 <!-- ad widget-->
                 <div class="aside-widget text-center">
                     <a href="#" style="display: inline-block;margin: auto;">
-                        <img class="img-responsive" src="{{ asset('main/img/ad-3.jpg') }}" alt="">
+                        <img class="img-responsive" src="{{ asset('home/img/ad-3.jpg') }}" alt="">
                     </a>
                 </div>
                 <!-- /ad widget -->
                 <!-- ad widget-->
                 <div class="aside-widget text-center">
                     <a href="#" style="display: inline-block;margin: auto;">
-                        <img class="img-responsive" src="{{ asset('main/img/ad-3.jpg') }}" alt="">
+                        <img class="img-responsive" src="{{ asset('home/img/ad-3.jpg') }}" alt="">
                     </a>
                 </div>
                 <!-- /ad widget -->
@@ -436,10 +312,10 @@
 <!-- /FOOTER -->
 
 <!-- jQuery Plugins -->
-<script src="{{ asset('main/js/jquery.min.js') }}"></script>
-<script src="{{ asset('main/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('home/js/jquery.min.js') }}"></script>
+<script src="{{ asset('home/js/bootstrap.min.js') }}"></script>
 <!-- <script src="{{ asset('js/jquery.stellar.min.js') }}"></script> -->
-<script src="{{ asset('main/js/main.js') }}"></script>
+<script src="{{ asset('home/js/main.js') }}"></script>
 @yield('js')
 </body>
 
