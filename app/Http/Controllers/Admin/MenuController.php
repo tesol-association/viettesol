@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Menu;
+use Session;
 
 class MenuController extends Controller
 {
@@ -15,7 +16,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        return view('layouts.admin.menu.list');
+        $res= Menu::all();
+        return view('layouts.admin.menu.list',['menus'=> $res]);
     }
 
     /**
@@ -49,6 +51,8 @@ class MenuController extends Controller
             'created_by'  => $request->creator_id,
             'parent_id'   => $request->parent_id
         ]);
+        Session::flash('success','Thêm thành công !');
+        return redirect()->route('admin_menu_list');
     }
 
     /**
@@ -70,7 +74,8 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        //
+        $res=Menu::find($id);
+        return view('layouts.admin.menu.update',['menu'=> $res]);
     }
 
     /**
@@ -82,7 +87,16 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $menu= Menu::find($id);
+        $menu->name = $request->name;
+        $menu->url  = $request->url;
+        $menu->description = $request->description;
+        $menu->created_by  = $request->creator_id;
+        $menu->parent_id   = $request->parent_id;
+
+        $menu->save();
+        Session::flash('success','Update thành công !');
+        return redirect()->route('admin_menu_list');
     }
 
     /**
@@ -93,6 +107,8 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Menu::destroy($id);
+        Session::flash('success','Xóa thành công !');
+        return redirect()->route('admin_menu_list');
     }
 }
