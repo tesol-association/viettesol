@@ -23,15 +23,18 @@ Route::get('/demo-admin',function () {
 Route::get('/demo-home',function () {
     return view('layouts.home.layout');
 });
+
 //'middleware'=>'auth'
-Route::group(['prefix'=>'admin'],function(){
-        
+Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
+    Route::get('/index',function () {
+        return view('layouts.admin.layout');
+    });
     //menu
     Route::group(['prefix'=>'menu'],function(){
         Route::get('/list','Admin\MenuController@index')->name('admin_menu_list');
 
 	    Route::get('/create','Admin\MenuController@create')->name('admin_menu_create');
-	    Route::post('/store','Admin\MenuController@store')->name('admin_menu_store');   
+	    Route::post('/store','Admin\MenuController@store')->name('admin_menu_store');
 	    Route::post('/delete/{id}','Admin\MenuController@destroy')->name('admin_menu_delete');
 
 	    Route::get('/view/{id}','Admin\MenuController@edit')->name('admin_menu_edit');
@@ -40,7 +43,7 @@ Route::group(['prefix'=>'admin'],function(){
 
 	//banner
 	Route::group(['prefix'=>'banner'],function(){
-        
+
 	});
 
 	//partner_sponsor
