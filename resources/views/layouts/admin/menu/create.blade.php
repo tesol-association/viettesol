@@ -33,7 +33,7 @@ Create menu
 
                 <div class="form-group">
                   <label for="exampleInputEmail1">created_by</label>
-                  <input type="text" class="form-control" placeholder="Enter creator" name="creator_id" required>
+                  <input type="text" class="form-control" placeholder="Enter creator" name="creator_id" value="{{Auth::User()->id}}" required>
                 </div>
 
                 <div class="form-group">
@@ -54,7 +54,7 @@ Create menu
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>
             </form>
-          </div>
+</div>
 @endsection
 @section('js')
 

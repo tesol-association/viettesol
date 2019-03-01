@@ -45,7 +45,7 @@ class BannerController extends Controller
                     $file = $request->file('upload_file');
                     $nameImage = $file->getClientOriginalName();
 
-                    $path = $file->move('upload/', $nameImage);
+                    $path = $file->move('upload/banner', $nameImage);
                 } catch (Illuminate\Filesystem\FileNotFoundException $e) {
 
                 }
@@ -78,7 +78,8 @@ class BannerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $res=Banner::find($id);
+        return view('layouts.admin.banner.update',['banner'=> $res]);
     }
 
     /**
@@ -90,7 +91,25 @@ class BannerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $banner= Banner::find($id);
+
+        if ($request->hasFile('upload_file')) {
+            if ($request->file('upload_file')->isValid()) {
+                try {
+                    $file = $request->file('upload_file');
+                    $nameImage = $file->getClientOriginalName();
+
+                    $path = $file->move('upload/banner', $nameImage);
+                } catch (Illuminate\Filesystem\FileNotFoundException $e) {
+
+                }
+            }
+        }
+        $banner->title = $request->title;
+        $banner->url   = asset($path);
+        $banner->save();
+        Session::flash('success','Update thành công !');
+        return redirect()->route('admin_banner_list');
     }
 
     /**

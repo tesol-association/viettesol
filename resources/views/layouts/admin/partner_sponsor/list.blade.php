@@ -33,6 +33,7 @@ List partner-sponsor
                   <th>Logo</th>
                   <th>Type</th>
                   <th>Delete</th>
+                  <th>Edit</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -70,6 +71,9 @@ List partner-sponsor
                     </form>
                     <!-- </div> -->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal_{{ $partner->id }}">Delete</button>
+                  </td>
+                  <td>
+                    <a href="{{ route('admin_partner_edit',['id'=> $partner->id ]) }}" class="btn btn-info">Edit</a>
                   </td>
                 </tr>
                 @endforeach

@@ -49,6 +49,9 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::post('/store','Admin\BannerController@store')->name('admin_banner_store'); 
 
         Route::post('/delete/{id}','Admin\BannerController@destroy')->name('admin_banner_delete');
+
+        Route::get('/view/{id}','Admin\BannerController@edit')->name('admin_banner_edit');
+        Route::post('/update/{id}','Admin\BannerController@update')->name('admin_banner_update');
     });
 
     //partner_sponsor
@@ -59,6 +62,9 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::post('/store','Admin\PartnerController@store')->name('admin_partner_store');
 
         Route::post('/delete/{id}','Admin\PartnerController@destroy')->name('admin_partner_delete');
+
+        Route::get('/view/{id}','Admin\PartnerController@edit')->name('admin_partner_edit');
+        Route::post('/update/{id}','Admin\PartnerController@update')->name('admin_partner_update');
     });
 
     //advertisements
@@ -69,6 +75,9 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::post('/store','Admin\AdvertisementController@store')->name('admin_advertisement_store');
 
         Route::post('/delete/{id}','Admin\AdvertisementController@destroy')->name('admin_advertisement_delete');
+
+        Route::get('/view/{id}','Admin\AdvertisementController@edit')->name('admin_advertisement_edit');
+        Route::post('/update/{id}','Admin\AdvertisementController@update')->name('admin_advertisement_update');
     });
 
     //comment

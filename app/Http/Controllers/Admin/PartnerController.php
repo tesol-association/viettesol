@@ -44,7 +44,7 @@ class PartnerController extends Controller
                     $file = $request->file('upload_file');
                     $nameImage = $file->getClientOriginalName();
 
-                    $path = $file->move('upload/', $nameImage);
+                    $path = $file->move('upload/logo', $nameImage);
                 } catch (Illuminate\Filesystem\FileNotFoundException $e) {
 
                 }
@@ -79,7 +79,8 @@ class PartnerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $res=Partner::find($id);
+        return view('layouts.admin.partner_sponsor.update',['partner'=> $res]);
     }
 
     /**
@@ -91,7 +92,27 @@ class PartnerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $partner= Partner::find($id);
+
+        if ($request->hasFile('upload_file')) {
+            if ($request->file('upload_file')->isValid()) {
+                try {
+                    $file = $request->file('upload_file');
+                    $nameImage = $file->getClientOriginalName();
+
+                    $path = $file->move('upload/logo', $nameImage);
+                } catch (Illuminate\Filesystem\FileNotFoundException $e) {
+
+                }
+            }
+        }
+        $partner->name        = $request->name;
+        $partner->description = $request->description;
+        $partner->logo        = asset($path);
+        $partner->type        = $request->type;
+        $partner->save();
+        Session::flash('success','Update thành công !');
+        return redirect()->route('admin_partner_list');
     }
 
     /**

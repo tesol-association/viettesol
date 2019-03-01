@@ -44,7 +44,7 @@ class AdvertisementController extends Controller
                     $file = $request->file('upload_file');
                     $nameImage = $file->getClientOriginalName();
 
-                    $path = $file->move('upload/', $nameImage);
+                    $path = $file->move('upload/adv', $nameImage);
                 } catch (Illuminate\Filesystem\FileNotFoundException $e) {
 
                 }
@@ -78,7 +78,8 @@ class AdvertisementController extends Controller
      */
     public function edit($id)
     {
-        //
+        $res=Advertisement::find($id);
+        return view('layouts.admin.advertisement.update',['advertisement'=> $res]);
     }
 
     /**
@@ -90,7 +91,25 @@ class AdvertisementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $advertisement= Advertisement::find($id);
+
+        if ($request->hasFile('upload_file')) {
+            if ($request->file('upload_file')->isValid()) {
+                try {
+                    $file = $request->file('upload_file');
+                    $nameImage = $file->getClientOriginalName();
+
+                    $path = $file->move('upload/adv', $nameImage);
+                } catch (Illuminate\Filesystem\FileNotFoundException $e) {
+
+                }
+            }
+        }
+        $advertisement->name    = $request->name;
+        $advertisement->image   = asset($path);
+        $advertisement->save();
+        Session::flash('success','Update thành công !');
+        return redirect()->route('admin_advertisement_list');
     }
 
     /**

@@ -31,6 +31,7 @@ List advertisement
                   <th>Name</th>
                   <th>Image</th>
                   <th>Delete</th>
+                  <th>Edit</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -64,6 +65,9 @@ List advertisement
                     </form>
                     <!-- </div> -->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal_{{ $advertisement->id }}">Delete</button>
+                  </td>
+                  <td>
+                    <a href="{{ route('admin_advertisement_edit',['id'=> $advertisement->id ]) }}" class="btn btn-info">Edit</a>
                   </td>
                 </tr>
                 @endforeach

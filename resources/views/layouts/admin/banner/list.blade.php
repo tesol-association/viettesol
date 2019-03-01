@@ -31,6 +31,7 @@ List banner
                   <th>Title</th>
                   <th>Image</th>
                   <th>Delete</th>
+                  <th>Edit</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -64,6 +65,9 @@ List banner
                     </form>
                     <!-- </div> -->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal_{{ $banner->id }}">Delete</button>
+                   </td>
+                   <td>
+                     <a href="{{ route('admin_banner_edit',['id'=> $banner->id ]) }}" class="btn btn-info">Edit</a>
                    </td>
                 </tr>
                 @endforeach
