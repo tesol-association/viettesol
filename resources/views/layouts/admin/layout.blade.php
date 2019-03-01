@@ -32,7 +32,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  @yield('css')      
+  @yield('css')
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -213,7 +213,14 @@ desired effect
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="{{ route('logout') }}" class="btn btn-default btn-flat"
+                    onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    Log out
+                  </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </div>
               </li>
             </ul>
@@ -437,7 +444,7 @@ desired effect
             </li>
           </ul>
         </li>
-        
+
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Proceeding Management</span>
             <span class="pull-right-container">
@@ -448,7 +455,7 @@ desired effect
             <li><a href="#">List Issue</a></li>
             <li><a href="#">Create Issue</a></li>
           </ul>
-        </li>        
+        </li>
 
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>ISSUE 1</span>
@@ -505,7 +512,7 @@ desired effect
       <h1>
         @yield('page-header')
       </h1>
-     
+
     </section>
 
     <!-- Main content -->
@@ -514,7 +521,7 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
-      @yield('content') 
+      @yield('content')
 
     </section>
     <!-- /.content -->
@@ -633,6 +640,6 @@ desired effect
            // <?php  //session()->forget('info'); ?>
         @endif
 </script>
- @yield('js')    
+ @yield('js')
 </body>
 </html>
