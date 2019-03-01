@@ -33,17 +33,17 @@ Create menu
 
                 <div class="form-group">
                   <label for="exampleInputEmail1">created_by</label>
-                  <input type="text" class="form-control" placeholder="Enter creator" name="creator_id" value="{{Auth::User()->id}}" required>
+                  <input type="text" class="form-control" placeholder="Enter creator"  value="{{Auth::User()->user_name}}" required disabled>
+                  <input type="hidden" name="created_by" value="{{Auth::User()->id}}">
                 </div>
 
                 <div class="form-group">
                   <label for="exampleInputEmail1">parent_id</label>
                   <select class="form-control" name="parent_id">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
+                    <option value="">Select menu</option>
+                    @foreach($menus as $menu)
+                      <option value="{{ $menu->id }}">{{ $menu->name }}</option>
+                    @endforeach
                   </select>
                   <!-- <input type="text" class="form-control" placeholder="Enter parent" name="parent_id"> -->
                 </div>

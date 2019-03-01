@@ -9,6 +9,7 @@ use Session;
 
 class PartnerController extends Controller
 {
+    const UPLOAD_FOLDER='upload/logo'; 
     /**
      * Display a listing of the resource.
      *
@@ -38,13 +39,19 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+           'name'    => 'required',
+           'logo'    => 'required',
+           'type'    => 'required'
+        ]);
+
         if ($request->hasFile('upload_file')) {
             if ($request->file('upload_file')->isValid()) {
                 try {
                     $file = $request->file('upload_file');
                     $nameImage = $file->getClientOriginalName();
 
-                    $path = $file->move('upload/logo', $nameImage);
+                    $path = $file->move(self::UPLOAD_FOLDER, $nameImage);
                 } catch (Illuminate\Filesystem\FileNotFoundException $e) {
 
                 }
@@ -92,6 +99,12 @@ class PartnerController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,[
+           'name'    => 'required',
+           'logo'    => 'required',
+           'type'    => 'required'
+        ]);
+        
         $partner= Partner::find($id);
 
         if ($request->hasFile('upload_file')) {
@@ -100,7 +113,7 @@ class PartnerController extends Controller
                     $file = $request->file('upload_file');
                     $nameImage = $file->getClientOriginalName();
 
-                    $path = $file->move('upload/logo', $nameImage);
+                    $path = $file->move(self::UPLOAD_FOLDER, $nameImage);
                 } catch (Illuminate\Filesystem\FileNotFoundException $e) {
 
                 }

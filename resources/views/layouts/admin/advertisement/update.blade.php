@@ -1,5 +1,5 @@
 @extends('layouts.admin.layout')
-@section('title','Menu Management')
+@section('title','Advertisement Management')
 @section('css')
 
 @endsection

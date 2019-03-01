@@ -9,6 +9,7 @@ use Session;
 
 class BannerController extends Controller
 {
+    const UPLOAD_FOLDER='upload/banner';
     /**
      * Display a listing of the resource.
      *
@@ -38,6 +39,10 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+           'title'       => 'required',
+           'url'      => 'required|image'
+        ]);
 
         if ($request->hasFile('upload_file')) {
             if ($request->file('upload_file')->isValid()) {
@@ -45,7 +50,7 @@ class BannerController extends Controller
                     $file = $request->file('upload_file');
                     $nameImage = $file->getClientOriginalName();
 
-                    $path = $file->move('upload/banner', $nameImage);
+                    $path = $file->move(self::UPLOAD_FOLDER, $nameImage);
                 } catch (Illuminate\Filesystem\FileNotFoundException $e) {
 
                 }
@@ -91,6 +96,11 @@ class BannerController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,[
+           'title'       => 'required',
+           'url'      => 'required|image'
+        ]);
+        
         $banner= Banner::find($id);
 
         if ($request->hasFile('upload_file')) {
@@ -99,7 +109,7 @@ class BannerController extends Controller
                     $file = $request->file('upload_file');
                     $nameImage = $file->getClientOriginalName();
 
-                    $path = $file->move('upload/banner', $nameImage);
+                    $path = $file->move(self::UPLOAD_FOLDER, $nameImage);
                 } catch (Illuminate\Filesystem\FileNotFoundException $e) {
 
                 }

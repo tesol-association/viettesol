@@ -15,7 +15,7 @@ List advertisement
             <div class="box-header">
               <div class="row">
                 <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                    <h3 class="box-title">Data Table With Full Features</h3>
+                    <h3 class="box-title"></h3>
                 </div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                     <a href="{{ route('admin_advertisement_create') }}" class="btn btn-warning">Create advertisement</a>

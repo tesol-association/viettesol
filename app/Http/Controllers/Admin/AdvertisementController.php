@@ -9,6 +9,7 @@ use Session;
 
 class AdvertisementController extends Controller
 {
+    const UPLOAD_FOLDER='upload/adv'; 
     /**
      * Display a listing of the resource.
      *
@@ -38,13 +39,19 @@ class AdvertisementController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->validate($request,[
+           'name'       => 'required',
+           'image'      => 'required|image'
+        ]);
+
         if ($request->hasFile('upload_file')) {
             if ($request->file('upload_file')->isValid()) {
                 try {
                     $file = $request->file('upload_file');
                     $nameImage = $file->getClientOriginalName();
 
-                    $path = $file->move('upload/adv', $nameImage);
+                    $path = $file->move(self::UPLOAD_FOLDER, $nameImage);
                 } catch (Illuminate\Filesystem\FileNotFoundException $e) {
 
                 }
@@ -91,6 +98,12 @@ class AdvertisementController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $this->validate($request,[
+           'name'       => 'required',
+           'image'      => 'required|image'
+        ]);
+        
         $advertisement= Advertisement::find($id);
 
         if ($request->hasFile('upload_file')) {
@@ -99,7 +112,7 @@ class AdvertisementController extends Controller
                     $file = $request->file('upload_file');
                     $nameImage = $file->getClientOriginalName();
 
-                    $path = $file->move('upload/adv', $nameImage);
+                    $path = $file->move(self::UPLOAD_FOLDER, $nameImage);
                 } catch (Illuminate\Filesystem\FileNotFoundException $e) {
 
                 }
