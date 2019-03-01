@@ -38,7 +38,14 @@ Update menu
 
                 <div class="form-group">
                   <label for="exampleInputEmail1">parent_id</label>
-                  <input type="text" class="form-control" placeholder="Enter parent" name="parent_id" value="{{ $menu->parent_id }}">
+                  <select class="form-control" name="parent_id">
+                    <option value="1" @if($menu->parent_id == 1) {{ 'selected' }} @endif>1</option>
+                    <option value="2" @if($menu->parent_id == 2) {{ 'selected' }} @endif>2</option>
+                    <option value="3" @if($menu->parent_id == 3) {{ 'selected' }} @endif>3</option>
+                    <option value="4" @if($menu->parent_id == 4) {{ 'selected' }} @endif>4</option>
+                    <option value="5" @if($menu->parent_id == 5) {{ 'selected' }} @endif>5</option>
+                  </select>
+                  <!-- <input type="text" class="form-control" placeholder="Enter parent" name="parent_id" value="{{ $menu->parent_id }}"> -->
                 </div>
               </div>
               <!-- /.box-body -->

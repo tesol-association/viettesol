@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Banner;
+use App\Models\Partner;
 use Session;
 
-class BannerController extends Controller
+class PartnerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class BannerController extends Controller
      */
     public function index()
     {
-        $res= Banner::all();
-        return view('layouts.admin.banner.list',['banners'=> $res]);
+        $res= Partner::all();
+        return view('layouts.admin.partner_sponsor.list',['partners'=> $res]);
     }
 
     /**
@@ -27,7 +27,7 @@ class BannerController extends Controller
      */
     public function create()
     {
-        return view('layouts.admin.banner.create');
+        return view('layouts.admin.partner_sponsor.create');
     }
 
     /**
@@ -38,7 +38,6 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-
         if ($request->hasFile('upload_file')) {
             if ($request->file('upload_file')->isValid()) {
                 try {
@@ -51,12 +50,14 @@ class BannerController extends Controller
                 }
             }
         }
-        Banner::create([
-           'title' => $request->title,
-           'url'   => asset($path)
+        Partner::create([
+           'name'        => $request->name,
+           'description' => $request->description,
+           'logo'        => asset($path),
+           'type'        => $request->type
         ]);
         Session::flash('success','Thêm thành công !');
-        return redirect()->route('admin_banner_list');
+        return redirect()->route('admin_partner_list');
     }
 
     /**
@@ -101,8 +102,8 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        Banner::destroy($id);
+        Partner::destroy($id);
         Session::flash('success','Xóa thành công !');
-        return redirect()->route('admin_banner_list');
+        return redirect()->route('admin_partner_list');
     }
 }

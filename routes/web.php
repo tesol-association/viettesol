@@ -40,17 +40,32 @@ Route::group(['prefix'=>'admin'],function(){
 
 	//banner
 	Route::group(['prefix'=>'banner'],function(){
-        
+        Route::get('/list','Admin\BannerController@index')->name('admin_banner_list');
+
+        Route::get('/create','Admin\BannerController@create')->name('admin_banner_create');
+	    Route::post('/store','Admin\BannerController@store')->name('admin_banner_store'); 
+
+	    Route::post('/delete/{id}','Admin\BannerController@destroy')->name('admin_banner_delete');
 	});
 
 	//partner_sponsor
 	Route::group(['prefix'=>'partner_sponsor'],function(){
+        Route::get('/list','Admin\PartnerController@index')->name('admin_partner_list');
 
+        Route::get('/create','Admin\PartnerController@create')->name('admin_partner_create');
+	    Route::post('/store','Admin\PartnerController@store')->name('admin_partner_store');
+
+	    Route::post('/delete/{id}','Admin\PartnerController@destroy')->name('admin_partner_delete');
 	});
 
 	//advertisements
 	Route::group(['prefix'=>'advertisements'],function(){
+		Route::get('/list','Admin\AdvertisementController@index')->name('admin_advertisement_list');
 
+		Route::get('/create','Admin\AdvertisementController@create')->name('admin_advertisement_create');
+	    Route::post('/store','Admin\AdvertisementController@store')->name('admin_advertisement_store');
+
+	    Route::post('/delete/{id}','Admin\AdvertisementController@destroy')->name('admin_advertisement_delete');
 	});
 
     //comment
@@ -65,7 +80,7 @@ Route::group(['prefix'=>'admin'],function(){
 
 	//news
 	Route::group(['prefix'=>'news'],function(){
-
+          
 	});
 
 	//events
@@ -82,5 +97,6 @@ Route::group(['prefix'=>'admin'],function(){
 	Route::group(['prefix'=>'building'],function(){
 
 	});
+
 });
 Auth::routes();

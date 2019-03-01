@@ -1,10 +1,10 @@
 @extends('layouts.admin.layout')
-@section('title','Banner Management')
+@section('title','Advertisement Management')
 @section('css')
 <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 @endsection
 @section('page-header')
-List banner
+List advertisement
 @endsection
 @section('content')
 <section class="content">
@@ -18,7 +18,7 @@ List banner
                     <h3 class="box-title">Data Table With Full Features</h3>
                 </div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                    <a href="{{ route('admin_banner_create') }}" class="btn btn-warning">Create banner</a>
+                    <a href="{{ route('admin_advertisement_create') }}" class="btn btn-warning">Create advertisement</a>
                 </div>
               </div>
             </div>
@@ -28,30 +28,30 @@ List banner
                 <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Title</th>
+                  <th>Name</th>
                   <th>Image</th>
                   <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($banners as $banner )
+                  @foreach($advertisements as $advertisement)
                 <tr>
-                   <td>{{ $banner->id }}</td>
-                   <td>{{ $banner->title }}</td>
-                   <td>
-                   	 <img src="{{ $banner->url }}" alt="" width="220px" height="110px">
-                   </td>
-                   <td>
-                   	<form method="post" action="{{ route('admin_banner_delete',['id'=> $banner->id ]) }}">
+                	<td>{{ $advertisement->id }}</td>
+                	<td>{{ $advertisement->name }}</td>
+                	<td>
+                     <img src="{{ $advertisement->image }}" alt="" width="200px" height="160px">
+                  </td>
+                  <td>
+                    <form method="post" action="{{ route('admin_advertisement_delete',['id'=> $advertisement->id ]) }}">
                         @csrf
-                        <div class="modal fade" id="myModal_{{ $banner->id }}" role="dialog">
+                        <div class="modal fade" id="myModal_{{ $advertisement->id }}" role="dialog">
                           <div class="modal-dialog">
                           
                             <!-- Modal content-->
                             <div class="modal-content">
                               <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Are you sure delete: {{ $banner->title }}</h4>
+                                <h4 class="modal-title">Are you sure delete: {{ $advertisement->name }}</h4>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -63,8 +63,8 @@ List banner
                         </div>
                     </form>
                     <!-- </div> -->
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal_{{ $banner->id }}">Delete</button>
-                   </td>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal_{{ $advertisement->id }}">Delete</button>
+                  </td>
                 </tr>
                 @endforeach
                 </tbody>
@@ -79,8 +79,7 @@ List banner
         <!-- /.col -->
       </div>
       <!-- /.row -->
-    </section>
-
+</section>
 @endsection
 @section('js')
 <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>

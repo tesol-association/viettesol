@@ -290,9 +290,9 @@ desired effect
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('admin_menu_list') }}">Menu Management</a></li>
-            <li><a href="">Banner Management</a></li>
-            <li><a href="">Adv Management</a></li>
-            <li><a href="">Partner Management</a></li>
+            <li><a href="{{ route('admin_banner_list') }}">Banner Management</a></li>
+            <li><a href="{{ route('admin_advertisement_list') }}">Adv Management</a></li>
+            <li><a href="{{ route('admin_partner_list') }}">Partner Management</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -339,6 +339,13 @@ desired effect
             <li><a href="#">Create</a></li>
             <li><a href="#">Role Management</a></li>
           </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Calendar</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
         </li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Conference Management</span>

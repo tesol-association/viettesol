@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Banner;
+use App\Models\Advertisement;
 use Session;
 
-class BannerController extends Controller
+class AdvertisementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class BannerController extends Controller
      */
     public function index()
     {
-        $res= Banner::all();
-        return view('layouts.admin.banner.list',['banners'=> $res]);
+        $res= Advertisement::all();
+        return view('layouts.admin.advertisement.list',['advertisements'=> $res]);
     }
 
     /**
@@ -27,7 +27,7 @@ class BannerController extends Controller
      */
     public function create()
     {
-        return view('layouts.admin.banner.create');
+        return view('layouts.admin.advertisement.create');
     }
 
     /**
@@ -38,7 +38,6 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-
         if ($request->hasFile('upload_file')) {
             if ($request->file('upload_file')->isValid()) {
                 try {
@@ -51,12 +50,13 @@ class BannerController extends Controller
                 }
             }
         }
-        Banner::create([
-           'title' => $request->title,
-           'url'   => asset($path)
+
+        Advertisement::create([
+            'name'  => $request->name,
+            'image' => asset($path)
         ]);
         Session::flash('success','Thêm thành công !');
-        return redirect()->route('admin_banner_list');
+        return redirect()->route('admin_advertisement_list');
     }
 
     /**
@@ -101,8 +101,8 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        Banner::destroy($id);
+        Advertisement::destroy($id);
         Session::flash('success','Xóa thành công !');
-        return redirect()->route('admin_banner_list');
+        return redirect()->route('admin_advertisement_list');
     }
 }
