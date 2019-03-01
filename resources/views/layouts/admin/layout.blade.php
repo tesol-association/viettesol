@@ -304,14 +304,8 @@ desired effect
         </li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Comment Management</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+            <span class="pull-right-container"></span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href="#">List</a></li>
-            <li><a href="#">Create</a></li>
-          </ul>
         </li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Content Management</span>
