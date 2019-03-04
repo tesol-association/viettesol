@@ -4,23 +4,25 @@
 
 @endsection
 @section('page-header')
-Create banner
+Update banner
 @endsection
 @section('content')
 <div class="box box-primary">
-            
+            <div class="box-header with-border">
+              <h3 class="box-title"></h3>
+            </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form method="post" action="{{ route('admin_banner_store') }}" enctype="multipart/form-data">
+            <form  method="post" action="{{ route('admin_banner_update',['id'=>$banner->id]) }}" enctype="multipart/form-data">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <div class="box-body">
-              	<input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Title</label>
-                  <input type="text" class="form-control" name="title" placeholder="Enter name" required>
+                  <input type="text" class="form-control" placeholder="Enter title" name="title" value="{{ $banner->title }}" required>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Url</label>
-                  <input type="file" class="form-control" name="upload_file" required>
+                  <label for="exampleInputEmail1">Url</label>
+                  <input type="file" class="form-control" placeholder="Enter name" name="upload_file" value="{{ $banner->url }}" required>
                 </div>
               </div>
               <!-- /.box-body -->
@@ -29,7 +31,7 @@ Create banner
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>
             </form>
-</div>
+          </div>
 @endsection
 @section('js')
 

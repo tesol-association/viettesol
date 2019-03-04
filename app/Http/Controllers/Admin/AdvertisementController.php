@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Banner;
+use App\Models\Advertisement;
 use Session;
 
-class BannerController extends Controller
+class AdvertisementController extends Controller
 {
-    const UPLOAD_FOLDER='upload/banner';
+    const UPLOAD_FOLDER='upload/adv'; 
     /**
      * Display a listing of the resource.
      *
@@ -17,8 +17,8 @@ class BannerController extends Controller
      */
     public function index()
     {
-        $res= Banner::all();
-        return view('layouts.admin.banner.list',['banners'=> $res]);
+        $res= Advertisement::all();
+        return view('layouts.admin.advertisement.list',['advertisements'=> $res]);
     }
 
     /**
@@ -28,7 +28,7 @@ class BannerController extends Controller
      */
     public function create()
     {
-        return view('layouts.admin.banner.create');
+        return view('layouts.admin.advertisement.create');
     }
 
     /**
@@ -39,9 +39,10 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request,[
-           'title'       => 'required',
-           'url'      => 'required|image'
+           'name'       => 'required',
+           'image'      => 'required|image'
         ]);
 
         if ($request->hasFile('upload_file')) {
@@ -56,12 +57,13 @@ class BannerController extends Controller
                 }
             }
         }
-        Banner::create([
-           'title' => $request->title,
-           'url'   => asset($path)
+
+        Advertisement::create([
+            'name'  => $request->name,
+            'image' => asset($path)
         ]);
         Session::flash('success','Thêm thành công !');
-        return redirect()->route('admin_banner_list');
+        return redirect()->route('admin_advertisement_list');
     }
 
     /**
@@ -83,8 +85,8 @@ class BannerController extends Controller
      */
     public function edit($id)
     {
-        $res=Banner::find($id);
-        return view('layouts.admin.banner.update',['banner'=> $res]);
+        $res=Advertisement::find($id);
+        return view('layouts.admin.advertisement.update',['advertisement'=> $res]);
     }
 
     /**
@@ -96,12 +98,13 @@ class BannerController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $this->validate($request,[
-           'title'       => 'required',
-           'url'      => 'required|image'
+           'name'       => 'required',
+           'image'      => 'required|image'
         ]);
         
-        $banner= Banner::find($id);
+        $advertisement= Advertisement::find($id);
 
         if ($request->hasFile('upload_file')) {
             if ($request->file('upload_file')->isValid()) {
@@ -115,11 +118,11 @@ class BannerController extends Controller
                 }
             }
         }
-        $banner->title = $request->title;
-        $banner->url   = asset($path);
-        $banner->save();
+        $advertisement->name    = $request->name;
+        $advertisement->image   = asset($path);
+        $advertisement->save();
         Session::flash('success','Update thành công !');
-        return redirect()->route('admin_banner_list');
+        return redirect()->route('admin_advertisement_list');
     }
 
     /**
@@ -130,8 +133,8 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        Banner::destroy($id);
+        Advertisement::destroy($id);
         Session::flash('success','Xóa thành công !');
-        return redirect()->route('admin_banner_list');
+        return redirect()->route('admin_advertisement_list');
     }
 }

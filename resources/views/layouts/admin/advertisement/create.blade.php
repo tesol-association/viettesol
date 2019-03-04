@@ -1,25 +1,25 @@
 @extends('layouts.admin.layout')
-@section('title','Banner Management')
+@section('title','Advertisement Management')
 @section('css')
 
 @endsection
 @section('page-header')
-Create banner
+Create advertisement
 @endsection
 @section('content')
 <div class="box box-primary">
             
             <!-- /.box-header -->
             <!-- form start -->
-            <form method="post" action="{{ route('admin_banner_store') }}" enctype="multipart/form-data">
+            <form method="post" action="{{ route('admin_advertisement_store') }}" enctype="multipart/form-data">
               <div class="box-body">
               	<input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Title</label>
-                  <input type="text" class="form-control" name="title" placeholder="Enter name" required>
+                  <label for="exampleInputEmail1">Name</label>
+                  <input type="text" class="form-control" name="name" placeholder="Enter name" required>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Url</label>
+                  <label for="exampleInputPassword1">Image</label>
                   <input type="file" class="form-control" name="upload_file" required>
                 </div>
               </div>

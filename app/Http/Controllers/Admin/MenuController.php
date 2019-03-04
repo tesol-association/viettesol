@@ -27,7 +27,8 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('layouts.admin.menu.create');
+        $res= Menu::all();
+        return view('layouts.admin.menu.create',['menus'=> $res]);
     }
 
     /**
@@ -38,17 +39,17 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request,[
-        //    'name'       => 'required'
-        //    'description' => 'required',
-        //    'creator_id'     => 'required'
-        // ]);
+        $this->validate($request,[
+           'name'           => 'required',
+           'description'    => 'required',
+           'created_by'     => 'required'
+        ]);
         //dd($request->all());
         Menu::create([
             'name'        => $request->name,
             'url'         => $request->url,
             'description' => $request->description,
-            'created_by'  => $request->creator_id,
+            'created_by'  => $request->created_by,
             'parent_id'   => $request->parent_id
         ]);
         Session::flash('success','Thêm thành công !');
@@ -74,8 +75,9 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
+        $parent = Menu::all();
         $res=Menu::find($id);
-        return view('layouts.admin.menu.update',['menu'=> $res]);
+        return view('layouts.admin.menu.update',['menu'=> $res,'parents'=> $parent]);
     }
 
     /**
@@ -87,11 +89,16 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $this->validate($request,[
+           'name'           => 'required',
+           'description'    => 'required'
+        ]);
+
         $menu= Menu::find($id);
         $menu->name = $request->name;
         $menu->url  = $request->url;
         $menu->description = $request->description;
-        $menu->created_by  = $request->creator_id;
         $menu->parent_id   = $request->parent_id;
 
         $menu->save();

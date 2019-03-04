@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Banner;
+use App\Models\Partner;
 use Session;
 
-class BannerController extends Controller
+class PartnerController extends Controller
 {
-    const UPLOAD_FOLDER='upload/banner';
+    const UPLOAD_FOLDER='upload/logo'; 
     /**
      * Display a listing of the resource.
      *
@@ -17,8 +17,8 @@ class BannerController extends Controller
      */
     public function index()
     {
-        $res= Banner::all();
-        return view('layouts.admin.banner.list',['banners'=> $res]);
+        $res= Partner::all();
+        return view('layouts.admin.partner_sponsor.list',['partners'=> $res]);
     }
 
     /**
@@ -28,7 +28,7 @@ class BannerController extends Controller
      */
     public function create()
     {
-        return view('layouts.admin.banner.create');
+        return view('layouts.admin.partner_sponsor.create');
     }
 
     /**
@@ -40,8 +40,9 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-           'title'       => 'required',
-           'url'      => 'required|image'
+           'name'    => 'required',
+           'logo'    => 'required',
+           'type'    => 'required'
         ]);
 
         if ($request->hasFile('upload_file')) {
@@ -56,12 +57,14 @@ class BannerController extends Controller
                 }
             }
         }
-        Banner::create([
-           'title' => $request->title,
-           'url'   => asset($path)
+        Partner::create([
+           'name'        => $request->name,
+           'description' => $request->description,
+           'logo'        => asset($path),
+           'type'        => $request->type
         ]);
         Session::flash('success','Thêm thành công !');
-        return redirect()->route('admin_banner_list');
+        return redirect()->route('admin_partner_list');
     }
 
     /**
@@ -83,8 +86,8 @@ class BannerController extends Controller
      */
     public function edit($id)
     {
-        $res=Banner::find($id);
-        return view('layouts.admin.banner.update',['banner'=> $res]);
+        $res=Partner::find($id);
+        return view('layouts.admin.partner_sponsor.update',['partner'=> $res]);
     }
 
     /**
@@ -97,11 +100,12 @@ class BannerController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-           'title'       => 'required',
-           'url'      => 'required|image'
+           'name'    => 'required',
+           'logo'    => 'required',
+           'type'    => 'required'
         ]);
         
-        $banner= Banner::find($id);
+        $partner= Partner::find($id);
 
         if ($request->hasFile('upload_file')) {
             if ($request->file('upload_file')->isValid()) {
@@ -115,11 +119,13 @@ class BannerController extends Controller
                 }
             }
         }
-        $banner->title = $request->title;
-        $banner->url   = asset($path);
-        $banner->save();
+        $partner->name        = $request->name;
+        $partner->description = $request->description;
+        $partner->logo        = asset($path);
+        $partner->type        = $request->type;
+        $partner->save();
         Session::flash('success','Update thành công !');
-        return redirect()->route('admin_banner_list');
+        return redirect()->route('admin_partner_list');
     }
 
     /**
@@ -130,8 +136,8 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        Banner::destroy($id);
+        Partner::destroy($id);
         Session::flash('success','Xóa thành công !');
-        return redirect()->route('admin_banner_list');
+        return redirect()->route('admin_partner_list');
     }
 }
