@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('affiliation');
             $table->string('gender')->nullable();
             $table->string('initals')->nullable();
+            $table->string('is_admin')->nullable()->default(0);
             $table->string('role_id')->nullable();
             $table->string('phone')->nullable();
             $table->string('country')->nullable();

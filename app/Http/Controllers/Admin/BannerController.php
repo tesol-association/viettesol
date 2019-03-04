@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
+use Session;
 
 class BannerController extends Controller
 {
+    const UPLOAD_FOLDER='upload/banner';
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +17,8 @@ class BannerController extends Controller
      */
     public function index()
     {
-        //
+        $res= Banner::all();
+        return view('layouts.admin.banner.list',['banners'=> $res]);
     }
 
     /**
@@ -24,7 +28,7 @@ class BannerController extends Controller
      */
     public function create()
     {
-        //
+        return view('layouts.admin.banner.create');
     }
 
     /**
@@ -35,7 +39,29 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+           'title'       => 'required',
+           'url'      => 'required|image'
+        ]);
+
+        if ($request->hasFile('upload_file')) {
+            if ($request->file('upload_file')->isValid()) {
+                try {
+                    $file = $request->file('upload_file');
+                    $nameImage = $file->getClientOriginalName();
+
+                    $path = $file->move(self::UPLOAD_FOLDER, $nameImage);
+                } catch (Illuminate\Filesystem\FileNotFoundException $e) {
+
+                }
+            }
+        }
+        Banner::create([
+           'title' => $request->title,
+           'url'   => asset($path)
+        ]);
+        Session::flash('success','Thêm thành công !');
+        return redirect()->route('admin_banner_list');
     }
 
     /**
@@ -57,7 +83,8 @@ class BannerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $res=Banner::find($id);
+        return view('layouts.admin.banner.update',['banner'=> $res]);
     }
 
     /**
@@ -69,7 +96,30 @@ class BannerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+           'title'       => 'required',
+           'url'      => 'required|image'
+        ]);
+        
+        $banner= Banner::find($id);
+
+        if ($request->hasFile('upload_file')) {
+            if ($request->file('upload_file')->isValid()) {
+                try {
+                    $file = $request->file('upload_file');
+                    $nameImage = $file->getClientOriginalName();
+
+                    $path = $file->move(self::UPLOAD_FOLDER, $nameImage);
+                } catch (Illuminate\Filesystem\FileNotFoundException $e) {
+
+                }
+            }
+        }
+        $banner->title = $request->title;
+        $banner->url   = asset($path);
+        $banner->save();
+        Session::flash('success','Update thành công !');
+        return redirect()->route('admin_banner_list');
     }
 
     /**
@@ -80,6 +130,8 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Banner::destroy($id);
+        Session::flash('success','Xóa thành công !');
+        return redirect()->route('admin_banner_list');
     }
 }
