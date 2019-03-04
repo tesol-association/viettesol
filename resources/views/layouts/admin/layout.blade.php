@@ -320,8 +320,10 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">News Management</a></li>
-            <li><a href="#">Events Management</a></li>
+            <li><a href="{{ route('admin_news_list') }}">News Management</a></li>
+            <li><a href="{{ route('admin_news_category_list') }}">News Category Management</a></li>
+            <li><a href="{{ route('admin_event_list') }}">Events Management</a></li>
+            <li><a href="{{ route('admin_events_category_list') }}">Events Category Manager</a></li>
           </ul>
         </li>
         <li class="treeview">

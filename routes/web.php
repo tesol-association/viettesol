@@ -66,14 +66,43 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
 	});
 
-	//news
-	Route::group(['prefix'=>'news'],function(){
-
+    /**
+     * CONTENT MANAGER
+     */
+	Route::group(['prefix'=>'news'], function(){
+	    Route::get('/list', 'Admin\NewsController@index')->name('admin_news_list');
+	    Route::get('/create', 'Admin\NewsController@create')->name('admin_news_create');
+	    Route::post('/store', 'Admin\NewsController@store')->name('admin_news_store');
+	    Route::get('/edit/{id}', 'Admin\NewsController@edit')->name('admin_news_edit');
+	    Route::post('/update/{id}', 'Admin\NewsController@update')->name('admin_news_update');
+	    Route::post('/delete/{id}', 'Admin\NewsController@destroy')->name('admin_news_delete');
 	});
 
-	//events
-	Route::group(['prefix'=>'events'],function(){
+    Route::group(['prefix'=>'news_category'], function(){
+        Route::get('/list', 'Admin\NewsCategoryController@index')->name('admin_news_category_list');
+        Route::get('/create', 'Admin\NewsCategoryController@create')->name('admin_news_category_create');
+        Route::post('/store', 'Admin\NewsCategoryController@store')->name('admin_news_category_store');
+        Route::get('/edit/{id}', 'Admin\NewsCategoryController@edit')->name('admin_news_category_edit');
+        Route::post('/update/{id}', 'Admin\NewsCategoryController@update')->name('admin_news_category_update');
+        Route::post('/delete/{id}', 'Admin\NewsCategoryController@destroy')->name('admin_news_category_delete');
+    });
 
+	Route::group(['prefix'=>'events'],function(){
+        Route::get('/list', 'Admin\EventController@index')->name('admin_event_list');
+        Route::get('/create', 'Admin\EventController@create')->name('admin_event_create');
+        Route::post('/store', 'Admin\EventController@store')->name('admin_event_store');
+        Route::get('/edit/{id}', 'Admin\EventController@edit')->name('admin_event_edit');
+        Route::post('/update/{id}', 'Admin\EventController@create')->name('admin_event_update');
+        Route::post('/delete/{id}', 'Admin\EventController@destroy')->name('admin_event_delete');
+	});
+
+	Route::group(['prefix'=>'events_category'],function(){
+        Route::get('/list', 'Admin\EventController@index')->name('admin_events_category_list');
+        Route::get('/create', 'Admin\EventController@create')->name('admin_events_category_create');
+        Route::post('/store', 'Admin\EventController@store')->name('admin_events_category_store');
+        Route::get('/edit/{id}', 'Admin\EventController@edit')->name('admin_events_category_edit');
+        Route::post('/update/{id}', 'Admin\EventController@create')->name('admin_events_category_update');
+        Route::post('/delete/{id}', 'Admin\EventController@destroy')->name('admin_events_category_delete');
 	});
 
 	//room
