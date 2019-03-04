@@ -149,4 +149,10 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
     });
 
 });
+
+Route::group(['prefix'=>'conference'],function(){
+    Route::get('/send_paper', 'TestController@sendPaper');
+    Route::get('/send_review', 'TestController@sendReview');
+    Route::get('/assign_paper', 'TestController@assignPaper');
+});
 Auth::routes();
