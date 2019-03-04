@@ -342,8 +342,8 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">List</a></li>
-            <li><a href="#">Create</a></li>
+            <li><a href="{{ route('admin_user_list') }}">List</a></li>
+            <li><a href="{{ route('admin_user_create') }}">Create</a></li>
             <li><a href="#">Role Management</a></li>
           </ul>
         </li>
