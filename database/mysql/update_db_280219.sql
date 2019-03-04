@@ -20,7 +20,8 @@ CREATE TABLE IF NOT EXISTS `viettesol`.`event_categories` (
   `name` VARCHAR(45) NOT NULL,
   `description` VARCHAR(45) NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` DATETIME NULL)
+  `updated_at` DATETIME NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -48,3 +49,5 @@ CREATE TABLE IF NOT EXISTS `viettesol`.`event_category_links` (
   `updated_at` TIMESTAMP NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
+ALTER TABLE events CHANGE id id INT(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `advertisements` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
