@@ -43,9 +43,11 @@
                                         <td>{{ $new->title }}</td>
                                         <td style="max-height:50px; max-width: 200px;">{{ $new->short_content }}</td>
                                         <td>
-                                            @foreach ($new->tags as $tag)
-                                                <span class="label label-success">{{ $tag }}</span>
-                                            @endforeach
+                                            @if (isset($new->tags) && count($new->tags))
+                                                @foreach ($new->tags as $tag)
+                                                    <span class="label label-success">{{ $tag }}</span>
+                                                @endforeach
+                                            @endif
                                         </td>
                                         <td>
                                             @if ($new->status == 'draft')
