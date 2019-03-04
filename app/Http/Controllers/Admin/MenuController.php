@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Menu;
+use Illuminate\Support\Facades\DB;
 use Session;
 
 class MenuController extends Controller
@@ -115,6 +116,7 @@ class MenuController extends Controller
     public function destroy($id)
     {
         Menu::destroy($id);
+        DB::
         Session::flash('success','Xóa thành công !');
         return redirect()->route('admin_menu_list');
     }
