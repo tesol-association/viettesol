@@ -14,7 +14,14 @@ List menu
       
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Data Table With Full Features</h3>
+              <div class="row">
+                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <h3 class="box-title"></h3>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    <a href="{{ route('admin_menu_create') }}" class="btn btn-warning">Create menu</a>
+                </div>
+              </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -42,8 +49,10 @@ List menu
                     </a>
                   </td>
                   <td>{{ $menu->description }}</td>
-                  <td>{{ $menu->created_by }}</td>
-                  <td>{{ $menu->parent_id }}</td>
+                  <td>{{ $menu->createdBy->user_name }}</td>
+                  <td>
+                    {{ $menu->parent_id }}
+                  </td>
                   <td>
                     <!-- <div class="container"> -->
                     <!-- Trigger the modal with a button -->
@@ -71,7 +80,6 @@ List menu
                     </form>
                   <!-- </div> -->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal_{{ $menu->id }}">Delete</button>
-                    <!-- <a href="{{ route('admin_menu_delete',['id'=> $menu->id ]) }}" class="btn btn-danger">Delete</a> -->
                   </td>
                   <td>
                     <a href="{{ route('admin_menu_edit',['id'=> $menu->id ]) }}" class="btn btn-info">Edit</a>

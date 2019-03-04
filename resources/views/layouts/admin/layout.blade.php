@@ -21,7 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="{{ asset('admin/dist/css/skins/skin-blue.min.css') }}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -93,7 +93,7 @@ desired effect
                     <a href="#">
                       <div class="pull-left">
                         <!-- User Image -->
-                        <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                        <img src="{{Auth::User()->image}}" class="img-circle" alt="User Image">
                       </div>
                       <!-- Message title and timestamp -->
                       <h4>
@@ -178,17 +178,17 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
+              <img src="{{Auth::User()->image}}" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs">{{Auth::User()->user_name}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                <img src="{{Auth::User()->image}}" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
+                  {{Auth::User()->user_name}}
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
@@ -242,10 +242,10 @@ desired effect
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+          <img src="{{Auth::User()->image}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p>{{Auth::User()->user_name}}</p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
@@ -297,21 +297,15 @@ desired effect
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('admin_menu_list') }}">Menu Management</a></li>
-            <li><a href="">Banner Management</a></li>
-            <li><a href="">Adv Management</a></li>
-            <li><a href="">Partner Management</a></li>
+            <li><a href="{{ route('admin_banner_list') }}">Banner Management</a></li>
+            <li><a href="{{ route('admin_advertisement_list') }}">Adv Management</a></li>
+            <li><a href="{{ route('admin_partner_list') }}">Partner Management</a></li>
           </ul>
         </li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Comment Management</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+            <span class="pull-right-container"></span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href="#">List</a></li>
-            <li><a href="#">Create</a></li>
-          </ul>
         </li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Content Management</span>
@@ -320,20 +314,16 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">News Management</a></li>
-            <li><a href="#">Events Management</a></li>
+            <li><a href="{{ route('admin_news_list') }}">News Management</a></li>
+            <li><a href="{{ route('admin_news_category_list') }}">News Category Management</a></li>
+            <li><a href="{{ route('admin_event_list') }}">Events Management</a></li>
+            <li><a href="{{ route('admin_events_category_list') }}">Events Category Manager</a></li>
           </ul>
         </li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Category Management</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+            <span class="pull-right-container"></span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href="#">List</a></li>
-            <li><a href="#">Create</a></li>
-          </ul>
         </li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>User Management</span>
@@ -346,6 +336,13 @@ desired effect
             <li><a href="{{ route('admin_user_create') }}">Create</a></li>
             <li><a href="#">Role Management</a></li>
           </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Calendar</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
         </li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Conference Management</span>
@@ -618,7 +615,7 @@ desired effect
 <script src="{{ asset('admin/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('admin/dist/js/adminlte.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="{{ asset('js/toastr.min.js') }}"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
@@ -628,10 +625,11 @@ desired effect
            toastr.success('{{ Session::get("success") }}');
            // <?php  //session()->forget('success'); ?>
         @endif
-        @if(Session::has('error'))
-           toastr.info('{{ Session::get("error") }}');
-           // <?php  //session()->forget('info'); ?>
-        @endif
+        @if($errors->any())
+          @foreach($errors->all() as $error)
+            toastr.error('{{ $error }}');
+          @endforeach  
+       @endif 
 </script>
  @yield('js')
 </body>

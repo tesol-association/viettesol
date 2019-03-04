@@ -32,13 +32,13 @@ Update menu
                 </div>
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">created_by</label>
-                  <input type="text" class="form-control" placeholder="Enter creator" name="creator_id" value="{{ $menu->created_by }}" required>
-                </div>
-
-                <div class="form-group">
                   <label for="exampleInputEmail1">parent_id</label>
-                  <input type="text" class="form-control" placeholder="Enter parent" name="parent_id" value="{{ $menu->parent_id }}">
+                  <select class="form-control" name="parent_id">
+                    <option value="">Select menu</option>
+                    @foreach($parents as $parent)
+                      <option value="{{ $parent->id }}" @if($parent->id == $menu->parent_id) {{'selected'}} @endif >{{ $parent->name }}</option>
+                    @endforeach
+                  </select>
                 </div>
               </div>
               <!-- /.box-body -->
