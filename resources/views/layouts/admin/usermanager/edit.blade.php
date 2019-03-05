@@ -173,7 +173,7 @@ Update User
                         <div class="form-group">
                             <label for="country" >{{ __('Country') }}</label>
                             <div>
-                                <select class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="country" name="country">
+                                <select class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="country" name="country" data-value="{{ $users->country }}">
                                     @include('helper.country')
                                 </select>
 
@@ -233,6 +233,10 @@ Update User
 @section('js')
     <script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
     <script>
-        $('#country').select2();
+        $(document).ready(function () {
+            $('#country').select2();
+            var countrySelected = $('#country').data('value');
+            $('#country').val(countrySelected).trigger('change');
+        });
     </script>
 @endsection
