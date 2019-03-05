@@ -1,0 +1,2 @@
+ALTER TABLE `criteria_review` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `review_form` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
