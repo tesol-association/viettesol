@@ -2,8 +2,12 @@
 @section('title','News Management')
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.5/css/bootstrap-select.min.css">
 @endsection
 @section('content')
+    <select class="selectpicker countrypicker"
+            data-live-search="true">
+    </select>
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
@@ -85,6 +89,8 @@
 @section('js')
     <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.5/js/bootstrap-select.min.js"></script>
+    <script src="{{ asset('js/lib/countrypicker.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>

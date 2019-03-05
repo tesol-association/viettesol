@@ -506,7 +506,7 @@ desired effect
             <li><a href="#"> Notification </a></li>
           </ul>
         </li>
-        
+
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -643,11 +643,14 @@ desired effect
            toastr.success('{{ Session::get("success") }}');
            // <?php  //session()->forget('success'); ?>
         @endif
+        @if(Session::has('error'))
+          toastr.error('{{ Session::get("error") }}');
+        @endif
         @if($errors->any())
           @foreach($errors->all() as $error)
             toastr.error('{{ $error }}');
-          @endforeach  
-       @endif 
+          @endforeach
+       @endif
 </script>
  @yield('js')
 </body>
