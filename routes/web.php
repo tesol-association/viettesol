@@ -153,5 +153,24 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::post('/delete/{id}', 'Admin\EventController@destroy')->name('admin_events_category_delete');
 	});
 
+
+	Route::group(['prefix'=>'contact'],function(){
+		Route::get('/list', 'Admin\ContactController@index')->name('admin_contact_list');
+		Route::get('/create', 'Admin\ContactController@create')->name('admin_contact_create');
+		Route::post('/store', 'Admin\ContactController@store')->name('admin_contact_store');
+		Route::get('/edit/{id}', 'Admin\ContactController@edit')->name('admin_contact_edit');
+		Route::post('/update/{id}', 'Admin\ContactController@update')->name('admin_contact_update');
+		Route::post('/delete/{id}', 'Admin\ContactController@destroy')->name('admin_contact_delete');
+	});
+
+	Route::group(['prefix'=>'contact_type'],function(){
+		Route::get('/list', 'Admin\ContactTypeController@index')->name('admin_contact_type_list');
+		Route::get('/create', 'Admin\ContactTypeController@create')->name('admin_contact_type_create');
+		Route::post('/store', 'Admin\ContactTypeController@store')->name('admin_contact_type_store');
+		Route::get('/edit/{id}', 'Admin\ContactTypeController@edit')->name('admin_contact_type_edit');
+		Route::post('/update/{id}', 'Admin\ContactTypeController@update')->name('admin_contact_type_update');
+		Route::post('/delete/{id}', 'Admin\ContactTypeController@destroy')->name('admin_contact_type_delete');
+	});
+	
 });
 Auth::routes();
