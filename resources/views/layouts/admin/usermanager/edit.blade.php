@@ -1,9 +1,9 @@
 @extends('layouts.admin.layout')
 @section('title','User Management')
-
 @section('css')
-<link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.5/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link href="{{ asset('admin/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/dist/css/AdminLTE.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('page-header')
@@ -11,13 +11,10 @@ Update User
 @endsection
 
 @section('content')
-<select class="selectpicker countrypicker"
-        data-live-search="true">
-</select>
 <section class="content">
     <div class="box box-default">
         <div class="box-header with-border">
-            <h3 class="box-title">Data User</h3>  
+            <h3 class="box-title">Data User</h3>
         </div>
         <div class="box-body">
             <div class="row">
@@ -176,7 +173,8 @@ Update User
                         <div class="form-group">
                             <label for="country" >{{ __('Country') }}</label>
                             <div>
-                                <select class=" form-control{{ $errors->has('email') ? ' is-invalid' : '' }} selectpicker countrypicker">
+                                <select class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="country" name="country">
+                                    @include('helper.country')
                                 </select>
 
                                 @if ($errors->has('country'))
@@ -224,7 +222,7 @@ Update User
                             <a href="{{ route('admin_user_list') }}" class="btn btn-primary">
                                 {{ __('Cancel') }}
                             </a>
-                        </div>  
+                        </div>
                     </div>
                 </form>
             </div>
@@ -233,6 +231,8 @@ Update User
 </section>
 @endsection
 @section('js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.5/js/bootstrap-select.min.js"></script>
-<script src="{{ asset('js/lib/countrypicker.min.js') }}"></script>
+    <script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
+    <script>
+        $('#country').select2();
+    </script>
 @endsection
