@@ -332,8 +332,8 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">List</a></li>
-            <li><a href="#">Create</a></li>
+            <li><a href="{{ route('admin_user_list') }}">List</a></li>
+            <li><a href="{{ route('admin_user_create') }}">Create</a></li>
             <li><a href="#">Role Management</a></li>
           </ul>
         </li>
@@ -489,6 +489,24 @@ desired effect
             </li>
           </ul>
         </li>
+
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span> Membership Management </span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+
+          <ul class="treeview-menu">
+            <li><a href="{{ route('admin_contact_list') }}"> Contact Manager </a></li>
+            <li><a href="{{ route('admin_contact_type_list') }}"> Contact Type Manager </a></li>
+            <li><a href="#"> Membership </a></li>
+            <li><a href="#"> Member Contribution </a></li>
+            <li><a href="#"> Member Payment </a></li>
+            <li><a href="#"> Notification </a></li>
+          </ul>
+        </li>
+        
       </ul>
       <!-- /.sidebar-menu -->
     </section>

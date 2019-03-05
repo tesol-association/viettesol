@@ -51,6 +51,24 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::post('/update-submenu/{id}','Admin\MenuController@updateSubmenu')->name('admin_submenu_update');
     });
 
+    //User Manager
+    Route::group(['prefix'=>'user'],function(){
+        Route::get('/list','Admin\UserManagerController@index')->name('admin_user_list');
+
+        Route::get('/create','Admin\UserManagerController@create')->name('admin_user_create');
+        Route::post('/store','Admin\UserManagerController@store')->name('admin_user_store');
+        Route::post('/delete/{id}','Admin\UserManagerController@destroy')->name('admin_user_delete');
+
+        Route::get('/view/{id}','Admin\UserManagerController@show')->name('admin_user_view');
+
+        Route::get('/edit/{id}','Admin\UserManagerController@edit')->name('admin_user_edit');
+        Route::post('/update/{id}','Admin\UserManagerController@update')->name('admin_user_update');
+
+        Route::post('/disable/{id}','Admin\UserManagerController@disable')->name('admin_user_disable');
+        Route::post('/enable/{id}','Admin\UserManagerController@enable')->name('admin_user_enable');
+    });
+
+
     //banner
     Route::group(['prefix'=>'banner'],function(){
         Route::get('/list','Admin\BannerController@index')->name('admin_banner_list');
@@ -95,6 +113,16 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
     });
 
+    //room
+    Route::group(['prefix'=>'room'],function(){
+
+    });
+
+    //building
+    Route::group(['prefix'=>'building'],function(){
+
+    });
+
 
     /**
      * CONTENT MANAGER
@@ -134,26 +162,26 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::post('/update/{id}', 'Admin\EventController@create')->name('admin_events_category_update');
         Route::post('/delete/{id}', 'Admin\EventController@destroy')->name('admin_events_category_delete');
 	});
-    //news
-    Route::group(['prefix'=>'news'],function(){
 
-    });
 
-    //events
-    Route::group(['prefix'=>'events'],function(){
+	Route::group(['prefix'=>'contact'],function(){
+		Route::get('/list', 'Admin\ContactController@index')->name('admin_contact_list');
+		Route::get('/create', 'Admin\ContactController@create')->name('admin_contact_create');
+		Route::post('/store', 'Admin\ContactController@store')->name('admin_contact_store');
+		Route::get('/edit/{id}', 'Admin\ContactController@edit')->name('admin_contact_edit');
+		Route::post('/update/{id}', 'Admin\ContactController@update')->name('admin_contact_update');
+		Route::post('/delete/{id}', 'Admin\ContactController@destroy')->name('admin_contact_delete');
+	});
 
-    });
-
-    //room
-    Route::group(['prefix'=>'room'],function(){
-
-    });
-
-    //building
-    Route::group(['prefix'=>'building'],function(){
-
-    });
-
+	Route::group(['prefix'=>'contact_type'],function(){
+		Route::get('/list', 'Admin\ContactTypeController@index')->name('admin_contact_type_list');
+		Route::get('/create', 'Admin\ContactTypeController@create')->name('admin_contact_type_create');
+		Route::post('/store', 'Admin\ContactTypeController@store')->name('admin_contact_type_store');
+		Route::get('/edit/{id}', 'Admin\ContactTypeController@edit')->name('admin_contact_type_edit');
+		Route::post('/update/{id}', 'Admin\ContactTypeController@update')->name('admin_contact_type_update');
+		Route::post('/delete/{id}', 'Admin\ContactTypeController@destroy')->name('admin_contact_type_delete');
+	});
+	
 });
 Auth::routes();
 
