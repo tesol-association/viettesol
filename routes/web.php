@@ -41,6 +41,24 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::post('/update/{id}','Admin\MenuController@update')->name('admin_menu_update');
     });
 
+    //User Manager
+    Route::group(['prefix'=>'user'],function(){
+        Route::get('/list','Admin\UserManagerController@index')->name('admin_user_list');
+
+        Route::get('/create','Admin\UserManagerController@create')->name('admin_user_create');
+        Route::post('/store','Admin\UserManagerController@store')->name('admin_user_store');
+        Route::post('/delete/{id}','Admin\UserManagerController@destroy')->name('admin_user_delete');
+
+        Route::get('/view/{id}','Admin\UserManagerController@show')->name('admin_user_view');
+
+        Route::get('/edit/{id}','Admin\UserManagerController@edit')->name('admin_user_edit');
+        Route::post('/update/{id}','Admin\UserManagerController@update')->name('admin_user_update');
+
+        Route::post('/disable/{id}','Admin\UserManagerController@disable')->name('admin_user_disable');
+        Route::post('/enable/{id}','Admin\UserManagerController@enable')->name('admin_user_enable');
+    });
+
+
     //banner
     Route::group(['prefix'=>'banner'],function(){
         Route::get('/list','Admin\BannerController@index')->name('admin_banner_list');
@@ -85,10 +103,16 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
     });
 
-    //category
-    Route::group(['prefix'=>'category'],function(){
+    //room
+    Route::group(['prefix'=>'room'],function(){
 
     });
+
+    //building
+    Route::group(['prefix'=>'building'],function(){
+
+    });
+
 
     /**
      * CONTENT MANAGER
@@ -128,25 +152,6 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::post('/update/{id}', 'Admin\EventController@create')->name('admin_events_category_update');
         Route::post('/delete/{id}', 'Admin\EventController@destroy')->name('admin_events_category_delete');
 	});
-    //news
-    Route::group(['prefix'=>'news'],function(){
-
-    });
-
-    //events
-    Route::group(['prefix'=>'events'],function(){
-
-    });
-
-    //room
-    Route::group(['prefix'=>'room'],function(){
-
-    });
-
-    //building
-    Route::group(['prefix'=>'building'],function(){
-
-    });
 
 
 	Route::group(['prefix'=>'contact'],function(){
