@@ -1,7 +1,6 @@
 @extends('layouts.admin.layout')
 @section('title','User Management')
 @section('css')
-<link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}"> 
 @endsection
 @section('content')
 <section class="content">

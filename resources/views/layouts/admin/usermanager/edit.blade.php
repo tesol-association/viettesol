@@ -3,6 +3,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.5/css/bootstrap-select.min.css">
 @endsection
 
 @section('page-header')
@@ -10,6 +11,9 @@ Update User
 @endsection
 
 @section('content')
+<select class="selectpicker countrypicker"
+        data-live-search="true">
+</select>
 <section class="content">
     <div class="box box-default">
         <div class="box-header with-border">
@@ -172,12 +176,7 @@ Update User
                         <div class="form-group">
                             <label for="country" >{{ __('Country') }}</label>
                             <div>
-                                <select id="country" type="text" class="form-control{{ $errors->has('country') ? ' is-invalid' : '' }}" name="country" value="{{ $users->country }}">
-                                    <option value="Albania" {{ $users->country == 'Albania' ? 'selected' : '' }}>Albania</option>
-                                    <option value="Afghanistan" {{ $users->country == 'Afghanistan' ? 'selected' : '' }}>Afghanistan</option>
-                                    <option value="Algeria" {{ $users->country == 'Algeria' ? 'selected' : '' }}>Algeria</option>
-                                    <option value="Andorra" {{ $users->country == 'Andorra' ? 'selected' : '' }}>Andorra</option>
-                                    <option value="Angola" {{ $users->country == 'Angola' ? 'selected' : '' }}>Angola</option>
+                                <select class=" form-control{{ $errors->has('email') ? ' is-invalid' : '' }} selectpicker countrypicker">
                                 </select>
 
                                 @if ($errors->has('country'))
@@ -232,4 +231,8 @@ Update User
         </div>
     </div>
 </section>
+@endsection
+@section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.5/js/bootstrap-select.min.js"></script>
+<script src="{{ asset('js/lib/countrypicker.min.js') }}"></script>
 @endsection

@@ -129,13 +129,7 @@ Create User
                         <div class="form-group">
                             <label for="country" >{{ __('Country') }}</label>
                             <div>
-                                <select id="country" type="text" class="form-control{{ $errors->has('country') ? ' is-invalid' : '' }}" name="country" value="{{ old('country') }}">
-                                    <option value="Albania">Albania</option>
-                                    <option value="Afghanistan">Afghanistan</option>
-                                    <option value="Algeria">Algeria</option>
-                                    <option value="Andorra">Andorra</option>
-                                    <option value="Angola">Angola</option>
-                                    <option value="Antigua & Barbuda">Antigua & Barbuda</option>
+                                <select id="country" type="text" class="form-control{{ $errors->has('country') ? ' is-invalid' : '' }} selectpicker countrypicker" name="country" value="{{ old('country') }}" data-live-search="true">
                                 </select>
 
                                 @if ($errors->has('country'))
