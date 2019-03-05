@@ -65,7 +65,8 @@ class MenuController extends Controller
      */
     public function show($id)
     {
-        //
+        $submenus =Menu::where('parent_id', '=', $id)->get();
+        return view('layouts.admin.menu.listSubmenu',['submenus' => $submenus]);
     }
 
     /**
@@ -116,7 +117,7 @@ class MenuController extends Controller
     public function destroy($id)
     {
         Menu::destroy($id);
-        DB::
+        DB::table('menu')->where('parent_id', '=', $id)->delete();
         Session::flash('success','Xóa thành công !');
         return redirect()->route('admin_menu_list');
     }

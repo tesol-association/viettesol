@@ -91,96 +91,22 @@
             <div class="container">
                 <!-- nav -->
                 <ul class="nav-menu">
-                    <li class="has-dropdown">
-                        <a href="index.html">Home</a>
-                        <div class="dropdown">
-                            <div class="dropdown-body">
-                                <ul class="dropdown-list">
-                                    <li><a href="category.html">Category page</a></li>
-                                    <li><a href="blog-post.html">Post page</a></li>
-                                    <li><a href="author.html">Author page</a></li>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="contact.html">Contacts</a></li>
-                                    <li><a href="blank.html">Regular</a></li>
-                                </ul>
+                    @foreach($menus as $menu)
+                        <li class="has-dropdown">
+                            <a href="{{ $menu->url }}">{{ $menu->name }}</a>
+                            <div class="dropdown">
+                                <div class="dropdown-body">
+                                    <ul class="dropdown-list">
+                                        @foreach($_menus as $_menu)
+                                         @if($menu->id == $_menu->parent_id)
+                                           <li><a href="">{{ $_menu->name }}</a></li>
+                                         @endif
+                                        @endforeach   
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="index.html">Home</a>
-                        <div class="dropdown">
-                            <div class="dropdown-body">
-                                <ul class="dropdown-list">
-                                    <li><a href="category.html">Category page</a></li>
-                                    <li><a href="blog-post.html">Post page</a></li>
-                                    <li><a href="author.html">Author page</a></li>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="contact.html">Contacts</a></li>
-                                    <li><a href="blank.html">Regular</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="index.html">Home</a>
-                        <div class="dropdown">
-                            <div class="dropdown-body">
-                                <ul class="dropdown-list">
-                                    <li><a href="category.html">Category page</a></li>
-                                    <li><a href="blog-post.html">Post page</a></li>
-                                    <li><a href="author.html">Author page</a></li>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="contact.html">Contacts</a></li>
-                                    <li><a href="blank.html">Regular</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="index.html">Home</a>
-                        <div class="dropdown">
-                            <div class="dropdown-body">
-                                <ul class="dropdown-list">
-                                    <li><a href="category.html">Category page</a></li>
-                                    <li><a href="blog-post.html">Post page</a></li>
-                                    <li><a href="author.html">Author page</a></li>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="contact.html">Contacts</a></li>
-                                    <li><a href="blank.html">Regular</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="index.html">Home</a>
-                        <div class="dropdown">
-                            <div class="dropdown-body">
-                                <ul class="dropdown-list">
-                                    <li><a href="category.html">Category page</a></li>
-                                    <li><a href="blog-post.html">Post page</a></li>
-                                    <li><a href="author.html">Author page</a></li>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="contact.html">Contacts</a></li>
-                                    <li><a href="blank.html">Regular</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="index.html">Home</a>
-                        <div class="dropdown">
-                            <div class="dropdown-body">
-                                <ul class="dropdown-list">
-                                    <li><a href="category.html">Category page</a></li>
-                                    <li><a href="blog-post.html">Post page</a></li>
-                                    <li><a href="author.html">Author page</a></li>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="contact.html">Contacts</a></li>
-                                    <li><a href="blank.html">Regular</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                    @endforeach   
                 </ul>
                 <!-- /nav -->
             </div>
@@ -190,19 +116,22 @@
         <!-- Aside Nav -->
         <div id="nav-aside">
             <ul class="nav-aside-menu">
-                <li><a href="index.html">Home</a></li>
-                <li class="has-dropdown"><a>Categories</a>
-                    <ul class="dropdown">
-                        <li><a href="#">Lifestyle</a></li>
-                        <li><a href="#">Fashion</a></li>
-                        <li><a href="#">Technology</a></li>
-                        <li><a href="#">Travel</a></li>
-                        <li><a href="#">Health</a></li>
-                    </ul>
-                </li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contacts</a></li>
-                <li><a href="#">Advertise</a></li>
+                @foreach($menus as $menu)
+                    <li class="has-dropdown">
+                        <a href="{{ $menu->url }}">{{ $menu->name }}</a>
+                        <div class="dropdown">
+                            <div class="dropdown-body">
+                                <ul class="dropdown-list">
+                                    @foreach($_menus as $_menu)
+                                     @if($menu->id == $_menu->parent_id)
+                                       <li><a href="">{{ $_menu->name }}</a></li>
+                                     @endif
+                                    @endforeach   
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                @endforeach
             </ul>
             <button class="nav-close nav-aside-close"><span></span></button>
         </div>
@@ -234,44 +163,16 @@
             <div class="col-md-4">
 
                 <!-- Right Side Of Navbar -->
-                <!-- ad widget-->
-                <div class="aside-widget text-center">
-                    <a href="#" style="display: inline-block;margin: auto;">
-                        <img class="img-responsive" src="{{ asset('home/img/ad-3.jpg') }}" alt="">
-                    </a>
-                </div>
-                <!-- /ad widget -->
 
-                <!-- ad widget-->
-                <div class="aside-widget text-center">
-                    <a href="#" style="display: inline-block;margin: auto;">
-                        <img class="img-responsive" src="{{ asset('home/img/ad-3.jpg') }}" alt="">
-                    </a>
-                </div>
-                <!-- /ad widget -->
-
-                <!-- ad widget-->
-                <div class="aside-widget text-center">
-                    <a href="#" style="display: inline-block;margin: auto;">
-                        <img class="img-responsive" src="{{ asset('home/img/ad-3.jpg') }}" alt="">
-                    </a>
-                </div>
-                <!-- /ad widget -->
-
-                <!-- ad widget-->
-                <div class="aside-widget text-center">
-                    <a href="#" style="display: inline-block;margin: auto;">
-                        <img class="img-responsive" src="{{ asset('home/img/ad-3.jpg') }}" alt="">
-                    </a>
-                </div>
-                <!-- /ad widget -->
-                <!-- ad widget-->
-                <div class="aside-widget text-center">
-                    <a href="#" style="display: inline-block;margin: auto;">
-                        <img class="img-responsive" src="{{ asset('home/img/ad-3.jpg') }}" alt="">
-                    </a>
-                </div>
-                <!-- /ad widget -->
+                @foreach($partners as $partner)
+                    <!-- ad widget-->
+                    <div class="aside-widget text-center">
+                        <a href="{{ $partner->logo }}" style="display: inline-block;margin: auto;">
+                            <img class="img-responsive" src="{{ $partner->logo }}" alt="">
+                        </a>
+                    </div>
+                    <!-- /ad widget -->
+                @endforeach
             </div>
         </div>
         <!-- /row -->
@@ -288,7 +189,7 @@
 
         <!-- row -->
         <div class="footer-bottom row">
-            <div class="col-md-6 col-md-push-6">
+            <!-- <div class="col-md-6 col-md-push-6">
                 <ul class="footer-nav">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About Us</a></li>
@@ -296,11 +197,11 @@
                     <li><a href="#">Advertise</a></li>
                     <li><a href="#">Privacy</a></li>
                 </ul>
-            </div>
-            <div class="col-md-6 col-md-pull-6">
+            </div> -->
+            <div class="col-md-6 col-md-push-3 text-center">
                 <div class="footer-copyright">
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> VietTESOL Association | All Right Reserved
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 </div>
             </div>

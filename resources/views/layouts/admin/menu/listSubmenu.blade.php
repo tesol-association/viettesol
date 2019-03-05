@@ -1,5 +1,5 @@
 @extends('layouts.admin.layout')
-@section('title','Menu Management')
+@section('title','Submenu Management')
 @section('css')
 <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 @endsection
@@ -19,7 +19,7 @@ List menu
                     <h3 class="box-title"></h3>
                 </div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                    <a href="{{ route('admin_menu_create') }}" class="btn btn-warning">Create menu</a>
+                    <a href="{{ route('admin_submenu_create') }}" class="btn btn-warning">Create menu</a>
                 </div>
               </div>
             </div>
@@ -39,22 +39,21 @@ List menu
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($menus as $menu)
-                 @if($menu->parent_id==null)
+                @foreach($submenus as $submenu)
                     <tr>
-                      <td>{{ $menu->id }}</td>
-                      <td>{{ $menu->name }}</td>
+                      <td>{{ $submenu->id }}</td>
+                      <td>{{ $submenu->name }}</td>
                       <td>
-                        <a href="{{ $menu->url }}">
-                             {{ $menu->url }}
+                        <a href="{{ $submenu->url }}">
+                             {{ $submenu->url }}
                         </a>
                       </td>
-                      <td>{{ $menu->description }}</td>
-                      <td>{{ $menu->createdBy->user_name }}</td>
+                      <td>{{ $submenu->description }}</td>
+                      <td>{{ $submenu->createdBy->user_name }}</td>
                       <td>
-                        @foreach($menus as $_menu)
-                          @if($_menu->id == $menu->parent_id )
-                              {{ $_menu->name }}
+                        @foreach($submenus as $_submenu)
+                          @if($_submenu->id == $submenu->parent_id )
+                              {{ $_submenu->name }}
                           @endif
                         @endforeach
                       </td>
@@ -63,16 +62,16 @@ List menu
                         <!-- Trigger the modal with a button -->
 
                         <!-- Modal -->
-                        <form method="post" action="{{ route('admin_menu_delete',['id'=> $menu->id ]) }}">
+                        <form method="post" action="{{ route('admin_submenu_delete',['id'=> $submenu->id ]) }}">
                             @csrf
-                            <div class="modal fade" id="myModal_{{ $menu->id }}" role="dialog">
+                            <div class="modal fade" id="myModal_{{ $submenu->id }}" role="dialog">
                               <div class="modal-dialog">
                               
                                 <!-- Modal content-->
                                 <div class="modal-content">
                                   <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Are you sure delete: {{ $menu->name }}</h4>
+                                    <h4 class="modal-title">Are you sure delete: {{ $submenu->name }}</h4>
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -84,16 +83,12 @@ List menu
                             </div>
                         </form>
                       <!-- </div> -->
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal_{{ $menu->id }}">Delete</button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal_{{ $submenu->id }}">Delete</button>
                       </td>
                       <td>
-                        <a href="{{ route('admin_menu_edit',['id'=> $menu->id ]) }}" class="btn btn-info">Edit</a>
-                      </td>
-                      <td>
-                        <a href="{{ route('admin_menu_show',['id'=> $menu->id]) }}" class="btn btn-success">View</a>
+                        <a href="{{ route('admin_submenu_edit',['id'=> $submenu->id ]) }}" class="btn btn-info">Edit</a>
                       </td>
                     </tr>
-                    @endif
                   @endforeach
                 </tbody>
                 <tfoot>
