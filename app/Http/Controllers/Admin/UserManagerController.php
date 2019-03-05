@@ -43,7 +43,6 @@ class UserManagerController extends Controller
             'user_name' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'gender' => ['required', 'string'],
             'affiliation' => ['required', 'string', 'max:255'],
             'is_admin' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -59,6 +58,8 @@ class UserManagerController extends Controller
             'initals' => $request->get('initals'),
             'affiliation' => $request->get('affiliation'),
             'is_admin'=> $request->get('is_admin'),
+            'phone' => $request->get('phone'),
+            'fax' => $request->get('fax'),
             'country' => $request->get('country'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
@@ -111,7 +112,6 @@ class UserManagerController extends Controller
             'user_name' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'gender' => ['required', 'string'],
             'affiliation' => ['required', 'string', 'max:255'],
             'is_admin' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
@@ -128,7 +128,6 @@ class UserManagerController extends Controller
         $users->initals = $request->get('initals');
         $users->affiliation = $request->get('affiliation');
         $users->is_admin = $request->get('is_admin');
-        $users->role_id = $request->get('role_id');
         $users->phone = $request->get('phone');
         $users->fax = $request->get('fax');
         $users->country = $request->get('country');
