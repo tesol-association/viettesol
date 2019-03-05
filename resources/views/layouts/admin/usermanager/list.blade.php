@@ -21,7 +21,6 @@
                             <tr>
                                 <td>User Name</td>
                                 <td>Name</td>
-                                <td>Initals</td>
                                 <td>Gender</td>
                                 <td>Affiliation</td>
                                 <td>Phone</td>
@@ -38,7 +37,6 @@
                             <tr>
                                 <td>{{ $user->user_name }}</td>
                                 <td>{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</td>
-                                <td>{{ $user->initals }}</td>
                                 <td>{{ $user->gender }}</td>
                                 <td>{{ $user->affiliation }}</td>
                                 <td>{{ $user->phone }}</td>

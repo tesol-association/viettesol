@@ -49,9 +49,9 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::post('/store','Admin\UserManagerController@store')->name('admin_user_store');
         Route::post('/delete/{id}','Admin\UserManagerController@destroy')->name('admin_user_delete');
 
-        Route::get('/show/{id}','Admin\UserManagerController@show')->name('admin_user_view');
+        Route::get('/view/{id}','Admin\UserManagerController@show')->name('admin_user_view');
 
-        Route::get('/view/{id}','Admin\UserManagerController@edit')->name('admin_user_edit');
+        Route::get('/edit/{id}','Admin\UserManagerController@edit')->name('admin_user_edit');
         Route::post('/update/{id}','Admin\UserManagerController@update')->name('admin_user_update');
 
         Route::post('/disable/{id}','Admin\UserManagerController@disable')->name('admin_user_disable');
