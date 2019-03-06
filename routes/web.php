@@ -40,9 +40,9 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::get('/view/{id}','Admin\MenuController@edit')->name('admin_menu_edit');
         Route::post('/update/{id}','Admin\MenuController@update')->name('admin_menu_update');
 
-        Route::get('/listSubmenu/{id}','Admin\MenuController@show')->name('admin_menu_show');
+        Route::get('/listSubmenu/{id}','Admin\MenuController@show')->name('admin_submenu_list');
 
-        Route::get('create-submenu','Admin\MenuController@createSubmenu')->name('admin_submenu_create');
+        Route::get('create-submenu/{id}','Admin\MenuController@createSubmenu')->name('admin_submenu_create');
         Route::post('add-submenu','Admin\MenuController@addSubmenu')->name('admin_submenu_add');
 
         Route::post('/delete-submenu/{id}','Admin\MenuController@destroySubmenu')->name('admin_submenu_delete');

@@ -4,7 +4,7 @@
 
 @endsection
 @section('page-header')
-Create submenu
+Update submenu
 @endsection
 @section('content')
 <div class="box box-primary">
@@ -13,34 +13,31 @@ Create submenu
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form  method="post" action="{{ route('admin_submenu_add') }}">
+            <form  method="post" action="{{ route('admin_submenu_update',['id'=>$submenu->id]) }}">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Name</label>
-                  <input type="text" class="form-control" placeholder="Enter name" name="name" required>
+                  <input type="text" class="form-control" placeholder="Enter name" name="name" value="{{ $submenu->name }}" required>
                 </div>
             
                 <div class="form-group">
                   <label for="exampleInputEmail1">Url</label>
-                  <input type="text" class="form-control" placeholder="Enter url" name="url">
+                  <input type="text" class="form-control" placeholder="Enter url" name="url" value="{{ $submenu->url }}">
                 </div>
 
                 <div class="form-group">
                   <label for="exampleInputEmail1">Description</label>
-                  <input type="text" class="form-control" placeholder="Enter description" name="description" required>
-                </div>
-
-                <div class="form-group">
-                  <label for="exampleInputEmail1">created_by</label>
-                  <input type="text" class="form-control" placeholder="Enter creator"  value="{{Auth::User()->user_name}}" required disabled>
-                  <input type="hidden" name="created_by" value="{{Auth::User()->id}}">
+                  <input type="text" class="form-control" placeholder="Enter description" name="description" value="{{ $submenu->description }}" required>
                 </div>
 
                 <div class="form-group">
                   <label for="exampleInputEmail1">parent_id</label>
                   <select class="form-control" name="parent_id">
-                      <option value="{{ $menu[0]->id }}">{{ $menu[0]->name }}</option>
+                    <option value="">Select menu</option>
+                    @foreach($parents as $parent)
+                      <option value="{{ $parent->id }}" @if($parent->id == $submenu->parent_id) {{'selected'}} @endif >{{ $parent->name }}</option>
+                    @endforeach
                   </select>
                 </div>
               </div>
@@ -50,7 +47,7 @@ Create submenu
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>
             </form>
-</div>
+          </div>
 @endsection
 @section('js')
 

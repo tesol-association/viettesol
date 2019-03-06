@@ -37,7 +37,7 @@ Create menu
                   <input type="hidden" name="created_by" value="{{Auth::User()->id}}">
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="exampleInputEmail1">parent_id</label>
                   <select class="form-control" name="parent_id">
                     <option value="">Select menu</option>
@@ -45,8 +45,7 @@ Create menu
                       <option value="{{ $menu->id }}">{{ $menu->name }}</option>
                     @endforeach
                   </select>
-                  <!-- <input type="text" class="form-control" placeholder="Enter parent" name="parent_id"> -->
-                </div>
+                </div> -->
               </div>
               <!-- /.box-body -->
 

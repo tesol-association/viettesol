@@ -30,16 +30,6 @@ Update menu
                   <label for="exampleInputEmail1">Description</label>
                   <input type="text" class="form-control" placeholder="Enter description" name="description" value="{{ $menu->description }}" required>
                 </div>
-
-                <div class="form-group">
-                  <label for="exampleInputEmail1">parent_id</label>
-                  <select class="form-control" name="parent_id">
-                    <option value="">Select menu</option>
-                    @foreach($parents as $parent)
-                      <option value="{{ $parent->id }}" @if($parent->id == $menu->parent_id) {{'selected'}} @endif >{{ $parent->name }}</option>
-                    @endforeach
-                  </select>
-                </div>
               </div>
               <!-- /.box-body -->
 

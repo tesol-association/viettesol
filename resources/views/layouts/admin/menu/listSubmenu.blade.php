@@ -19,7 +19,7 @@ List menu
                     <h3 class="box-title"></h3>
                 </div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                    <a href="{{ route('admin_submenu_create') }}" class="btn btn-warning">Create menu</a>
+                    <a href="{{ route('admin_submenu_create',['id' => $id]) }}" class="btn btn-warning">Create submenu</a>
                 </div>
               </div>
             </div>
@@ -51,9 +51,9 @@ List menu
                       <td>{{ $submenu->description }}</td>
                       <td>{{ $submenu->createdBy->user_name }}</td>
                       <td>
-                        @foreach($submenus as $_submenu)
-                          @if($_submenu->id == $submenu->parent_id )
-                              {{ $_submenu->name }}
+                        @foreach($menus as $menu)
+                          @if($menu->id == $submenu->parent_id )
+                              {{ $menu->name }}
                           @endif
                         @endforeach
                       </td>

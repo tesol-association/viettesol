@@ -20,6 +20,7 @@
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="{{ asset('home/css/style.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('home/css/custom.css') }}" />
 @yield('css')
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -161,9 +162,9 @@
                 @yield('content')
             </div>
             <div class="col-md-4">
-
+                <h3 class="module-title "><span>VIC 2018 Sponsors</span></h3>
                 <!-- Right Side Of Navbar -->
-
+                <div id="slideshow">
                 @foreach($partners as $partner)
                     <!-- ad widget-->
                     <div class="aside-widget text-center">
@@ -173,6 +174,20 @@
                     </div>
                     <!-- /ad widget -->
                 @endforeach
+                </div>
+
+                <div id="slideshow_1">
+                @foreach($advs as $adv)
+                    <!-- ad widget-->
+                    <div class="aside-widget text-center">
+                        <a href="{{ $adv->image }}" style="display: inline-block;margin: auto;">
+                            <img class="img-responsive" src="{{ $adv->image }}" alt="">
+                        </a>
+                    </div>
+                    <!-- /ad widget -->
+                @endforeach
+                </div>
+
             </div>
         </div>
         <!-- /row -->
@@ -217,6 +232,7 @@
 <script src="{{ asset('home/js/bootstrap.min.js') }}"></script>
 <!-- <script src="{{ asset('js/jquery.stellar.min.js') }}"></script> -->
 <script src="{{ asset('home/js/main.js') }}"></script>
+<script src="{{ asset('home/js/custom.js') }}"></script>
 @yield('js')
 </body>
 

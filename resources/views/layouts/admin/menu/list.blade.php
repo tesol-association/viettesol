@@ -90,7 +90,7 @@ List menu
                         <a href="{{ route('admin_menu_edit',['id'=> $menu->id ]) }}" class="btn btn-info">Edit</a>
                       </td>
                       <td>
-                        <a href="{{ route('admin_menu_show',['id'=> $menu->id]) }}" class="btn btn-success">View</a>
+                        <a href="{{ route('admin_submenu_list',['id'=> $menu->id]) }}" class="btn btn-success">View</a>
                       </td>
                     </tr>
                     @endif

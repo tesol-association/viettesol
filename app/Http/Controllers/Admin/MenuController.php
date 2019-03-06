@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Menu;
 use Illuminate\Support\Facades\DB;
 use Session;
+use Illuminate\Support\Facades\URL;
 
 class MenuController extends Controller
 {
@@ -65,8 +66,9 @@ class MenuController extends Controller
      */
     public function show($id)
     {
+        $menus= Menu::all();
         $submenus =Menu::where('parent_id', '=', $id)->get();
-        return view('layouts.admin.menu.listSubmenu',['submenus' => $submenus]);
+        return view('layouts.admin.menu.listSubmenu',['submenus' => $submenus,'menus'=>$menus,'id'=>$id]);
     }
 
     /**
@@ -119,6 +121,58 @@ class MenuController extends Controller
         Menu::destroy($id);
         DB::table('menu')->where('parent_id', '=', $id)->delete();
         Session::flash('success','Xóa thành công !');
+        return redirect()->route('admin_menu_list');
+    }
+
+    public function createSubmenu($id)
+    {   
+        $menu=Menu::where('id', '=', $id)->get();
+        return view('layouts.admin.menu.createSubmenu',['menu'=>$menu]);
+    }
+    public function addSubmenu(Request $request)
+    {
+        $this->validate($request,[
+           'name'           => 'required',
+           'description'    => 'required',
+           'created_by'     => 'required'
+        ]);
+        Menu::create([
+            'name'        => $request->name,
+            'url'         => $request->url,
+            'description' => $request->description,
+            'created_by'  => $request->created_by,
+            'parent_id'   => $request->parent_id
+        ]);
+        Session::flash('success','Thêm thành công !');
+        return redirect()->route('admin_menu_list');
+    }
+    public function destroySubmenu($id)
+    {
+        Menu::destroy($id);
+        Session::flash('success','Xóa thành công !');
+        return redirect()->route('admin_menu_list');
+    }
+    public function editSubmenu($id)
+    {
+        $parent = Menu::where('parent_id', '=', null)->get();
+        $res=Menu::find($id);
+        return view('layouts.admin.menu.updateSubmenu',['submenu'=> $res,'parents'=> $parent]);
+    }
+    public function updateSubmenu(Request $request, $id)
+    {
+        $this->validate($request,[
+           'name'           => 'required',
+           'description'    => 'required'
+        ]);
+
+        $menu= Menu::find($id);
+        $menu->name = $request->name;
+        $menu->url  = $request->url;
+        $menu->description = $request->description;
+        $menu->parent_id   = $request->parent_id;
+
+        $menu->save();
+        Session::flash('success','Update thành công !');
         return redirect()->route('admin_menu_list');
     }
 }
