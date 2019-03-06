@@ -5,9 +5,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.5/css/bootstrap-select.min.css">
 @endsection
 @section('content')
-    <select class="selectpicker countrypicker"
-            data-live-search="true">
-    </select>
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
