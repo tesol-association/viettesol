@@ -41,7 +41,7 @@ class PartnerController extends Controller
     {
         $this->validate($request,[
            'name'    => 'required',
-           'logo'    => 'required',
+           'upload_file'    => 'required',
            'type'    => 'required'
         ]);
 
@@ -101,7 +101,7 @@ class PartnerController extends Controller
     {
         $this->validate($request,[
            'name'    => 'required',
-           'logo'    => 'required',
+           'upload_file'    => 'required',
            'type'    => 'required'
         ]);
         

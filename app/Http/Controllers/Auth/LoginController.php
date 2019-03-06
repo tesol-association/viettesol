@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Models\Menu;
+use App\Models\Partner;
+use App\Models\Advertisement;
 
 class LoginController extends Controller
 {
@@ -53,6 +57,16 @@ class LoginController extends Controller
     {
         Auth::logout();
         return redirect('/');
+    }
+
+    public function showLoginForm()
+    {
+        $menus=DB::table('menu')->where('parent_id', '=', null)->get();
+        $_menus=DB::table('menu')->where('parent_id', '!=', null)->get();
+        $partners =  Partner::all();
+        $advs = Advertisement::all();
+
+        return view('auth.login',['menus'=> $menus,'_menus'=>$_menus, 'partners'=>$partners,'advs'=> $advs ]);
     }
 
 }

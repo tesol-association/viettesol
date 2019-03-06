@@ -1,10 +1,10 @@
 @extends('layouts.admin.layout')
-@section('title','Menu Management')
+@section('title','Submenu Management')
 @section('css')
 
 @endsection
 @section('page-header')
-Create menu
+Create submenu
 @endsection
 @section('content')
 <div class="box box-primary">
@@ -13,7 +13,7 @@ Create menu
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form  method="post" action="{{ route('admin_menu_store') }}">
+            <form  method="post" action="{{ route('admin_submenu_add') }}">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <div class="box-body">
                 <div class="form-group">
@@ -37,15 +37,12 @@ Create menu
                   <input type="hidden" name="created_by" value="{{Auth::User()->id}}">
                 </div>
 
-                <!-- <div class="form-group">
+                <div class="form-group">
                   <label for="exampleInputEmail1">parent_id</label>
                   <select class="form-control" name="parent_id">
-                    <option value="">Select menu</option>
-                    @foreach($menus as $menu)
-                      <option value="{{ $menu->id }}">{{ $menu->name }}</option>
-                    @endforeach
+                      <option value="{{ $menu[0]->id }}">{{ $menu[0]->name }}</option>
                   </select>
-                </div> -->
+                </div>
               </div>
               <!-- /.box-body -->
 

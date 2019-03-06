@@ -42,7 +42,7 @@ class AdvertisementController extends Controller
 
         $this->validate($request,[
            'name'       => 'required',
-           'image'      => 'required|image'
+           'upload_file'      => 'required|image'
         ]);
 
         if ($request->hasFile('upload_file')) {
@@ -101,7 +101,7 @@ class AdvertisementController extends Controller
 
         $this->validate($request,[
            'name'       => 'required',
-           'image'      => 'required|image'
+           'upload_file'      => 'required|image'
         ]);
         
         $advertisement= Advertisement::find($id);

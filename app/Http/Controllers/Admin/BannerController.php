@@ -40,8 +40,8 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-           'title'       => 'required',
-           'url'      => 'required|image'
+           'title'            => 'required',
+           'upload_file'      => 'required|image'
         ]);
 
         if ($request->hasFile('upload_file')) {
@@ -98,7 +98,7 @@ class BannerController extends Controller
     {
         $this->validate($request,[
            'title'       => 'required',
-           'url'      => 'required|image'
+           'upload_file'      => 'required|image'
         ]);
         
         $banner= Banner::find($id);

@@ -39,6 +39,16 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
         Route::get('/view/{id}','Admin\MenuController@edit')->name('admin_menu_edit');
         Route::post('/update/{id}','Admin\MenuController@update')->name('admin_menu_update');
+
+        Route::get('/listSubmenu/{id}','Admin\MenuController@show')->name('admin_submenu_list');
+
+        Route::get('create-submenu/{id}','Admin\MenuController@createSubmenu')->name('admin_submenu_create');
+        Route::post('add-submenu','Admin\MenuController@addSubmenu')->name('admin_submenu_add');
+
+        Route::post('/delete-submenu/{id}','Admin\MenuController@destroySubmenu')->name('admin_submenu_delete');
+
+        Route::get('/view-submenu/{id}','Admin\MenuController@editSubmenu')->name('admin_submenu_edit');
+        Route::post('/update-submenu/{id}','Admin\MenuController@updateSubmenu')->name('admin_submenu_update');
     });
 
     //User Manager
@@ -183,3 +193,7 @@ Route::group(['prefix'=>'test'],function(){
     Route::get('/assign_paper', 'TestController@assignPaper');
 });
 Auth::routes();
+
+Route::group(['prefix'=>'home'],function(){
+    Route::get('/index','Home\HomeController@index');
+});
