@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\EventCategoryLink;
 use App\Models\News;
 use App\Models\NewsCategory;
 use App\Models\NewsCategoryLink;
@@ -127,7 +128,7 @@ class NewsController extends Controller
         }
         if (isset($categorieIds) && count($categorieIds)) {
             foreach ($categorieIds as $categoryId) {
-                NewsCategoryLink::where('new_id', $new->id)->where('category_id', $categoryId)->delete();
+                EventCategoryLink::where('new_id', $new->id)->where('category_id', $categoryId)->delete();
             }
         }
         return redirect()->route('admin_news_list')->with('success', 'Update ' . $new->title . ' successful !');
