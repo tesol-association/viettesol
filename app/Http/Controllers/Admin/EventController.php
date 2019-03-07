@@ -14,7 +14,7 @@ use Illuminate\Validation\Rule;
 
 class EventController extends Controller
 {
-    const UPLOAD_FOLER = 'event_cover';
+    const UPLOAD_FOLDER = 'event_cover';
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -53,7 +53,7 @@ class EventController extends Controller
         }
         $path = '';
         if ($request->hasFile('cover')) {
-            $path = Storage::disk('public')->put(self::UPLOAD_FOLER, $request->cover);
+            $path = Storage::disk('public')->put(self::UPLOAD_FOLDER, $request->cover);
         }
         $event = new Event();
         $event->title = $request->title;
@@ -119,7 +119,7 @@ class EventController extends Controller
         }
         $event = Event::find($id);
         if ($request->hasFile('cover')) {
-            $path = Storage::disk('public')->put(self::UPLOAD_FOLER, $request->cover);
+            $path = Storage::disk('public')->put(self::UPLOAD_FOLDER, $request->cover);
             Storage::disk('public')->delete($event->cover);
             $event->cover = $path;
         }
