@@ -23,6 +23,9 @@ Route::get('/demo-admin',function () {
 Route::get('/demo-home',function () {
     return view('layouts.home.layout');
 });
+Route::get('/test',function () {
+    return view('layouts.admin.conference_layout');
+});
 
 //'middleware'=>'auth'
 Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
@@ -171,6 +174,28 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 		Route::post('/update/{id}', 'Admin\ContactTypeController@update')->name('admin_contact_type_update');
 		Route::post('/delete/{id}', 'Admin\ContactTypeController@destroy')->name('admin_contact_type_delete');
 	});
+
+    /**
+     * CONFERENCE MANAGER
+     */
+    Route::group(['prefix'=>'conference'], function() {
+        Route::get('/list', 'Admin\ConferenceController@index')->name('admin_conference_list');
+        Route::get('/create', 'Admin\ConferenceController@create')->name('admin_conference_create');
+        Route::post('/store', 'Admin\ConferenceController@store')->name('admin_conference_store');
+        Route::get('/view/{id}', 'Admin\ConferenceController@view')->name('admin_conference_view');
+        Route::get('/edit/{id}', 'Admin\ConferenceController@edit')->name('admin_conference_edit');
+        Route::post('/update/{id}', 'Admin\ConferenceController@update')->name('admin_conference_update');
+        Route::post('/delete/{id}', 'Admin\ConferenceController@destroy')->name('admin_conference_delete');
+    });
+
+    Route::group(['prefix'=>'/track'], function() {
+        Route::get('/conf/{conference_id}/list', 'Admin\TrackController@index')->name('admin_track_list');
+        Route::get('/conf/{conference_id}/create', 'Admin\TrackController@create')->name('admin_track_create');
+        Route::post('/store', 'Admin\TrackController@store')->name('admin_track_store');
+        Route::get('/edit/{id}', 'Admin\TrackController@edit')->name('admin_track_edit');
+        Route::post('/update/{id}', 'Admin\TrackController@update')->name('admin_track_update');
+        Route::post('/delete/{id}', 'Admin\TrackController@destroy')->name('admin_track_delete');
+    });
 
 });
 
