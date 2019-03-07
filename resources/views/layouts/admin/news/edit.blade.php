@@ -54,9 +54,11 @@
                     <div class="form-group">
                         <label for="choose_tags">Choose Tags</label>
                         <select id="choose_tags" name="tags[]" class="form-control" multiple="multiple" data-placeholder="Select a Tags" style="width: 100%;">
-                            @foreach($new->tags as $tag)
-                                <option value="{{ $tag }}" selected>{{ $tag }}</option>
-                            @endforeach
+                            @if (isset($new->tags) && count($new->tags))
+                                @foreach($new->tags as $tag)
+                                    <option value="{{ $tag }}" selected>{{ $tag }}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
 

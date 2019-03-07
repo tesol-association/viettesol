@@ -7,6 +7,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
+use App\Models\Menu;
+use App\Models\Partner;
+use App\Models\Advertisement;
 
 class RegisterController extends Controller
 {
@@ -74,5 +78,14 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+    public function showRegistrationForm()
+    {
+        $menus=DB::table('menu')->where('parent_id', '=', null)->get();
+        $_menus=DB::table('menu')->where('parent_id', '!=', null)->get();
+        $partners =  Partner::all();
+        $advs = Advertisement::all();
+
+        return view('auth.register',['menus'=> $menus,'_menus'=>$_menus, 'partners'=>$partners,'advs'=> $advs ]);
     }
 }

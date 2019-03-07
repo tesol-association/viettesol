@@ -40,6 +40,16 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
         Route::get('/view/{id}','Admin\MenuController@edit')->name('admin_menu_edit');
         Route::post('/update/{id}','Admin\MenuController@update')->name('admin_menu_update');
+
+        Route::get('/listSubmenu/{id}','Admin\MenuController@show')->name('admin_submenu_list');
+
+        Route::get('create-submenu/{id}','Admin\MenuController@createSubmenu')->name('admin_submenu_create');
+        Route::post('add-submenu','Admin\MenuController@addSubmenu')->name('admin_submenu_add');
+
+        Route::post('/delete-submenu/{id}','Admin\MenuController@destroySubmenu')->name('admin_submenu_delete');
+
+        Route::get('/view-submenu/{id}','Admin\MenuController@editSubmenu')->name('admin_submenu_edit');
+        Route::post('/update-submenu/{id}','Admin\MenuController@updateSubmenu')->name('admin_submenu_update');
     });
 
     //User Manager
@@ -140,22 +150,22 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::post('/delete/{id}', 'Admin\NewsCategoryController@destroy')->name('admin_news_category_delete');
     });
 
-	Route::group(['prefix'=>'events'],function(){
+	Route::group(['prefix'=> 'events'],function(){
         Route::get('/list', 'Admin\EventController@index')->name('admin_event_list');
         Route::get('/create', 'Admin\EventController@create')->name('admin_event_create');
         Route::post('/store', 'Admin\EventController@store')->name('admin_event_store');
         Route::get('/edit/{id}', 'Admin\EventController@edit')->name('admin_event_edit');
-        Route::post('/update/{id}', 'Admin\EventController@create')->name('admin_event_update');
+        Route::post('/update/{id}', 'Admin\EventController@update')->name('admin_event_update');
         Route::post('/delete/{id}', 'Admin\EventController@destroy')->name('admin_event_delete');
 	});
 
-	Route::group(['prefix'=>'events_category'],function(){
-        Route::get('/list', 'Admin\EventController@index')->name('admin_events_category_list');
-        Route::get('/create', 'Admin\EventController@create')->name('admin_events_category_create');
-        Route::post('/store', 'Admin\EventController@store')->name('admin_events_category_store');
-        Route::get('/edit/{id}', 'Admin\EventController@edit')->name('admin_events_category_edit');
-        Route::post('/update/{id}', 'Admin\EventController@create')->name('admin_events_category_update');
-        Route::post('/delete/{id}', 'Admin\EventController@destroy')->name('admin_events_category_delete');
+	Route::group(['prefix'=> 'events_category'],function(){
+        Route::get('/list', 'Admin\EventCategoryController@index')->name('admin_events_category_list');
+        Route::get('/create', 'Admin\EventCategoryController@create')->name('admin_events_category_create');
+        Route::post('/store', 'Admin\EventCategoryController@store')->name('admin_events_category_store');
+        Route::get('/edit/{id}', 'Admin\EventCategoryController@edit')->name('admin_events_category_edit');
+        Route::post('/update/{id}', 'Admin\EventCategoryController@update')->name('admin_events_category_update');
+        Route::post('/delete/{id}', 'Admin\EventCategoryController@destroy')->name('admin_events_category_delete');
 	});
 
 
@@ -176,6 +186,19 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 		Route::post('/update/{id}', 'Admin\ContactTypeController@update')->name('admin_contact_type_update');
 		Route::post('/delete/{id}', 'Admin\ContactTypeController@destroy')->name('admin_contact_type_delete');
 	});
-	
+
+});
+
+Route::group(['prefix'=>'test'],function(){
+    Route::get('/{trackId}/get_paper', 'TestController@getPapers');
+    Route::get('/{trackId}/send_paper', 'TestController@sendPaper');
+    Route::get('/create_review_form', 'TestController@createReviewForm');
+    Route::get('/show_review_form', 'TestController@showReviewForm');
+    Route::get('/send_review', 'TestController@sendReview');
+    Route::get('/assign_paper', 'TestController@assignPaper');
 });
 Auth::routes();
+
+Route::group(['prefix'=>'home'],function(){
+    Route::get('/index','Home\HomeController@index');
+});
