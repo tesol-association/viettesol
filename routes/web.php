@@ -13,19 +13,24 @@
 
 Route::get('/', function () {
     return view('layouts.home.layout');
-});
+})->name('home_page');
 Route::get('/demo-conference',function () {
     return view('layouts.conference.layout');
 });
 Route::get('/demo-admin',function () {
     return view('layouts.admin.layout');
 });
+
 Route::get('/demo-home',function () {
     return view('layouts.home.layout');
 });
 Route::get('/test',function () {
     return view('layouts.admin.conference_layout');
 });
+
+//Contact Form
+Route::get('/home/contact_form/create','Admin\ContactFormController@create')->name('home_contactForm_create');
+Route::post('/home/contact_form/store','Admin\ContactFormController@store')->name('home_contactForm_store');
 
 //'middleware'=>'auth'
 Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
@@ -42,6 +47,16 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
         Route::get('/view/{id}','Admin\MenuController@edit')->name('admin_menu_edit');
         Route::post('/update/{id}','Admin\MenuController@update')->name('admin_menu_update');
+
+        Route::get('/listSubmenu/{id}','Admin\MenuController@show')->name('admin_submenu_list');
+
+        Route::get('create-submenu/{id}','Admin\MenuController@createSubmenu')->name('admin_submenu_create');
+        Route::post('add-submenu','Admin\MenuController@addSubmenu')->name('admin_submenu_add');
+
+        Route::post('/delete-submenu/{id}','Admin\MenuController@destroySubmenu')->name('admin_submenu_delete');
+
+        Route::get('/view-submenu/{id}','Admin\MenuController@editSubmenu')->name('admin_submenu_edit');
+        Route::post('/update-submenu/{id}','Admin\MenuController@updateSubmenu')->name('admin_submenu_update');
     });
 
     //User Manager
@@ -61,6 +76,10 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::post('/enable/{id}','Admin\UserManagerController@enable')->name('admin_user_enable');
     });
 
+    //Contact Form Manager
+    Route::group(['prefix'=>'contact_form'],function(){
+        Route::get('/list','Admin\ContactFormController@index')->name('admin_contactForm_list');
+    });
 
     //banner
     Route::group(['prefix'=>'banner'],function(){
@@ -208,3 +227,6 @@ Route::group(['prefix'=>'test'],function(){
     Route::get('/assign_paper', 'TestController@assignPaper');
 });
 Auth::routes();
+
+Route::group(['prefix'=>'home'],function(){
+});

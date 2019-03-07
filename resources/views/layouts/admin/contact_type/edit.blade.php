@@ -2,7 +2,7 @@
 @section('title','Contact Management')
 
 @section('css')
-
+<link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 @endsection
 
 @section('page-header')
@@ -20,7 +20,7 @@ Edit this Contact Type
         <div class="box-body">
 
             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                <label for="name"> Name: </label>
+                <label for="name"> Name*: </label>
                 <input id="name" type="text" class="form-control" name="name" required value="{{ $contactType->name }}">
                 @if ($errors->has('name'))
                     <span class="help-block">{{ $errors->first('name') }}</span>

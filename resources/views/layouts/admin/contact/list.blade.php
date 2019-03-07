@@ -56,13 +56,107 @@ All Contacts
 					            </td>
 					            <td>{{ $contact->country }}</td>
 					            <td>{{ $contact->website }}</td>
-					            <td><a href="#" class="btn btn-primary"> View </a></td>
-					            <td><a href="#" class="btn btn-primary"> Edit </a></td>
 					            <td>
-					            	<form action="#" method="post">
-					                	@csrf
-					                	<button class="btn btn-danger" type="submit"> Delete </button>
-					                </form>
+					            	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#showDetails"> View </button>
+
+					            	<form method="post" action="#">
+                                        @csrf
+                                        <div class="modal fade" id="showDetails" role="dialog">
+                                          <div class="modal-dialog">
+                                          
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title"> Details of Contact with ID {{ $contact->id }} </h4>
+                                                <br/>
+                                                <table style="border: 0; width: 100%">
+                                                	<tr>
+                                                		<td> <p style="font-size: 20"> Type: </p></td>
+                                                		<td> <p style="font-size: 20"> {{ $contact->type }} </p></td>
+                                                	</tr>
+
+                                                	<tr>
+                                                		<td> <p style="font-size: 20"> Name: </p></td>
+                                                		<td> 
+                                                			@if($contact->type != "Individual")
+                                                			{{ "Not used with this type." }}
+                                                			@endif
+                                                			<p style="font-size: 20"> {{ $contact->first_name." ".$contact->middle_name." ".$contact->last_name }} </p>
+                                                		</td>
+                                                	</tr>
+                                                	<tr>
+                                                		<td> 
+                                                			@if($contact->type != "Organization")
+                                                			{{ "Not used with this type." }}
+                                                			@endif
+                                                			<p style="font-size: 20"> Organization Name: </p>
+                                                		</td>
+                                                		<td> <p style="font-size: 20"> {{ $contact->organize_name }} </p></td>
+                                                	</tr>
+                                                	<tr>
+                                                		<td> <p style="font-size: 20"> Address: </p></td>
+                                                		<td> <p style="font-size: 20"> {{ $contact->address }} </p></td>
+                                                	</tr>
+                                                	<tr>
+                                                		<td> <p style="font-size: 20"> Email: </p></td>
+                                                		<td> <p style="font-size: 20"> {{ $contact->email }} </p></td>
+                                                	</tr>
+                                                	<tr>
+                                                		<td> <p style="font-size: 20"> Phone: </p></td>
+                                                		<td> <p style="font-size: 20"> {{ $contact->phone }} </p></td>
+                                                	</tr>
+                                                	<tr>
+                                                		<td> <p style="font-size: 20"> Fax: </p></td>
+                                                		<td> <p style="font-size: 20"> {{ $contact->fax }} </p></td>
+                                                	</tr>
+                                                	<tr>
+                                                		<td> <p style="font-size: 20"> Website: </p></td>
+                                                		<td> <p style="font-size: 20"> {{ $contact->website }} </p></td>
+                                                	</tr>
+                                                	<tr>
+                                                		<td> <p style="font-size: 20"> Country: </p></td>
+                                                		<td> <p style="font-size: 20"> {{ $contact->country }} </p></td>
+                                                	</tr>
+                                                	<tr>
+                                                		<td> <p style="font-size: 20"> Note: </p></td>
+                                                		<td> <p style="font-size: 20"> {{ $contact->note }} </p></td>
+                                                	</tr>
+                                                </table>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                              </div>
+                                            </div>
+                                            
+                                          </div>
+                                        </div>
+                                    </form>
+					            </td>
+					            <td><a href="{{ route('admin_contact_edit', ["id" => $contact->id]) }}" class="btn btn-primary"> Edit </a></td>
+					            <td>
+					            	<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_contact{{ $contact->id }}">Delete</button>
+
+					            	<form method="post" action="{{ route('admin_contact_delete',['id'=> $contact->id ]) }}">
+                                        @csrf
+                                        <div class="modal fade" id="delete_contact{{ $contact->id }}" role="dialog">
+                                          <div class="modal-dialog">
+                                          
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Are you sure you want to delete contact with ID {{ $contact->id }} ?</h4>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                              </div>
+                                            </div>
+                                            
+                                          </div>
+                                        </div>
+                                    </form>
 					            </td>
 					        </tr>
 					        @endforeach

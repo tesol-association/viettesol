@@ -321,6 +321,16 @@ desired effect
           </ul>
         </li>
         <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Contact Form Management</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('admin_contactForm_list') }}">Contact Form List</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Category Management</span>
             <span class="pull-right-container"></span>
           </a>
@@ -498,8 +508,8 @@ desired effect
           </a>
 
           <ul class="treeview-menu">
-            <li><a href="{{ route('admin_contact_list') }}"> Contact Manager </a></li>
-            <li><a href="{{ route('admin_contact_type_list') }}"> Contact Type Manager </a></li>
+            <li><a href="{{ route('admin_contact_list') }}"> Contact Management </a></li>
+            <li><a href="{{ route('admin_contact_type_list') }}"> Contact Type Management </a></li>
             <li><a href="#"> Membership </a></li>
             <li><a href="#"> Member Contribution </a></li>
             <li><a href="#"> Member Payment </a></li>
