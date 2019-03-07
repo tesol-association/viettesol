@@ -229,4 +229,7 @@ Route::group(['prefix'=>'test'],function(){
 Auth::routes();
 
 Route::group(['prefix'=>'home'],function(){
+    Route::get('/index','Home\MainController@index');
+
+    Route::get('/main','Home\MainController@getData')->name('home-main');
 });
