@@ -2,7 +2,8 @@
 @section('title','Contact Management')
 
 @section('css')
-
+<link rel="stylesheet" href="{{ asset('admin/bower_components/select2/dist/css/select2.css') }}">
+<link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 @endsection
 
 @section('page-header')
@@ -11,67 +12,78 @@ Create a New Contact
 
 @section('content')
 <div class="box box-primary">
-	<div class="box-header with-border">
-		<select>
-			
-		</select>
-	</div>
 
-	<form method="post" action="{{ route('') }}">
+	<form method="post" action="{{ route('admin_contact_store') }}" id="form_ind">
+		@csrf
 		<div class="box-body">
 			<div class="form-group">
-				<label for="exampleInputEmail1"> First Name: </label>
-				<input type="text" class="form-control" placeholder="e.g.: Alexander" name="first_name" required>
+				<label for="type"> Contact Type*: </label>
+				<select class="form-control" name="type" id="type" onselect="change(this)">
+					@foreach( $contactTypes as $contactType )
+					<option value="{{ $contactType->name }}"> {{ $contactType->name }} </option>
+					@endforeach
+				</select>
 			</div>
 
 			<div class="form-group">
-				<label for="exampleInputEmail1"> Middle Name: </label>
-				<input type="text" class="form-control" name="middle_name">
+				<label for="first_name"> First Name: </label>
+				<input type="text" class="form-control" placeholder="e.g.: Alexander" name="first_name" id="first_name" value="{{ old('first_name')}}">
 			</div>
 
 			<div class="form-group">
-				<label for="exampleInputEmail1"> Last Name: </label>
-				<input type="text" class="form-control" placeholder="e.g.: Pierce" name="last_name">
+				<label for="middle_name"> Middle Name: </label>
+				<input type="text" class="form-control" name="middle_name" id="middle_name" value="{{ old('middle_name')}}">
 			</div>
 
 			<div class="form-group">
-				<label for="exampleInputEmail1"> Organization Name: </label>
-				<input type="text" class="form-control" placeholder="e.g.: Pierce" name="organization">
+				<label for="last_name"> Last Name: </label>
+				<input type="text" class="form-control" placeholder="e.g.: Pierce" name="last_name" id="last_name" value="{{ old('last_name')}}">
 			</div>
 
 			<div class="form-group">
-				<label for="exampleInputEmail1"> Address: </label>
-				<input type="text" class="form-control" name="address">
+				<label for="organization"> Organization Name: </label>
+				<input type="text" class="form-control" placeholder="e.g.: Pierce" name="organization" id="organization" value="{{ old('organization')}}">
 			</div>
 
 			<div class="form-group">
-				<label for="exampleInputEmail1"> Email: </label>
-				<input type="text" class="form-control" name="email">
+				<label for="address"> Address: </label>
+				<input type="text" class="form-control" name="address" id="address" value="{{ old('address')}}">
+			</div>
+
+			<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+				<label for="email"> Email*: </label>
+				<input type="text" class="form-control" name="email" id="email">
+				@if ($errors->has('email'))
+                    <span class="help-block">{{ $errors->first('email') }}</span>
+                @endif
+			</div>
+
+			<div class="form-group {{ $errors->has('phone') ? 'has-error' : '' }}">
+				<label for="phone"> Phone Number*: </label>
+				<input type="text" class="form-control" name="phone" id="phone">
+				@if ($errors->has('phone'))
+                    <span class="help-block">{{ $errors->first('phone') }}</span>
+                @endif
 			</div>
 
 			<div class="form-group">
-				<label for="exampleInputEmail1"> Phone Number: </label>
-				<input type="text" class="form-control" name="phone">
+				<label for="fax"> Fax Number: </label>
+				<input type="text" class="form-control" name="fax" id="fax" value="{{ old('fax')}}">
 			</div>
 
 			<div class="form-group">
-				<label for="exampleInputEmail1"> Fax Number: </label>
-				<input type="text" class="form-control" name="fax">
+				<label for="website"> Website: </label>
+				<input type="text" class="form-control" name="website" id="website" value="{{ old('website')}}">
 			</div>
 
 			<div class="form-group">
-				<label for="exampleInputEmail1"> Website: </label>
-				<input type="text" class="form-control" name="website">
-			</div>
-
-			<div class="form-group">
-				<label for="exampleInputEmail1"> Country: </label>
+				<label for="country"> Country: </label>
 				<input type="text" class="form-control" name="country">
 			</div>
 
 			<div class="form-group">
-				<label for="exampleInputEmail1"> Note: </label>
-				<input type="text" class="form-control" name="note">
+				<label for="note"> Note: </label>
+				<textarea id="note"  class="form-control" rows="3" placeholder="Other info ..." name="note"> {{ old('note')}} </textarea>
 			</div>
 		</div>
 
@@ -83,5 +95,13 @@ Create a New Contact
 @endsection
 
 @section('js')
-
+<script type="text/javascript">
+	$(
+		function change(param)
+		{
+			var value = param.value;
+			
+		}
+	)
+</script>
 @endsection

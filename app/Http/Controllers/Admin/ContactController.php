@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\ContactType;
 use Session;
 
 class ContactController extends Controller
@@ -30,7 +31,9 @@ class ContactController extends Controller
     public function create()
     {
         //
-        return view('layouts.admin.contact.create');
+        $contactTypes = ContactType::all();
+
+        return view('layouts.admin.contact.create', ['contactTypes' => $contactTypes]);
     }
 
     /**
@@ -42,6 +45,13 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'type' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+        ]);
+
+
         $contact = new Contact([
             'type' => $request->get('type'),
             'first_name' => $request->get('first_name'),
@@ -86,8 +96,9 @@ class ContactController extends Controller
     {
         //
         $contact = Contact::find($id);
+        $contactTypes = ContactType::all();
 
-        return view('layouts.admin.contact.edit', compact('contact'));
+        return view('layouts.admin.contact.edit', compact('contact'), ['contactTypes' => $contactTypes]);
     }
 
     /**
