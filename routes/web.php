@@ -13,16 +13,17 @@
 
 Route::get('/', function () {
     return view('layouts.home.layout');
-});
+})->name('home_page');
 Route::get('/demo-conference',function () {
     return view('layouts.conference.layout');
 });
 Route::get('/demo-admin',function () {
     return view('layouts.admin.layout');
 });
-Route::get('/demo-home',function () {
-    return view('layouts.home.layout');
-});
+
+//Contact Form
+Route::get('/home/contact_form/create','Admin\ContactFormController@create')->name('home_contactForm_create');
+Route::post('/home/contact_form/store','Admin\ContactFormController@store')->name('home_contactForm_store');
 
 //'middleware'=>'auth'
 Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
@@ -68,6 +69,10 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::post('/enable/{id}','Admin\UserManagerController@enable')->name('admin_user_enable');
     });
 
+    //Contact Form Manager
+    Route::group(['prefix'=>'contact_form'],function(){
+        Route::get('/list','Admin\ContactFormController@index')->name('admin_contactForm_list');
+    });
 
     //banner
     Route::group(['prefix'=>'banner'],function(){
