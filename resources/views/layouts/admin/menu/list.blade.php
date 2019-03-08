@@ -40,51 +40,60 @@ List menu
                 </thead>
                 <tbody>
                 @foreach($menus as $menu)
-                <tr>
-                  <td>{{ $menu->id }}</td>
-                  <td>{{ $menu->name }}</td>
-                  <td>
-                    <a href="{{ $menu->url }}">
-                         {{ $menu->url }}
-                    </a>
-                  </td>
-                  <td>{{ $menu->description }}</td>
-                  <td>{{ $menu->createdBy->user_name }}</td>
-                  <td>
-                    {{ $menu->parent_id }}
-                  </td>
-                  <td>
-                    <!-- <div class="container"> -->
-                    <!-- Trigger the modal with a button -->
+                 @if($menu->parent_id==null)
+                    <tr>
+                      <td>{{ $menu->id }}</td>
+                      <td>{{ $menu->name }}</td>
+                      <td>
+                        <a href="{{ $menu->url }}">
+                             {{ $menu->url }}
+                        </a>
+                      </td>
+                      <td>{{ $menu->description }}</td>
+                      <td>{{ $menu->createdBy->user_name }}</td>
+                      <td>
+                        @foreach($menus as $_menu)
+                          @if($_menu->id == $menu->parent_id )
+                              {{ $_menu->name }}
+                          @endif
+                        @endforeach
+                      </td>
+                      <td>
+                        <!-- <div class="container"> -->
+                        <!-- Trigger the modal with a button -->
 
-                    <!-- Modal -->
-                    <form method="post" action="{{ route('admin_menu_delete',['id'=> $menu->id ]) }}">
-                        @csrf
-                        <div class="modal fade" id="myModal_{{ $menu->id }}" role="dialog">
-                          <div class="modal-dialog">
-                          
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Are you sure delete: {{ $menu->name }}</h4>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                        <!-- Modal -->
+                        <form method="post" action="{{ route('admin_menu_delete',['id'=> $menu->id ]) }}">
+                            @csrf
+                            <div class="modal fade" id="myModal_{{ $menu->id }}" role="dialog">
+                              <div class="modal-dialog">
+                              
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Are you sure delete: {{ $menu->name }}</h4>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                  </div>
+                                </div>
+                                
                               </div>
                             </div>
-                            
-                          </div>
-                        </div>
-                    </form>
-                  <!-- </div> -->
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal_{{ $menu->id }}">Delete</button>
-                  </td>
-                  <td>
-                    <a href="{{ route('admin_menu_edit',['id'=> $menu->id ]) }}" class="btn btn-info">Edit</a>
-                  </td>
-                </tr>
+                        </form>
+                      <!-- </div> -->
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal_{{ $menu->id }}">Delete</button>
+                      </td>
+                      <td>
+                        <a href="{{ route('admin_menu_edit',['id'=> $menu->id ]) }}" class="btn btn-info">Edit</a>
+                      </td>
+                      <td>
+                        <a href="{{ route('admin_submenu_list',['id'=> $menu->id]) }}" class="btn btn-success">View</a>
+                      </td>
+                    </tr>
+                    @endif
                   @endforeach
                 </tbody>
                 <tfoot>

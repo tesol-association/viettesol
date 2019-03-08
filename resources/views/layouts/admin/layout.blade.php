@@ -321,6 +321,16 @@ desired effect
           </ul>
         </li>
         <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Contact Form Management</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('admin_contactForm_list') }}">Contact Form List</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Category Management</span>
             <span class="pull-right-container"></span>
           </a>
@@ -351,8 +361,8 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">List</a></li>
-            <li><a href="#">Create</a></li>
+            <li><a href="{{ route('admin_conference_list') }}">List</a></li>
+            <li><a href="{{ route('admin_conference_create') }}">Create</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -506,7 +516,7 @@ desired effect
             <li><a href="#"> Notification </a></li>
           </ul>
         </li>
-        
+
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -643,11 +653,14 @@ desired effect
            toastr.success('{{ Session::get("success") }}');
            // <?php  //session()->forget('success'); ?>
         @endif
+        @if(Session::has('error'))
+          toastr.error('{{ Session::get("error") }}');
+        @endif
         @if($errors->any())
           @foreach($errors->all() as $error)
             toastr.error('{{ $error }}');
-          @endforeach  
-       @endif 
+          @endforeach
+       @endif
 </script>
  @yield('js')
 </body>

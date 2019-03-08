@@ -68,8 +68,11 @@ class NewsCategoryController extends Controller
     public function destroy($id)
     {
         $newsCategory = NewsCategory::find($id);
+        if (count($newsCategory->categoryLink)) {
+            return redirect()->route('admin_news_category_list')->with('error','Please delete News of Category first !');
+        }
         NewsCategory::destroy($id);
-        return redirect()->route('admin_news_category_list')->with('success','Xóa thành công: ' . $newsCategory->name . '!');
+        return redirect()->route('admin_news_category_list')->with('success','Delete ' . $newsCategory->name . ' successful !');
     }
 
     public function validateData($data) {
