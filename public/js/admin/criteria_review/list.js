@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#track_list').DataTable({
+    $('#criteria_review_list').DataTable({
         'order': [[0, 'desc']],
     });
 });

@@ -1,19 +1,21 @@
 @extends('layouts.admin.conference_layout')
-@section('title','Create Criteria Review')
+@section('title','Create Review Form')
 @section('css')
+    <link href="{{ asset('admin/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/dist/css/AdminLTE.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Create Criteria Review</h3>
+            <h3 class="box-title">Create Review Form</h3>
             <div class="box-tools pull-right">
-                <a href="{{ route('admin_criteria_review_list', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-backward"></i> Criteria Review List</a>
+                <a href="{{ route('admin_review_form_list', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-backward"></i> Review Form List</a>
             </div>
         </div>
 
         <div class="box-body">
             <!-- form start -->
-            <form  method="post" action="{{ route('admin_criteria_review_store', ["conference_id" => $conference->id]) }}" enctype="multipart/form-data">
+            <form  method="post" action="{{ route('admin_review_form_store', ["conference_id" => $conference->id]) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="box-body">
                     <div class="form-group {{ $errors->first('name') ? 'has-error' : ''}}">
@@ -24,20 +26,32 @@
                         @endif
                     </div>
 
-                    <div class="form-group {{ $errors->first('possible_values') ? 'has-error' : ''}}">
-                        <label>Possible Values*</label>
-                        <input type="text" class="form-control possible_values" placeholder="Each Value is separated by commas. Example: 1, 2, 3, 4, 5" name="possible_values" required>
-                        @if ($errors->has('possible_values'))
-                            <span class="help-block">{{ $errors->first('possible_values') }}</span>
+                    <div class="form-group {{ $errors->first('attach_file') ? 'has-error' : ''}}">
+                        <label for="attach_file">Attach File</label>
+                        <input type="file" id="attach_file" name="attach_file">
+                        @if ($errors->has('attach_file'))
+                            <span class="help-block">{{ $errors->first('attach_file') }}</span>
                         @endif
                     </div>
 
-                    <div class="form-group {{ $errors->first('description') ? 'has-error' : ''}}">
-                        <label for="description">Description</label>
-                        <textarea name="description" id="description" class="form-control" rows="3" placeholder="Enter Description ...">{{ old('description') }}</textarea>
-                        @if ($errors->has('description'))
-                            <span class="help-block">{{ $errors->first('description') }}</span>
+                    <div class="form-group {{ $errors->first('criteria') ? 'has-error' : ''}}">
+                        <label for="choose_criteria">Choose Criteria*</label>
+                        <select id="choose_criteria" name="criteria[]" class="form-control" multiple="multiple" data-placeholder="Select one or many Criteria" style="width: 100%;" required>
+                            @foreach ($criterias as $criteria)
+                                <option value="{{ $criteria->id }}">{{ $criteria->name }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('criteria'))
+                            <span class="help-block">{{ $errors->first('body') }}</span>
                         @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" name="status" class="form-control" data-placeholder="Select a Tags" style="width: 100%;" required>
+                            <option value="active">Active</option>
+                            <option value="inactive">InActive</option>
+                        </select>
                     </div>
                 </div>
 
@@ -50,4 +64,6 @@
     </div>
 @endsection
 @section('js')
+    <script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('js/admin/review_form/create.js') }}"></script>
 @endsection

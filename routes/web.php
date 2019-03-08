@@ -207,13 +207,41 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::post('/delete/{id}', 'Admin\ConferenceController@destroy')->name('admin_conference_delete');
     });
 
-    Route::group(['prefix'=>'/track'], function() {
-        Route::get('/conf/{conference_id}/list', 'Admin\TrackController@index')->name('admin_track_list');
-        Route::get('/conf/{conference_id}/create', 'Admin\TrackController@create')->name('admin_track_create');
-        Route::post('/store', 'Admin\TrackController@store')->name('admin_track_store');
-        Route::get('/edit/{id}', 'Admin\TrackController@edit')->name('admin_track_edit');
-        Route::post('/update/{id}', 'Admin\TrackController@update')->name('admin_track_update');
-        Route::post('/delete/{id}', 'Admin\TrackController@destroy')->name('admin_track_delete');
+    Route::group(['prefix'=>'/conf/{conference_id}'], function() {
+        Route::group(['prefix'=>'/track'], function() {
+            Route::get('/list', 'Admin\TrackController@index')->name('admin_track_list');
+            Route::get('/create', 'Admin\TrackController@create')->name('admin_track_create');
+            Route::post('/store', 'Admin\TrackController@store')->name('admin_track_store');
+            Route::get('/edit/{id}', 'Admin\TrackController@edit')->name('admin_track_edit');
+            Route::post('/update/{id}', 'Admin\TrackController@update')->name('admin_track_update');
+            Route::post('/delete/{id}', 'Admin\TrackController@destroy')->name('admin_track_delete');
+        });
+
+        Route::group(['prefix'=>'/review_form'], function() {
+            Route::get('/list', 'Admin\ReviewFormController@index')->name('admin_review_form_list');
+            Route::get('/create', 'Admin\ReviewFormController@create')->name('admin_review_form_create');
+            Route::post('/store', 'Admin\ReviewFormController@store')->name('admin_review_form_store');
+            Route::get('/edit/{id}', 'Admin\ReviewFormController@edit')->name('admin_review_form_edit');
+            Route::post('/update/{id}', 'Admin\ReviewFormController@update')->name('admin_review_form_update');
+            Route::post('/delete/{id}', 'Admin\ReviewFormController@destroy')->name('admin_review_form_delete');
+        });
+
+        Route::group(['prefix'=>'/criteria_review'], function() {
+            Route::get('/list', 'Admin\CriteriaReviewController@index')->name('admin_criteria_review_list');
+            Route::get('/create', 'Admin\CriteriaReviewController@create')->name('admin_criteria_review_create');
+            Route::post('/store', 'Admin\CriteriaReviewController@store')->name('admin_criteria_review_store');
+            Route::get('/edit/{id}', 'Admin\CriteriaReviewController@edit')->name('admin_criteria_review_edit');
+            Route::post('/update/{id}', 'Admin\CriteriaReviewController@update')->name('admin_criteria_review_update');
+            Route::post('/delete/{id}', 'Admin\CriteriaReviewController@destroy')->name('admin_criteria_review_delete');
+        });
+
+        Route::group(['prefix'=>'/paper'], function() {
+            Route::get('/list', 'Admin\PaperController@index')->name('admin_paper_list');
+            Route::get('/edit/{id}', 'Admin\PaperController@edit')->name('admin_paper_edit');
+            Route::post('/update/{id}', 'Admin\PaperController@update')->name('admin_paper_update');
+            Route::post('/delete/{id}', 'Admin\PaperController@destroy')->name('admin_paper_delete');
+        });
+
     });
 
 });

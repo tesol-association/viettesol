@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#track_list').DataTable({
+    $('#paper_list').DataTable({
         'order': [[0, 'desc']],
     });
 });

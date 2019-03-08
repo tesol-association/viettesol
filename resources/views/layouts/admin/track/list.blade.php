@@ -1,5 +1,5 @@
 @extends('layouts.admin.conference_layout')
-@section('title','Conference Management')
+@section('title','Track Management')
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 @endsection
@@ -13,7 +13,7 @@
                             <h3 class="box-title">Track List</h3>
                         </div>
                         <div class="col-md-2 col-md-offset-6">
-                            <a href="{{ route('admin_track_create', ["id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add Track</a>
+                            <a href="{{ route('admin_track_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add Track</a>
                         </div>
                     </div>
                     <div class="box-body">
@@ -41,22 +41,22 @@
                                         <td>{{ $track->policy }}</td>
                                         <td>{{ $track->created_at }}</td>
                                         <td>
-                                            {{--<a href="{{ route('admin_conference_edit', ["id" => $track->id]) }}" class="btn btn-info">Edit</a>--}}
+                                            <a href="{{ route('admin_track_edit', ["conference_id" => $conference->id, "id" => $track->id]) }}" class="btn btn-info">Edit</a>
                                         </td>
                                         <td>
-                                            {{--<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_conference_{{ $track->id }}">Delete</button>--}}
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_track_{{ $track->id }}">Delete</button>
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->
-                                    <div class="modal fade" id="delete_conference_{{ $track->id }}" role="dialog">
-                                        <form method="post" action="{{ route('admin_conference_delete', ['id'=> $track->id ]) }}">
+                                    <div class="modal fade" id="delete_track_{{ $track->id }}" role="dialog">
+                                        <form method="post" action="{{ route('admin_track_delete', [ "conference_id" => $conference->id, 'id'=> $track->id ]) }}">
                                             @csrf
                                             <div class="modal-dialog">
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <h4 class="modal-title">Are you sure delete: {{ $track->title }} ?</h4>
+                                                        <h4 class="modal-title">Are you sure delete: {{ $track->name }} ?</h4>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -89,5 +89,5 @@
     <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
-    <script src="{{ asset('js/admin/conference/list.js') }}"></script>
+    <script src="{{ asset('js/admin/track/list.js') }}"></script>
 @endsection
