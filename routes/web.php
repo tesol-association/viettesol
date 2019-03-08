@@ -232,4 +232,9 @@ Route::group(['prefix'=>'home'],function(){
     Route::get('/index','Home\MainController@index');
 
     Route::get('/main','Home\MainController@getData')->name('home-main');
+
+    Route::get('/news','Home\MainController@getNews')->name('home-news');
+    Route::get('/news/{slug}','Home\MainController@getNewsDetail')->name('home-newsDetail');
+
+    Route::get('/event','Home\MainController@getEvent')->name('home-event');
 });

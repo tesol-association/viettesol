@@ -8,8 +8,8 @@
 <div class="slider-container">
   <div class="slider">
   	@foreach($banners as $banner)
-	    <div class="slider__item">
-	      <img src="{{ $banner->url }}" alt="" width="100%">
+	    <div class="slider__item" style="height:450px; width: 800px;">
+	      <img src="{{ $banner->url }}" alt="" style="height: 100%; width: 100%;">
 	    </div>
     @endforeach
   </div>
@@ -22,7 +22,7 @@
 </div>
 @endsection
 @section('content')
-
+   
 @endsection
 @section('js')
 <script src="{{ asset('home/js/slider-main.js') }}"></script>

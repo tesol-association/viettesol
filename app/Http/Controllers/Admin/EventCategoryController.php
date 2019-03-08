@@ -6,6 +6,7 @@ use App\Models\EventCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class EventCategoryController extends Controller
 {
@@ -25,7 +26,9 @@ class EventCategoryController extends Controller
 
     public function store(Request $request)
     {
-        $validator = $this->validateData($request->all());
+        $data = $request->all();
+        $data["slug"] = Str::slug($request->name, '-');
+        $validator = $this->validateData($data);
         if ($validator->fails()) {
             return redirect()
                 ->route('admin_events_category_create')
@@ -34,7 +37,7 @@ class EventCategoryController extends Controller
         }
         $eventCategory = new EventCategory();
         $eventCategory->name = $request->name;
-        $eventCategory->slug = $request->slug;
+        $eventCategory->slug = $data["slug"];
         $eventCategory->description = $request->description;
         $eventCategory->save();
         return redirect()->route('admin_events_category_list')->with('success', 'Create ' . $eventCategory->name . ' successful !');
@@ -50,6 +53,7 @@ class EventCategoryController extends Controller
     {
         $data = $request->all();
         $data["id"] = $id;
+        $data["slug"] = Str::slug($request->title, '-');
         $validator = $this->validateData($data);
         if ($validator->fails()) {
             return redirect()
@@ -59,7 +63,7 @@ class EventCategoryController extends Controller
         }
         $eventCategory = EventCategory::find($id);
         $eventCategory->name = $request->name;
-        $eventCategory->slug = $request->slug;
+        $eventCategory->slug = $data["slug"];
         $eventCategory->description = $request->description;
         $eventCategory->save();
         return redirect()->route('admin_events_category_list')->with('success', 'Update ' . $eventCategory->name . ' successful !');

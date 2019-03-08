@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class NewsController extends Controller
 {
@@ -44,7 +45,9 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $this->validateData($request->all());
+        $data = $request->all();
+        $data["slug"] = Str::slug($request->title, '-');
+        $validator = $this->validateData($data);
         if ($validator->fails()) {
             return redirect()
                 ->route('admin_news_create')
@@ -53,7 +56,7 @@ class NewsController extends Controller
         }
         $news = new News();
         $news->title = $request->title;
-        $news->slug = $request->slug;
+        $news->slug = $data["slug"];
         $news->short_content = $request->short_content;
         $news->body = $request->body;
         $news->tags = json_encode($request->tags);
@@ -94,6 +97,7 @@ class NewsController extends Controller
     {
         $data = $request->all();
         $data["id"] = $id;
+        $data["slug"] = Str::slug($request->title, '-');
         $validator = $this->validateData($data);
         if ($validator->fails()) {
             return redirect()
@@ -103,7 +107,7 @@ class NewsController extends Controller
         }
         $new = News::find($id);
         $new->title = $request->title;
-        $new->slug = $request->slug;
+        $new->slug = $data["slug"];
         $new->short_content = $request->short_content;
         $new->body = $request->body;
         $new->tags = json_encode($request->tags);
