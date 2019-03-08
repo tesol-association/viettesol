@@ -256,7 +256,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="treeview-menu">
                         <li><a href="#">Announcement</a></li>
                         <li><a href="#">Fee</a></li>
-                        <li><a href="#">Track</a></li>
+                        <li><a href="{{ route('admin_track_list', ["conference_id" => $conference->id]) }}">Track</a></li>
                         <li class="treeview">
                             <a href="#"> <span>Review Form</span>
                             <span class="pull-right-container">
@@ -264,7 +264,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="#">Critea Review</a></li>
+                                <li><a href="{{ route('admin_review_form_list', ["conference_id" => $conference->id]) }}">List Review Form</a></li>
+                                <li><a href="{{ route('admin_criteria_review_list', ["conference_id" => $conference->id]) }}">Criteria Review</a></li>
                             </ul>
                         </li>
                         <li><a href="#">Prepaired email</a></li>
@@ -277,7 +278,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="#">List Paper</a></li>
+                                <li><a href="{{ route('admin_paper_list', ["conference_id" => $conference->id]) }}">List Paper</a></li>
                                 <li><a href="#">Paper File</a></li>
                                 <li><a href="#">Paper author</a></li>
                                 <li><a href="#">Review Assignment</a></li>
