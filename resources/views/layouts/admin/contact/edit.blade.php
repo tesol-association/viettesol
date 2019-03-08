@@ -7,20 +7,30 @@
 @endsection
 
 @section('page-header')
-Create a New Contact
+Edit an existing Contact
 @endsection
 
 @section('content')
 <div class="box box-primary">
+	<div class="box-header with-border">
+        <div class="col-md-4">
+                <h3 class="box-title">Edit this Contact</h3>
+        </div>
+        <div class="col-md-2 col-md-offset-6">
+            <a href="{{ route('admin_contact_list') }}" class="btn btn-block btn-info">
+                Contact List
+            </a>
+        </div>
+    </div>
 
 	<form method="post" action="{{ route('admin_contact_update', ["id" => $contact->id]) }}" id="form_ind">
 		@csrf
 		<div class="box-body">
 			<div class="form-group">
-				<label for="type"> Contact Type*: </label>
-				<select class="form-control" name="type" id="type" onselect="change(this)">
+				<label for="type_id"> Contact Type*: </label>
+				<select class="form-control" name="type_id" id="type_id" onselect="change(this)">
 					@foreach( $contactTypes as $contactType )
-					<option value="{{ $contactType->name }}"> {{ $contactType->name }} </option>
+					<option value="{{ $contactType->id }}"> {{ $contactType->name }} </option>
 					@endforeach
 				</select>
 			</div>

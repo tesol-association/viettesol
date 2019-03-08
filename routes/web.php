@@ -172,5 +172,14 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 		Route::post('/delete/{id}', 'Admin\ContactTypeController@destroy')->name('admin_contact_type_delete');
 	});
 	
+    Route::group(['prefix'=>'membership'],function(){
+        Route::get('/list', 'Admin\MembershipController@index')->name('admin_membership_list');
+        Route::get('/create', 'Admin\MembershipController@create')->name('admin_membership_create');
+        Route::post('/store', 'Admin\MembershipController@store')->name('admin_membership_store');
+        Route::get('/edit/{id}', 'Admin\MembershipController@edit')->name('admin_membership_edit');
+        Route::post('/update/{id}', 'Admin\MembershipController@update')->name('admin_membership_update');
+        Route::post('/delete/{id}', 'Admin\MembershipController@destroy')->name('admin_membership_delete');
+        Route::get('/make/{id}', 'Admin\ContactController@make')->name('admin_membership_make');
+    });
 });
 Auth::routes();

@@ -17,10 +17,9 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
-        $contact = Contact::all();
+        $contacts = Contact::all();
         
-        return view('layouts.admin.contact.list', ['contacts' => $contact]);
+        return view('layouts.admin.contact.list', ['contacts' => $contacts]);
     }
 
     /**
@@ -44,29 +43,24 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $request->validate([
-            'type' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
+            'email' => 'required|email|unique:contacts',
+            'phone' => 'required|numeric',
         ]);
 
-
-        $contact = new Contact([
-            'type' => $request->get('type'),
-            'first_name' => $request->get('first_name'),
-            'middle_name' => $request->get('middle_name'),
-            'last_name' => $request->get('middle_name'),
-            'organize_name' => $request->get('organize_name'),
-            'address' => $request->get('address'),
-            'email' => $request->get('email'),
-            'phone' => $request->get('phone'),
-            'fax' => $request->get('fax'),
-            'country' => $request->get('country'),
-            'website' => $request->get('website'),
-            'note' => $request->get('note')
-        ]);
-
+        $contact = new Contact();
+        $contact->type_id = $request->get('type_id');
+        $contact->first_name = $request->get('first_name');
+        $contact->middle_name = $request->get('middle_name');
+        $contact->last_name = $request->get('middle_name');
+        $contact->organize_name = $request->get('organize_name');
+        $contact->address = $request->get('address');
+        $contact->email = $request->get('email');
+        $contact->phone = $request->get('phone');
+        $contact->fax = $request->get('fax');
+        $contact->country = $request->get('country');
+        $contact->website = $request->get('website');
+        $contact->note = $request->get('note');
         $contact->save();
 
         return redirect()->route('admin_contact_list')->with('success', 'A new contact has been added.');
@@ -81,9 +75,6 @@ class ContactController extends Controller
     public function show($id)
     {
         //
-        $contact = Contact::find($id);
-
-        return view('layouts.admin.contact.show', compact('contact'));
     }
 
     /**
@@ -98,7 +89,7 @@ class ContactController extends Controller
         $contact = Contact::find($id);
         $contactTypes = ContactType::all();
 
-        return view('layouts.admin.contact.edit', compact('contact'), ['contactTypes' => $contactTypes]);
+        return view('layouts.admin.contact.edit', ['contact' => $contact], ['contactTypes' => $contactTypes]);
     }
 
     /**
@@ -111,10 +102,15 @@ class ContactController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'email' => 'required|email|unique:contacts,email,' .$id,
+            'phone' => 'required|numeric',
+        ]);
+        
         $contact = Contact::find($id);
 
 
-        $contact->type = $request->get('type');
+        $contact->type_id = $request->get('type_id');
         $contact->first_name = $request->get('first_name');
         $contact->middle_name = $request->get('middle_name');
         $contact->last_name = $request->get('last_name');
@@ -146,5 +142,12 @@ class ContactController extends Controller
         $contact->delete();
 
         return redirect()->route('admin_contact_list')->with('success', 'Contact '.$contact->id.' has been removed.');
+    }
+
+    public function make($id)
+    {
+        $contact = Contact::find($id);
+
+        return view('layouts.admin.membership.make', ['contact' => $contact]);
     }
 }

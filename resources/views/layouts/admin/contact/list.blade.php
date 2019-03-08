@@ -21,7 +21,7 @@ All Contacts
 				<div class="box-body">
 
 					<form method="get" action="{{ route('admin_contact_create') }}">
-                        <button type="submit" class="btn btn-primary"> New </button>
+                        <button type="submit" class="btn btn-primary"> New Contact </button>
                     </form>
 
                     <br/>
@@ -32,9 +32,9 @@ All Contacts
 					        	<td> ID </td>
 					        	<td> Type </td>
 					        	<td> Name </td>
-					        	<td> Country </td>
 					        	<td> Website </td>
 					        	<td>  </td>
+                                <td>  </td>
 					        	<td>  </td>
 					        	<td>  </td>
 					        </tr>
@@ -44,24 +44,23 @@ All Contacts
 					    	@foreach($contacts as $contact)
 					        <tr>
 					            <td>{{ $contact->id }}</td>
-					            <td>{{ $contact->type }}</td>
+					            <td>{{ $contact->contactType->name }}</td>
 					            <td>
-					            	@if($contact->type == "Individual")
+					            	@if( $contact->contactType->name === "Individual" )
 					            	{{ $contact->first_name." ".$contact->middle_name." ".$contact->last_name }}
-					            	@elseif($contact->type == "Organization")
+					            	@elseif( $contact->contactType->name === "Organization" )
 					            	{{ $contact->organize_name }}
 					            	@else
 					            	{{ $contact->organize_name }}
 					            	@endif
 					            </td>
-					            <td>{{ $contact->country }}</td>
 					            <td>{{ $contact->website }}</td>
 					            <td>
-					            	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#showDetails"> View </button>
+					            	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#showDetails{{ $contact->id }}"> View </button>
 
 					            	<form method="post" action="#">
                                         @csrf
-                                        <div class="modal fade" id="showDetails" role="dialog">
+                                        <div class="modal fade" id="showDetails{{ $contact->id }}" role="dialog">
                                           <div class="modal-dialog">
                                           
                                             <!-- Modal content-->
@@ -72,55 +71,56 @@ All Contacts
                                                 <br/>
                                                 <table style="border: 0; width: 100%">
                                                 	<tr>
-                                                		<td> <p style="font-size: 20"> Type: </p></td>
-                                                		<td> <p style="font-size: 20"> {{ $contact->type }} </p></td>
+                                                		<td> <p> Type: </p></td>
+                                                		<td> <p> {{ $contact->contactType->name }} </p></td>
                                                 	</tr>
 
                                                 	<tr>
-                                                		<td> <p style="font-size: 20"> Name: </p></td>
+                                                		<td> <p> Name: </p></td>
                                                 		<td> 
-                                                			@if($contact->type != "Individual")
-                                                			{{ "Not used with this type." }}
+                                                			@if($contact->contactType->name != "Individual")
+                                                			<i style="color: red"> {{ "Not used with this type." }} </i>
+                                                			@else
+                                                			<p> {{ $contact->first_name." ".$contact->middle_name." ".$contact->last_name }} </p>
                                                 			@endif
-                                                			<p style="font-size: 20"> {{ $contact->first_name." ".$contact->middle_name." ".$contact->last_name }} </p>
                                                 		</td>
                                                 	</tr>
                                                 	<tr>
+                                                		<td> <p> Organization Name: </p></td>
                                                 		<td> 
-                                                			@if($contact->type != "Organization")
-                                                			{{ "Not used with this type." }}
+                                                			@if($contact->contactType->name === "Individual")
+                                                			<i style="color: red"> {{ "Not used with this type." }} </i>
+                                                			@else
+                                                			<p> {{ $contact->organize_name }} </p>
                                                 			@endif
-                                                			<p style="font-size: 20"> Organization Name: </p>
                                                 		</td>
-                                                		<td> <p style="font-size: 20"> {{ $contact->organize_name }} </p></td>
                                                 	</tr>
                                                 	<tr>
-                                                		<td> <p style="font-size: 20"> Address: </p></td>
-                                                		<td> <p style="font-size: 20"> {{ $contact->address }} </p></td>
+                                                		<td> <p> Address: </p></td>
+                                                		<td> <p> {{ $contact->address }} </p></t 22                                                	</tr>
+                                                	<tr>
+                                                		<td> <p> Email: </p></td>
+                                                		<td> <p> {{ $contact->email }} </p></td>
                                                 	</tr>
                                                 	<tr>
-                                                		<td> <p style="font-size: 20"> Email: </p></td>
-                                                		<td> <p style="font-size: 20"> {{ $contact->email }} </p></td>
+                                                		<td> <p> Phone: </p></td>
+                                                		<td> <p> {{ $contact->phone }} </p></td>
                                                 	</tr>
                                                 	<tr>
-                                                		<td> <p style="font-size: 20"> Phone: </p></td>
-                                                		<td> <p style="font-size: 20"> {{ $contact->phone }} </p></td>
+                                                		<td> <p> Fax: </p></td>
+                                                		<td> <p> {{ $contact->fax }} </p></td>
                                                 	</tr>
                                                 	<tr>
-                                                		<td> <p style="font-size: 20"> Fax: </p></td>
-                                                		<td> <p style="font-size: 20"> {{ $contact->fax }} </p></td>
+                                                		<td> <p> Website: </p></td>
+                                                		<td> <p> {{ $contact->website }} </p></td>
                                                 	</tr>
                                                 	<tr>
-                                                		<td> <p style="font-size: 20"> Website: </p></td>
-                                                		<td> <p style="font-size: 20"> {{ $contact->website }} </p></td>
+                                                		<td> <p> Country: </p></td>
+                                                		<td> <p> {{ $contact->country }} </p></td>
                                                 	</tr>
                                                 	<tr>
-                                                		<td> <p style="font-size: 20"> Country: </p></td>
-                                                		<td> <p style="font-size: 20"> {{ $contact->country }} </p></td>
-                                                	</tr>
-                                                	<tr>
-                                                		<td> <p style="font-size: 20"> Note: </p></td>
-                                                		<td> <p style="font-size: 20"> {{ $contact->note }} </p></td>
+                                                		<td> <p> Note: </p></td>
+                                                		<td> <p> {{ $contact->note }} </p></td>
                                                 	</tr>
                                                 </table>
                                               </div>
@@ -133,6 +133,13 @@ All Contacts
                                         </div>
                                     </form>
 					            </td>
+                                <td>
+                                    @if( $contact->membership === null )
+                                    <a href="{{ route('admin_membership_make', ["id" => $contact->id]) }}" class="btn btn-primary">Make Member</a>
+                                    @else
+                                    <i> &check;Member </i>
+                                    @endif
+                                </td>
 					            <td><a href="{{ route('admin_contact_edit', ["id" => $contact->id]) }}" class="btn btn-primary"> Edit </a></td>
 					            <td>
 					            	<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_contact{{ $contact->id }}">Delete</button>
