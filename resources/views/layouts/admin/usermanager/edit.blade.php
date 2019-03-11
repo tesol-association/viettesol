@@ -74,6 +74,7 @@
             <div class="form-group">
                 <label for="gender">{{ __('Gender') }}</label>
                 <select id="gender" type="text" class="form-control{{ $errors->has('gender') ? 'is-invalid' : '' }}" name="gender">
+                    <option value="" {{ $users->gender == 'null' ? 'selected' : '' }}></option>
                     <option value="male" {{ $users->gender == 'male' ? 'selected' : '' }}>male</option>
                     <option value="female" {{ $users->gender == 'female' ? 'selected' : '' }}>female</option>
                     <option value="other" {{ $users->gender == 'other' ? 'selected' : '' }}>Other</option>
