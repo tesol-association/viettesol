@@ -13,9 +13,9 @@
                     Update User Information
                 </h1>
             </legend>
-            @if (session('error'))
+            @if (session('errors'))
                 <div class="alert alert-danger">
-                    {{ session('error') }}
+                    {{ session('errors') }}
                 </div>
             @endif
             @if (session('success'))
@@ -23,7 +23,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <form  method="POST" action="{{ route('home_profile_update',['id'=> $user->id ]) }}"  enctype="multipart/form-data">
+            <form  method="POST" action="{{ route('home_profile_update',['id'=> $user->id ]) }}" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="box-body">
                     <div class="box box-default">

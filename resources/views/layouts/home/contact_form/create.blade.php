@@ -9,9 +9,9 @@
                     Contact Form
                 </h1>
             </legend>
-            @if (session('error'))
+            @if (session('errors'))
                 <div class="alert alert-danger">
-                    {{ session('error') }}
+                    {{ session('errors') }}
                 </div>
             @endif
             @if (session('success'))

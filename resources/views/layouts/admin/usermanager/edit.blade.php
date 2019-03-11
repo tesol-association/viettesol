@@ -157,17 +157,6 @@
                     </span>
                 @endif
             </div>
-
-            <div class="form-group">
-                <label for="password">{{ __('Password') }}</label>
-                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Enter password" value="{{ $users->password }}">
-
-                @if ($errors->has('password'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('password') }}</strong>
-                    </span>
-                @endif
-            </div>
         </div>
 
         <div class="box-footer">

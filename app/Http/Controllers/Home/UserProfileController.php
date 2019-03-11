@@ -108,7 +108,7 @@ class UserProfileController extends HomeController
         if($user->save()){
             return redirect()->route('home_profile_view')->with('success', 'User has been update successfully');
         }else{
-            return redirect()->route('home_profile_edit',$id)->with('errors', 'Error');
+            return redirect()->back()->with('errors', 'Error');
         } 
     }
 
