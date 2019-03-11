@@ -1,5 +1,7 @@
 @extends('layouts.home.layout')
-
+@section('css')
+    <script src="https://www.google.com/recaptcha/api.js?hl=en" async defer></script>
+@endsection
 @section('content')
 <div class="container">
     <div class="col-md-8">
@@ -90,6 +92,22 @@
                                         <strong>{{ $errors->first('message') }}</strong>
                                     </span>
                                 @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <br>
+                                <!-- Google reCaptcha -->
+                                <div class="g-recaptcha" id="feedback-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
+                                <!-- End Google reCaptcha -->
+
+                                @if ($errors->has('g-recaptcha-response'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    </span>
+                                @endif
+                                <br>
                             </div>
                         </div>
 

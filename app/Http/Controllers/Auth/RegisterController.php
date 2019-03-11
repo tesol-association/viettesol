@@ -59,6 +59,7 @@ class RegisterController extends Controller
             'affiliation' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha]
         ]);
     }
 
@@ -73,6 +74,7 @@ class RegisterController extends Controller
         return User::create([
             'user_name' => $data['user_name'],
             'first_name' => $data['first_name'],
+            'middle_name' => $data['middle_name'],
             'last_name' => $data['last_name'],
             'affiliation' => $data['affiliation'],
             'email' => $data['email'],

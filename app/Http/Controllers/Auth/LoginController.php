@@ -69,4 +69,18 @@ class LoginController extends Controller
         return view('auth.login',['menus'=> $menus,'_menus'=>$_menus, 'partners'=>$partners,'advs'=> $advs ]);
     }
 
+    /**
+   * Validate the user login request.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return void
+   */
+  protected function validateLogin(Request $request)
+  {
+        $this->validate($request, [
+        $this->username() => ['required', 'string'],
+        'password' => ['required', 'string'],
+        'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha]
+    ]);
+  }
 }
