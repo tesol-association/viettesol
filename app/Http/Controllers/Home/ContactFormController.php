@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Home\HomeController;
 use App\Models\ContactForm;
+use Illuminate\Support\Facades\Validator;
 
 class ContactFormController extends HomeController
 {
@@ -40,7 +41,8 @@ class ContactFormController extends HomeController
             'name' => ['required','string','max:45'],
             'email' => ['required', 'email', 'max:45'],
             'subject' => ['required', 'string', 'max:255'],
-            'message' => ['required', 'string']
+            'message' => ['required', 'string'],
+            'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha]
         ]);
 
         $contactForm = new ContactForm([

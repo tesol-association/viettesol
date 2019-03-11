@@ -49,6 +49,7 @@ class ChangePasswordController extends HomeController
         $validatedData = $request->validate([
             'current-password' => 'required',
             'new-password' => 'required|string|min:6|confirmed',
+            'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha]
         ]);
         //Change Password
         $user = Auth::user();
