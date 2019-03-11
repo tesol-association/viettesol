@@ -1,0 +1,1 @@
+ALTER TABLE `conferences` CHANGE `file_id` `attach_file` VARCHAR(255) NULL DEFAULT NULL;
