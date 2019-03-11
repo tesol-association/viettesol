@@ -1,90 +1,52 @@
-@extends('layouts.admin.layout')
-@section('title','Edit Conference')
+@extends('layouts.admin.conference_layout')
+@section('title','Edit Track')
 @section('css')
-    <link href="{{ asset('admin/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
     <div class="box">
-        <!-- /.box-header -->
         <div class="box-header with-border">
-            <h3 class="box-title">Edit Conference</h3>
+            <h3 class="box-title">Edit Track {{ $track->name }} For Conference: {{ $conference->title }}</h3>
             <div class="box-tools pull-right">
-                <a href="{{ route('admin_conference_list') }}" class="btn btn-block btn-info"><i class="fa fa-backward"></i> Conference List</a>
+                <a href="{{ route('admin_track_list', ["id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-backward"></i> Track List</a>
             </div>
         </div>
 
         <div class="box-body">
             <!-- form start -->
-            <form  method="post" action="{{ route('admin_conference_update', ["id" => $conference->id]) }}" enctype="multipart/form-data">
+            <form  method="post" action="{{ route('admin_track_update', ["conference_id" => $conference->id, "id" => $track->id]) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="box-body">
-                    <div class="form-group {{ $errors->first('slogan') ? 'has-error' : ''}}">
-                        <label for="slogan">Slogan*</label>
-                        <input id="slogan" type="text" class="form-control" placeholder="Enter Title" name="slogan" required value="{{ $conference->slogan }}">
-                        @if ($errors->has('slogan'))
-                            <span class="help-block">{{ $errors->first('slogan') }}</span>
+                    <div class="form-group {{ $errors->first('name') ? 'has-error' : ''}}">
+                        <label for="name">Name*</label>
+                        <input id="name" type="text" class="form-control" placeholder="Enter Title" name="name" required value="{{ $track->name }}">
+                        @if ($errors->has('name'))
+                            <span class="help-block">{{ $errors->first('name') }}</span>
                         @endif
                     </div>
 
-                    <div class="form-group {{ $errors->first('title') ? 'has-error' : ''}}">
-                        <label for="title">Title*</label>
-                        <input id="title" type="text" class="form-control" placeholder="Enter Title" name="title" required value="{{ $conference->title }}">
-                        @if ($errors->has('title'))
-                            <span class="help-block">{{ $errors->first('title') }}</span>
+                    <div class="form-group {{ $errors->first('abbrev') ? 'has-error' : ''}}">
+                        <label for="abbrev">Abbrev*</label>
+                        <input id="abbrev" type="text" class="form-control" placeholder="Enter Title" name="abbrev" required value="{{ $track->abbrev }}">
+                        @if ($errors->has('abbrev'))
+                            <span class="help-block">{{ $errors->first('abbrev') }}</span>
                         @endif
                     </div>
 
-                    <div class="form-group {{ $errors->first('path') ? 'has-error' : ''}}">
-                        <label for="path">Path*</label>
-                        <input id="path" type="text" class="form-control" placeholder="Enter Title" name="path" required value="{{ $conference->path }}">
-                        @if ($errors->has('path'))
-                            <span class="help-block">{{ $errors->first('path') }}</span>
-                        @endif
-                    </div>
-
-                    <div class="form-group {{ $errors->first('start_time') ? 'has-error' : ''}}">
-                        <label for="start_time">Start Time*</label>
-                        <input id="start_time" type='text' class="form-control" name="start_time" required value="{{ $conference->start_time }}" />
-                        @if ($errors->has('start_time'))
-                            <span class="help-block">{{ $errors->first('start_time') }}</span>
-                        @endif
-                    </div>
-
-                    <div class="form-group {{ $errors->first('end_time') ? 'has-error' : ''}}">
-                        <label for="end_time">End Time*</label>
-                        <input id="end_time" type='text' class="form-control" name="end_time" required value="{{ $conference->end_time }}" />
-                        @if ($errors->has('end_time'))
-                            <span class="help-block">{{ $errors->first('end_time') }}</span>
-                        @endif
-                    </div>
-
-                    <div class="form-group {{ $errors->first('venue') ? 'has-error' : ''}}">
-                        <label for="venue">Venue*</label>
-                        <input id="venue" type="text" class="form-control" placeholder="Enter Venue" name="venue" required value="{{ $conference->venue }}">
-                        @if ($errors->has('venue'))
-                            <span class="help-block">{{ $errors->first('venue') }}</span>
+                    <div class="form-group {{ $errors->first('policy') ? 'has-error' : ''}}">
+                        <label for="policy">Policy</label>
+                        <textarea name="policy" id="policy" class="form-control" rows="3" placeholder="Enter Policy ...">{{ $track->policy }}</textarea>
+                        @if ($errors->has('policy'))
+                            <span class="help-block">{{ $errors->first('policy') }}</span>
                         @endif
                     </div>
 
                     <div class="form-group {{ $errors->first('description') ? 'has-error' : ''}}">
                         <label for="description">Description</label>
-                        <textarea name="description" id="description" class="form-control" rows="3" placeholder="Enter Description ...">{{ $conference->description }}</textarea>
+                        <textarea name="description" id="description" class="form-control" rows="3" placeholder="Enter Description ...">{{ $track->description }}</textarea>
                         @if ($errors->has('description'))
                             <span class="help-block">{{ $errors->first('description') }}</span>
                         @endif
                     </div>
-
-                    <div class="form-group {{ $errors->first('attach_file') ? 'has-error' : ''}}">
-                        <label for="attach_file">Attach File</label>
-                        <input type="file" id="attach_file" name="attach_file">
-                        @if ($conference->attach_file)
-                            <a href="{{ asset('/storage' . $conference->attach_file) }}" class="btn btn-primary"><span class="fa fa-download"></span> Attach File</a>
-                        @endif
-                        @if ($errors->has('attach_file'))
-                            <span class="help-block">{{ $errors->first('attach_file') }}</span>
-                        @endif
-                    </div>
-
                 </div>
 
                 <div class="box-footer">
@@ -96,7 +58,4 @@
     </div>
 @endsection
 @section('js')
-    <script src="{{ asset('admin/bower_components/moment/min/moment.min.js') }}"></script>
-    <script src="{{ asset('admin/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
-    <script src="{{ asset('js/admin/conference/create.js') }}"></script>
 @endsection
