@@ -212,7 +212,26 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::get('/edit/{id}', 'Admin\TrackController@edit')->name('admin_track_edit');
             Route::post('/update/{id}', 'Admin\TrackController@update')->name('admin_track_update');
             Route::post('/delete/{id}', 'Admin\TrackController@destroy')->name('admin_track_delete');
+            });
+
+        Route::group(['prefix'=>'/buldings'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\BuildingsController@index')->name('admin_buildings_list');
+            Route::get('/create', 'Admin\ConferenceManager\BuildingsController@create')->name('admin_buildings_create');
+            Route::post('/store', 'Admin\ConferenceManager\BuildingsController@store')->name('admin_buildings_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\BuildingsController@edit')->name('admin_buildings_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\BuildingsController@update')->name('admin_buildings_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\BuildingsController@destroy')->name('admin_buildings_delete');
+
+            Route::group(['prefix'=>'/{building_id}/rooms'], function(){
+                Route::get('/list', 'Admin\ConferenceManager\RoomsController@index')->name('admin_rooms_list');
+                Route::get('/create', 'Admin\ConferenceManager\RoomsController@create')->name('admin_rooms_create');
+                Route::post('/store', 'Admin\ConferenceManager\RoomsController@store')->name('admin_rooms_store');
+                Route::get('/edit/{id}', 'Admin\ConferenceManager\RoomsController@edit')->name('admin_rooms_edit');
+                Route::post('/update/{id}', 'Admin\ConferenceManager\RoomsController@update')->name('admin_rooms_update');
+                Route::post('/delete/{id}', 'Admin\ConferenceManager\RoomsController@destroy')->name('admin_rooms_delete');
         });
+        });
+
 
         Route::group(['prefix'=>'/review_form'], function() {
             Route::get('/list', 'Admin\ReviewFormController@index')->name('admin_review_form_list');
