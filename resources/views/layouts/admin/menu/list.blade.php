@@ -13,7 +13,7 @@ List menu
         <div class="col-xs-12">
       
           <div class="box">
-            <div class="box-header">
+            <div class="box-header with-border">
               <div class="row">
                 <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                     <h3 class="box-title"></h3>
@@ -25,6 +25,7 @@ List menu
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+              <div class="table-responsive">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -100,6 +101,7 @@ List menu
                 </tfoot>
               </table>
             </div>
+            </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
@@ -107,7 +109,7 @@ List menu
         <!-- /.col -->
       </div>
       <!-- /.row -->
-    </section>
+</section>
 @endsection
 
 @section('js')

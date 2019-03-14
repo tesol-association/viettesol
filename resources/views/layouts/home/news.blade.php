@@ -15,7 +15,7 @@
 					<li>{{ $new->createdBy->user_name }}</li>
 					<li>{{ \Carbon\Carbon::parse($new->created_at)->format('d/m/Y') }}</li>
 					@foreach($new->categoryLinks as $categoryLink)
-					   <li><a href="">{{ $categoryLink->category->name }}</a></li>
+					   <li><a href="{{ route('home-news_category',['slug'=>$categoryLink->category->slug]) }}">{{ $categoryLink->category->name }}</a></li>
 					@endforeach
 				</ul>
 				<br>

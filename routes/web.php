@@ -57,6 +57,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
         Route::get('/view-submenu/{id}','Admin\MenuController@editSubmenu')->name('admin_submenu_edit');
         Route::post('/update-submenu/{id}','Admin\MenuController@updateSubmenu')->name('admin_submenu_update');
+
     });
 
     //User Manager
@@ -122,7 +123,10 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
     //comment
     Route::group(['prefix'=>'comment'],function(){
+        Route::get('/list','Admin\CommentController@index')->name('admin_comment_list');
 
+        Route::post('/store', 'Admin\CommentController@store')->name('admin_comment_store');
+        Route::get('/update','Admin\CommentController@update')->name('admin-comment-update');
     });
 
     //room
@@ -264,5 +268,14 @@ Route::group(['prefix'=>'home'],function(){
     Route::get('/news','Home\MainController@getNews')->name('home-news');
     Route::get('/news/{slug}','Home\MainController@getNewsDetail')->name('home-newsDetail');
 
+    Route::get('/news_category/{slug}','Home\MainController@getNewsByCategory')->name('home-news_category');
+
+    Route::get('/news_tags/{tag}','Home\MainController@getNewsByTag')->name('home-news_tag');
+
     Route::get('/event','Home\MainController@getEvent')->name('home-event');
+    Route::get('/event/{slug}','Home\MainController@getEventDetail')->name('home-eventDetail');
+
+    Route::get('/event_category/{slug}','Home\MainController@getEventByCategory')->name('home-event_category');
+
+    Route::get('/event_tags/{tag}','Home\MainController@getEventByTag')->name('home-event_tag');
 });
