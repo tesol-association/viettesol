@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Home;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Home\HomeController;
 use App\Models\ContactForm;
+use Illuminate\Support\Facades\Validator;
 
-class ContactFormController extends Controller
+class ContactFormController extends HomeController
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,7 @@ class ContactFormController extends Controller
      */
     public function index()
     {
-        $contactForms = ContactForm::all();
-        return view('layouts.admin.contact_form.list',compact('contactForms'));
+        //
     }
 
     /**
@@ -26,7 +26,7 @@ class ContactFormController extends Controller
      */
     public function create()
     {
-        //
+        return view('layouts.home.contact_form.create');
     }
 
     /**
@@ -37,7 +37,26 @@ class ContactFormController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required','string','max:45'],
+            'email' => ['required', 'email', 'max:45'],
+            'subject' => ['required', 'string', 'max:255'],
+            'message' => ['required', 'string'],
+            'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha]
+        ]);
+
+        $contactForm = new ContactForm([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'subject' => $request->get('subject'),
+            'message' => $request->get('message'),
+        ]);
+
+        if ($contactForm->save()) {
+            return redirect()->back()->with('success', 'Contact has been sent successfully');
+        } else{
+            return redirect()->back()->with('errors', 'Error');
+        }
     }
 
     /**

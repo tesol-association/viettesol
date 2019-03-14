@@ -31,7 +31,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/home/index';
 
     /**
      * Create a new controller instance.
@@ -49,14 +49,14 @@ class LoginController extends Controller
         if ($isAdmin == 1) {
             return '/admin/index';
         } else {
-            return '/';
+            return '/home/index';
         }
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/');
+        return redirect('/home/index');
     }
 
     public function showLoginForm()
@@ -69,4 +69,18 @@ class LoginController extends Controller
         return view('auth.login',['menus'=> $menus,'_menus'=>$_menus, 'partners'=>$partners,'advs'=> $advs ]);
     }
 
+    /**
+   * Validate the user login request.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return void
+   */
+  protected function validateLogin(Request $request)
+  {
+        $this->validate($request, [
+        $this->username() => ['required', 'string'],
+        'password' => ['required', 'string'],
+        'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha]
+    ]);
+  }
 }

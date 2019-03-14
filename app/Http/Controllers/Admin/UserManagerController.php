@@ -115,7 +115,6 @@ class UserManagerController extends Controller
             'affiliation' => ['required', 'string', 'max:255'],
             'is_admin' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
-            'password' => ['required', 'string', 'min:6'],
         ]);
 
         $users = User::find($id);
@@ -133,8 +132,6 @@ class UserManagerController extends Controller
         $users->country = $request->get('country');
         if(!($users->email == $request->get('email')))
             $users->email = $request->get('email');
-        if(!($users->password == $request->get('password')))
-            $users->password = Hash::make($request->get('password'));
 
         if($users->save()){
             return redirect()->route('admin_user_view',$id)->with('success', 'User has been update successfully');

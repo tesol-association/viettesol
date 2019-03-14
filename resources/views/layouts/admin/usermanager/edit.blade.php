@@ -74,6 +74,7 @@
             <div class="form-group">
                 <label for="gender">{{ __('Gender') }}</label>
                 <select id="gender" type="text" class="form-control{{ $errors->has('gender') ? 'is-invalid' : '' }}" name="gender">
+                    <option value="" {{ $users->gender == 'null' ? 'selected' : '' }}></option>
                     <option value="male" {{ $users->gender == 'male' ? 'selected' : '' }}>male</option>
                     <option value="female" {{ $users->gender == 'female' ? 'selected' : '' }}>female</option>
                     <option value="other" {{ $users->gender == 'other' ? 'selected' : '' }}>Other</option>
@@ -153,17 +154,6 @@
                 @if ($errors->has('email'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('email') }}</strong>
-                    </span>
-                @endif
-            </div>
-
-            <div class="form-group">
-                <label for="password">{{ __('Password') }}</label>
-                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Enter password" value="{{ $users->password }}">
-
-                @if ($errors->has('password'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('password') }}</strong>
                     </span>
                 @endif
             </div>
