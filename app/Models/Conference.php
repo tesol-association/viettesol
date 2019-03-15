@@ -12,4 +12,9 @@ class Conference extends Model
     {
         return $this->hasMany('App\Models\Track');
     }
+
+    public function timeline()
+    {
+        return $this->hasOne('App\Models\ConferenceTimeline', 'conference_id');
+    }
 }

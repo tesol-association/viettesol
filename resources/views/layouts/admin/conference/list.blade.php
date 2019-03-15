@@ -54,13 +54,13 @@
                                         </td>
                                         <td>{{ $conference->created_at }}</td>
                                         <td>
-                                            <a href="{{ route('admin_conference_view', ["id" => $conference->id]) }}" class="btn btn-info">Detail</a>
+                                            <a href="{{ route('admin_conference_view', ["id" => $conference->id]) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin_conference_edit', ["id" => $conference->id]) }}" class="btn btn-info">Edit</a>
+                                            <a href="{{ route('admin_conference_edit', ["id" => $conference->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_conference_{{ $conference->id }}">Delete</button>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_conference_{{ $conference->id }}"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->
