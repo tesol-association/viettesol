@@ -1,4 +1,3 @@
-ALTER TABLE `users` ADD `is_admin` INT NOT NULL DEFAULT '0' AFTER `initals`;
 -- -----------------------------------------------------
 -- Table `viettesol`.`contacts`
 -- -----------------------------------------------------

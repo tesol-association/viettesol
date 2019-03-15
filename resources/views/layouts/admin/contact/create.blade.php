@@ -2,8 +2,7 @@
 @section('title','Contact Management')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('admin/bower_components/select2/dist/css/select2.css') }}">
-<link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<link href="{{ asset('admin/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('page-header')
@@ -12,15 +11,25 @@ Create a New Contact
 
 @section('content')
 <div class="box box-primary">
+	<div class="box-header with-border">
+        <div class="col-md-4">
+                <h3 class="box-title">Create a New Contact</h3>
+        </div>
+        <div class="col-md-2 col-md-offset-6">
+            <a href="{{ route('admin_contact_list') }}" class="btn btn-block btn-info">
+                Contact List
+            </a>
+        </div>
+    </div>
 
 	<form method="post" action="{{ route('admin_contact_store') }}" id="form_ind">
 		@csrf
 		<div class="box-body">
 			<div class="form-group">
-				<label for="type"> Contact Type*: </label>
-				<select class="form-control" name="type" id="type" onselect="change(this)">
+				<label> Contact Type*: </label>
+				<select class="form-control" name="type_id" onselect="onSelect(this)">
 					@foreach( $contactTypes as $contactType )
-					<option value="{{ $contactType->name }}"> {{ $contactType->name }} </option>
+					<option value="{{ $contactType->id }}"> {{ $contactType->name }} </option>
 					@endforeach
 				</select>
 			</div>
@@ -41,8 +50,8 @@ Create a New Contact
 			</div>
 
 			<div class="form-group">
-				<label for="organization"> Organization Name: </label>
-				<input type="text" class="form-control" placeholder="e.g.: Pierce" name="organization" id="organization" value="{{ old('organization')}}">
+				<label for="organize_name"> Organization Name: </label>
+				<input type="text" class="form-control" placeholder="e.g.: Admin LTE, Inc" name="organize_name" id="organize_name" value="{{ old('organize_name')}}">
 			</div>
 
 			<div class="form-group">
@@ -78,7 +87,15 @@ Create a New Contact
 
 			<div class="form-group">
 				<label for="country"> Country: </label>
-				<input type="text" class="form-control" name="country">
+				<select class="form-control {{ $errors->has('country') ? ' is-invalid' : '' }}" id="country" name="country" data-value="{{ old('country') }}">
+                    @include('helper.country')
+                </select>
+
+                @if ($errors->has('country'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('country') }}</strong>
+                    </span>
+                @endif
 			</div>
 
 			<div class="form-group">
@@ -90,18 +107,18 @@ Create a New Contact
 		<div class="box-footer">
             <button type="submit" class="btn btn-primary"> Create </button>
         </div>
+        
 	</form>
 </div>
 @endsection
 
 @section('js')
+<script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script type="text/javascript">
-	$(
-		function change(param)
-		{
-			var value = param.value;
-			
-		}
-	)
+	$(document).ready(function () {
+        $('#country').select2();
+        var countrySelected = $('#country').data('value');
+        $('#country').val(countrySelected).trigger('change');
+    });	
 </script>
 @endsection

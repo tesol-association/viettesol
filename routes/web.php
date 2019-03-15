@@ -196,6 +196,22 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 		Route::post('/delete/{id}', 'Admin\ContactTypeController@destroy')->name('admin_contact_type_delete');
 	});
 
+    Route::group(['prefix'=>'contribution'],function(){
+        Route::get('/list', 'Admin\ContributionController@index')->name('admin_contribution_list');
+        Route::post('/delete/{id}', 'Admin\ContributionController@destroy')->name('admin_contribution_delete');
+    });
+	
+    Route::group(['prefix'=>'membership'],function(){
+        Route::get('/list', 'Admin\MembershipController@index')->name('admin_membership_list');
+        Route::get('/create', 'Admin\MembershipController@create')->name('admin_membership_create');
+        Route::post('/store', 'Admin\MembershipController@store')->name('admin_membership_store');
+        Route::get('/edit/{id}', 'Admin\MembershipController@edit')->name('admin_membership_edit');
+        Route::post('/update/{id}', 'Admin\MembershipController@update')->name('admin_membership_update');
+        Route::post('/delete/{id}', 'Admin\MembershipController@destroy')->name('admin_membership_delete');
+        Route::get('/make/{id}', 'Admin\ContactController@make')->name('admin_membership_make');
+    });
+
+
     /**
      * CONFERENCE MANAGER
      */
@@ -210,6 +226,15 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
     });
 
     Route::group(['prefix'=>'/conf/{conference_id}'], function() {
+        // Conference TimeLine
+        Route::group(['prefix'=>'/timeline'], function() {
+            Route::get('/view', 'Admin\ConferenceTimelineController@view')->name('admin_timeline_view');
+            Route::get('/create', 'Admin\ConferenceTimelineController@create')->name('admin_timeline_create');
+            Route::post('/store', 'Admin\ConferenceTimelineController@store')->name('admin_timeline_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceTimelineController@edit')->name('admin_timeline_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceTimelineController@update')->name('admin_timeline_update');
+        });
+
         Route::group(['prefix'=>'/track'], function() {
             Route::get('/list', 'Admin\TrackController@index')->name('admin_track_list');
             Route::get('/create', 'Admin\TrackController@create')->name('admin_track_create');
@@ -217,6 +242,43 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::get('/edit/{id}', 'Admin\TrackController@edit')->name('admin_track_edit');
             Route::post('/update/{id}', 'Admin\TrackController@update')->name('admin_track_update');
             Route::post('/delete/{id}', 'Admin\TrackController@destroy')->name('admin_track_delete');
+        });
+
+        Route::group(['prefix'=>'/buldings'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\BuildingsController@index')->name('admin_buildings_list');
+            Route::get('/create', 'Admin\ConferenceManager\BuildingsController@create')->name('admin_buildings_create');
+            Route::post('/store', 'Admin\ConferenceManager\BuildingsController@store')->name('admin_buildings_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\BuildingsController@edit')->name('admin_buildings_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\BuildingsController@update')->name('admin_buildings_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\BuildingsController@destroy')->name('admin_buildings_delete');
+
+            Route::group(['prefix'=>'/{building_id}/rooms'], function(){
+                Route::get('/list', 'Admin\ConferenceManager\RoomsController@index')->name('admin_rooms_list');
+                Route::get('/create', 'Admin\ConferenceManager\RoomsController@create')->name('admin_rooms_create');
+                Route::post('/store', 'Admin\ConferenceManager\RoomsController@store')->name('admin_rooms_store');
+                Route::get('/edit/{id}', 'Admin\ConferenceManager\RoomsController@edit')->name('admin_rooms_edit');
+                Route::post('/update/{id}', 'Admin\ConferenceManager\RoomsController@update')->name('admin_rooms_update');
+                Route::post('/delete/{id}', 'Admin\ConferenceManager\RoomsController@destroy')->name('admin_rooms_delete');
+            });
+        });
+
+        Route::group(['prefix'=>'/speakers'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\SpeakersController@index')->name('admin_speakers_list');
+            Route::get('/create', 'Admin\ConferenceManager\SpeakersController@create')->name('admin_speakers_create');
+            Route::post('/store', 'Admin\ConferenceManager\SpeakersController@store')->name('admin_speakers_store');
+            Route::get('/view/{id}', 'Admin\ConferenceManager\SpeakersController@show')->name('admin_speakers_view');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\SpeakersController@edit')->name('admin_speakers_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\SpeakersController@update')->name('admin_speakers_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\SpeakersController@destroy')->name('admin_speakers_delete');
+        });
+
+        Route::group(['prefix'=>'/announcements'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\AnnouncementsController@index')->name('admin_announcements_list');
+            Route::get('/create', 'Admin\ConferenceManager\AnnouncementsController@create')->name('admin_announcements_create');
+            Route::post('/store', 'Admin\ConferenceManager\AnnouncementsController@store')->name('admin_announcements_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\AnnouncementsController@edit')->name('admin_announcements_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\AnnouncementsController@update')->name('admin_announcements_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\AnnouncementsController@destroy')->name('admin_announcements_delete');
         });
 
         Route::group(['prefix'=>'/review_form'], function() {
@@ -255,6 +317,7 @@ Route::group(['prefix'=>'test'],function(){
     Route::get('/show_review_form', 'TestController@showReviewForm');
     Route::get('/send_review', 'TestController@sendReview');
     Route::get('/assign_paper', 'TestController@assignPaper');
+
 });
 Auth::routes();
 

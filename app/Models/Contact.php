@@ -6,22 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
-    //
     protected $table = 'contacts';
 
-    protected $fillable = 
-    [
-    	'type',
-    	'first_name',
-    	'middle_name',
-    	'last_name',
-    	'organize_name',
-    	'address',
-    	'email',
-    	'phone',
-    	'fax',
-    	'country',
-    	'website',
-    	'note'
-    ];
+    public function contactType()
+    {
+    	return $this->belongsTo('App\Models\ContactType', 'type_id');
+    }
+
+    public function membership()
+    {
+    	return $this->hasOne('App\Models\Membership', 'contact_id');
+    }
+
+    public function contributions()
+    {
+    	return $this->hasMany('App\Models\Contribution', 'contact_id');
+    }
 }

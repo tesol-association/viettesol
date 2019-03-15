@@ -94,7 +94,7 @@ desired effect
                     <a href="#">
                       <div class="pull-left">
                         <!-- User Image -->
-                        <img src="{{Auth::User()->image}}" class="img-circle" alt="User Image">
+                        <img src="{{ asset('/storage/' . Auth::User()->image) }}" class="img-circle" alt="User Image">
                       </div>
                       <!-- Message title and timestamp -->
                       <h4>
@@ -511,8 +511,8 @@ desired effect
           <ul class="treeview-menu">
             <li><a href="{{ route('admin_contact_list') }}"> Contact Management </a></li>
             <li><a href="{{ route('admin_contact_type_list') }}"> Contact Type Management </a></li>
-            <li><a href="#"> Membership </a></li>
-            <li><a href="#"> Member Contribution </a></li>
+            <li><a href="{{ route('admin_membership_list') }}"> Membership </a></li>
+            <li><a href="{{ route('admin_contribution_list') }}"> Contribution </a></li>
             <li><a href="#"> Member Payment </a></li>
             <li><a href="#"> Notification </a></li>
           </ul>

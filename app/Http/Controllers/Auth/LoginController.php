@@ -49,14 +49,22 @@ class LoginController extends Controller
         if ($isAdmin == 1) {
             return '/admin/index';
         } else {
+
+            return '/home/index/';
+
             return '/home/index';
+
         }
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
+
+        return redirect('/home/index/');
+
         return redirect('/home/index');
+
     }
 
     public function showLoginForm()
@@ -75,8 +83,8 @@ class LoginController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return void
    */
-  protected function validateLogin(Request $request)
-  {
+    protected function validateLogin(Request $request)
+    {
         $this->validate($request, [
         $this->username() => ['required', 'string'],
         'password' => ['required', 'string'],
