@@ -205,6 +205,15 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
     });
 
     Route::group(['prefix'=>'/conf/{conference_id}'], function() {
+        // Conference TimeLine
+        Route::group(['prefix'=>'/timeline'], function() {
+            Route::get('/view', 'Admin\ConferenceTimelineController@view')->name('admin_timeline_view');
+            Route::get('/create', 'Admin\ConferenceTimelineController@create')->name('admin_timeline_create');
+            Route::post('/store', 'Admin\ConferenceTimelineController@store')->name('admin_timeline_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceTimelineController@edit')->name('admin_timeline_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceTimelineController@update')->name('admin_timeline_update');
+        });
+
         Route::group(['prefix'=>'/track'], function() {
             Route::get('/list', 'Admin\TrackController@index')->name('admin_track_list');
             Route::get('/create', 'Admin\TrackController@create')->name('admin_track_create');
