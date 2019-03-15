@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Session;
@@ -150,6 +151,7 @@ class UserManagerController extends Controller
     {
         $users = User::find($id);
         if($users->delete()){
+            Storage::disk('public')->delete($users->image);
             return redirect()->route('admin_user_list')->with('success', 'Account has been deleted successfully');
         }else{
             return redirect()->route('admin_user_list')->with('errors', 'Error');

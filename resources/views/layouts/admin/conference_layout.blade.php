@@ -158,14 +158,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="{{Auth::User()->image}}" class="user-image" alt="User Image">
+                            <img src="{{ asset('/storage/' . Auth::User()->image) }}" class="user-image" alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">{{Auth::User()->user_name}}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="{{Auth::User()->image}}" class="img-circle" alt="User Image">
+                                <img src="{{ asset('/storage/' . Auth::User()->image) }}" class="img-circle" alt="User Image">
 
                                 <p>
                                     {{Auth::User()->user_name}}
@@ -223,7 +223,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="{{Auth::User()->image}}" class="img-circle" alt="User Image">
+                    <img src="{{ asset('/storage/' . Auth::User()->image) }}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>{{Auth::User()->user_name}}</p>
@@ -254,8 +254,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </span>
                     </a>
                     <ul class="treeview-menu">
+                        <li><a href="{{ route('admin_announcements_list', ["conference_id" => $conference->id]) }}">Announcement</a></li>
                         <li><a href="{{ route('admin_timeline_view', ["conference_id" => $conference->id]) }}">Conference Timeline</a></li>
-                        <li><a href="#">Announcement</a></li>
                         <li><a href="#">Fee</a></li>
                         <li><a href="{{ route('admin_track_list', ["conference_id" => $conference->id]) }}">Track</a></li>
                         <li class="treeview">
@@ -271,7 +271,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
                         <li><a href="#">Prepaired email</a></li>
                         <li><a href="#">Registration</a></li>
-                        <li><a href="#">Speaker</a></li>
+                        <li><a href="{{ route('admin_speakers_list', ["conference_id" => $conference->id]) }}">Speaker</a></li>
                         <li class="treeview">
                             <a href="#"><i class="fa fa-link"></i> <span>Paper Management</span>
                                 <span class="pull-right-container">
@@ -294,8 +294,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <ul class="treeview-menu">
                                 <li><a href="#">Schedule</a></li>
                                 <li><a href="#">Time Block</a></li>
-                                <li><a href="#">Room</a></li>
-                                <li><a href="#">Building</a></li>
+                                <li><a href="{{ route('admin_buildings_list', ["conference_id" => $conference->id]) }}">Building & Room</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
