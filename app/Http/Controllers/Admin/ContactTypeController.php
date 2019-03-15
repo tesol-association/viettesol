@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ContactType;
+use App\Models\Contact;
 use Session;
 
 class ContactTypeController extends Controller
@@ -17,7 +18,9 @@ class ContactTypeController extends Controller
     public function index()
     {
         $contactTypes = ContactType::all();
-        return view('layouts.admin.contact_type.list', ['contactTypes' => $contactTypes]);
+        $contacts = Contact::all();
+        
+        return view('layouts.admin.contact_type.list', ['contactTypes' => $contactTypes], ['contacts' => $contacts]);
     }
 
     /**
@@ -94,6 +97,7 @@ class ContactTypeController extends Controller
         // ]);
 
         $contactType = ContactType::find($id);
+
         $contactType->name = $request->get('name');
         $contactType->description = $request->get('description');
 
