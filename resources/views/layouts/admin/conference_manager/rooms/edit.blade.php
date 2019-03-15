@@ -52,5 +52,4 @@
 @endsection
 @section('js')
     <script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('js/admin/review_form/create.js') }}"></script>
 @endsection

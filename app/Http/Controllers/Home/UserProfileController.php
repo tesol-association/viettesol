@@ -11,7 +11,7 @@ use App\Models\User;
 
 class UserProfileController extends HomeController
 {
-    const AVATAR_FOLDER = 'avatar';
+    const AVATAR_FOLDER = 'usersAvatar';
     /**
      * Display a listing of the resource.
      *
