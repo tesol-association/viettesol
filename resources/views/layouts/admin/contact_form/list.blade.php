@@ -17,11 +17,11 @@
                     <table id="contact_form_manager" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <td>Name</td>
-                                <td>Email</td>
-                                <td>Subject</td>
-                                <td>Message</td>
-                                <td>Send Time</td>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Subject</th>
+                                <th>Message</th>
+                                <th>Send Time</th>
                             </tr>
                         </thead>
                         <tbody>

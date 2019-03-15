@@ -26,7 +26,6 @@
                                     <th>Id</th>
                                     <th>Slug</th>
                                     <th>Title</th>
-                                    <th>Short Content</th>
                                     <th>Tags</th>
                                     <th>Status</th>
                                     <th>Last Updated</th>
@@ -41,7 +40,6 @@
                                         <td>{{ $new->id }}</td>
                                         <td>{{ $new->slug }}</td>
                                         <td>{{ $new->title }}</td>
-                                        <td style="max-height:50px; max-width: 200px;">{{ $new->short_content }}</td>
                                         <td>
                                             @if (isset($new->tags) && count($new->tags))
                                                 @foreach ($new->tags as $tag)

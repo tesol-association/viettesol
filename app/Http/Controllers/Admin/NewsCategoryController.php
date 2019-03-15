@@ -6,6 +6,7 @@ use App\Models\NewsCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class NewsCategoryController extends Controller
 {
@@ -25,7 +26,9 @@ class NewsCategoryController extends Controller
 
     public function store(Request $request)
     {
-        $validator = $this->validateData($request->all());
+        $data = $request->all();
+        $data["slug"] = Str::slug($request->name, '-');
+        $validator = $this->validateData($data);
         if ($validator->fails()) {
             return redirect()
                 ->route('admin_news_category_create')
@@ -34,7 +37,7 @@ class NewsCategoryController extends Controller
         }
         $newsCategory = new NewsCategory();
         $newsCategory->name = $request->name;
-        $newsCategory->slug = $request->slug;
+        $newsCategory->slug = $data["slug"];
         $newsCategory->description = $request->description;
         $newsCategory->save();
         return redirect()->route('admin_news_category_list')->with('success', 'Create ' . $newsCategory->name . ' successful !');
@@ -50,6 +53,7 @@ class NewsCategoryController extends Controller
     {
         $data = $request->all();
         $data["id"] = $id;
+        $data["slug"] = Str::slug($request->name, '-');
         $validator = $this->validateData($data);
         if ($validator->fails()) {
             return redirect()
@@ -59,7 +63,7 @@ class NewsCategoryController extends Controller
         }
         $newsCategory = NewsCategory::find($id);
         $newsCategory->name = $request->name;
-        $newsCategory->slug = $request->slug;
+        $newsCategory->slug = $data["slug"];
         $newsCategory->description = $request->description;
         $newsCategory->save();
         return redirect()->route('admin_news_category_list')->with('success', 'Update ' . $newsCategory->name . ' successful !');

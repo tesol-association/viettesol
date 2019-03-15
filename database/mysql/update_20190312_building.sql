@@ -1,0 +1,1 @@
+ALTER TABLE buildings ADD conference_id INT NOT NULL AFTER abbrev;

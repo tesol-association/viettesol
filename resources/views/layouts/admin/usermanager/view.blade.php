@@ -10,7 +10,7 @@
     <div class="box box-default">
         <div class="box-header with-border">
             <div class="col-md-4">
-                <h3 class="box-title">User List</h3>
+                <h3 class="box-title">User Infomation</h3>
             </div>
             <div class="col-md-2 col-md-offset-6">
                 <a href="{{ route('admin_user_list') }}" class="btn btn-block btn-info"><i class="fa fa-backward"></i> User List</a>

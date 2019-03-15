@@ -29,14 +29,6 @@
                         @endif
                     </div>
 
-                    <div class="form-group {{ $errors->first('slug') ? 'has-error' : ''}}">
-                        <label for="slug">Slug*</label>
-                        <input id="slug" type="text" class="form-control" placeholder="Enter Title" name="slug" required value="{{ old('slug') }}">
-                        @if ($errors->has('slug'))
-                            <span class="help-block">{{ $errors->first('slug') }}</span>
-                        @endif
-                    </div>
-
                     <div class="form-group {{ $errors->first('cover') ? 'has-error' : ''}}">
                         <label for="exampleInputFile">Cover</label>
                         <input type="file" id="cover" name="cover" accept="image/*">
