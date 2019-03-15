@@ -37,7 +37,7 @@
 	</div>
 	<div class="post-comments">
         @foreach( $comments as $comment)
-        @if($comment->status=='active')
+        @if($comment->status=='approved')
 		<!-- comment -->
 		<div class="media">
 			<div class="media-left">

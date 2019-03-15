@@ -19,7 +19,7 @@ List menu
                     <h3 class="box-title"></h3>
                 </div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                    <a href="{{ route('admin_menu_create') }}" class="btn btn-warning">Create menu</a>
+                    <a href="{{ route('admin_menu_create') }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i>Create menu</a>
                 </div>
               </div>
             </div>

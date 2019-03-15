@@ -14,6 +14,8 @@ use App\Models\Comment;
 use App\Models\Event;
 use App\Models\EventCategory;
 use App\Models\EventCategoryLink;
+use App\Models\EventRegistration;
+use Session;
 
 class MainController extends HomeController
 {
@@ -24,7 +26,9 @@ class MainController extends HomeController
 	public function getData()
 	{
 		$banners = Banner::all();
-		return view('layouts.home.main',['banners'=> $banners ]);
+		$news= News::orderBy('id', 'DESC')->limit(5)->offset(0)->get();
+		$events=Event::orderBy('id', 'DESC')->limit(5)->offset(0)->get();
+		return view('layouts.home.main',['banners'=> $banners,'news'=>$news,'events'=>$events ]);
 	}
 	public function getNews()
 	{
@@ -39,7 +43,7 @@ class MainController extends HomeController
 		$tags = json_decode($newsDetail->tags, true);
 		$comments = Comment::where('new_id', '=', $idNews)->get();
 		foreach ($comments as $value) {
-			if($value->status == 'active'){
+			if($value->status == 'approved'){
 				$i++;
 			}
 		}
@@ -75,5 +79,34 @@ class MainController extends HomeController
 	{
 		$events= Event::where('tags','like','%' .$tag. '%')->get();
 		return view('layouts.home.event_tag',['events'=> $events]);
+	}
+	public function createFormRegistraion($id)
+	{
+		$event=Event::where('id','=',$id)->first();
+		return view('layouts.home.registration_form',['event'=>$event]);
+	}
+	public function addRegisterEvent(Request $request)
+	{
+		$this->validate($request,[
+           'full_name'  => 'required',
+           'gender'     => 'required',
+           'affiliation'=> 'required',
+           'email'      => 'required'
+        ]);
+        EventRegistration::create([
+           'full_name'     => $request->full_name,
+           'gender'        => $request->gender,
+           'affiliation'   => $request->affiliation,
+           'department'    => $request->department,
+           'position'      => $request->position,
+           'address'       => $request->address,
+           'email'         => $request->email,
+           'phone'         => $request->phone,
+           'highest_degree'=> $request->highest_degree,
+           'email_notify'  => $request->email_notify,
+           'event_id'      => $request->event_id 
+        ]);
+        Session::flash('success','successful registration !');
+        return redirect()->back();
 	}
 }

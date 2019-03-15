@@ -18,6 +18,8 @@
 		</ul>
 		<br>
 		{!! $eventDetail->body !!}
+		<br>
+		<strong><a href="{{ route('create-form',['id'=>$eventDetail->id]) }}">Registration</a></strong>
 	</div>
 </div>
 <!-- /post content -->

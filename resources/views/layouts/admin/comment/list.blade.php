@@ -8,23 +8,25 @@ List comment
 @endsection
 @section('content')
 <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-      
-          <div class="box">
-            <div class="box-body">
-              <div class="table-responsive">
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
+  <div class="row">
+    <div class="col-xs-12">
+
+      <div class="box">
+        <div class="box-body">
+          <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
                 <tr>
                   <th>Id</th>
                   <th>Body</th>
                   <th>Create by</th>
                   <th>News</th>
-                  <th>Status</th>
+                  <th>Select all
+                     <input type="checkbox" id="all" onclick="getAll()">
+                  </th>
                 </tr>
-                </thead>
-                <tbody>
+              </thead>
+              <tbody>
                 @foreach($comments as $comment)	
                 <tr>
                 	<td>{{ $comment->id }}</td>
@@ -32,29 +34,30 @@ List comment
                 	<td>{{ $comment->createdBy->user_name }}</td>
                 	<td>{{ $comment->news->title }}</td>
                 	<td>
-                  <div class="form-group">
-		                <select class="form-control select2 select2-hidden-accessible" id="status_{{ $comment->id }}" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateStatus(this)">
+                    <div class="form-group">
+		                {{-- <select class="form-control select2 select2-hidden-accessible" id="status_{{ $comment->id }}" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateStatus(this)">
 		                @foreach($status as $_status)	
 		                  <option value="{{ $_status }}" @if($_status == $comment->status) {{ 'selected' }} @endif>{{ $_status }}</option>
 		                @endforeach  
-		                </select>
-		              </div>
-                	</td>
-                </tr>
-                @endforeach
-                </tbody>
-                <tfoot>
-                </tfoot>
-              </table>
-            </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
+                  </select> --}}
+                  <input type="checkbox" id="status_{{ $comment->id }}" name="status[]" value="{{ $comment->status }}" @if($comment->status=='approved') {{ 'checked' }} @endif onchange="updateStatus(this)"><br>
+                </div>
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
+          <tfoot>
+          </tfoot>
+        </table>
       </div>
-      <!-- /.row -->
+    </div>
+    <!-- /.box-body -->
+  </div>
+  <!-- /.box -->
+</div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
 </section>
 @endsection
 

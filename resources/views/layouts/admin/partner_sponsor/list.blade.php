@@ -18,12 +18,13 @@ List partner-sponsor
                     <h3 class="box-title"></h3>
                 </div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                    <a href="{{ route('admin_partner_create') }}" class="btn btn-warning">Create partner/sponsor</a>
+                    <a href="{{ route('admin_partner_create') }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i>Create partner/sponsor</a>
                 </div>
               </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+              <div class="table-responsive">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -81,6 +82,7 @@ List partner-sponsor
                 <tfoot>
                 </tfoot>
               </table>
+            </div>
             </div>
             <!-- /.box-body -->
           </div>

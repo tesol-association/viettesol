@@ -124,6 +124,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
         Route::post('/store', 'Admin\CommentController@store')->name('admin_comment_store');
         Route::get('/update','Admin\CommentController@update')->name('admin-comment-update');
+        Route::get('/updateAll','Admin\CommentController@updateAll')->name('admin-comment-updateAll');
     });
 
     //room
@@ -275,6 +276,9 @@ Route::group(['prefix'=>'home'],function(){
     Route::get('/event_category/{slug}','Home\MainController@getEventByCategory')->name('home-event_category');
 
     Route::get('/event_tags/{tag}','Home\MainController@getEventByTag')->name('home-event_tag');
+
+    Route::get('/event/registration/{id}','Home\MainController@createFormRegistraion')->name('create-form');
+    Route::post('/event/registration/store','Home\MainController@addRegisterEvent')->name('store-register');
 
     //User Profile
     Route::group(['prefix'=>'profile'], function(){
