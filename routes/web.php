@@ -191,6 +191,22 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 		Route::post('/delete/{id}', 'Admin\ContactTypeController@destroy')->name('admin_contact_type_delete');
 	});
 
+    Route::group(['prefix'=>'contribution'],function(){
+        Route::get('/list', 'Admin\ContributionController@index')->name('admin_contribution_list');
+        Route::post('/delete/{id}', 'Admin\ContributionController@destroy')->name('admin_contribution_delete');
+    });
+	
+    Route::group(['prefix'=>'membership'],function(){
+        Route::get('/list', 'Admin\MembershipController@index')->name('admin_membership_list');
+        Route::get('/create', 'Admin\MembershipController@create')->name('admin_membership_create');
+        Route::post('/store', 'Admin\MembershipController@store')->name('admin_membership_store');
+        Route::get('/edit/{id}', 'Admin\MembershipController@edit')->name('admin_membership_edit');
+        Route::post('/update/{id}', 'Admin\MembershipController@update')->name('admin_membership_update');
+        Route::post('/delete/{id}', 'Admin\MembershipController@destroy')->name('admin_membership_delete');
+        Route::get('/make/{id}', 'Admin\ContactController@make')->name('admin_membership_make');
+    });
+
+
     /**
      * CONFERENCE MANAGER
      */
@@ -260,6 +276,7 @@ Route::group(['prefix'=>'test'],function(){
     Route::get('/show_review_form', 'TestController@showReviewForm');
     Route::get('/send_review', 'TestController@sendReview');
     Route::get('/assign_paper', 'TestController@assignPaper');
+
 });
 Auth::routes();
 
