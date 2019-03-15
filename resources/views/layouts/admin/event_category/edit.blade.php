@@ -23,14 +23,6 @@
                     @endif
                 </div>
 
-                <div class="form-group {{ $errors->first('slug') ? 'has-error' : ''}}">
-                    <label class="control-label" for="slug">Slug*</label>
-                    <input name="slug" type="text" class="form-control" id="slug" placeholder="Enter ..." value="{{ $eventCategory->slug }}" required>
-                    @if ($errors->has('slug'))
-                        <span class="help-block">{{ $errors->first('slug') }}</span>
-                    @endif
-                </div>
-
                 <div class="form-group">
                     <label for="description">Description</label>
                     <textarea name="description" id="description" class="form-control" rows="3" placeholder="Enter Body ...">{{ $eventCategory->description }}</textarea>
