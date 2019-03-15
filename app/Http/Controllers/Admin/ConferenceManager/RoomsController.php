@@ -14,10 +14,11 @@ class RoomsController extends BaseConferenceController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($conference_id, $building_id)
+    public function index($conferenceId, $buildingId)
     {
-        $rooms = Rooms::where('building_id', $building_id)->get();
-        return view('layouts.admin.conference_manager.rooms.list', ["rooms" => $rooms, 'building_id' =>$building_id]);
+        $building = Buildings::find($buildingId);
+        $rooms = Rooms::where('building_id', $buildingId)->get();
+        return view('layouts.admin.conference_manager.rooms.list', ["rooms" => $rooms, 'building_id' =>$buildingId, 'building'=>$building]);
     }
 
     /**
@@ -25,9 +26,9 @@ class RoomsController extends BaseConferenceController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($conference_id, $building_id)
+    public function create($conferenceId, $buildingId)
     {
-        return view('layouts.admin.conference_manager.rooms.create', ["conference_id" => $conference_id, 'building_id' => $building_id]);
+        return view('layouts.admin.conference_manager.rooms.create', ["conference_id" => $conferenceId, 'building_id' => $buildingId]);
     }
 
     /**
@@ -36,7 +37,7 @@ class RoomsController extends BaseConferenceController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $conference_id, $building_id)
+    public function store(Request $request, $conferenceId, $buildingId)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -47,13 +48,13 @@ class RoomsController extends BaseConferenceController
             'name' => $request->get('name'),
             'abbrev' => $request->get('abbrev'),
             'description' => $request->get('description'),
-            'building_id' => $building_id,
+            'building_id' => $buildingId,
         ]);
 
         if ($room->save()) {
-            return redirect()->route('admin_rooms_list', ["conference_id" => $conference_id, 'building_id' => $building_id])->with('success', 'Room has been added successfully');
+            return redirect()->route('admin_rooms_list', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('success', 'Room has been added successfully');
         } else{
-            return redirect()->route('admin_rooms_create',  ["conference_id" => $conference_id, 'building_id' => $building_id])->with('errors', 'Error');
+            return redirect()->route('admin_rooms_create',  ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('errors', 'Error');
         }
     }
 
@@ -74,11 +75,11 @@ class RoomsController extends BaseConferenceController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($conference_id, $building_id, $id)
+    public function edit($conferenceId, $buildingId, $id)
     {
         $room = Rooms::find($id);
 
-         return view('layouts.admin.conference_manager.rooms.edit', ["room" => $room, "conference_id" => $conference_id, 'building_id' => $building_id]);
+         return view('layouts.admin.conference_manager.rooms.edit', ["room" => $room, "conference_id" => $conferenceId, 'building_id' => $buildingId]);
     }
 
     /**
@@ -88,7 +89,7 @@ class RoomsController extends BaseConferenceController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $conference_id, $building_id, $id)
+    public function update(Request $request, $conferenceId, $buildingId, $id)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -102,9 +103,9 @@ class RoomsController extends BaseConferenceController
         $room->description = $request->get('description');
 
         if($room->save()){
-            return redirect()->route('admin_rooms_list', ["conference_id" => $conference_id, 'building_id' => $building_id])->with('success', 'Room has been update successfully');
+            return redirect()->route('admin_rooms_list', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('success', 'Room has been update successfully');
         }else{
-            return redirect()->route('admin_room_edit', ["conference_id" => $conference_id, 'building_id' => $building_id])->with('errors', 'Error');
+            return redirect()->route('admin_room_edit', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('errors', 'Error');
         } 
     }
 
@@ -114,14 +115,14 @@ class RoomsController extends BaseConferenceController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($conference_id, $building_id, $id)
+    public function destroy($conferenceId, $buildingId, $id)
     {
         $room = Rooms::find($id);
 
         if($room->delete()){
-            return redirect()->route('admin_rooms_list', ["conference_id" => $conference_id, 'building_id' => $building_id])->with('success', 'Room has been deleted successfully');
+            return redirect()->route('admin_rooms_list', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('success', 'Room has been deleted successfully');
         }else{
-            return redirect()->route('admin_rooms_list', ["conference_id" => $conference_id, 'building_id' => $building_id])->with('errors', 'Error');
+            return redirect()->route('admin_rooms_list', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('errors', 'Error');
         }
     }
 }

@@ -13,4 +13,9 @@ class Buildings extends Model
     	'description',
     	'conference_id'
     ];
+
+    public function rooms()
+    {
+    	return $this->hasMany('App\Models\Rooms', 'building_id');
+    }
 }

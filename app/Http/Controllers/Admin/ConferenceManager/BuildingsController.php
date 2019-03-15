@@ -115,27 +115,14 @@ class BuildingsController extends BaseConferenceController
      */
     public function destroy( $conferenceId, $id)
     {
-        //Delete room 
-        $room = Rooms::where('building_id', $id)->get();
-
-        if($room == NULL){
-            return redirect()->route('admin_buildings_list', $conferenceId)->with('success', 'Building has been deleted successfully');
-        }
-        else{
-            foreach ($room as $rooms){ 
-                if(!$rooms->delete()){
-                    return redirect()->route('admin_buildings_list', $conferenceId)->with('errors', 'Error');
-                }
-            }
-        }
-
-        //Delete building
         $building = Buildings::find($id);
+        foreach ($building->rooms as $room) {
+            $room->delete();
+        }
         
         if(!$building->delete()){
             return redirect()->route('admin_buildings_list', $conferenceId)->with('errors', 'Error');
         }
-        
         
         return redirect()->route('admin_buildings_list', $conferenceId)->with('success', 'Building has been deleted successfully');
     }

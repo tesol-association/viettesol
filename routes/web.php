@@ -243,6 +243,15 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::post('/delete/{id}', 'Admin\ConferenceManager\SpeakersController@destroy')->name('admin_speakers_delete');
         });
 
+        Route::group(['prefix'=>'/announcements'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\AnnouncementsController@index')->name('admin_announcements_list');
+            Route::get('/create', 'Admin\ConferenceManager\AnnouncementsController@create')->name('admin_announcements_create');
+            Route::post('/store', 'Admin\ConferenceManager\AnnouncementsController@store')->name('admin_announcements_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\AnnouncementsController@edit')->name('admin_announcements_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\AnnouncementsController@update')->name('admin_announcements_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\AnnouncementsController@destroy')->name('admin_announcements_delete');
+        });
+
         Route::group(['prefix'=>'/review_form'], function() {
             Route::get('/list', 'Admin\ReviewFormController@index')->name('admin_review_form_list');
             Route::get('/create', 'Admin\ReviewFormController@create')->name('admin_review_form_create');

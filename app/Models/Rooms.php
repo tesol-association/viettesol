@@ -13,4 +13,8 @@ class Rooms extends Model
     	'description',
     	'building_id'
     ];
+
+    public function building(){
+    	return $this->belongsTo('App\Models\Buildings', 'building_id');
+    }
 }

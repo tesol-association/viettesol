@@ -9,16 +9,16 @@ use App\Models\Speakers;
 
 class SpeakersController extends BaseConferenceController
 {
-    const AVATAR_FOLDER = 'speakersAvatar';
-    const FILE_FOLDER = 'speakersFile';
+    const AVATAR_FOLDER = 'speakers_avatar';
+    const FILE_FOLDER = 'speakers_file';
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($conference_id)
+    public function index($conferenceId)
     {
-        $speakers = Speakers::where('conference_id', $conference_id)->get();
+        $speakers = Speakers::where('conference_id', $conferenceId)->get();
         return view('layouts.admin.conference_manager.speaker.list', compact('speakers'));
     }
 
@@ -27,7 +27,7 @@ class SpeakersController extends BaseConferenceController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($conference_id)
+    public function create($conferenceId)
     {
         return view('layouts.admin.conference_manager.speaker.create');
     }
@@ -38,7 +38,7 @@ class SpeakersController extends BaseConferenceController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $conference_id)
+    public function store(Request $request, $conferenceId)
     {
         $request->validate([
             'image' => ['required', 'image'],
@@ -56,14 +56,14 @@ class SpeakersController extends BaseConferenceController
         $speaker->biography = $request->get('biography');
         $speaker->site_url = $request->get('site_url');
         $speaker->abstract = $request->get('abstract');
-        $speaker->conference_id = $conference_id;
+        $speaker->conference_id = $conferenceId;
         if ($request->hasFile('attach_file')) {
             $path = Storage::disk('public')->put(self::FILE_FOLDER, $request->attach_file);
             $speaker->attach_file = $path;
         }
 
         if($speaker->save()){
-            return redirect()->route('admin_speakers_list', ["conference_id" => $conference_id])->with('success', 'Speaker has been add successfully');
+            return redirect()->route('admin_speakers_list', ["conference_id" => $conferenceId])->with('success', 'Speaker has been add successfully');
         }else{
             return redirect()->back()->with('errors', 'Error');
         } 
@@ -75,10 +75,10 @@ class SpeakersController extends BaseConferenceController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($conference_id, $id)
+    public function show($conferenceId, $id)
     {
         $speaker = Speakers::find($id);
-         return view('layouts.admin.conference_manager.speaker.view', ["conference_id" => $conference_id, "speaker" => $speaker ]);
+         return view('layouts.admin.conference_manager.speaker.view', ["conference_id" => $conferenceId, "speaker" => $speaker ]);
     }
 
     /**
@@ -87,10 +87,10 @@ class SpeakersController extends BaseConferenceController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($conference_id, $id)
+    public function edit($conferenceId, $id)
     {
         $speaker = Speakers::find($id);
-        return view('layouts.admin.conference_manager.speaker.edit', ["conference_id" => $conference_id, "speaker" => $speaker ]);
+        return view('layouts.admin.conference_manager.speaker.edit', ["conference_id" => $conferenceId, "speaker" => $speaker ]);
     }
 
     /**
@@ -100,7 +100,7 @@ class SpeakersController extends BaseConferenceController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $conference_id, $id)
+    public function update(Request $request, $conferenceId, $id)
     {
         $request->validate([
             'full_name' => ['required', 'string', 'max:255'],
@@ -126,7 +126,7 @@ class SpeakersController extends BaseConferenceController
         }
 
         if($speaker->save()){
-            return redirect()->route('admin_speakers_view',  ["conference_id" => $conference_id, "speaker" => $speaker])->with('success', 'Speaker has been update successfully');
+            return redirect()->route('admin_speakers_view',  ["conference_id" => $conferenceId, "speaker" => $speaker])->with('success', 'Speaker has been update successfully');
         }else{
             return redirect()->back()->with('errors', 'Error');
         } 
@@ -139,16 +139,16 @@ class SpeakersController extends BaseConferenceController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($conference_id, $id)
+    public function destroy($conferenceId, $id)
     {
         $speaker = Speakers::find($id);
 
          if($speaker->delete()){
             Storage::disk('public')->delete($speaker->image);
             Storage::disk('public')->delete($speaker->attach_file);
-            return redirect()->route('admin_speakers_list', ["conference_id" => $conference_id])->with('success', 'Speaker has been deleted successfully');
+            return redirect()->route('admin_speakers_list', ["conference_id" => $conferenceId])->with('success', 'Speaker has been deleted successfully');
         }else{
-            return redirect()->route('admin_speakers_list', ["conference_id" => $conference_id])->with('errors', 'Error');
+            return redirect()->route('admin_speakers_list', ["conference_id" => $conferenceId])->with('errors', 'Error');
         }
     }
 }

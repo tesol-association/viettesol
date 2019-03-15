@@ -10,13 +10,13 @@
                 <div class="box">
                     <div class="box-header with-border">
                         <div class="col-md-4">
-                            <h3 class="box-title">Rooms List</h3>
+                            <h3 class="box-title">Room List Of {{ $building->name }}</h3>
                         </div>
                         <div class="col-md-2 col-md-offset-4">
-                            <a href="{{ route('admin_rooms_create', ["conference_id" => $conference->id, "building_id" => $building_id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add New Room</a>
+                            <a href="{{ route('admin_rooms_create', ['conference_id' => $conference->id, 'building_id' => $building_id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add New Room</a>
                         </div>
                         <div class="col-md-2">
-                            <a href="{{ route('admin_buildings_list', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-backward"></i> Buildings List</a>
+                            <a href="{{ route('admin_buildings_list', ['conference_id' => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-backward"></i> Buildings List</a>
                         </div>
                     </div>
                     <div class="box-body">
