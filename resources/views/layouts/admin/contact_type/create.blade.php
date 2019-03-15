@@ -2,7 +2,7 @@
 @section('title','Contact Management')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+
 @endsection
 
 @section('page-header')

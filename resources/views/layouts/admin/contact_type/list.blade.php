@@ -38,8 +38,8 @@ All Contact Types
                                 <td> Name </td>
                                 <td> Description </td>
                                 <td> Number of contacts </td>
-                                <td>  </td>
-                                <td>  </td>
+                                <td> Edit </td>
+                                <td> Delete </td>
                             </tr>
                         </thead>
 
@@ -52,17 +52,17 @@ All Contact Types
                                 <td>{{ count($contactType->contacts) }}</td>
                                 <td>
                                     @if( $contactType->name != "Individual" )
-                                    <a href="{{ route('admin_contact_type_edit', $contactType->id) }}" class="btn btn-primary">Edit</a>
+                                    <a href="{{ route('admin_contact_type_edit', $contactType->id) }}" class="btn btn-primary"> <i class="fa fa-edit"></i> </a>
                                     @else
                                     <i> disabled </i>
                                     @endif
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_contact_type{{ $contactType->id }}">Delete</button>
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_contact_type{{ $contactType->id }}"> <i class="fa fa-trash">  </i> </button>
                                     @if ($contactType->name != "Individual")
 
                                         @if( count($contactType->contacts)==0 )
-                                        <form method="post" action="{{ route('admin_contact_delete',['id'=> $contactType->id ]) }}">
+                                        <form method="post" action="{{ route('admin_contact_type_delete',['id'=> $contactType->id ]) }}">
                                             @csrf
                                             <div class="modal fade" id="delete_contact_type{{ $contactType->id }}" role="dialog">
                                               <div class="modal-dialog">

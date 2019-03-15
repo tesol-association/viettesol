@@ -17,4 +17,9 @@ class Contact extends Model
     {
     	return $this->hasOne('App\Models\Membership', 'contact_id');
     }
+
+    public function contributions()
+    {
+    	return $this->hasMany('App\Models\Contribution', 'contact_id');
+    }
 }

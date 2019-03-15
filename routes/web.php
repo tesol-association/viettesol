@@ -194,6 +194,10 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 		Route::post('/delete/{id}', 'Admin\ContactTypeController@destroy')->name('admin_contact_type_delete');
 	});
 
+    Route::group(['prefix'=>'contribution'],function(){
+        Route::get('/list', 'Admin\ContributionController@index')->name('admin_contribution_list');
+        Route::post('/delete/{id}', 'Admin\ContributionController@destroy')->name('admin_contribution_delete');
+    });
 	
     Route::group(['prefix'=>'membership'],function(){
         Route::get('/list', 'Admin\MembershipController@index')->name('admin_membership_list');

@@ -2,8 +2,7 @@
 @section('title','Contact Management')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('admin/bower_components/select2/dist/css/select2.css') }}">
-<link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<link href="{{ asset('admin/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('page-header')
@@ -28,9 +27,13 @@ Edit an existing Contact
 		<div class="box-body">
 			<div class="form-group">
 				<label for="type_id"> Contact Type*: </label>
-				<select class="form-control" name="type_id" id="type_id" onselect="change(this)">
+				<select class="form-control" name="type_id" id="type_id" onselect="change(this)" >
 					@foreach( $contactTypes as $contactType )
-					<option value="{{ $contactType->id }}"> {{ $contactType->name }} </option>
+						@if ($contactType->id == $contact->contactType->id)
+							<option value="{{ $contactType->id }}" selected> {{ $contactType->name }} </option>
+						@else
+							<option value="{{ $contactType->id }}"> {{ $contactType->name }} </option>
+						@endif
 					@endforeach
 				</select>
 			</div>
@@ -51,8 +54,8 @@ Edit an existing Contact
 			</div>
 
 			<div class="form-group">
-				<label for="organization"> Organization Name: </label>
-				<input type="text" class="form-control" placeholder="e.g.: Pierce" name="organization" id="organization" value="{{ $contact->organization }}">
+				<label for="organize_name"> Organization Name: </label>
+				<input type="text" class="form-control" placeholder="e.g.: Pierce" name="organize_name" id="organize_name" value="{{ $contact->organize_name }}">
 			</div>
 
 			<div class="form-group">
@@ -88,7 +91,15 @@ Edit an existing Contact
 
 			<div class="form-group">
 				<label for="country"> Country: </label>
-				<input type="text" class="form-control" name="country">
+				<select class="form-control {{ $errors->has('country') ? ' is-invalid' : '' }}" id="country" name="country" data-value="{{ $contact->country }}">
+					@include('helper.country')
+                </select>
+
+                @if ($errors->has('country'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('country') }}</strong>
+                    </span>
+                @endif
 			</div>
 
 			<div class="form-group">
@@ -105,13 +116,13 @@ Edit an existing Contact
 @endsection
 
 @section('js')
-<script type="text/javascript">
-	$(
-		function change(param)
-		{
-			var value = param.value;
-			
-		}
-	)
+<script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('#country').select2();
+        var countrySelected = $('#country').data('value');
+        $('#country').val(countrySelected).trigger('change');
+    });
 </script>
+
 @endsection

@@ -49,14 +49,14 @@ class LoginController extends Controller
         if ($isAdmin == 1) {
             return '/admin/index';
         } else {
-            return '/';
+            return '/home/index/';
         }
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/');
+        return redirect('/home/index/');
     }
 
     public function showLoginForm()

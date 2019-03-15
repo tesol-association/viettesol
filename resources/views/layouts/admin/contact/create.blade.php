@@ -2,8 +2,7 @@
 @section('title','Contact Management')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('admin/bower_components/select2/dist/css/select2.css') }}">
-<link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<link href="{{ asset('admin/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('page-header')
@@ -52,7 +51,7 @@ Create a New Contact
 
 			<div class="form-group">
 				<label for="organize_name"> Organization Name: </label>
-				<input type="text" class="form-control" placeholder="e.g.: Pierce" name="organize_name" id="organize_name" value="{{ old('organization')}}">
+				<input type="text" class="form-control" placeholder="e.g.: Admin LTE, Inc" name="organize_name" id="organize_name" value="{{ old('organize_name')}}">
 			</div>
 
 			<div class="form-group">
@@ -114,23 +113,12 @@ Create a New Contact
 @endsection
 
 @section('js')
+<script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script type="text/javascript">
-
-	$(
-		function onSelect(obj)
-		{
-			var param = obj.value;
-
-			if( param == 1 )
-			{
-				
-			}
-			else
-			{
-				
-			}
-		}
-	)
-	
+	$(document).ready(function () {
+        $('#country').select2();
+        var countrySelected = $('#country').data('value');
+        $('#country').val(countrySelected).trigger('change');
+    });	
 </script>
 @endsection

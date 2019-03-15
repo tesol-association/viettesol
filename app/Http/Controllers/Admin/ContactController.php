@@ -52,7 +52,7 @@ class ContactController extends Controller
         $contact->type_id = $request->get('type_id');
         $contact->first_name = $request->get('first_name');
         $contact->middle_name = $request->get('middle_name');
-        $contact->last_name = $request->get('middle_name');
+        $contact->last_name = $request->get('last_name');
         $contact->organize_name = $request->get('organize_name');
         $contact->address = $request->get('address');
         $contact->email = $request->get('email');

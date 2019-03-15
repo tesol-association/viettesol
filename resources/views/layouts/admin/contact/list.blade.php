@@ -2,6 +2,7 @@
 @section('title','Contact Management')
 
 @section('css')
+<link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 <style type="text/css">
 	td{
 		text-align: center;
@@ -37,10 +38,10 @@ All Contacts
 								<td> Type </td>
 								<td> Name </td>
 								<td> Website </td>
-								<td>  </td>
-								<td>  </td>
-								<td>  </td>
-								<td>  </td>
+								<td> View </td>
+								<td> Membership </td>
+								<td> Edit </td>
+								<td> Delete </td>
 							</tr>
 						</thead>
 
@@ -60,7 +61,7 @@ All Contacts
 								</td>
 								<td>{{ $contact->website }}</td>
 								<td>
-									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#showDetails{{ $contact->id }}"> View </button>
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#showDetails{{ $contact->id }}"> <i class="fa fa-eye"> </i>  </button>
 
 									<form method="post" action="#">
 										@csrf
@@ -144,9 +145,9 @@ All Contacts
 									<i> &check; Member Already </i>
 									@endif
 								</td>
-								<td><a href="{{ route('admin_contact_edit', ["id" => $contact->id]) }}" class="btn btn-primary"> Edit </a></td>
+								<td><a href="{{ route('admin_contact_edit', ["id" => $contact->id]) }}" class="btn btn-primary"> <i class="fa fa-edit">  </i>  </a></td>
 								<td>
-									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_contact{{ $contact->id }}">Delete</button>
+									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_contact{{ $contact->id }}"> <i class="fa fa-trash"> </i> </button>
 
 									<form method="post" action="{{ route('admin_contact_delete',['id'=> $contact->id ]) }}">
 										@csrf
