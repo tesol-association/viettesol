@@ -255,6 +255,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ route('admin_announcements_list', ["conference_id" => $conference->id]) }}">Announcement</a></li>
+                        <li><a href="{{ route('admin_timeline_view', ["conference_id" => $conference->id]) }}">Conference Timeline</a></li>
                         <li><a href="#">Fee</a></li>
                         <li><a href="{{ route('admin_track_list', ["conference_id" => $conference->id]) }}">Track</a></li>
                         <li class="treeview">

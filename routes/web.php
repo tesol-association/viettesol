@@ -191,6 +191,22 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 		Route::post('/delete/{id}', 'Admin\ContactTypeController@destroy')->name('admin_contact_type_delete');
 	});
 
+    Route::group(['prefix'=>'contribution'],function(){
+        Route::get('/list', 'Admin\ContributionController@index')->name('admin_contribution_list');
+        Route::post('/delete/{id}', 'Admin\ContributionController@destroy')->name('admin_contribution_delete');
+    });
+	
+    Route::group(['prefix'=>'membership'],function(){
+        Route::get('/list', 'Admin\MembershipController@index')->name('admin_membership_list');
+        Route::get('/create', 'Admin\MembershipController@create')->name('admin_membership_create');
+        Route::post('/store', 'Admin\MembershipController@store')->name('admin_membership_store');
+        Route::get('/edit/{id}', 'Admin\MembershipController@edit')->name('admin_membership_edit');
+        Route::post('/update/{id}', 'Admin\MembershipController@update')->name('admin_membership_update');
+        Route::post('/delete/{id}', 'Admin\MembershipController@destroy')->name('admin_membership_delete');
+        Route::get('/make/{id}', 'Admin\ContactController@make')->name('admin_membership_make');
+    });
+
+
     /**
      * CONFERENCE MANAGER
      */
@@ -205,7 +221,15 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
     });
 
     Route::group(['prefix'=>'/conf/{conference_id}'], function() {
-        
+        // Conference TimeLine
+        Route::group(['prefix'=>'/timeline'], function() {
+            Route::get('/view', 'Admin\ConferenceTimelineController@view')->name('admin_timeline_view');
+            Route::get('/create', 'Admin\ConferenceTimelineController@create')->name('admin_timeline_create');
+            Route::post('/store', 'Admin\ConferenceTimelineController@store')->name('admin_timeline_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceTimelineController@edit')->name('admin_timeline_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceTimelineController@update')->name('admin_timeline_update');
+        });
+
         Route::group(['prefix'=>'/track'], function() {
             Route::get('/list', 'Admin\TrackController@index')->name('admin_track_list');
             Route::get('/create', 'Admin\TrackController@create')->name('admin_track_create');
@@ -288,6 +312,7 @@ Route::group(['prefix'=>'test'],function(){
     Route::get('/show_review_form', 'TestController@showReviewForm');
     Route::get('/send_review', 'TestController@sendReview');
     Route::get('/assign_paper', 'TestController@assignPaper');
+
 });
 Auth::routes();
 
