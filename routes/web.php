@@ -243,6 +243,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
         Route::group(['prefix'=>'/paper'], function() {
             Route::get('/list', 'Admin\PaperController@index')->name('admin_paper_list');
+            Route::get('/create', 'Admin\PaperController@create')->name('admin_paper_create');
             Route::get('/edit/{id}', 'Admin\PaperController@edit')->name('admin_paper_edit');
             Route::post('/update/{id}', 'Admin\PaperController@update')->name('admin_paper_update');
             Route::post('/delete/{id}', 'Admin\PaperController@destroy')->name('admin_paper_delete');

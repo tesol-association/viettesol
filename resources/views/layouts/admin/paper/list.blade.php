@@ -12,6 +12,9 @@
                         <div class="col-md-4">
                             <h3 class="box-title">Paper List</h3>
                         </div>
+                        <div class="col-md-2 col-md-offset-6">
+                            <a href="{{ route('admin_paper_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Send Paper</a>
+                        </div>
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">

@@ -15,12 +15,19 @@ class PaperController extends BaseConferenceController
     public function index()
     {
         $conferenceId = $this->conferenceId;
-        $papers = Paper::with(['track' => function ($query) use ($conferenceId) {
-            $query->where('conference_id', '=', $conferenceId);
-        }])->get();
+        $papers = Paper::with('track.conference')->get();
+        $papers = $papers->filter(function($paper) use ($conferenceId) {
+            return $paper->track->conference->id == $conferenceId;
+        });
         return view('layouts.admin.paper.list', [
-            'papers'=> $papers
+            'papers'=> $papers->all()
         ]);
+    }
+
+
+    public function create()
+    {
+        return view('layouts.admin.paper.create');
     }
 
     /**
