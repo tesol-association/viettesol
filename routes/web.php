@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.home.layout');
-})->name('home_page');
 Route::get('/demo-conference',function () {
     return view('layouts.conference.layout');
 });
@@ -29,8 +26,8 @@ Route::get('/test',function () {
 });
 
 //Contact Form
-Route::get('/home/contact_form/create','Admin\ContactFormController@create')->name('home_contactForm_create');
-Route::post('/home/contact_form/store','Admin\ContactFormController@store')->name('home_contactForm_store');
+Route::get('/home/contact_form/create','Home\ContactFormController@create')->name('home_contactForm_create');
+Route::post('/home/contact_form/store','Home\ContactFormController@store')->name('home_contactForm_store');
 
 //'middleware'=>'auth'
 Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
@@ -274,7 +271,21 @@ Route::group(['prefix'=>'test'],function(){
 Auth::routes();
 
 Route::group(['prefix'=>'home'],function(){
-    Route::get('/index','Home\MainController@index');
+    Route::get('/index','Home\MainController@index')->name('home_page');
 
     Route::get('/main','Home\MainController@getData')->name('home-main');
+
+    //User Profile
+    Route::group(['prefix'=>'profile'], function(){
+        Route::get('/view','Home\UserProfileController@index')->name('home_profile_view');
+
+        Route::get('/edit/{id}','Home\UserProfileController@edit')->name('home_profile_edit');
+        Route::post('/update/{id}','Home\UserProfileController@update')->name('home_profile_update');
+    });
+
+    //Change Password
+    Route::group(['prefix'=>'changepassword'], function(){
+        Route::get('/view','Home\ChangePasswordController@index')->name('home_changepassword_view');
+        Route::post('/save','Home\ChangePasswordController@store')->name('home_changepassword_save');
+    });
 });
