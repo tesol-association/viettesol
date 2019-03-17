@@ -8,6 +8,7 @@
 <!-- post content -->
 <div class="section-row">
 	<h3>{{ $eventDetail->title }}</h3>
+	<h4><a href="{{ route('create-form',['id'=>$eventDetail->id]) }}" class="btn btn-info">Registration</a></h4>
 	<div class="post-body">
 		<ul class="post-meta">
 			<li>{{ $eventDetail->createdBy->user_name }}</li>
@@ -19,7 +20,6 @@
 		<br>
 		{!! $eventDetail->body !!}
 		<br>
-		<strong><a href="{{ route('create-form',['id'=>$eventDetail->id]) }}">Registration</a></strong>
 	</div>
 </div>
 <!-- /post content -->

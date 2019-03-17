@@ -18,7 +18,7 @@
 
 			<div class="form-group">
 				<label for="exampleInputEmail1">Full name *</label>
-				<input type="text" class="form-control" name="full_name" placeholder="Enter name">
+				<input type="text" class="form-control" name="full_name" placeholder="Enter name" value="@if(!empty(Auth::id())) {{  Auth::User()->first_name.' '.Auth::User()->middle_name.' '.Auth::User()->last_name }} @else @endif">
 			</div>
 			<div class="form-group">
 				<label>Select gender</label>
@@ -30,7 +30,7 @@
 			</div>
 			<div class="form-group">
 				<label for="exampleInputEmail1">Affiliation *</label>
-				<input type="text" class="form-control" name="affiliation" placeholder="Enter affiliation">
+				<input type="text" class="form-control" name="affiliation" placeholder="Enter affiliation" value="@if(!empty(Auth::id())) {{  Auth::User()->affiliation }} @else @endif">
 			</div>
 			<div class="form-group">
 				<label for="exampleInputEmail1">Department</label>
@@ -46,11 +46,11 @@
 			</div>
 			<div class="form-group">
 				<label for="exampleInputEmail1">Email *</label>
-				<input type="email" class="form-control" name="email" placeholder="Enter email">
+				<input type="email" class="form-control" name="email" placeholder="Enter email" value="@if(!empty(Auth::id())) {{  Auth::User()->email }} @else @endif">
 			</div>
 			<div class="form-group">
 				<label for="exampleInputEmail1">Phone</label>
-				<input type="text" class="form-control" name="phone" placeholder="Enter phone">
+				<input type="text" class="form-control" name="phone" placeholder="Enter phone" value="@if(!empty(Auth::id())) {{  Auth::User()->phone }} @else @endif">
 			</div>
 			<div class="form-group">
 				<label for="exampleInputEmail1">Highest degree</label>
@@ -58,7 +58,7 @@
 			</div>
 			<div class="form-group">
 				<label for="exampleInputEmail1">Email notify</label>
-				<input type="email" class="form-control" name="email_notify" placeholder="Enter email notify">
+				<input type="email" class="form-control" name="email_notify" placeholder="Enter email notify" value="@if(!empty(Auth::id())) {{  Auth::User()->email }} @else @endif">
 			</div>
 			<div class="form-group">
 				<input type="hidden" class="form-control" name="event_id" value="{{ $event->id }}">

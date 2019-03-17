@@ -326,6 +326,8 @@ Route::group(['prefix'=>'home'],function(){
 
     Route::get('/main','Home\MainController@getData')->name('home-main');
 
+    Route::post('/main/search','Home\MainController@searchPost')->name('home-search');
+
     Route::get('/news','Home\MainController@getNews')->name('home-news');
     Route::get('/news/{slug}','Home\MainController@getNewsDetail')->name('home-newsDetail');
 
