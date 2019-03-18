@@ -200,7 +200,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::get('/list', 'Admin\ContributionController@index')->name('admin_contribution_list');
         Route::post('/delete/{id}', 'Admin\ContributionController@destroy')->name('admin_contribution_delete');
     });
-	
+
     Route::group(['prefix'=>'membership'],function(){
         Route::get('/list', 'Admin\MembershipController@index')->name('admin_membership_list');
         Route::get('/create', 'Admin\MembershipController@create')->name('admin_membership_create');
@@ -301,6 +301,8 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
         Route::group(['prefix'=>'/paper'], function() {
             Route::get('/list', 'Admin\PaperController@index')->name('admin_paper_list');
+            Route::get('/create', 'Admin\PaperController@create')->name('admin_paper_create');
+            Route::post('/store', 'Admin\PaperController@store')->name('admin_paper_store');
             Route::get('/edit/{id}', 'Admin\PaperController@edit')->name('admin_paper_edit');
             Route::post('/update/{id}', 'Admin\PaperController@update')->name('admin_paper_update');
             Route::post('/delete/{id}', 'Admin\PaperController@destroy')->name('admin_paper_delete');

@@ -10,10 +10,11 @@ use Illuminate\Support\Facades\View;
 class BaseConferenceController extends Controller
 {
     protected $conferenceId;
+    protected $conference;
     public function __construct(Request $request)
     {
         $this->conferenceId = $request->route('conference_id');
-        $conference = Conference::find($this->conferenceId);
-        View::share('conference', $conference);
+        $this->conference = Conference::find($this->conferenceId);
+        View::share('conference', $this->conference);
     }
 }
