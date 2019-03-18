@@ -19,12 +19,13 @@ List menu
                     <h3 class="box-title"></h3>
                 </div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                    <a href="{{ route('admin_submenu_create',['id' => $id]) }}" class="btn btn-warning">Create submenu</a>
+                    <a href="{{ route('admin_submenu_create',['id' => $id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i>Create submenu</a>
                 </div>
               </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+              <div class="table-responsive">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -94,6 +95,7 @@ List menu
                 <tfoot>
                 </tfoot>
               </table>
+            </div>
             </div>
             <!-- /.box-body -->
           </div>

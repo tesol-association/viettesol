@@ -1,4 +1,4 @@
-@extends('layouts.admin.layout')
+@extends('layouts.admin.conference_layout')
 @section('title','View Timeline')
 @section('css')
 @endsection
@@ -56,7 +56,7 @@
                     <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text" class="form-control pull-right" name="author_registration_opened" id="author_registration_opened" value="{{ $timeline->author_registration_opened ? date('Y/m/d', strtotime($timeline->author_registration_opened)) : "" }}" disabled>
+                    <input type="text" class="form-control pull-right" name="author_registration_opened" id="author_registration_opened" value="{{ $timeline ? date('Y/m/d', strtotime($timeline->author_registration_opened)) : "" }}" disabled>
                 </div>
             </div>
 

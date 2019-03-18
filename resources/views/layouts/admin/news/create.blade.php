@@ -27,14 +27,6 @@
                         @endif
                     </div>
 
-                    <div class="form-group {{ $errors->first('slug') ? 'has-error' : ''}}">
-                        <label for="slug">Slug*</label>
-                        <input id="slug" type="text" class="form-control" placeholder="Enter Title" name="slug" required value="{{ old('slug') }}">
-                        @if ($errors->has('slug'))
-                            <span class="help-block">{{ $errors->first('slug') }}</span>
-                        @endif
-                    </div>
-
                     <div class="form-group {{ $errors->first('short_content') ? 'has-error' : ''}}">
                         <label for="short_content">Short Content*</label>
                         <textarea name="short_content" id="short_content" class="form-control" rows="3" placeholder="Enter Short Content ...">{{ old('short_content') }}</textarea>

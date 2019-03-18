@@ -54,6 +54,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
         Route::get('/view-submenu/{id}','Admin\MenuController@editSubmenu')->name('admin_submenu_edit');
         Route::post('/update-submenu/{id}','Admin\MenuController@updateSubmenu')->name('admin_submenu_update');
+
     });
 
     //User Manager
@@ -119,7 +120,11 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
     //comment
     Route::group(['prefix'=>'comment'],function(){
+        Route::get('/list','Admin\CommentController@index')->name('admin_comment_list');
 
+        Route::post('/store', 'Admin\CommentController@store')->name('admin_comment_store');
+        Route::get('/update','Admin\CommentController@update')->name('admin-comment-update');
+        Route::get('/updateAll','Admin\CommentController@updateAll')->name('admin-comment-updateAll');
     });
 
     //room
@@ -195,7 +200,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::get('/list', 'Admin\ContributionController@index')->name('admin_contribution_list');
         Route::post('/delete/{id}', 'Admin\ContributionController@destroy')->name('admin_contribution_delete');
     });
-	
+
     Route::group(['prefix'=>'membership'],function(){
         Route::get('/list', 'Admin\MembershipController@index')->name('admin_membership_list');
         Route::get('/create', 'Admin\MembershipController@create')->name('admin_membership_create');
@@ -305,6 +310,8 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
         Route::group(['prefix'=>'/paper'], function() {
             Route::get('/list', 'Admin\PaperController@index')->name('admin_paper_list');
+            Route::get('/create', 'Admin\PaperController@create')->name('admin_paper_create');
+            Route::post('/store', 'Admin\PaperController@store')->name('admin_paper_store');
             Route::get('/edit/{id}', 'Admin\PaperController@edit')->name('admin_paper_edit');
             Route::post('/update/{id}', 'Admin\PaperController@update')->name('admin_paper_update');
             Route::post('/delete/{id}', 'Admin\PaperController@destroy')->name('admin_paper_delete');
@@ -329,6 +336,23 @@ Route::group(['prefix'=>'home'],function(){
     Route::get('/index','Home\MainController@index')->name('home_page');
 
     Route::get('/main','Home\MainController@getData')->name('home-main');
+
+    Route::get('/news','Home\MainController@getNews')->name('home-news');
+    Route::get('/news/{slug}','Home\MainController@getNewsDetail')->name('home-newsDetail');
+
+    Route::get('/news_category/{slug}','Home\MainController@getNewsByCategory')->name('home-news_category');
+
+    Route::get('/news_tags/{tag}','Home\MainController@getNewsByTag')->name('home-news_tag');
+
+    Route::get('/event','Home\MainController@getEvent')->name('home-event');
+    Route::get('/event/{slug}','Home\MainController@getEventDetail')->name('home-eventDetail');
+
+    Route::get('/event_category/{slug}','Home\MainController@getEventByCategory')->name('home-event_category');
+
+    Route::get('/event_tags/{tag}','Home\MainController@getEventByTag')->name('home-event_tag');
+
+    Route::get('/event/registration/{id}','Home\MainController@createFormRegistraion')->name('create-form');
+    Route::post('/event/registration/store','Home\MainController@addRegisterEvent')->name('store-register');
 
     //User Profile
     Route::group(['prefix'=>'profile'], function(){

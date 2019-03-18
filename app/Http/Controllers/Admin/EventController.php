@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class EventController extends Controller
 {
@@ -44,7 +45,9 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $this->validateData($request->all());
+        $data = $request->all();
+        $data["slug"] = Str::slug($request->title, '-');
+        $validator = $this->validateData($data);
         if ($validator->fails()) {
             return redirect()
                 ->route('admin_event_create')
@@ -57,7 +60,7 @@ class EventController extends Controller
         }
         $event = new Event();
         $event->title = $request->title;
-        $event->slug = $request->slug;
+        $event->slug = $data["slug"];
         $event->cover = $path;
         $event->start_time = new \DateTime($request->start_time);
         $event->end_time = new \DateTime($request->end_time);
@@ -110,6 +113,7 @@ class EventController extends Controller
     {
         $data = $request->all();
         $data["id"] = $id;
+        $data["slug"] = Str::slug($request->title, '-');
         $validator = $this->validateData($data);
         if ($validator->fails()) {
             return redirect()
@@ -124,7 +128,7 @@ class EventController extends Controller
             $event->cover = $path;
         }
         $event->title = $request->title;
-        $event->slug = $request->slug;
+        $event->slug = $data["slug"];
         $event->start_time = new \DateTime($request->start_time);
         $event->end_time = new \DateTime($request->end_time);
         $event->venue = $request->venue;
