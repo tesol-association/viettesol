@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\Conference;
 use App\Models\Paper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PaperController extends BaseConferenceController
 {
@@ -24,10 +25,24 @@ class PaperController extends BaseConferenceController
         ]);
     }
 
-
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
-        return view('layouts.admin.paper.create');
+        $tracks = $this->conference->tracks;
+        $sessionTypes = [(object) ["id" => 1, "name" => "POSTER"]];
+        $author = Auth::user();
+        return view('layouts.admin.paper.create', [
+            'tracks' => $tracks,
+            'sessionTypes' => $sessionTypes,
+            'author' => $author
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        dd($request->all());
     }
 
     /**
