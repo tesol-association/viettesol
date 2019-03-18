@@ -272,6 +272,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li><a href="#">Prepaired email</a></li>
                         <li><a href="#">Registration</a></li>
                         <li><a href="{{ route('admin_speakers_list', ["conference_id" => $conference->id]) }}">Speaker</a></li>
+                        <li><a href="{{ route('admin_session_type_list', ["conference_id" => $conference->id]) }}">Session Types</a></li>
                         <li class="treeview">
                             <a href="#"><i class="fa fa-link"></i> <span>Paper Management</span>
                                 <span class="pull-right-container">
