@@ -288,6 +288,15 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::post('/delete/{id}', 'Admin\ConferenceManager\SpecialEventController@destroy')->name('admin_special_event_delete');
         });
 
+        Route::group(['prefix'=>'/conference_partners_sponsers'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\ConferencePartnerSponserController@index')->name('admin_conference_partners_sponsers_list');
+            Route::get('/create', 'Admin\ConferenceManager\ConferencePartnerSponserController@create')->name('admin_conference_partners_sponsers_create');
+            Route::post('/store', 'Admin\ConferenceManager\ConferencePartnerSponserController@store')->name('admin_conference_partners_sponsers_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\ConferencePartnerSponserController@edit')->name('admin_conference_partners_sponsers_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\ConferencePartnerSponserController@update')->name('admin_conference_partners_sponsers_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\ConferencePartnerSponserController@destroy')->name('admin_conference_partners_sponsers_delete');
+        });
+
         Route::group(['prefix'=>'/review_form'], function() {
             Route::get('/list', 'Admin\ReviewFormController@index')->name('admin_review_form_list');
             Route::get('/create', 'Admin\ReviewFormController@create')->name('admin_review_form_create');
@@ -313,6 +322,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::get('/edit/{id}', 'Admin\PaperController@edit')->name('admin_paper_edit');
             Route::post('/update/{id}', 'Admin\PaperController@update')->name('admin_paper_update');
             Route::post('/delete/{id}', 'Admin\PaperController@destroy')->name('admin_paper_delete');
+            Route::get('/submission/{id}', 'Admin\PaperController@submission')->name('admin_paper_submission');
         });
 
         Route::group(['prefix'=>'/time_block'], function(){
@@ -330,6 +340,13 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::group(['prefix'=>'/schedule'], function(){
             Route::get('/list','Admin\ConferenceManager\ScheduleController@index')->name('admin_schedule_list');
         });
+//        Route::group(['prefix'=>'/review_assignment'], function() {
+//            Route::get('/submission/{paperId}', 'Admin\ConferenceManager\ReviewAssignmentController@create')->name('admin_review_assignment_create');
+//            Route::post('/store', 'Admin\ReviewAssignmentController@store')->name('admin_review_assignment_store');
+//            Route::get('/edit/{id}', 'Admin\ReviewAssignmentController@edit')->name('admin_review_assignment_edit');
+//            Route::post('/update/{id}', 'Admin\ReviewAssignmentController@update')->name('admin_review_assignment_update');
+//            Route::post('/delete/{id}', 'Admin\ReviewAssignmentController@destroy')->name('admin_review_assignment_delete');
+//        });
 
     });
 

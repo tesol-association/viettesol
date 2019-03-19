@@ -5,12 +5,15 @@
     <link href="{{ asset('admin/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/dist/css/AdminLTE.min.css') }}" rel="stylesheet">
 @endsection
+@section('page-header') ABSTRACT REVIEW
+@endsection
 @section('content')
+
 <form method="POST" action="{{ route('admin_paper_store', ["id" => $conference->id]) }}">
     @csrf
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">TRACK AND SESSION TYPE</h3>
+            <h3 class="box-title">SUBMISSION</h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
                     <i class="fa fa-minus"></i>
@@ -100,7 +103,7 @@
 
             <div class="form-group {{ $errors->first('site_url') ? 'has-error' : ''}}">
                 <label for="site_url">Site URL</label>
-                <input id="site_url" type="text" class="form-control" name="authors[0][site_url]" value="{{ $author->site_url }}">
+                <input id="site_url" type="text" class="form-control" name="authors[0][site_url]" value="{{ old('site_url') }}">
                 @if ($errors->has('site_url'))
                     <span class="help-block">{{ $errors->first('site_url') }}</span>
                 @endif
