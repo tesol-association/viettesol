@@ -17,4 +17,9 @@ class Rooms extends Model
     public function building(){
     	return $this->belongsTo('App\Models\Buildings', 'building_id');
     }
+
+    public function specialEvents()
+    {
+        return $this->hasMany('App\Models\SpecialEvent', 'room_id');
+    }
 }

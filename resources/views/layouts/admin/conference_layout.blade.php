@@ -272,6 +272,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li><a href="#">Prepaired email</a></li>
                         <li><a href="#">Registration</a></li>
                         <li><a href="{{ route('admin_speakers_list', ["conference_id" => $conference->id]) }}">Speaker</a></li>
+                        <li><a href="{{ route('admin_session_type_list', ["conference_id" => $conference->id]) }}">Session Types</a></li>
                         <li class="treeview">
                             <a href="#"><i class="fa fa-link"></i> <span>Paper Management</span>
                                 <span class="pull-right-container">
@@ -310,6 +311,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ route('admin_special_event_list', ['conference_id' => $conference->id]) }}">List Special Event</a></li>
+                                <li><a href="{{ route('admin_special_event_create', ['conference_id' => $conference->id]) }}">Create Special Event</a></li>
+                            </ul>
                         </li>
                         <li class="treeview">
                             <a href="#"><i class="fa fa-link"></i> <span>Payment</span>

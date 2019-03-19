@@ -13,6 +13,11 @@ class Conference extends Model
         return $this->hasMany('App\Models\Track');
     }
 
+    public function sessionTypes()
+    {
+        return $this->hasMany('App\Models\SessionType');
+    }
+
     public function timeline()
     {
         return $this->hasOne('App\Models\ConferenceTimeline', 'conference_id');
