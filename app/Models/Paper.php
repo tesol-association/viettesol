@@ -15,7 +15,6 @@ class Paper extends Model
     {
         return $this->belongsTo('App\Models\Track', 'track_id');
     }
-<<<<<<< HEAD
     public function schedule()
 	{
 		return $this->belongsTo('App\Models\Schedule', 'id');
@@ -24,11 +23,9 @@ class Paper extends Model
 	{
 		return $this->belongsTo('App\Models\SessionType', 'session_type_id');
 	}
-=======
 
     public function authors()
     {
         return $this->belongsToMany('App\Models\Author', 'paper_author', 'paper_id', 'author_id');
     }
->>>>>>> 0459e681665d79877ab3c0bfd1976425e9dc067f
 }
