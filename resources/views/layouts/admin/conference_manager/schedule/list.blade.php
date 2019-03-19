@@ -11,7 +11,7 @@
                 <div class="box-header with-border">
                     <div class="col-md-4">
                       <h3 class="box-title">Select Room</h3>
-                      <select style="width: 50%;height: 30px; margin-left:20px ">
+                      <select style="width: 50%;height: 30px; margin-left:20px" id="room">
                         <option>room</option>
                         @foreach($buildings as $building)
                         <option disabled>{{ $building->name }}</option>
@@ -25,31 +25,47 @@
 
                 </div>
             </div>
-            <div class="box-body">
+            <div class="box-body list" style="display: none">
                 <div class="table-responsive">
-                    <table id="schedule_list" class="table table-bordered table-striped" style="display: none">
+                    <table id="schedule_list" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Paper</th>
+                                <th>ID</th>
+                                <th style="width: 600px;">Paper</th>
                                 <th>Time block</th>
                             </tr>
                         </thead>
                         <tbody>
-                         <tr>
-                             <td></td>
-                             <td></td>
-                         </tr>
-                     </tbody>
-                     <tfoot>
-                     </tfoot>
-                 </table>
-             </div>
-         </div>
-         <!-- /.box-body -->
-     </div>
-     <!-- /.box -->
- </div>
- <!-- /.col -->
+                            @foreach($papers as $paper)
+                            <tr>
+                               <td>{{ $paper->id }}</td>
+                               <td>{{ $paper->title }}</td>
+                               <td>
+                                   <select style="width: 68%;height: 40px; margin-left:20px" onchange="selectTimeBlock(this)" id="timeblock_{{ $paper->id }}">
+                                      <option>Select time block</option>
+                                      @foreach($timeBlocks as $timeBlock)
+                                      <option value="{{ $timeBlock['id'] }}" @if($paper->sessionType->length > $timeBlock['duration']) {{"disabled"}} @endif>{{
+                                        $timeBlock['date']
+                                      }} ----- {{ \Carbon\Carbon::createFromFormat('H:i:s',$timeBlock['start_time'])->format('H:i') }}-{{ \Carbon\Carbon::createFromFormat('H:i:s',$timeBlock['end_time'])->format('H:i') }}</option>
+                                      @endforeach
+                                  </select>
+                              </td>
+                          </tr>
+                          @endforeach
+
+                      </div>
+                  </div>
+              </tbody>
+              <tfoot>
+              </tfoot>
+          </table>
+      </div>
+  </div>
+  <!-- /.box-body -->
+</div>
+<!-- /.box -->
+</div>
+<!-- /.col -->
 </div>
 <!-- /.row -->
 </section>
@@ -60,4 +76,6 @@
 <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
 <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
+<script src="{{ asset('js/admin/schedule/list.js') }}"></script>
+<script src="{{ asset('js/admin/schedule/schedule.js') }}"></script>
 @endsection

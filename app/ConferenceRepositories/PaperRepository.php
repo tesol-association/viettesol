@@ -16,7 +16,7 @@ class PaperRepository
     {
         $papers = Paper::with('track.conference')->get();
         $papers = $papers->filter(function($paper) use ($conferenceId) {
-            return $paper->track->conference->id == $conferenceId;
+            return $paper->track->conference->id == $conferenceId && $paper->status== 'unscheduled';
         });
         return $papers->all();
     }
