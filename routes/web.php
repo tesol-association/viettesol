@@ -299,6 +299,15 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::post('/delete/{id}', 'Admin\ConferenceManager\SpecialEventController@destroy')->name('admin_special_event_delete');
         });
 
+        Route::group(['prefix'=>'/conference_partners_sponsers'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\ConferencePartnerSponserController@index')->name('admin_conference_partners_sponsers_list');
+            Route::get('/create', 'Admin\ConferenceManager\ConferencePartnerSponserController@create')->name('admin_conference_partners_sponsers_create');
+            Route::post('/store', 'Admin\ConferenceManager\ConferencePartnerSponserController@store')->name('admin_conference_partners_sponsers_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\ConferencePartnerSponserController@edit')->name('admin_conference_partners_sponsers_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\ConferencePartnerSponserController@update')->name('admin_conference_partners_sponsers_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\ConferencePartnerSponserController@destroy')->name('admin_conference_partners_sponsers_delete');
+        });
+
         Route::group(['prefix'=>'/review_form'], function() {
             Route::get('/list', 'Admin\ReviewFormController@index')->name('admin_review_form_list');
             Route::get('/create', 'Admin\ReviewFormController@create')->name('admin_review_form_create');
