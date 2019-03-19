@@ -8,6 +8,7 @@ class Paper extends Model
 {
 	const STATUS_UNSCHEDULER = 'unscheduled';
 	const STATUS_SCHEDULER   = 'scheduled';
+    const STATUS_SUBMITTED = 'submitted';
     protected $table = 'papers';
 
     public function track()

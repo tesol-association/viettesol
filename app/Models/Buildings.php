@@ -18,4 +18,8 @@ class Buildings extends Model
     {
     	return $this->hasMany('App\Models\Rooms', 'building_id');
     }
+
+     public function conference(){
+        return $this->belongsTo('App\Models\Conference', 'conference_id');
+    }
 }

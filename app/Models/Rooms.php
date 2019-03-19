@@ -22,4 +22,9 @@ class Rooms extends Model
 	{
 		return $this->belongsTo('App\Models\Schedule', 'id');
 	}
+
+    public function specialEvents()
+    {
+        return $this->hasMany('App\Models\SpecialEvent', 'room_id');
+    }
 }
