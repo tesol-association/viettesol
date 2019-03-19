@@ -1,5 +1,5 @@
 @extends('layouts.admin.conference_layout')
-@section('title','Session Type Management')
+@section('title','Special Event Management')
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 @endsection
@@ -10,51 +10,59 @@
                 <div class="box">
                     <div class="box-header with-border">
                         <div class="col-md-4">
-                            <h3 class="box-title">Session Type List</h3>
+                            <h3 class="box-title">Special Event List</h3>
                         </div>
                         <div class="col-md-2 col-md-offset-6">
-                            <a href="{{ route('admin_session_type_create', ['conference_id' => $conference_id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add Session Type</a>
+                            <a href="{{ route('admin_special_event_create', ['conference_id' => $conference_id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add Special Event</a>
                         </div>
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
-                            <table id="session_type_list" class="table table-bordered table-striped">
+                            <table id="special_event_list" class="table table-bordered table-striped">
                                 <thead>
 	                                <tr>
 	                                    <th>Id</th>
 	                                    <th>Name</th>
-                                        <th>Duration (minutes)</th>
-                                        <th>Abstract lenght (words)</th>
+                                        <th>Date</th>
+                                        <th>Start time</th>
+                                        <th>End time</th>
+                                        <th>Room</th>
                                         <th>Description</th>
 	                                    <th>Edit</th>
 	                                    <th>Delete</th>
 	                                </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($sessionTypes as $sessionType)
+                                @foreach($specialEvents as $specialEvent)
                                     <tr>
-                                        <td>{{ $sessionType->id }}</td>
-                                        <td>{{ $sessionType->name }}</td>
-                                        <td>{{ $sessionType->length }}</td>
-                                        <td>{{ $sessionType->abstract_length }}</td>
-                                        <td>{{ $sessionType->description }}</td>
+                                        <td>{{ $specialEvent->id }}</td>
+                                        <td>{{ $specialEvent->name }}</td>
+                                        <td>{{ $specialEvent->date }}</td>
+                                        <td>{{ $specialEvent->start_time }}</td>
+                                        <td>{{ $specialEvent->end_time }}</td>
+                                        @if($specialEvent->room == null)
+                                            <td></td>
+                                        @else
+                                            <td>{{ $specialEvent->room->name }} in {{ $specialEvent->room->building->name }}</td>
+                                        @endif
+                                        <td>{{ $specialEvent->description }}</td>
                                         <td>
-                                            <a href="{{ route('admin_session_type_edit', ['conference_id' => $conference_id, 'id' => $sessionType->id]) }}" class="btn btn-info fa fa-edit"></a>
+                                            <a href="{{ route('admin_special_event_edit', ['conference_id' => $conference_id, 'id' => $specialEvent->id]) }}" class="btn btn-info fa fa-edit"></a>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_session_type_{{ $sessionType->id }}"></button>
+                                            <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_special_event_{{ $specialEvent->id }}"></button>
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->
-                                    <div class="modal fade" id="delete_session_type_{{ $sessionType->id }}" role="dialog">
-                                        <form method="post" action="{{ route('admin_session_type_delete', [ 'conference_id' => $conference_id, 'id'=> $sessionType->id ]) }}">
+                                    <div class="modal fade" id="delete_special_event_{{ $specialEvent->id }}" role="dialog">
+                                        <form method="post" action="{{ route('admin_special_event_delete', [ 'conference_id' => $conference_id, 'id'=> $specialEvent->id ]) }}">
                                             @csrf
                                             <div class="modal-dialog">
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <h4 class="modal-title">Are you sure delete: {{ $sessionType->name }} ?</h4>
+                                                        <h4 class="modal-title">Are you sure delete: {{ $specialEvent->name }} ?</h4>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -87,5 +95,5 @@
     <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
-    <script src="{{ asset('js/admin/session_types/list.js') }}"></script>
+    <script src="{{ asset('js/admin/special_event/list.js') }}"></script>
 @endsection

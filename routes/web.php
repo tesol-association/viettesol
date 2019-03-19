@@ -290,6 +290,15 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::post('/delete/{id}', 'Admin\ConferenceManager\SessionTypeController@destroy')->name('admin_session_type_delete');
         });
 
+        Route::group(['prefix'=>'/special_event'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\SpecialEventController@index')->name('admin_special_event_list');
+            Route::get('/create', 'Admin\ConferenceManager\SpecialEventController@create')->name('admin_special_event_create');
+            Route::post('/store', 'Admin\ConferenceManager\SpecialEventController@store')->name('admin_special_event_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\SpecialEventController@edit')->name('admin_special_event_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\SpecialEventController@update')->name('admin_special_event_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\SpecialEventController@destroy')->name('admin_special_event_delete');
+        });
+
         Route::group(['prefix'=>'/review_form'], function() {
             Route::get('/list', 'Admin\ReviewFormController@index')->name('admin_review_form_list');
             Route::get('/create', 'Admin\ReviewFormController@create')->name('admin_review_form_create');
