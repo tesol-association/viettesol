@@ -317,6 +317,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </ul>
                         </li>
                         <li class="treeview">
+                            <a href="#"><i class="fa fa-link"></i> <span>Conference Partner Sponser</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ route('admin_conference_partners_sponsers_list', ['conference_id' => $conference->id]) }}">List Conference Partner Sponser</a></li>
+                                <li><a href="{{ route('admin_conference_partners_sponsers_create', ['conference_id' => $conference->id]) }}">Create PartnerSponser</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
                             <a href="#"><i class="fa fa-link"></i> <span>Payment</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
