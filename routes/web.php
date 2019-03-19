@@ -270,6 +270,15 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::post('/delete/{id}', 'Admin\ConferenceManager\AnnouncementsController@destroy')->name('admin_announcements_delete');
         });
 
+        Route::group(['prefix'=>'/session_type'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\SessionTypeController@index')->name('admin_session_type_list');
+            Route::get('/create', 'Admin\ConferenceManager\SessionTypeController@create')->name('admin_session_type_create');
+            Route::post('/store', 'Admin\ConferenceManager\SessionTypeController@store')->name('admin_session_type_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\SessionTypeController@edit')->name('admin_session_type_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\SessionTypeController@update')->name('admin_session_type_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\SessionTypeController@destroy')->name('admin_session_type_delete');
+        });
+
         Route::group(['prefix'=>'/review_form'], function() {
             Route::get('/list', 'Admin\ReviewFormController@index')->name('admin_review_form_list');
             Route::get('/create', 'Admin\ReviewFormController@create')->name('admin_review_form_create');
@@ -290,6 +299,8 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
         Route::group(['prefix'=>'/paper'], function() {
             Route::get('/list', 'Admin\PaperController@index')->name('admin_paper_list');
+            Route::get('/create', 'Admin\PaperController@create')->name('admin_paper_create');
+            Route::post('/store', 'Admin\PaperController@store')->name('admin_paper_store');
             Route::get('/edit/{id}', 'Admin\PaperController@edit')->name('admin_paper_edit');
             Route::post('/update/{id}', 'Admin\PaperController@update')->name('admin_paper_update');
             Route::post('/delete/{id}', 'Admin\PaperController@destroy')->name('admin_paper_delete');
