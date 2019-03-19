@@ -324,7 +324,16 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::get('/edit/{id}', 'Admin\PaperController@edit')->name('admin_paper_edit');
             Route::post('/update/{id}', 'Admin\PaperController@update')->name('admin_paper_update');
             Route::post('/delete/{id}', 'Admin\PaperController@destroy')->name('admin_paper_delete');
+            Route::get('/submission/{id}', 'Admin\PaperController@submission')->name('admin_paper_submission');
         });
+
+//        Route::group(['prefix'=>'/review_assignment'], function() {
+//            Route::get('/submission/{paperId}', 'Admin\ConferenceManager\ReviewAssignmentController@create')->name('admin_review_assignment_create');
+//            Route::post('/store', 'Admin\ReviewAssignmentController@store')->name('admin_review_assignment_store');
+//            Route::get('/edit/{id}', 'Admin\ReviewAssignmentController@edit')->name('admin_review_assignment_edit');
+//            Route::post('/update/{id}', 'Admin\ReviewAssignmentController@update')->name('admin_review_assignment_update');
+//            Route::post('/delete/{id}', 'Admin\ReviewAssignmentController@destroy')->name('admin_review_assignment_delete');
+//        });
 
     });
 

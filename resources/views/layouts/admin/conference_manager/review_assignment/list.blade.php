@@ -47,9 +47,7 @@
                                         <td>{{ $paper->track->name }}</td>
                                         <td>{{ $paper->status }}</td>
                                         <td>{{ $paper->created_at }}</td>
-                                        <td>
-                                            <a href="{{ route('admin_paper_submission', ["conference_id" => $conference->id, "id" => $paper->id]) }}" class="btn btn-primary">Assign</a>
-                                        </td>
+                                        <td><a href="{{ route('admin_paper_edit', ["conference_id" => $conference->id, "id" => $paper->id]) }}" class="btn btn-primary">Assign</a></td>
                                         <td>
                                             <a href="{{ route('admin_paper_edit', ["conference_id" => $conference->id, "id" => $paper->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
                                         </td>
