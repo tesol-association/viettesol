@@ -14,4 +14,9 @@ class SessionType extends Model
     	'abstract_length',
     	'conference_id'
     ];
+
+    public function conference()
+    {
+        return $this->belongsTo('App\Models\Conference');
+    }
 }

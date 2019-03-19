@@ -21,7 +21,7 @@
         <div class="box-body">
             <div class="form-group {{ $errors->first('track_id') ? 'has-error' : ''}}">
                 <label for="track_id">Track</label>
-                <select id="track_id" style="width: 100%;" tabindex="-1" aria-hidden="true" name="track_id" required>
+                <select id="track_id" style="width: 100%;" tabindex="-1" aria-hidden="true" name="paper[track_id]" required>
                     @if (isset($tracks) && count($tracks))
                         @foreach ($tracks as $track)
                             <option value="{{ $track->id }}">{{ $track->name }}</option>
@@ -34,7 +34,7 @@
             </div>
             <div class="form-group {{ $errors->first('session_type_id') ? 'has-error' : ''}}">
                 <label for="session_type_id">Session Type</label>
-                <select id="session_type_id" style="width: 100%;" tabindex="-1" aria-hidden="true" name="session_type_id" required>
+                <select id="session_type_id" style="width: 100%;" tabindex="-1" aria-hidden="true" name="paper[session_type_id]" required>
                     @if (isset($sessionTypes) && count($sessionTypes))
                         @foreach ($sessionTypes as $sessionType)
                             <option value="{{ $sessionType->id }}">{{ $sessionType->name }}</option>
@@ -60,7 +60,7 @@
         <div class="box-body">
             <div class="form-group {{ $errors->first('first_name') ? 'has-error' : ''}}">
                 <label for="first_name">First Name*</label>
-                <input id="first_name" type="text" class="form-control" name="first_name" required value="{{ $author->first_name }}">
+                <input id="first_name" type="text" class="form-control" name="authors[0][first_name]" required value="{{ $author->first_name }}">
                 @if ($errors->has('first_name'))
                     <span class="help-block">{{ $errors->first('first_name') }}</span>
                 @endif
@@ -68,7 +68,7 @@
 
             <div class="form-group {{ $errors->first('middle_name') ? 'has-error' : ''}}">
                 <label for="middle_name">Middle Name</label>
-                <input id="middle_name" type="text" class="form-control" name="middle_name" value="{{ $author->middle_name }}">
+                <input id="middle_name" type="text" class="form-control" name="authors[0][middle_name]" value="{{ $author->middle_name }}">
                 @if ($errors->has('middle_name'))
                     <span class="help-block">{{ $errors->first('middle_name') }}</span>
                 @endif
@@ -76,7 +76,7 @@
 
             <div class="form-group {{ $errors->first('last_name') ? 'has-error' : ''}}">
                 <label for="last_name">Last Name*</label>
-                <input id="last_name" type="text" class="form-control" name="last_name" required value="{{ $author->last_name }}">
+                <input id="last_name" type="text" class="form-control" name="authors[0][last_name]" required value="{{ $author->last_name }}">
                 @if ($errors->has('last_name'))
                     <span class="help-block">{{ $errors->first('last_name') }}</span>
                 @endif
@@ -84,7 +84,7 @@
 
             <div class="form-group {{ $errors->first('email') ? 'has-error' : ''}}">
                 <label for="email">Email*</label>
-                <input id="email" type="email" class="form-control" name="email" required value="{{ $author->email }}">
+                <input id="email" type="email" class="form-control" name="authors[0][email]" required value="{{ $author->email }}">
                 @if ($errors->has('email'))
                     <span class="help-block">{{ $errors->first('email') }}</span>
                 @endif
@@ -92,7 +92,7 @@
 
             <div class="form-group {{ $errors->first('affiliation') ? 'has-error' : ''}}">
                 <label for="affiliation">Affiliation*</label>
-                <input id="affiliation" type="text" class="form-control" name="affiliation" required value="{{ $author->affiliation }}">
+                <input id="affiliation" type="text" class="form-control" name="authors[0][affiliation]" required value="{{ $author->affiliation }}">
                 @if ($errors->has('affiliation'))
                     <span class="help-block">{{ $errors->first('affiliation') }}</span>
                 @endif
@@ -100,7 +100,7 @@
 
             <div class="form-group {{ $errors->first('site_url') ? 'has-error' : ''}}">
                 <label for="site_url">Site URL</label>
-                <input id="site_url" type="text" class="form-control" name="site_url" value="{{ old('site_url') }}">
+                <input id="site_url" type="text" class="form-control" name="authors[0][site_url]" value="{{ old('site_url') }}">
                 @if ($errors->has('site_url'))
                     <span class="help-block">{{ $errors->first('site_url') }}</span>
                 @endif
@@ -108,7 +108,7 @@
 
             <div class="form-group">
                 <label for="country">Country</label>
-                <select class="form-control {{ $errors->has('country') ? ' is-invalid' : '' }}" id="country" name="country" data-value="{{ $author->country }}">
+                <select class="form-control {{ $errors->has('country') ? ' is-invalid' : '' }}" id="country" name="authors[0][country]" data-value="{{ $author->country }}">
                     @include('helper.country')
                 </select>
 
@@ -133,7 +133,7 @@
         <div class="box-body">
             <div class="form-group {{ $errors->first('title') ? 'has-error' : ''}}">
                 <label for="title">Title*</label>
-                <input id="title" type="text" class="form-control" name="title" required value="{{ old('title') }}">
+                <input id="title" type="text" class="form-control" name="paper[title]" required value="{{ old('title') }}">
                 @if ($errors->has('title'))
                     <span class="help-block">{{ $errors->first('title') }}</span>
                 @endif
@@ -141,7 +141,7 @@
 
             <div class="form-group {{ $errors->first('abstract') ? 'has-error' : ''}}">
                 <label for="abstract">Abstract*</label>
-                <textarea name="abstract" id="abstract" class="form-control" rows="3" placeholder="Enter Abstract ...">{{ old('abstract') }}</textarea>
+                <textarea name="paper[abstract]" id="abstract" class="form-control" rows="3" placeholder="Enter Abstract ...">{{ old('abstract') }}</textarea>
                 @if ($errors->has('abstract'))
                     <span class="help-block">{{ $errors->first('abstract') }}</span>
                 @endif

@@ -22,12 +22,13 @@
                                 <thead>
                                 <tr>
                                     <th>Id</th>
+                                    <th>Title</th>
                                     <th>Abstract</th>
-                                    <th>Full Paper</th>
                                     <th>Attach File</th>
                                     <th>Track</th>
                                     <th>Status</th>
                                     <th>Created At</th>
+                                    <th>Assign</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -36,8 +37,8 @@
                                 @foreach($papers as $paper)
                                     <tr>
                                         <td>{{ $paper->id }}</td>
-                                        <td>{{ $paper->abstract }}</td>
-                                        <td>{{ $paper->full_paper }}</td>
+                                        <td>{{ $paper->title }}</td>
+                                        <td>{!! $paper->abstract !!}</td>
                                         <td>
                                             @if ($paper->attach_file)
                                                 <a target="_blank" href="{{ asset('/storage/' . $paper->attach_file) }}" class="btn btn-primary"><span class="fa fa-download"></span> Attach File</a>
@@ -46,11 +47,12 @@
                                         <td>{{ $paper->track->name }}</td>
                                         <td>{{ $paper->status }}</td>
                                         <td>{{ $paper->created_at }}</td>
+                                        <td><a href="{{ route('admin_paper_edit', ["conference_id" => $conference->id, "id" => $paper->id]) }}" class="btn btn-primary">Assign</a></td>
                                         <td>
-                                            {{--<a href="{{ route('admin_paper_edit', ["conference_id" => $conference->id, "id" => $paper->id]) }}" class="btn btn-info">Edit</a>--}}
+                                            <a href="{{ route('admin_paper_edit', ["conference_id" => $conference->id, "id" => $paper->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
                                         </td>
                                         <td>
-                                            {{--<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_paper_{{ $paper->id }}">Delete</button>--}}
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_paper_{{ $paper->id }}"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->
