@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Membership;
 use App\Models\Contact;
+use App\Models\MemberType;
 use Session;
 
 class MembershipController extends Controller
@@ -32,7 +33,8 @@ class MembershipController extends Controller
     {
         //
         $contacts = Contact::all();
-        return view("layouts.admin.membership.create", ['contacts' => $contacts]);
+        $memberTypes = MemberType::all();
+        return view("layouts.admin.membership.create", ['contacts' => $contacts], ['memberTypes' => $memberTypes]);
     }
 
     /**
@@ -46,16 +48,16 @@ class MembershipController extends Controller
 
         $request->validate([
             'contact_id'=>'required|integer|unique:membership',
+            'type_id' => 'required',
             'start_date'=>'required|date',
-            'end_date'=>'required|date|after:start_date',
-            'num_of_term'=>'required'
+            'end_date'=>'required|date|after:start_date'
         ]);
 
         $member = new Membership();
         $member->contact_id = $request->get('contact_id');
+        $member->type_id = $request->get('type_id');
         $member->start_date = $request->get('start_date');
         $member->end_date = $request->get('end_date');
-        $member->num_of_term = $request->get('num_of_term');
 
         $member->save();
 
@@ -71,6 +73,9 @@ class MembershipController extends Controller
     public function show($id)
     {
         //
+        $member = Membership::find($id);
+
+        return view('layouts.admin.membership.show', ['member' => $member]);
     }
 
     /**
@@ -83,8 +88,8 @@ class MembershipController extends Controller
     {
         //
         $member = Membership::find($id);
-
-        return view('layouts.admin.membership.edit',['member' => $member]);
+        $memberTypes = MemberType::all();
+        return view('layouts.admin.membership.edit',['member' => $member], ['memberTypes' => $memberTypes]);
     }
 
     /**
@@ -99,17 +104,17 @@ class MembershipController extends Controller
         //
         $request->validate([
             'contact_id'=>'required|integer|unique:membership',
+            'type_id' => 'required',
             'start_date'=>'required|date',
-            'end_date'=>'required|date|after:start_date',
-            'num_of_term'=>'required'
+            'end_date'=>'required|date|after:start_date'
         ]);
 
         $member = Membership::find($id);
 
         $member->contact_id = $request->get('contact_id');
+        $member->type_id = $request->get('type_id');
         $member->start_date = $request->get('start_date');
         $member->end_date = $request->get('end_date');
-        $member->num_of_term = $request->get('num_of_term');
 
         $member->save();
 

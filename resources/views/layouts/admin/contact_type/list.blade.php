@@ -53,13 +53,14 @@ All Contact Types
                                 <td>
                                     @if( $contactType->name != "Individual" )
                                     <a href="{{ route('admin_contact_type_edit', $contactType->id) }}" class="btn btn-primary"> <i class="fa fa-edit"></i> </a>
-                                    @else
-                                    <i> disabled </i>
                                     @endif
                                 </td>
                                 <td>
+                                    @if ( $contactType->name != "Individual" )
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_contact_type{{ $contactType->id }}"> <i class="fa fa-trash">  </i> </button>
-                                    @if ($contactType->name != "Individual")
+                                    @endif
+                                    
+                                    @if ( $contactType->name != "Individual" )
 
                                         @if( count($contactType->contacts)==0 )
                                         <form method="post" action="{{ route('admin_contact_type_delete',['id'=> $contactType->id ]) }}">

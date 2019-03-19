@@ -209,6 +209,16 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::post('/update/{id}', 'Admin\MembershipController@update')->name('admin_membership_update');
         Route::post('/delete/{id}', 'Admin\MembershipController@destroy')->name('admin_membership_delete');
         Route::get('/make/{id}', 'Admin\ContactController@make')->name('admin_membership_make');
+        Route::get('/show/{id}', 'Admin\MembershipController@show')->name('admin_membership_show');
+    });
+
+    Route::group(['prefix'=>'membertype'],function(){
+        Route::get('/list', 'Admin\MemberTypeController@index')->name('admin_membertype_list');
+        Route::get('/create', 'Admin\MemberTypeController@create')->name('admin_membertype_create');
+        Route::post('/store', 'Admin\MemberTypeController@store')->name('admin_membertype_store');
+        Route::get('/edit/{id}', 'Admin\MemberTypeController@edit')->name('admin_membertype_edit');
+        Route::post('/update/{id}', 'Admin\MemberTypeController@update')->name('admin_membertype_update');
+        Route::post('/delete/{id}', 'Admin\MemberTypeController@destroy')->name('admin_membertype_delete');
     });
 
 

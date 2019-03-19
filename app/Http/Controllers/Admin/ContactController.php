@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use App\Models\ContactType;
+use App\Models\MemberType;
 use Session;
 
 class ContactController extends Controller
@@ -147,7 +148,8 @@ class ContactController extends Controller
     public function make($id)
     {
         $contact = Contact::find($id);
+        $memberTypes = MemberType::all();
 
-        return view('layouts.admin.membership.make', ['contact' => $contact]);
+        return view('layouts.admin.membership.make', ['contact' => $contact], ['memberTypes' => $memberTypes] );
     }
 }
