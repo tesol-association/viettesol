@@ -11,15 +11,15 @@ class Schedule extends Model
 	protected $fillable=[
 		'id', 'paper_id', 'time_block_id', 'room_id', 'status'
 	];
-	public function timeblock()
+	public function timeblocks()
 	{
 		return $this->hasMany('App\Models\TimeBlock', 'id');
 	}
-	public function paper()
+	public function papers()
 	{
 		return $this->hasMany('App\Models\Paper', 'id');
 	}
-	public function room()
+	public function rooms()
 	{
 		return $this->hasMany('App\Models\Room', 'id');
 	}

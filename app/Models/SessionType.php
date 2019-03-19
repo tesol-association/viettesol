@@ -14,4 +14,8 @@ class SessionType extends Model
     	'abstract_length',
     	'conference_id'
     ];
+    public function papers()
+    {
+    	return $this->hasMany('App\Models\Paper', 'session_type_id');
+    }
 }
