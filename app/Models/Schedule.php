@@ -9,7 +9,7 @@ class Schedule extends Model
 	protected $table="schedule";
 
 	protected $fillable=[
-		'id', 'paper_id', 'time_block_id', 'room_id', 'status'
+		'id', 'paper_id', 'time_block_id', 'room_id', 'status', 'conference_id'
 	];
 	public function timeblocks()
 	{

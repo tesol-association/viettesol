@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Paper extends Model
 {
-	const STATUS_UNSCHEDULER = 'unscheduled';
-	const STATUS_SCHEDULER   = 'scheduled';
+	const STATUS_UNSCHEDULED = 'unscheduled';
+	const STATUS_SCHEDULED   = 'scheduled';
     const STATUS_SUBMITTED = 'submitted';
     protected $table = 'papers';
 

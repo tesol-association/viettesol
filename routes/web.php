@@ -339,6 +339,12 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
         Route::group(['prefix'=>'/schedule'], function(){
             Route::get('/list','Admin\ConferenceManager\ScheduleController@index')->name('admin_schedule_list');
+
+            Route::get('/getTable','Admin\ConferenceManager\ScheduleController@getTable')->name('admin_schedule_getTable');
+
+            Route::get('/store','Admin\ConferenceManager\ScheduleController@addSchedule')->name('admin_schedule_store');
+
+            Route::get('/delete','Admin\ConferenceManager\ScheduleController@delete')->name('admin_schedule_delete');
         });
 //        Route::group(['prefix'=>'/review_assignment'], function() {
 //            Route::get('/submission/{paperId}', 'Admin\ConferenceManager\ReviewAssignmentController@create')->name('admin_review_assignment_create');
