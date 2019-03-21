@@ -308,6 +308,20 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::post('/delete/{id}', 'Admin\ConferenceManager\ConferencePartnerSponserController@destroy')->name('admin_conference_partners_sponsers_delete');
         });
 
+        Route::group(['prefix'=>'/conference_roles'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\ConferenceRoleController@index')->name('admin_conference_roles_list');
+            Route::get('/create', 'Admin\ConferenceManager\ConferenceRoleController@create')->name('admin_conference_roles_create');
+            Route::post('/store', 'Admin\ConferenceManager\ConferenceRoleController@store')->name('admin_conference_roles_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\ConferenceRoleController@edit')->name('admin_conference_roles_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\ConferenceRoleController@update')->name('admin_conference_roles_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\ConferenceRoleController@destroy')->name('admin_conference_roles_delete');
+        });
+
+        Route::group(['prefix'=>'/user_conference_roles'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\UserConferenceRoleController@index')->name('admin_user_conference_roles_list');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\UserConferenceRoleController@update')->name('admin_user_conference_roles_update');
+        });
+
         Route::group(['prefix'=>'/review_form'], function() {
             Route::get('/list', 'Admin\ReviewFormController@index')->name('admin_review_form_list');
             Route::get('/create', 'Admin\ReviewFormController@create')->name('admin_review_form_create');

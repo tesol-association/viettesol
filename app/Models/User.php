@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\News');
     }
+
+    public function conferenceRoles()
+    {
+        return $this->belongsToMany('App\Models\ConferenceRole', 'user_conference_roles', 'user_id', 'conference_role_id');
+    }
 }
