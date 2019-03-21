@@ -296,6 +296,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ route('admin_conference_roles_list', ['conference_id' => $conference->id]) }}">List Conference Roles</a></li>
+                                <li><a href="{{ route('admin_conference_roles_create', ['conference_id' => $conference->id]) }}">Create Conference Roles</a></li>
+                                <li><a href="{{ route('admin_user_conference_roles_list', ['conference_id' => $conference->id]) }}">User Conference Roles</a></li>
+                            </ul>
                         </li>
                         <li class="treeview">
                             <a href="#"><i class="fa fa-link"></i> <span>Special Event</span>
