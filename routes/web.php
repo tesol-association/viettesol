@@ -315,15 +315,15 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::get('/edit/{id}', 'Admin\ReviewFormController@edit')->name('admin_review_form_edit');
             Route::post('/update/{id}', 'Admin\ReviewFormController@update')->name('admin_review_form_update');
             Route::post('/delete/{id}', 'Admin\ReviewFormController@destroy')->name('admin_review_form_delete');
-        });
 
-        Route::group(['prefix'=>'/criteria_review'], function() {
-            Route::get('/list', 'Admin\CriteriaReviewController@index')->name('admin_criteria_review_list');
-            Route::get('/create', 'Admin\CriteriaReviewController@create')->name('admin_criteria_review_create');
-            Route::post('/store', 'Admin\CriteriaReviewController@store')->name('admin_criteria_review_store');
-            Route::get('/edit/{id}', 'Admin\CriteriaReviewController@edit')->name('admin_criteria_review_edit');
-            Route::post('/update/{id}', 'Admin\CriteriaReviewController@update')->name('admin_criteria_review_update');
-            Route::post('/delete/{id}', 'Admin\CriteriaReviewController@destroy')->name('admin_criteria_review_delete');
+            Route::group(['prefix'=>'/{review_form_id}/criteria'], function() {
+                Route::get('/list', 'Admin\CriteriaReviewController@index')->name('admin_criteria_review_list');
+                Route::get('/create', 'Admin\CriteriaReviewController@create')->name('admin_criteria_review_create');
+                Route::post('/store', 'Admin\CriteriaReviewController@store')->name('admin_criteria_review_store');
+                Route::get('/edit/{id}', 'Admin\CriteriaReviewController@edit')->name('admin_criteria_review_edit');
+                Route::post('/update/{id}', 'Admin\CriteriaReviewController@update')->name('admin_criteria_review_update');
+                Route::post('/delete/{id}', 'Admin\CriteriaReviewController@destroy')->name('admin_criteria_review_delete');
+            });
         });
 
         Route::group(['prefix'=>'/paper'], function() {
@@ -348,15 +348,6 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
 });
 
-Route::group(['prefix'=>'test'],function(){
-    Route::get('/{trackId}/get_paper', 'TestController@getPapers');
-    Route::get('/{trackId}/send_paper', 'TestController@sendPaper');
-    Route::get('/create_review_form', 'TestController@createReviewForm');
-    Route::get('/show_review_form', 'TestController@showReviewForm');
-    Route::get('/send_review', 'TestController@sendReview');
-    Route::get('/assign_paper', 'TestController@assignPaper');
-
-});
 Auth::routes();
 
 Route::group(['prefix'=>'home'],function(){
