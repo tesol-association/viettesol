@@ -15,7 +15,7 @@ class PaperRepository
     public function find($paperId)
     {
         $paper = Paper::find($paperId);
-        $paper->load('track');
+        $paper->load('track', 'sessionType');
         return $paper;
     }
 

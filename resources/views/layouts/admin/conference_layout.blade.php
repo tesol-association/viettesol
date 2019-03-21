@@ -267,6 +267,90 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="treeview-menu">
                         <li><a href="{{ route('admin_review_form_list', ["conference_id" => $conference->id]) }}">List Review Form</a></li>
                         <li><a href="{{ route('admin_criteria_review_list', ["conference_id" => $conference->id]) }}">Criteria Review</a></li>
+                        <li><a href="{{ route('admin_announcements_list', ["conference_id" => $conference->id]) }}">Announcement</a></li>
+                        <li><a href="{{ route('admin_timeline_view', ["conference_id" => $conference->id]) }}">Conference Timeline</a></li>
+                        <li><a href="#">Fee</a></li>
+                        <li><a href="{{ route('admin_track_list', ["conference_id" => $conference->id]) }}">Track</a></li>
+                        <li class="treeview">
+                            <a href="{{ route('admin_review_form_list', ["conference_id" => $conference->id]) }}"> <span>Review Form</span>
+                        </li>
+                        <li><a href="#">Prepaired email</a></li>
+                        <li><a href="#">Registration</a></li>
+                        <li><a href="{{ route('admin_speakers_list', ["conference_id" => $conference->id]) }}">Speaker</a></li>
+                        <li><a href="{{ route('admin_session_type_list', ["conference_id" => $conference->id]) }}">Session Types</a></li>
+                        <li class="treeview">
+                            <a href="#"><i class="fa fa-link"></i> <span>Paper Management</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ route('admin_paper_list', ["conference_id" => $conference->id]) }}">List Paper</a></li>
+                                <li><a href="#">Paper File</a></li>
+                                <li><a href="#">Paper author</a></li>
+                                <li><a href="#">Review Assignment</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#"><i class="fa fa-link"></i> <span>Schedule Management</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#">Schedule</a></li>
+                                <li><a href="#">Time Block</a></li>
+                                <li><a href="{{ route('admin_buildings_list', ["conference_id" => $conference->id]) }}">Building & Room</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#"><i class="fa fa-link"></i> <span>Conference Role</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ route('admin_conference_roles_list', ['conference_id' => $conference->id]) }}">List Conference Roles</a></li>
+                                <li><a href="{{ route('admin_conference_roles_create', ['conference_id' => $conference->id]) }}">Create Conference Roles</a></li>
+                                <li><a href="{{ route('admin_user_conference_roles_list', ['conference_id' => $conference->id]) }}">User Conference Roles</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#"><i class="fa fa-link"></i> <span>Special Event</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ route('admin_special_event_list', ['conference_id' => $conference->id]) }}">List Special Event</a></li>
+                                <li><a href="{{ route('admin_special_event_create', ['conference_id' => $conference->id]) }}">Create Special Event</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#"><i class="fa fa-link"></i> <span>Conference Partner Sponser</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ route('admin_conference_partners_sponsers_list', ['conference_id' => $conference->id]) }}">List Conference Partner Sponser</a></li>
+                                <li><a href="{{ route('admin_conference_partners_sponsers_create', ['conference_id' => $conference->id]) }}">Create PartnerSponser</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#"><i class="fa fa-link"></i> <span>Payment</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="treeview">
+                            <a href="#"><i class="fa fa-link"></i> <span>Conference Gallery</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li><a href="#">Prepaired email</a></li>

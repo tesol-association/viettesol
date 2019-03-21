@@ -201,6 +201,160 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 	});
 
 
+    Route::group(['prefix'=>'contribution'],function(){
+        Route::get('/list', 'Admin\ContributionController@index')->name('admin_contribution_list');
+        Route::post('/delete/{id}', 'Admin\ContributionController@destroy')->name('admin_contribution_delete');
+    });
+
+    Route::group(['prefix'=>'membership'],function(){
+        Route::get('/list', 'Admin\MembershipController@index')->name('admin_membership_list');
+        Route::get('/create', 'Admin\MembershipController@create')->name('admin_membership_create');
+        Route::post('/store', 'Admin\MembershipController@store')->name('admin_membership_store');
+        Route::get('/edit/{id}', 'Admin\MembershipController@edit')->name('admin_membership_edit');
+        Route::post('/update/{id}', 'Admin\MembershipController@update')->name('admin_membership_update');
+        Route::post('/delete/{id}', 'Admin\MembershipController@destroy')->name('admin_membership_delete');
+        Route::get('/make/{id}', 'Admin\ContactController@make')->name('admin_membership_make');
+    });
+
+
+    /**
+     * CONFERENCE MANAGER
+     */
+    Route::group(['prefix'=>'conference'], function() {
+        Route::get('/list', 'Admin\ConferenceController@index')->name('admin_conference_list');
+        Route::get('/create', 'Admin\ConferenceController@create')->name('admin_conference_create');
+        Route::post('/store', 'Admin\ConferenceController@store')->name('admin_conference_store');
+        Route::get('/view/{id}', 'Admin\ConferenceController@view')->name('admin_conference_view');
+        Route::get('/edit/{id}', 'Admin\ConferenceController@edit')->name('admin_conference_edit');
+        Route::post('/update/{id}', 'Admin\ConferenceController@update')->name('admin_conference_update');
+        Route::post('/delete/{id}', 'Admin\ConferenceController@destroy')->name('admin_conference_delete');
+    });
+
+    Route::group(['prefix'=>'/conf/{conference_id}'], function() {
+        // Conference TimeLine
+        Route::group(['prefix'=>'/timeline'], function() {
+            Route::get('/view', 'Admin\ConferenceTimelineController@view')->name('admin_timeline_view');
+            Route::get('/create', 'Admin\ConferenceTimelineController@create')->name('admin_timeline_create');
+            Route::post('/store', 'Admin\ConferenceTimelineController@store')->name('admin_timeline_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceTimelineController@edit')->name('admin_timeline_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceTimelineController@update')->name('admin_timeline_update');
+        });
+
+        Route::group(['prefix'=>'/track'], function() {
+            Route::get('/list', 'Admin\TrackController@index')->name('admin_track_list');
+            Route::get('/create', 'Admin\TrackController@create')->name('admin_track_create');
+            Route::post('/store', 'Admin\TrackController@store')->name('admin_track_store');
+            Route::get('/edit/{id}', 'Admin\TrackController@edit')->name('admin_track_edit');
+            Route::post('/update/{id}', 'Admin\TrackController@update')->name('admin_track_update');
+            Route::post('/delete/{id}', 'Admin\TrackController@destroy')->name('admin_track_delete');
+        });
+
+        Route::group(['prefix'=>'/buldings'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\BuildingsController@index')->name('admin_buildings_list');
+            Route::get('/create', 'Admin\ConferenceManager\BuildingsController@create')->name('admin_buildings_create');
+            Route::post('/store', 'Admin\ConferenceManager\BuildingsController@store')->name('admin_buildings_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\BuildingsController@edit')->name('admin_buildings_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\BuildingsController@update')->name('admin_buildings_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\BuildingsController@destroy')->name('admin_buildings_delete');
+
+            Route::group(['prefix'=>'/{building_id}/rooms'], function(){
+                Route::get('/list', 'Admin\ConferenceManager\RoomsController@index')->name('admin_rooms_list');
+                Route::get('/create', 'Admin\ConferenceManager\RoomsController@create')->name('admin_rooms_create');
+                Route::post('/store', 'Admin\ConferenceManager\RoomsController@store')->name('admin_rooms_store');
+                Route::get('/edit/{id}', 'Admin\ConferenceManager\RoomsController@edit')->name('admin_rooms_edit');
+                Route::post('/update/{id}', 'Admin\ConferenceManager\RoomsController@update')->name('admin_rooms_update');
+                Route::post('/delete/{id}', 'Admin\ConferenceManager\RoomsController@destroy')->name('admin_rooms_delete');
+            });
+        });
+
+        Route::group(['prefix'=>'/speakers'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\SpeakersController@index')->name('admin_speakers_list');
+            Route::get('/create', 'Admin\ConferenceManager\SpeakersController@create')->name('admin_speakers_create');
+            Route::post('/store', 'Admin\ConferenceManager\SpeakersController@store')->name('admin_speakers_store');
+            Route::get('/view/{id}', 'Admin\ConferenceManager\SpeakersController@show')->name('admin_speakers_view');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\SpeakersController@edit')->name('admin_speakers_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\SpeakersController@update')->name('admin_speakers_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\SpeakersController@destroy')->name('admin_speakers_delete');
+        });
+
+        Route::group(['prefix'=>'/announcements'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\AnnouncementsController@index')->name('admin_announcements_list');
+            Route::get('/create', 'Admin\ConferenceManager\AnnouncementsController@create')->name('admin_announcements_create');
+            Route::post('/store', 'Admin\ConferenceManager\AnnouncementsController@store')->name('admin_announcements_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\AnnouncementsController@edit')->name('admin_announcements_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\AnnouncementsController@update')->name('admin_announcements_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\AnnouncementsController@destroy')->name('admin_announcements_delete');
+        });
+
+        Route::group(['prefix'=>'/session_type'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\SessionTypeController@index')->name('admin_session_type_list');
+            Route::get('/create', 'Admin\ConferenceManager\SessionTypeController@create')->name('admin_session_type_create');
+            Route::post('/store', 'Admin\ConferenceManager\SessionTypeController@store')->name('admin_session_type_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\SessionTypeController@edit')->name('admin_session_type_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\SessionTypeController@update')->name('admin_session_type_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\SessionTypeController@destroy')->name('admin_session_type_delete');
+        });
+
+        Route::group(['prefix'=>'/special_event'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\SpecialEventController@index')->name('admin_special_event_list');
+            Route::get('/create', 'Admin\ConferenceManager\SpecialEventController@create')->name('admin_special_event_create');
+            Route::post('/store', 'Admin\ConferenceManager\SpecialEventController@store')->name('admin_special_event_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\SpecialEventController@edit')->name('admin_special_event_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\SpecialEventController@update')->name('admin_special_event_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\SpecialEventController@destroy')->name('admin_special_event_delete');
+        });
+
+        Route::group(['prefix'=>'/conference_partners_sponsers'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\ConferencePartnerSponserController@index')->name('admin_conference_partners_sponsers_list');
+            Route::get('/create', 'Admin\ConferenceManager\ConferencePartnerSponserController@create')->name('admin_conference_partners_sponsers_create');
+            Route::post('/store', 'Admin\ConferenceManager\ConferencePartnerSponserController@store')->name('admin_conference_partners_sponsers_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\ConferencePartnerSponserController@edit')->name('admin_conference_partners_sponsers_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\ConferencePartnerSponserController@update')->name('admin_conference_partners_sponsers_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\ConferencePartnerSponserController@destroy')->name('admin_conference_partners_sponsers_delete');
+        });
+
+        Route::group(['prefix'=>'/conference_roles'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\ConferenceRoleController@index')->name('admin_conference_roles_list');
+            Route::get('/create', 'Admin\ConferenceManager\ConferenceRoleController@create')->name('admin_conference_roles_create');
+            Route::post('/store', 'Admin\ConferenceManager\ConferenceRoleController@store')->name('admin_conference_roles_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\ConferenceRoleController@edit')->name('admin_conference_roles_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\ConferenceRoleController@update')->name('admin_conference_roles_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\ConferenceRoleController@destroy')->name('admin_conference_roles_delete');
+        });
+
+        Route::group(['prefix'=>'/user_conference_roles'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\UserConferenceRoleController@index')->name('admin_user_conference_roles_list');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\UserConferenceRoleController@update')->name('admin_user_conference_roles_update');
+        });
+
+        Route::group(['prefix'=>'/review_form'], function() {
+            Route::get('/list', 'Admin\ReviewFormController@index')->name('admin_review_form_list');
+            Route::get('/create', 'Admin\ReviewFormController@create')->name('admin_review_form_create');
+            Route::post('/store', 'Admin\ReviewFormController@store')->name('admin_review_form_store');
+            Route::get('/edit/{id}', 'Admin\ReviewFormController@edit')->name('admin_review_form_edit');
+            Route::post('/update/{id}', 'Admin\ReviewFormController@update')->name('admin_review_form_update');
+            Route::post('/delete/{id}', 'Admin\ReviewFormController@destroy')->name('admin_review_form_delete');
+
+            Route::group(['prefix'=>'/{review_form_id}/criteria'], function() {
+                Route::get('/list', 'Admin\CriteriaReviewController@index')->name('admin_criteria_review_list');
+                Route::get('/create', 'Admin\CriteriaReviewController@create')->name('admin_criteria_review_create');
+                Route::post('/store', 'Admin\CriteriaReviewController@store')->name('admin_criteria_review_store');
+                Route::get('/edit/{id}', 'Admin\CriteriaReviewController@edit')->name('admin_criteria_review_edit');
+                Route::post('/update/{id}', 'Admin\CriteriaReviewController@update')->name('admin_criteria_review_update');
+                Route::post('/delete/{id}', 'Admin\CriteriaReviewController@destroy')->name('admin_criteria_review_delete');
+            });
+        });
+
+        Route::group(['prefix'=>'/paper'], function() {
+            Route::get('/list', 'Admin\PaperController@index')->name('admin_paper_list');
+            Route::get('/create', 'Admin\PaperController@create')->name('admin_paper_create');
+            Route::post('/store', 'Admin\PaperController@store')->name('admin_paper_store');
+            Route::get('/edit/{id}', 'Admin\PaperController@edit')->name('admin_paper_edit');
+            Route::post('/update/{id}', 'Admin\PaperController@update')->name('admin_paper_update');
+            Route::post('/delete/{id}', 'Admin\PaperController@destroy')->name('admin_paper_delete');
+            Route::get('/submission/{id}', 'Admin\PaperController@submission')->name('admin_paper_submission');
+        });
+
 	/**
 	 * CONFERENCE MANAGER
 	 */

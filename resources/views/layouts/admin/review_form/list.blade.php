@@ -26,6 +26,7 @@
                                     <th>Attach File</th>
                                     <th>Status</th>
                                     <th>Created At</th>
+                                    <th>Criteria</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -40,13 +41,28 @@
                                                 <a target="_blank" href="{{ asset('/storage/' . $reviewForm->attach_file) }}" class="btn btn-primary"><span class="fa fa-download"></span> Attach File</a>
                                             @endif
                                         </td>
-                                        <td>{{ $reviewForm->status }}</td>
+                                        <td>
+                                            @if ($reviewForm->status == 'active')
+                                                <span class="label label-success">{{ $reviewForm->status }}</span>
+                                            @else
+                                                <span class="label label-danger">{{ $reviewForm->status }}</span>
+                                            @endif
+                                        </td>
                                         <td>{{ $reviewForm->created_at }}</td>
                                         <td>
-                                            <a href="{{ route('admin_review_form_edit', ["conference_id" => $conference->id, "id" => $reviewForm->id]) }}" class="btn btn-info">Edit</a>
+                                            <a href="{{ route('admin_criteria_review_list', ["conference_id" => $conference->id, "review_form_id" => $reviewForm->id]) }}" class="btn btn-info">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_review_form_{{ $reviewForm->id }}">Delete</button>
+                                            <a href="{{ route('admin_review_form_edit', ["conference_id" => $conference->id, "id" => $reviewForm->id]) }}" class="btn btn-info">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_review_form_{{ $reviewForm->id }}">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->

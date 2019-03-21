@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ConferenceRepositories\CriteriaReviewRepository;
+use App\ConferenceRepositories\ReviewFormRepository;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\CriteriaReview;
 use Illuminate\Http\Request;
@@ -9,30 +11,44 @@ use Illuminate\Support\Facades\Validator;
 
 class CriteriaReviewController extends BaseConferenceController
 {
+    protected $criteriaReviews;
+    protected $reviewForms;
+    public function __construct(Request $request, CriteriaReviewRepository $criteriaReviewRepository, ReviewFormRepository $reviewFormRepository)
+    {
+        parent::__construct($request);
+        $this->criteriaReviews = $criteriaReviewRepository;
+        $this->reviewForms = $reviewFormRepository;
+    }
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index($conferenceId, $reviewFormId)
     {
-        $criteriaReviews = CriteriaReview::all();
+        $reviewForm = $this->reviewForms->find($reviewFormId);
+        $criteriaReviews = $this->criteriaReviews->get(['review_form_id' => $reviewFormId]);
         return view('layouts.admin.criteria_review.list', [
-            'criteriaReviews'=> $criteriaReviews
+            'criteriaReviews'=> $criteriaReviews,
+            'reviewForm' => $reviewForm
         ]);
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create($conferenceId, $reviewFormId)
     {
-        return view('layouts.admin.criteria_review.create');
+        $reviewForm = $this->reviewForms->find($reviewFormId);
+        return view('layouts.admin.criteria_review.create', [
+            'reviewForm' => $reviewForm
+        ]);
     }
 
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, $conferenceId, $reviewFormId)
     {
         $validator = $this->validateData($request->all());
         if ($validator->fails()) {
@@ -41,46 +57,61 @@ class CriteriaReviewController extends BaseConferenceController
                 ->withErrors($validator)
                 ->withInput();
         }
-        $criteriaReview = new CriteriaReview();
-        $criteriaReview->name = $request->name;
-        $criteriaReview->description = $request->description;
-        $criteriaReview->possible_values = json_encode(explode(",", $request->possible_values));
-        $criteriaReview->save();
-        return redirect()->route('admin_criteria_review_list', ['id' => $this->conferenceId])->with('success', 'Create ' . $criteriaReview->name . ' successful !');
+        $criteriaReview = $this->criteriaReviews->create($request->all());
+        return redirect()
+            ->route('admin_criteria_review_list', [
+                'conference_id' => $this->conferenceId,
+                'review_form_id' => $reviewFormId
+            ])
+            ->with('success', 'Create ' . $criteriaReview->name . ' successful !');
     }
 
 
-    public function edit($conferenceId, $criteriaId)
+    public function edit($conferenceId, $reviewFormId, $criteriaId)
     {
-        $criteriaReview = CriteriaReview::find($criteriaId);
-        return view('layouts.admin.criteria_review.edit', ['criteriaReview' => $criteriaReview]);
+        $reviewForm = $this->reviewForms->find($reviewFormId);
+        $criteriaReview = $this->criteriaReviews->find($criteriaId);
+        return view('layouts.admin.criteria_review.edit', [
+            'criteriaReview' => $criteriaReview,
+            'reviewForm' => $reviewForm
+        ]);
     }
 
 
     /**
      * @param Request $request
+     * @param $conferenceId
+     * @param $reviewFormId
+     * @param $criteriaId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $conferenceId, $criteriaId)
+    public function update(Request $request, $conferenceId, $reviewFormId, $criteriaId)
     {
         $validator = $this->validateData($request->all());
         if ($validator->fails()) {
             return redirect()
-                ->route('admin_criteria_review_create', ['conference_id' => $this->conferenceId])
+                ->route('admin_criteria_review_edit', ['conference_id' => $this->conferenceId, 'review_form_id' => $reviewFormId, 'id' => $criteriaId])
                 ->withErrors($validator)
                 ->withInput();
         }
-        $criteriaReview = CriteriaReview::find($criteriaId);
-        $criteriaReview->name = $request->name;
-        $criteriaReview->description = $request->description;
-        $criteriaReview->possible_values = json_encode(explode(",", $request->possible_values));
-        $criteriaReview->save();
-        return redirect()->route('admin_criteria_review_list', ['id' => $this->conferenceId])->with('success', 'Update ' . $criteriaReview->name . ' successful !');
+        $criteriaReview = $this->criteriaReviews->update($criteriaId, $request->all());
+        return redirect()
+            ->route('admin_criteria_review_list', [
+                'conference_id' => $this->conferenceId,
+                'review_form_id' => $reviewFormId
+            ])
+            ->with('success', 'Update ' . $criteriaReview->name . ' successful !');
     }
 
-    public function destroy()
+    public function destroy($conferenceId, $reviewFormId, $criteriaId)
     {
-
+        $criteriaReview = $this->criteriaReviews->destroy($criteriaId);
+        return redirect()
+            ->route('admin_criteria_review_list', [
+                'conference_id' => $this->conferenceId,
+                'review_form_id' => $reviewFormId
+            ])
+            ->with('success', 'Delete ' . $criteriaReview->name . ' successful !');
     }
     /**
      * @param $data
@@ -89,8 +120,9 @@ class CriteriaReviewController extends BaseConferenceController
     public function validateData($data)
     {
         return Validator::make($data, [
+            'review_form_id' => 'required|numeric',
             'name' => 'required|max:45',
-            'possible_values' => 'required',
+            'possible_values' => 'required|array',
         ]);
     }
 }

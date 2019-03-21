@@ -25,11 +25,17 @@
                     <div class="box-body">
                         <dl class="dl-horizontal">
                             <dt>Author</dt>
-                            <dd>{{ $paper-> }}</dd>
+                            <dd>
+                                @foreach($paper->authors as $author)
+                                    {{ $author->first_name }} {{ $author->last_name }} ,
+                                @endforeach
+                            </dd>
                             <dt>Title</dt>
                             <dd>{{ $paper->title }}</dd>
                             <dt>Track</dt>
                             <dd>{{ $paper->track->name }}</dd>
+                            <dt>Session Type</dt>
+                            <dd>{{ $paper->sessionType->name }}</dd>
                             <dt>Track Director</dt>
                             <dd>??</dd>
                             <dt>Abstract</dt>
