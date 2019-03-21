@@ -34,18 +34,6 @@
                         @endif
                     </div>
 
-                    <div class="form-group {{ $errors->first('criteria') ? 'has-error' : ''}}">
-                        <label for="choose_criteria">Choose Criteria*</label>
-                        <select id="choose_criteria" name="criteria[]" class="form-control" multiple="multiple" data-placeholder="Select one or many Criteria" style="width: 100%;" required>
-                            @foreach ($criterias as $criteria)
-                                <option value="{{ $criteria->id }}">{{ $criteria->name }}</option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('criteria'))
-                            <span class="help-block">{{ $errors->first('body') }}</span>
-                        @endif
-                    </div>
-
                     <div class="form-group">
                         <label for="status">Status</label>
                         <select id="status" name="status" class="form-control" data-placeholder="Select a Tags" style="width: 100%;" required>
