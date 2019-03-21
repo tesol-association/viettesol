@@ -348,15 +348,6 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
 });
 
-Route::group(['prefix'=>'test'],function(){
-    Route::get('/{trackId}/get_paper', 'TestController@getPapers');
-    Route::get('/{trackId}/send_paper', 'TestController@sendPaper');
-    Route::get('/create_review_form', 'TestController@createReviewForm');
-    Route::get('/show_review_form', 'TestController@showReviewForm');
-    Route::get('/send_review', 'TestController@sendReview');
-    Route::get('/assign_paper', 'TestController@assignPaper');
-
-});
 Auth::routes();
 
 Route::group(['prefix'=>'home'],function(){
