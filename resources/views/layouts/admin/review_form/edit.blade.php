@@ -15,7 +15,7 @@
 
         <div class="box-body">
             <!-- form start -->
-            <form  method="post" action="{{ route('admin_review_form_store', ["conference_id" => $conference->id]) }}" enctype="multipart/form-data">
+            <form  method="post" action="{{ route('admin_review_form_update', ["conference_id" => $conference->id, 'id' => $reviewForm->id]) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="box-body">
                     <div class="form-group {{ $errors->first('name') ? 'has-error' : ''}}">
@@ -29,24 +29,11 @@
                     <div class="form-group {{ $errors->first('attach_file') ? 'has-error' : ''}}">
                         <label for="attach_file">Attach File</label>
                         <input type="file" id="attach_file" name="attach_file">
+                        @if ($reviewForm->attach_file)
+                            <a href="{{ asset('/storage' . $reviewForm->attach_file) }}" class="btn btn-primary"><span class="fa fa-download"></span> Attach File</a>
+                        @endif
                         @if ($errors->has('attach_file'))
                             <span class="help-block">{{ $errors->first('attach_file') }}</span>
-                        @endif
-                    </div>
-
-                    <div class="form-group {{ $errors->first('criteria') ? 'has-error' : ''}}">
-                        <label for="choose_criteria">Choose Criteria*</label>
-                        <select id="choose_criteria" name="criteria[]" class="form-control" multiple="multiple" data-placeholder="Select one or many Criteria" style="width: 100%;" required>
-                            @foreach ($criterias as $criteria)
-                                @if (in_array($criteria->id, $criteriaSelected))
-                                    <option value="{{ $criteria->id }}" selected>{{ $criteria->name }}</option>
-                                @else
-                                    <option value="{{ $criteria->id }}">{{ $criteria->name }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                        @if ($errors->has('criteria'))
-                            <span class="help-block">{{ $errors->first('body') }}</span>
                         @endif
                     </div>
 
