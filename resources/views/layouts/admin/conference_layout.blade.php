@@ -258,8 +258,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li><a href="{{ route('admin_timeline_view', ["conference_id" => $conference->id]) }}">Conference Timeline</a></li>
                         <li><a href="#">Fee</a></li>
                         <li><a href="{{ route('admin_track_list', ["conference_id" => $conference->id]) }}">Track</a></li>
-                        <li class="treeview">
-                            <a href="{{ route('admin_review_form_list', ["conference_id" => $conference->id]) }}"> <span>Review Form</span>
+                        <li>
+                            <a href="{{ route('admin_review_form_list', ["conference_id" => $conference->id]) }}">
+                                <span>Review Form</span>
+                            </a>
                         </li>
                         <li><a href="#">Prepaired email</a></li>
                         <li><a href="#">Registration</a></li>
