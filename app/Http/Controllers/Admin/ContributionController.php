@@ -41,6 +41,22 @@ class ContributionController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'contact_id' => 'required',
+            'amount' => 'required',
+            'unit' => 'required',
+            'payment_method_id' => 'required',
+            'transacion_id' => 'required'
+        ]);
+
+        $contribution = new Contribution();
+        $contribution->contact_id = $request->get('contact_id');
+        $contribution->amount = $request->get('amount');
+        $contribution->unit = $request->get('unit');
+        $contribution->payment_method_id = $request->get('payment_method_id');
+        $contribution->transaction_id = $request->get('transaction_id');
+
+        $contribution->save();
     }
 
     /**
