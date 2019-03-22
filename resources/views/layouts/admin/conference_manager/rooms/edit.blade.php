@@ -36,14 +36,14 @@
 
                     <div class="form-group {{ $errors->first('description') ? 'has-error' : ''}}">
                     	<label for="description">Description</label>
-                    	<textarea class="form-control" id="description" name="description" rows="6" placeholder="Enter discription for building">{{ $room->description }}</textarea>
+                    	<textarea class="form-control" id="description" name="description" rows="6" placeholder="Enter discription for room">{{ $room->description }}</textarea>
                     	@if ($errors->has('description'))
                             <span class="help-block">{{ $errors->first('description') }}</span>
                         @endif
                     </div>
 
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
             <!-- form end -->

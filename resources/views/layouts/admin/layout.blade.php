@@ -243,7 +243,7 @@ desired effect
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{Auth::User()->image}}" class="img-circle" alt="User Image">
+          <img src="{{ asset('/storage/' . Auth::User()->image) }}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>{{Auth::User()->user_name}}</p>
@@ -291,87 +291,75 @@ desired effect
           </ul>
         </li> -->
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Site Management</span>
+          <a href="#"><i class="fa fa-cogs"></i> <span>Site Management</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('admin_menu_list') }}">Menu Management</a></li>
-            <li><a href="{{ route('admin_banner_list') }}">Banner Management</a></li>
-            <li><a href="{{ route('admin_advertisement_list') }}">Adv Management</a></li>
-            <li><a href="{{ route('admin_partner_list') }}">Partner Management</a></li>
+            <li><a href="{{ route('admin_menu_list') }}"><i class="glyphicon glyphicon-menu-hamburger"></i><span> Menu Management</span></a></li>
+            <li><a href="{{ route('admin_banner_list') }}"><i class="fa fa-shirtsinbulk"></i><span>Banner Management</span></a></li>
+            <li><a href="{{ route('admin_advertisement_list') }}"><i class="fa fa-file-image-o"></i><span>Adv Management</span></a></li>
+            <li><a href="{{ route('admin_partner_list') }}"><i class="glyphicon glyphicon-retweet"></i><span>Partner Management</span></a></li>
           </ul>
         </li>
         <li class="treeview">
-          <a href="{{ route('admin_comment_list') }}"><i class="fa fa-link"></i> <span>Comment Management</span>
+          <a href="{{ route('admin_comment_list') }}"><i class="fa fa-commenting-o"></i> <span>Comment Management</span>
             <span class="pull-right-container"></span>
           </a>
         </li>
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Content Management</span>
+          <a href="#"><i class="fa fa-file-text-o"></i> <span>Content Management</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('admin_news_list') }}">News Management</a></li>
-            <li><a href="{{ route('admin_news_category_list') }}">News Category Management</a></li>
-            <li><a href="{{ route('admin_event_list') }}">Events Management</a></li>
-            <li><a href="{{ route('admin_events_category_list') }}">Events Category Manager</a></li>
+            <li><a href="{{ route('admin_news_list') }}"><i class="fa fa-newspaper-o"></i><span>News Management</span></a></li>
+            <li><a href="{{ route('admin_news_category_list') }}"><i class="fa fa-file-text"></i><span>News Category Management</span></a></li>
+            <li><a href="{{ route('admin_event_list') }}"><i class="fa fa-volume-up"></i><span>Events Management</span></a></li>
+            <li><a href="{{ route('admin_events_category_list') }}"><i class="fa fa-hand-paper-o"></i><span>Events Category Manager</span></a></li>
           </ul>
         </li>
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Contact Form Management</span>
+          <a href="#"><i class="fa fa-fax"></i><span>Contact Form Management</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('admin_contactForm_list') }}">Contact Form List</a></li>
+            <li><a href="{{ route('admin_contactForm_list') }}"><i class="fa fa-list"></i><span> Contact Form List</span></a></li>
           </ul>
         </li>
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Category Management</span>
+          <a href="#"><i class="fa fa-th"></i> <span>Category Management</span>
             <span class="pull-right-container"></span>
           </a>
         </li>
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>User Management</span>
+          <a href="#"><i class="fa fa-user"></i> <span>User Management</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('admin_user_list') }}">List</a></li>
-            <li><a href="{{ route('admin_user_create') }}">Create</a></li>
-            <li><a href="#">Role Management</a></li>
+            <li><a href="{{ route('admin_user_list') }}"><i class="fa fa-list"></i><span>List</span></a></li>
+            <li><a href="{{ route('admin_user_create') }}"><i class="glyphicon glyphicon-plus-sign"></i><span>Create</span></a></li>
+            <li><a href="#"><i class="fa fa-lock"></i><span>Role Management</span></a></li>
           </ul>
         </li>
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Calendar</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Conference Management</span>
+          <a href="#"><i class="fa fa-object-group"></i> <span>Conference Management</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('admin_conference_list') }}">List</a></li>
-            <li><a href="{{ route('admin_conference_create') }}">Create</a></li>
+            <li><a href="{{ route('admin_conference_list') }}"><i class="fa fa-list"></i><span>List</span></a></li>
+            <li><a href="{{ route('admin_conference_create') }}"><i class="glyphicon glyphicon-plus-sign"></i><span>Create</span></a></li>
           </ul>
         </li>
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Conference 1</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
           <ul class="treeview-menu">
             <li><a href="#">Announcement</a></li>
             <li><a href="#">Fee</a></li>
@@ -396,7 +384,7 @@ desired effect
                   </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="#">List Paper</a></li>
+                <li><a href="#"><i class="fa fa-list"></i><span>List Paper</span></a></li>
                 <li><a href="#">Paper File</a></li>
                 <li><a href="#">Paper author</a></li>
                 <li><a href="#">Review Assignment</a></li>
@@ -447,19 +435,19 @@ desired effect
         </li>
 
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Proceeding Management</span>
+          <a href="#"><i class="fa fa-recycle"></i> <span>Proceeding Management</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">List Issue</a></li>
-            <li><a href="#">Create Issue</a></li>
+            <li><a href="#"><i class="fa fa-list"></i><span>List Issue</span></a></li>
+            <li><a href="#"><i class="glyphicon glyphicon-plus-sign"></i><span>Create Issue</span></a></li>
           </ul>
         </li>
 
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>ISSUE 1</span>
+          <a href="#"><i class="fa fa-question-circle"></i> <span>ISSUE 1</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -485,7 +473,7 @@ desired effect
                   </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="#">List Paper</a></li>
+                <li><a href="#"><i class="fa fa-list"></i><span>List Paper</span></a></li>
                 <li><a href="#">Paper File</a></li>
                 <li><a href="#">Paper author</a></li>
                 <li><a href="#">Review Assignment</a></li>
@@ -502,13 +490,14 @@ desired effect
         </li>
 
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span> Membership Management </span>
+          <a href="#"><i class="fa fa-users"></i> <span> Membership Management </span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
 
           <ul class="treeview-menu">
+
             <li><a href="{{ route('admin_contact_list') }}"> Contact Management </a></li>
             <li><a href="{{ route('admin_contact_type_list') }}"> Contact Type Management </a></li>
             <li><a href="{{ route('admin_membership_list') }}"> Membership </a></li>
@@ -516,6 +505,14 @@ desired effect
             <li><a href="{{ route('admin_contribution_list') }}"> Contribution </a></li>
             <li><a href="#"> Member Payment </a></li>
             <li><a href="#"> Notification </a></li>
+
+            <li><a href="{{ route('admin_contact_list') }}"><i class="fa fa-tty"></i><span> Contact Management </span></a></li>
+            <li><a href="{{ route('admin_contact_type_list') }}"><i class="fa fa-list-ol"></i><span> Contact Type Management </span></a></li>
+            <li><a href="{{ route('admin_membership_list') }}"><i class="fa fa-user"></i><span> Membership </span></a></li>
+            <li><a href="{{ route('admin_contribution_list') }}"><i class="fa fa-hand-o-right"></i><span> Contribution </span></a></li>
+            <li><a href="#"><i class="fa fa-credit-card"></i><span> Member Payment </span></a></li>
+            <li><a href="#"><i class="fa fa-sticky-note-o"></i><span> Notification </span></a></li>
+
           </ul>
         </li>
 

@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\ConferenceRepositories\AuthorRepository;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\Author;
-use App\Models\Conference;
-use App\Models\Paper;
 use App\Models\PaperAuthor;
 use App\ConferenceRepositories\PaperRepository;
 use Illuminate\Http\Request;
@@ -77,34 +75,14 @@ class PaperController extends BaseConferenceController
         return redirect()->route('admin_paper_list', ["conference_id" => $this->conferenceId])->with('success', 'Submission ' . $paper->title . ' successful !');
     }
 
-    /**
-     * @param $conferenceId
-     * @param $reviewFormId
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function edit($conferenceId, $reviewFormId)
+    public function submission($conferenceId, $paperId)
     {
-        $criterias = CriteriaReview::all();
-        $reviewForm = ReviewForm::find($reviewFormId);
-        $criteriaSelected = [];
-        foreach ($reviewForm->reviewCriteriaLink as $reviewCriteria) {
-            $criteriaSelected[] = $reviewCriteria->criteria_review_id;
-        }
-        return view('layouts.admin.review_form.edit', ['reviewForm' => $reviewForm, 'criterias' => $criterias, 'criteriaSelected' => $criteriaSelected]);
+        $paper = $this->papers->find($paperId);
+        return view('layouts.admin.paper.submission', [
+            'paper' => $paper
+        ]);
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(Request $request, $conferenceId, $criteriaId)
-    {
-    }
-
-    public function destroy()
-    {
-
-    }
     /**
      * @param $data
      * @return \Illuminate\Contracts\Validation\Validator

@@ -17,6 +17,7 @@
             <!-- form start -->
             <form  method="post" action="{{ route('admin_buildings_store', ["conference_id" => $conference->id]) }}" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="conference_id" value="{{ $conference->id }}">
                 <div class="box-body">
                     <div class="form-group {{ $errors->first('name') ? 'has-error' : ''}}">
                         <label for="name">Name*</label>

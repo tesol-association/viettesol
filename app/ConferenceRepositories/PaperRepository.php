@@ -12,9 +12,24 @@ use App\Models\Paper;
 
 class PaperRepository
 {
-    public function get($conferenceId)
+    public function find($paperId)
     {
-        $papers = Paper::with('track.conference')->get();
+        $paper = Paper::find($paperId);
+        $paper->load('track', 'sessionType');
+        return $paper;
+    }
+
+    public function get($conferenceId, array $filters = null)
+    {
+        if (empty($filters)) {
+            $papers = Paper::with('track.conference')->get();
+        } else {
+            $conditions = [];
+            foreach ($filters as $key => $filter) {
+                $conditions[] = [$key, '=', $filter];
+            }
+            $papers = Paper::with('track.conference')->where($conditions)->get();
+        }
         $papers = $papers->filter(function($paper) use ($conferenceId) {
             return $paper->track->conference->id == $conferenceId;
         });
@@ -32,4 +47,5 @@ class PaperRepository
         $paper->save();
         return $paper;
     }
+
 }

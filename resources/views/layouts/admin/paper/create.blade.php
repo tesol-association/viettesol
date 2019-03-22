@@ -100,7 +100,7 @@
 
             <div class="form-group {{ $errors->first('site_url') ? 'has-error' : ''}}">
                 <label for="site_url">Site URL</label>
-                <input id="site_url" type="text" class="form-control" name="authors[0][site_url]" value="{{ old('site_url') }}">
+                <input id="site_url" type="text" class="form-control" name="authors[0][site_url]" value="{{ $author->site_url }}">
                 @if ($errors->has('site_url'))
                     <span class="help-block">{{ $errors->first('site_url') }}</span>
                 @endif

@@ -49,7 +49,6 @@ class SpeakersController extends BaseConferenceController
         $speaker = new Speakers();
 
         $path = Storage::disk('public')->put(self::AVATAR_FOLDER, $request->image);
-        Storage::disk('public')->delete($speaker->image);
         $speaker->image = $path;
         $speaker->full_name = $request->get('full_name');
         $speaker->affiliate = $request->get('affiliate');

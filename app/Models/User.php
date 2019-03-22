@@ -34,6 +34,7 @@ class User extends Authenticatable
         'fax',
         'email',
         'password',
+        'last_login',
     ];
 
     /**
@@ -48,5 +49,10 @@ class User extends Authenticatable
     public function news()
     {
         return $this->hasMany('App\Models\News');
+    }
+
+    public function conferenceRoles()
+    {
+        return $this->belongsToMany('App\Models\ConferenceRole', 'user_conference_roles', 'user_id', 'conference_role_id');
     }
 }
