@@ -5,10 +5,16 @@ namespace App\Http\Controllers\Admin\ConferenceManager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\Buildings;
-use App\Models\Rooms;
+use App\ConferenceRepositories\BuildingRepository;
 
 class BuildingsController extends BaseConferenceController
 {
+    protected $buildingRepository;
+    public function __construct(Request $request, BuildingRepository $buildings)
+    {
+        parent::__construct($request);
+        $this->buildingRepository = $buildings;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +22,7 @@ class BuildingsController extends BaseConferenceController
      */
     public function index()
     {
-        $buildings = Buildings::where('conference_id', $this->conferenceId)->get();
+        $buildings = $this->buildingRepository->get(['conference_id'=>$this->conferenceId]);
         return view('layouts.admin.conference_manager.buildings.list', compact('buildings'));
     }
 
@@ -41,20 +47,12 @@ class BuildingsController extends BaseConferenceController
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'abbrev' => ['required', 'string', 'max:45'],
+            'conference_id' => ['required', 'numeric']
         ]);
 
-        $building = new Buildings([
-            'name' => $request->get('name'),
-            'abbrev' => $request->get('abbrev'),
-            'description' => $request->get('description'),
-            'conference_id' => $conferenceId,
-        ]);
+        $building = $this->buildingRepository->create($request->all());
 
-        if ($building->save()) {
-            return redirect()->route('admin_buildings_list', $conferenceId)->with('success', 'Building has been added successfully');
-        } else{
-            return redirect()->route('admin_buildings_create', $conferenceId)->with('errors', 'Error');
-        }
+        return redirect()->route('admin_buildings_list', $conferenceId)->with('success', 'Building has been added successfully');
     }
 
     /**
@@ -94,17 +92,9 @@ class BuildingsController extends BaseConferenceController
             'abbrev' => ['required', 'string', 'max:45'],
         ]);
 
-        $building = Buildings::find($id);
+        $building = $this->buildingRepository->update($id, $request->all());
 
-        $building->name = $request->get('name');
-        $building->abbrev = $request->get('abbrev');
-        $building->description = $request->get('description');
-
-        if($building->save()){
-            return redirect()->route('admin_buildings_list', $conferenceId)->with('success', 'Building has been update successfully');
-        }else{
-            return redirect()->route('admin_buildings_edit', $building)->with('errors', 'Error');
-        } 
+        return redirect()->route('admin_buildings_list', $conferenceId)->with('success', 'Building has been update successfully');
     }
 
     /**
@@ -115,15 +105,8 @@ class BuildingsController extends BaseConferenceController
      */
     public function destroy( $conferenceId, $id)
     {
-        $building = Buildings::find($id);
-        foreach ($building->rooms as $room) {
-            $room->delete();
-        }
-        
-        if(!$building->delete()){
-            return redirect()->route('admin_buildings_list', $conferenceId)->with('errors', 'Error');
-        }
-        
+        $building = $this->buildingRepository->destroy($id);
+
         return redirect()->route('admin_buildings_list', $conferenceId)->with('success', 'Building has been deleted successfully');
     }
 }

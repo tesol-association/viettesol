@@ -6,9 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\Rooms;
 use App\Models\Buildings;
+use App\ConferenceRepositories\RoomRepository;
 
 class RoomsController extends BaseConferenceController
 {
+    protected $roomRepository;
+    public function __construct(Request $request, RoomRepository $rooms)
+    {
+        parent::__construct($request);
+        $this->roomRepository = $rooms;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +24,7 @@ class RoomsController extends BaseConferenceController
     public function index($conferenceId, $buildingId)
     {
         $building = Buildings::find($buildingId);
-        $rooms = Rooms::where('building_id', $buildingId)->get();
+        $rooms = $this->roomRepository->get(['building_id' => $buildingId]);
         return view('layouts.admin.conference_manager.rooms.list', ["rooms" => $rooms, 'building_id' =>$buildingId, 'building'=>$building]);
     }
 
@@ -44,18 +51,9 @@ class RoomsController extends BaseConferenceController
             'abbrev' => ['required', 'string', 'max:45'],
         ]);
 
-        $room = new Rooms([
-            'name' => $request->get('name'),
-            'abbrev' => $request->get('abbrev'),
-            'description' => $request->get('description'),
-            'building_id' => $buildingId,
-        ]);
-
-        if ($room->save()) {
-            return redirect()->route('admin_rooms_list', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('success', 'Room has been added successfully');
-        } else{
-            return redirect()->route('admin_rooms_create',  ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('errors', 'Error');
-        }
+       $room = $this->roomRepository->create($request->all());
+        
+        return redirect()->route('admin_rooms_list', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('success', 'Room has been added successfully');
     }
 
     /**
@@ -79,7 +77,7 @@ class RoomsController extends BaseConferenceController
     {
         $room = Rooms::find($id);
 
-         return view('layouts.admin.conference_manager.rooms.edit', ["room" => $room, "conference_id" => $conferenceId, 'building_id' => $buildingId]);
+        return view('layouts.admin.conference_manager.rooms.edit', ["room" => $room, "conference_id" => $conferenceId, 'building_id' => $buildingId]);
     }
 
     /**
@@ -96,17 +94,9 @@ class RoomsController extends BaseConferenceController
             'abbrev' => ['required', 'string', 'max:45'],
         ]);
 
-        $room = Rooms::find($id);
-
-        $room->name = $request->get('name');
-        $room->abbrev = $request->get('abbrev');
-        $room->description = $request->get('description');
-
-        if($room->save()){
-            return redirect()->route('admin_rooms_list', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('success', 'Room has been update successfully');
-        }else{
-            return redirect()->route('admin_room_edit', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('errors', 'Error');
-        } 
+        $room = $this->roomRepository->update($id, $request->all());
+            
+        return redirect()->route('admin_rooms_list', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('success', 'Room has been update successfully');
     }
 
     /**
@@ -117,12 +107,8 @@ class RoomsController extends BaseConferenceController
      */
     public function destroy($conferenceId, $buildingId, $id)
     {
-        $room = Rooms::find($id);
-
-        if($room->delete()){
-            return redirect()->route('admin_rooms_list', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('success', 'Room has been deleted successfully');
-        }else{
-            return redirect()->route('admin_rooms_list', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('errors', 'Error');
-        }
+        $room = $this->roomRepository->destroy($id);
+        
+        return redirect()->route('admin_rooms_list', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('success', 'Room has been deleted successfully');
     }
 }

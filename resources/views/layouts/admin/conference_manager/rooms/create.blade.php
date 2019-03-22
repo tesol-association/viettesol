@@ -17,6 +17,7 @@
             <!-- form start -->
             <form  method="post" action="{{ route('admin_rooms_store', ["conference_id" => $conference->id, "building_id" => $building_id]) }}" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="building_id" value="{{ $building_id }}">
                 <div class="box-body">
                     <div class="form-group {{ $errors->first('name') ? 'has-error' : ''}}">
                         <label for="name">Name*</label>
@@ -36,7 +37,7 @@
 
                     <div class="form-group {{ $errors->first('description') ? 'has-error' : ''}}">
                     	<label for="description">Description</label>
-                    	<textarea class="form-control" id="description" name="description" rows="6" placeholder="Enter discription for building"></textarea>
+                    	<textarea class="form-control" id="description" name="description" rows="6" placeholder="Enter discription for room"></textarea>
                     	@if ($errors->has('description'))
                             <span class="help-block">{{ $errors->first('description') }}</span>
                         @endif

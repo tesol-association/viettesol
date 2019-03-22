@@ -53,7 +53,7 @@
                                                             <h3>Select a conference role for {{ $user->user_name }}</h3>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <select class="form-control" id="name" name="name[]" multiple="multiple"  style="width: 100%">
+                                                            <select class="role_name form-control" name="name[]" multiple="multiple"  style="width: 100%">
                                                                 @foreach($conferenceRoles as $conferenceRole)
                                                                     @if(in_array($conferenceRole->id, $user->conferenceRoleIds))
                                                                         <option value="{{ $conferenceRole->id }}" selected>{{ $conferenceRole->name }}</option>
