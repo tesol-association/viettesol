@@ -147,15 +147,15 @@
                     <div class="col-md-9">
                         <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a href="#activity" data-toggle="tab" aria-expanded="true">Activity</a></li>
-                                <li><a href="#timeline" data-toggle="tab" aria-expanded="false">Timeline</a></li>
+                                <li class="active">
+                                    <a href="#activity" data-toggle="tab" aria-expanded="true">
+                                        <strong>Activity</strong>
+                                    </a>
+                                </li>
                             </ul>
                             <div class="tab-content">
                                 <div class="active tab-pane" id="activity">
                                     
-                                </div>
-                                <div class="tab-pane" id="timeline">
-                                        
                                 </div>
                             </div>
                         </div>

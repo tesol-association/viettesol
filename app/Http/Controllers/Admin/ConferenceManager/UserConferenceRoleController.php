@@ -19,11 +19,7 @@ class UserConferenceRoleController extends BaseConferenceController
         $conferenceRoles = ConferenceRole::where('conference_id', $conferenceId)->get();
         $users = User::all();
         foreach ($users as $user) {
-            $conferenceRoleIds = [];
-            foreach ($user->conferenceRoles as $role) {
-                $conferenceRoleIds[] = $role->id;
-            }
-            $user->conferenceRoleIds = $conferenceRoleIds;
+            $user->conferenceRoleIds = $user->conferenceRoles->pluck('id')->all();
         }
         return view('layouts.admin.conference_manager.user_conference_role.list', ['conferenceRoles' => $conferenceRoles, 'users' => $users]);
     }

@@ -64,6 +64,7 @@ class UserManagerController extends Controller
             'country' => $request->get('country'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
+            'image' => env('AVATAR_DEFAULT'),
         ]);
         
         if ($users->save()) {
