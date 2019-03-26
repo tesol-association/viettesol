@@ -9,9 +9,10 @@
 namespace App\ConferenceRepositories;
 
 
-use App\Models\Track;
+use App\Models\ReviewAssignment;
+use Carbon\Carbon;
 
-class TrackRepository
+class ReviewAssignmentRepository
 {
 
     /**
@@ -19,47 +20,46 @@ class TrackRepository
      */
     public function all()
     {
-        return Track::all();
+        return ReviewAssignment::all();
     }
 
-    public function find($trackId)
+    public function find($id)
     {
-        return Track::find($trackId);
+        return ReviewAssignment::find($id);
     }
 
     /**
      * @param null $filters
-     * @return Track[]|\Illuminate\Database\Eloquent\Collection
+     * @return ReviewAssignment[]|\Illuminate\Database\Eloquent\Collection
      */
     public function get($filters = null)
     {
         if (empty($filters)) {
-            $track = Track::with('conference')->get();
+            $reviewAssignment = ReviewAssignment::with('paper', 'reviewer')->get();
         } else {
             $conditions = [];
             foreach ($filters as $key => $filter) {
                 $conditions[] = [$key, '=', $filter];
             }
-            $track = Track::with('conference')->where($conditions)->get();
+            $reviewAssignment = ReviewAssignment::with('paper', 'reviewer')->where($conditions)->get();
         }
-        return $track;
+        return $reviewAssignment;
     }
 
     /**
      * @param $data
-     * @return Track
+     * @return ReviewAssignment
+     * @throws \Exception
      */
-    public function create($data)
+    public function assignReviewer($data)
     {
-        $track = new Track();
-        $track->name = $data['name'];
-        $track->abbrev = $data['abbrev'];
-        $track->policy = $data['policy'];
-        $track->description = $data['description'];
-        $track->conference_id = $data['conference_id'];
-        $track->review_form_id = $data['review_form_id'];
-        $track->save();
-        return $track;
+        $reviewAssignment = new ReviewAssignment();
+        $reviewAssignment->paper_id = $data['paper_id'];
+        $reviewAssignment->reviewer_id = $data['reviewer_id'];
+        $reviewAssignment->date_assigned = Carbon::now();
+        $reviewAssignment->save();
+        $reviewAssignment->load('reviewer');
+        return $reviewAssignment;
     }
 
     /**
@@ -69,7 +69,7 @@ class TrackRepository
      */
     public function update($id, $data)
     {
-        $track = Track::find($id);
+        $track = ReviewAssignment::find($id);
         $track->name = $data['name'];
         $track->abbrev = $data['abbrev'];
         $track->policy = $data['policy'];
@@ -81,7 +81,7 @@ class TrackRepository
 
     public function destroy($id)
     {
-        $track = Track::find($id);
+        $track = ReviewAssignment::find($id);
         $track->delete();
         return $track;
     }

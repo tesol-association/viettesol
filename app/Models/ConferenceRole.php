@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConferenceRole extends Model
 {
+    const TRACK_DIRECTOR = 'track_director';
+    const REVIEWER = 'Reviewer';
+    const AUTHOR = 'author';
     protected $table = 'conference_roles';
     protected $fillable = [
     	'name',
@@ -15,6 +18,6 @@ class ConferenceRole extends Model
 
     public function user()
     {
-    	return $this->belongsToMany('App\Models\User', 'user_conference_roles', 'user_id', 'conference_role_id');
+    	return $this->belongsToMany('App\Models\User', 'user_conference_roles', 'conference_role_id', 'user_id');
     }
 }
