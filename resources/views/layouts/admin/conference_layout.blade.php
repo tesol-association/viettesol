@@ -73,7 +73,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <a href="#">
                                             <div class="pull-left">
                                                 <!-- User Image -->
-                                                <img src="{{ Auth::User()->image }}" class="img-circle" alt="User Image">
+                                                <img src="{{ asset('/storage/' . Auth::User()->image) }}" class="img-circle" alt="User Image">
                                             </div>
                                             <!-- Message title and timestamp -->
                                             <h4>

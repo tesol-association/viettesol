@@ -34,6 +34,7 @@ class User extends Authenticatable
         'fax',
         'email',
         'password',
+        'last_login',
     ];
 
     /**
