@@ -26,3 +26,5 @@ ALTER TABLE `papers` DROP `co_authors`;
 DROP TABLE ` review_form_setting`;
 ALTER TABLE `review_form` CHANGE `attach_file` `attach_file` VARCHAR(255) NULL DEFAULT NULL;
 ALTER TABLE `criteria_review` ADD `review_form_id` INT NOT NULL AFTER `id`;
+---- 21/03/2019
+ALTER TABLE `tracks` ADD `review_form_id` INT NULL AFTER `conference_id`;

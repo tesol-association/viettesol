@@ -23,4 +23,14 @@ class Paper extends Model
     {
         return $this->belongsTo('App\Models\SessionType', 'session_type_id');
     }
+
+    public function reviewAssignment()
+    {
+        return $this->hasMany('App\Models\ReviewAssignment', 'paper_id');
+    }
+
+    public function reviewers()
+    {
+        return $this->belongsToMany('App\Models\User', 'review_assignments', 'paper_id', 'reviewer_id');
+    }
 }

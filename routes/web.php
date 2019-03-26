@@ -350,16 +350,22 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::get('/submission/{id}', 'Admin\PaperController@submission')->name('admin_paper_submission');
         });
 
-//        Route::group(['prefix'=>'/review_assignment'], function() {
-//            Route::get('/submission/{paperId}', 'Admin\ConferenceManager\ReviewAssignmentController@create')->name('admin_review_assignment_create');
-//            Route::post('/store', 'Admin\ReviewAssignmentController@store')->name('admin_review_assignment_store');
-//            Route::get('/edit/{id}', 'Admin\ReviewAssignmentController@edit')->name('admin_review_assignment_edit');
-//            Route::post('/update/{id}', 'Admin\ReviewAssignmentController@update')->name('admin_review_assignment_update');
-//            Route::post('/delete/{id}', 'Admin\ReviewAssignmentController@destroy')->name('admin_review_assignment_delete');
-//        });
-
+        Route::group(['prefix'=>'/{paper_id}/review_assignment'], function() {
+            Route::post('/store', 'Admin\ConferenceManager\ReviewAssignmentController@store')->name('admin_review_assignment_store');
+        });
     });
 
+});
+
+/**
+ * PAGE FOR REVIEWER
+ */
+Route::group(['prefix'=>'/reviewer'], function() {
+    Route::get('/paper/list', 'Admin\ConferenceManager\ReviewAssignmentController@store')->name('admin_review_assignment_store');
+    Route::post('/store', 'Admin\ConferenceManager\ReviewAssignmentController@store')->name('admin_review_assignment_store');
+    Route::get('/edit/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@edit')->name('admin_review_assignment_edit');
+    Route::post('/update/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@update')->name('admin_review_assignment_update');
+    Route::post('/delete/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@destroy')->name('admin_review_assignment_delete');
 });
 
 Auth::routes();
