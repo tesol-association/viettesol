@@ -94,28 +94,47 @@ class ScheduleController extends BaseConferenceController
 		$timeBlockId = $request->timeBlockId;
 		$roomId  = $request->roomId;
 
-		$schedule= Schedule::create([
-			'paper_id'      => $paperId,
+		$count = Schedule::where([
 			'time_block_id' => $timeBlockId,
-			'room_id'       => $roomId,
+			'room_id' => $roomId,
 			'conference_id' => $request->conferenceId
-		]);
+		])->count();
 
-		if ($schedule) {
-			$paper= Paper::find($paperId);
-			$paper->status = 'scheduled';
-			if($paper->save()){
-				$data=array(
-					'status' => true
-				); 
-				echo json_encode($data);
+		if($count > 0) {
+			$data=array(
+				'status' => false
+			); 
+			echo json_encode($data);
+		}else{
+			$schedule= Schedule::create([
+				'paper_id'      => $paperId,
+				'time_block_id' => $timeBlockId,
+				'room_id'       => $roomId,
+				'conference_id' => $request->conferenceId
+			]);
+
+			if ($schedule) {
+				$paper= Paper::find($paperId);
+				$paper->status = 'scheduled';
+				if($paper->save()){
+					$data=array(
+						'status' => true
+					); 
+					echo json_encode($data);
+				}else{
+					$data=array(
+						'status' => false
+					); 
+					echo json_encode($data);
+				}
 			}else{
 				$data=array(
 					'status' => false
 				); 
 				echo json_encode($data);
 			}
-		}else{ }
+		} 
+		
 	}
 	public function delete()
 	{

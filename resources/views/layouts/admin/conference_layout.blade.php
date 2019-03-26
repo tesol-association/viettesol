@@ -348,7 +348,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ route('admin_calendar_list', ['conference_id' => $conference->id]) }}">List calendar</a></li>
+                        <li><a href="{{ route('admin_calendar_list', ['conference_id' => $conference->id]) }}">Calendar for paper</a></li>
+                        <li><a href="{{ route('admin_calendar_calendarConference', ['conference_id' => $conference->id]) }}">Calendar for conference</a></li>
                     </ul>
                 </li>
             </ul>

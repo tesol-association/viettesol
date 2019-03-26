@@ -49,7 +49,7 @@
 		var roomId=$('#room :selected').val();
 		//console.log(idPaper,timeBlockValue,roomId);
 		var timeBlockText=$('#timeblock_'+idPaper+" :selected").text();
-		$('#timeblock_'+idPaper).attr("disabled", "disabled");
+		//$('#timeblock_'+idPaper).attr("disabled", "disabled");
 		$("select option").each(function(){
 			if ($(this).text() == timeBlockText) {
 				$(this).attr("disabled", "disabled");
@@ -72,9 +72,10 @@
 			},
 			success:function(res) {
 				if(res.status==true){
+					$('#timeblock_'+idPaper).attr("disabled", "disabled");
 					toastr.success('Schedule has been created successfully');
 				}else{
-					toastr.error('error');
+					toastr.error('Duplicate record. Please choose again');
 				}
 			},error:function(res){
 				console.log('Ajax call fail');

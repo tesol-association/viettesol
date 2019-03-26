@@ -348,9 +348,11 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 		});
 
 		Route::group(['prefix'=>'/calendar'], function(){
-			Route::get('/list','Admin\ConferenceManager\CalendarController@index')->name('admin_calendar_list');
+			Route::get('/calendarPaper','Admin\ConferenceManager\CalendarController@index')->name('admin_calendar_list');
 
 			Route::get('/getData','Admin\ConferenceManager\CalendarController@getData')->name('admin_calendar_getData');
+
+			Route::get('/calendarConference','Admin\ConferenceManager\CalendarController@calendarConference')->name('admin_calendar_calendarConference');
 		});
 //        Route::group(['prefix'=>'/review_assignment'], function() {
 //            Route::get('/submission/{paperId}', 'Admin\ConferenceManager\ReviewAssignmentController@create')->name('admin_review_assignment_create');

@@ -11,11 +11,10 @@ body {
 	padding: 0;
 	font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
 	font-size: 14px;
-	background-color: black;
 }
 
 #calendar {
-	max-width: 900px;
+	max-width: 950px;
 	margin: 50px auto;
 	border: 1px solid lightgray;
 }
@@ -23,10 +22,9 @@ body {
 </style>
 @endsection
 @section('content')
-<button class="btn btn-info" onclick="getCalendarPaper()">Calendar for paper</button>
-<button class="btn btn-success">Calendar conference</button>
 
-<div id='calendar' style="visibility: hidden;"></div>
+<div id='calendar'"></div>
+
 @endsection
 @section('js')
 <script src='{{ asset('js/lib/calendar/moment.min.js') }}'></script>

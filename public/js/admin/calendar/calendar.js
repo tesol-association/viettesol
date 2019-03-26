@@ -2,8 +2,6 @@
 
 
   function getCalendarPaper(){
-    //console.log('abc');
-    $('#calendar').css('visibility', 'visible');
 
     $.ajax({
       url: "getData",
@@ -17,8 +15,7 @@
       },
       success:function(res) {
         if(res.status==true){
-          var events=[]; 
-          renderCalendar(res.room, events);
+          renderCalendar(res.room, res.events);
         }else{
 
         }
@@ -32,10 +29,29 @@
   function renderCalendar(arrResources, arrEvents){
     var calendarEl = document.getElementById('calendar');
 
+    var d=new Date();
+    var monthCurrent = d.getMonth()+1 ; 
+    var dateCurrent = d.getDate(); 
+
+    if( monthCurrent < 10 ){
+      if(dateCurrent  < 10) {
+        date = d.getFullYear()+'-0'+monthCurrent+'-0'+dateCurrent ;
+      }else{
+        date = d.getFullYear()+'-0'+monthCurrent+'-'+dateCurrent ;
+      }
+    }else{
+      if(dateCurrent  < 10) {
+        date = d.getFullYear()+'-'+monthCurrent+'-0'+dateCurrent ;
+      }else{
+        date = d.getFullYear()+'-'+monthCurrent+'-'+dateCurrent ;
+      }
+    }
     var calendar = new FullCalendar.Calendar(calendarEl, {
      schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-     now: '2019-03-21',
-     editable: true,
+     now: date,
+     //navLinks: true,
+     //editable: true,
+     //eventLimit: true,
      aspectRatio: 1.8,
      scrollTime: '00:00',
      header: {
@@ -47,11 +63,11 @@
     views: {
       timelineDay: {
         buttonText: 'timelineDay',
-        slotDuration: '00:15'
+        slotDuration: '00:05'
       },
       timelineThreeDays: {
         type: 'timeline',
-        duration: { days: 3 }
+        duration: { days: 4 }
       }
     },
     resourceAreaWidth: '40%',
@@ -72,6 +88,9 @@
 
     calendar.render();
   }
+
+
+  getCalendarPaper();
 
   // var resources=[
   //       { id: 'a', building: '460 Bryant', title: 'Auditorium A' },
