@@ -76,13 +76,7 @@
                             </span>
                 </a>
             </li>
-            <li class="treeview">
-                <a href="#"><i class="fa fa-link"></i> <span>Conference Gallery</span>
-                    <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                </a>
-            </li>
+            <li><a href="{{ route('admin_conference_gallery_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-link"></i> Conference Gallery</a></li>
         </ul>
     </li>
 
