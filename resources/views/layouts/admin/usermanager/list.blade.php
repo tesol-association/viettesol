@@ -43,10 +43,10 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->country }}</td>
                                     <td>
-                                        <a href="{{ route('admin_user_view',$user->id )}}" class="btn btn-block btn-primary">View</a>
+                                        <a href="{{ route('admin_user_view',$user->id )}}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin_user_edit',$user->id )}}" class="btn btn-block btn-primary">Edit</a>
+                                        <a href="{{ route('admin_user_edit',$user->id )}}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
                                     </td>
                                     <td>
                                         <form method="post" action="{{ route('admin_user_delete',['id'=> $user->id ]) }}">
@@ -68,7 +68,7 @@
                                               </div>
                                             </div>
                                         </form>
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_user_{{ $user->id }}">Delete</button>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_user_{{ $user->id }}"><i class="fa fa-trash"></i></button>
                                     </td>
                                     <td>
                                         @if($user->disable == '1')

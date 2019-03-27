@@ -1,6 +1,7 @@
 @extends('layouts.admin.conference_layout')
 @section('title','Create Track')
 @section('css')
+    <link href="{{ asset('js/lib/summernote/dist/summernote.css') }}" rel="stylesheet">
 @endsection
 @section('content')
     <div class="box">
@@ -48,6 +49,16 @@
                             <span class="help-block">{{ $errors->first('description') }}</span>
                         @endif
                     </div>
+
+                    <div class="form-group">
+                        <label for="review_form_id">Choose Review Form</label>
+                        <select id="review_form_id" name="review_form_id" class="form-control">
+                            <option value=""></option>
+                            @foreach($reviewForms as $reviewForm)
+                                <option value="{{ $reviewForm->id }}">{{ $reviewForm->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <input type="hidden" name="conference_id" value="{{ $conference->id }}"/>
                 </div>
 
@@ -60,4 +71,6 @@
     </div>
 @endsection
 @section('js')
+    <script src="{{ asset('js/lib/summernote/dist/summernote.min.js') }}"></script>
+    <script src="{{ asset('js/admin/track/create.js') }}"></script>
 @endsection

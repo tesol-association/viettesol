@@ -79,6 +79,7 @@ class RegisterController extends Controller
             'affiliation' => $data['affiliation'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'image' => env('AVATAR_DEFAULT'),
         ]);
     }
     public function showRegistrationForm()

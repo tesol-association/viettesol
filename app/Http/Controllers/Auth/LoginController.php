@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Menu;
 use App\Models\Partner;
 use App\Models\Advertisement;
+use App\Models\UserHistory;
+use Carbon\Carbon;
 
 class LoginController extends Controller
 {
@@ -45,26 +47,31 @@ class LoginController extends Controller
 
     protected function redirectTo()
     {
+        //User History
+        $userHistory = new UserHistory();
+        $userHistory->user_id = Auth::user()->id;
+        $userHistory->ip = \Request::ip();
+        $userHistory->user_agent = \Request::userAgent();
+        $userHistory->save();
+
+        //user
+        $user = Auth::user();
+        $user->last_login = Carbon::now();
+        $user->save();
+
+        //Role
         $isAdmin = Auth::user()->is_admin;
         if ($isAdmin == 1) {
             return '/admin/index';
         } else {
-
-            return '/home/index/';
-
             return '/home/index';
-
         }
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
-
-        return redirect('/home/index/');
-
         return redirect('/home/index');
-
     }
 
     public function showLoginForm()

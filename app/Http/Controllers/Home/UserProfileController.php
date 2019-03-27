@@ -89,7 +89,9 @@ class UserProfileController extends HomeController
 
         if ($request->hasFile('image')) {
             $path = Storage::disk('public')->put(self::AVATAR_FOLDER, $request->image);
-            Storage::disk('public')->delete($user->image);
+            if(!$user->image == env('AVATAR_DEFAULT')){
+                Storage::disk('public')->delete($user->image);
+            }
             $user->image = $path;
         }
         $user->user_name = $request->get('user_name');

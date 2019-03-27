@@ -8,8 +8,8 @@ class ReviewForm extends Model
 {
     protected $table = "review_form";
 
-    public function reviewCriteriaLink()
+    public function criteriaReviews()
     {
-        return $this->hasMany('App\Models\ReviewFormSetting', 'review_form_id');
+        return $this->hasMany('App\Models\CriteriaReview', 'review_form_id');
     }
 }

@@ -1,0 +1,1 @@
+ALTER TABLE `conference_roles` ADD `conference_id` INT(11) NOT NULL AFTER `description`;

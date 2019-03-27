@@ -12,6 +12,7 @@ use App\ConferenceRepositories\PaperRepository;
 use App\Models\TimeBlock;
 use App\Models\Schedule;
 use App\Models\SessionType;
+use App\Models\PaperAuthor;
 
 class ScheduleController extends BaseConferenceController
 {
@@ -94,13 +95,28 @@ class ScheduleController extends BaseConferenceController
 		$timeBlockId = $request->timeBlockId;
 		$roomId  = $request->roomId;
 
+		$authorId= PaperAuthor::where(['paper_id' => $paperId, 'seq'=>0 ])->first()->author_id;
+
+		$authors= array();
+		$papers = Schedule::where('time_block_id' , '=' , $timeBlockId)->get();
+
+        $i= 0 ;
+		if(!empty($papers)){
+			foreach ($papers as $paper) {
+			    $author_id=  PaperAuthor::where(['paper_id' => $paper->paper_id, 'seq'=>0 ])->first()->author_id;	
+			    if($authorId == $author_id){
+			    	$i++;
+			    }
+			}
+		}
+
 		$count = Schedule::where([
 			'time_block_id' => $timeBlockId,
 			'room_id' => $roomId,
 			'conference_id' => $request->conferenceId
 		])->count();
 
-		if($count > 0) {
+		if($count > 0 || $i >0) {
 			$data=array(
 				'status' => false
 			); 

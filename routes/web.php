@@ -297,6 +297,20 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::post('/delete/{id}', 'Admin\ConferenceManager\ConferencePartnerSponserController@destroy')->name('admin_conference_partners_sponsers_delete');
         });
 
+        Route::group(['prefix'=>'/conference_roles'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\ConferenceRoleController@index')->name('admin_conference_roles_list');
+            Route::get('/create', 'Admin\ConferenceManager\ConferenceRoleController@create')->name('admin_conference_roles_create');
+            Route::post('/store', 'Admin\ConferenceManager\ConferenceRoleController@store')->name('admin_conference_roles_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\ConferenceRoleController@edit')->name('admin_conference_roles_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\ConferenceRoleController@update')->name('admin_conference_roles_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\ConferenceRoleController@destroy')->name('admin_conference_roles_delete');
+        });
+
+        Route::group(['prefix'=>'/user_conference_roles'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\UserConferenceRoleController@index')->name('admin_user_conference_roles_list');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\UserConferenceRoleController@update')->name('admin_user_conference_roles_update');
+        });
+
         Route::group(['prefix'=>'/review_form'], function() {
             Route::get('/list', 'Admin\ReviewFormController@index')->name('admin_review_form_list');
             Route::get('/create', 'Admin\ReviewFormController@create')->name('admin_review_form_create');
@@ -304,15 +318,15 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::get('/edit/{id}', 'Admin\ReviewFormController@edit')->name('admin_review_form_edit');
             Route::post('/update/{id}', 'Admin\ReviewFormController@update')->name('admin_review_form_update');
             Route::post('/delete/{id}', 'Admin\ReviewFormController@destroy')->name('admin_review_form_delete');
-        });
 
-        Route::group(['prefix'=>'/criteria_review'], function() {
-            Route::get('/list', 'Admin\CriteriaReviewController@index')->name('admin_criteria_review_list');
-            Route::get('/create', 'Admin\CriteriaReviewController@create')->name('admin_criteria_review_create');
-            Route::post('/store', 'Admin\CriteriaReviewController@store')->name('admin_criteria_review_store');
-            Route::get('/edit/{id}', 'Admin\CriteriaReviewController@edit')->name('admin_criteria_review_edit');
-            Route::post('/update/{id}', 'Admin\CriteriaReviewController@update')->name('admin_criteria_review_update');
-            Route::post('/delete/{id}', 'Admin\CriteriaReviewController@destroy')->name('admin_criteria_review_delete');
+            Route::group(['prefix'=>'/{review_form_id}/criteria'], function() {
+                Route::get('/list', 'Admin\CriteriaReviewController@index')->name('admin_criteria_review_list');
+                Route::get('/create', 'Admin\CriteriaReviewController@create')->name('admin_criteria_review_create');
+                Route::post('/store', 'Admin\CriteriaReviewController@store')->name('admin_criteria_review_store');
+                Route::get('/edit/{id}', 'Admin\CriteriaReviewController@edit')->name('admin_criteria_review_edit');
+                Route::post('/update/{id}', 'Admin\CriteriaReviewController@update')->name('admin_criteria_review_update');
+                Route::post('/delete/{id}', 'Admin\CriteriaReviewController@destroy')->name('admin_criteria_review_delete');
+            });
         });
 
         Route::group(['prefix'=>'/paper'], function() {
@@ -353,28 +367,28 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::get('/getData','Admin\ConferenceManager\CalendarController@getData')->name('admin_calendar_getData');
 
             Route::get('/calendarConference','Admin\ConferenceManager\CalendarController@calendarConference')->name('admin_calendar_calendarConference');
-        });
-//        Route::group(['prefix'=>'/review_assignment'], function() {
-//            Route::get('/submission/{paperId}', 'Admin\ConferenceManager\ReviewAssignmentController@create')->name('admin_review_assignment_create');
-//            Route::post('/store', 'Admin\ReviewAssignmentController@store')->name('admin_review_assignment_store');
-//            Route::get('/edit/{id}', 'Admin\ReviewAssignmentController@edit')->name('admin_review_assignment_edit');
-//            Route::post('/update/{id}', 'Admin\ReviewAssignmentController@update')->name('admin_review_assignment_update');
-//            Route::post('/delete/{id}', 'Admin\ReviewAssignmentController@destroy')->name('admin_review_assignment_delete');
-//        });
 
+            Route::get('/getDataConference','Admin\ConferenceManager\CalendarController@getDataConference')->name('admin_calendar_getDataConference');
+        });
+
+        Route::group(['prefix'=>'/{paper_id}/review_assignment'], function() {
+            Route::post('/store', 'Admin\ConferenceManager\ReviewAssignmentController@store')->name('admin_review_assignment_store');
+        });
     });
 
 });
 
-Route::group(['prefix'=>'test'],function(){
-    Route::get('/{trackId}/get_paper', 'TestController@getPapers');
-    Route::get('/{trackId}/send_paper', 'TestController@sendPaper');
-    Route::get('/create_review_form', 'TestController@createReviewForm');
-    Route::get('/show_review_form', 'TestController@showReviewForm');
-    Route::get('/send_review', 'TestController@sendReview');
-    Route::get('/assign_paper', 'TestController@assignPaper');
-
+/**
+ * PAGE FOR REVIEWER
+ */
+Route::group(['prefix'=>'/reviewer'], function() {
+    Route::get('/paper/list', 'Admin\ConferenceManager\ReviewAssignmentController@store')->name('admin_review_assignment_store');
+    Route::post('/store', 'Admin\ConferenceManager\ReviewAssignmentController@store')->name('admin_review_assignment_store');
+    Route::get('/edit/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@edit')->name('admin_review_assignment_edit');
+    Route::post('/update/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@update')->name('admin_review_assignment_update');
+    Route::post('/delete/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@destroy')->name('admin_review_assignment_delete');
 });
+
 Auth::routes();
 
 Route::group(['prefix'=>'home'],function(){

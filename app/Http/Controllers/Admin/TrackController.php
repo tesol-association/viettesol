@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ConferenceRepositories\ReviewFormRepository;
+use App\ConferenceRepositories\TrackRepository;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\Conference;
 use App\Models\Track;
@@ -10,14 +12,22 @@ use Illuminate\Support\Facades\Validator;
 
 class TrackController extends BaseConferenceController
 {
+    protected $tracks;
+    protected $reviewForms;
+    public function __construct(Request $request, TrackRepository $trackRepository, ReviewFormRepository $reviewFormRepository)
+    {
+        parent::__construct($request);
+        $this->tracks = $trackRepository;
+        $this->reviewForms = $reviewFormRepository;
+    }
+
     /**
      * @param $conferenceId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index($conferenceId)
     {
-        $conference = Conference::find($conferenceId);
-        $tracks = $conference->tracks;
+        $tracks = $this->tracks->get(['conference_id' => $conferenceId]);
         return view('layouts.admin.track.list', [
             'tracks'=> $tracks
         ]);
@@ -28,7 +38,10 @@ class TrackController extends BaseConferenceController
      */
     public function create()
     {
-        return view('layouts.admin.track.create');
+        $reviewForms = $this->reviewForms->all();
+        return view('layouts.admin.track.create', [
+            'reviewForms' => $reviewForms
+        ]);
     }
 
     /**
@@ -45,9 +58,7 @@ class TrackController extends BaseConferenceController
                 ->withErrors($validator)
                 ->withInput();
         }
-        $track = new Track();
-        $track->fill($data);
-        $track->save();
+        $track = $this->tracks->create($data);
         return redirect()->route('admin_track_list', ['id' => $request->conference_id])->with('success', 'Create ' . $track->name . ' successful !');
     }
 
@@ -58,8 +69,12 @@ class TrackController extends BaseConferenceController
      */
     public function edit($conferenceId, $trackId)
     {
-        $track = Track::find($trackId);
-        return view('layouts.admin.track.edit', ['track' => $track]);
+        $track = $this->tracks->find($trackId);
+        $reviewForms = $this->reviewForms->all();
+        return view('layouts.admin.track.edit', [
+            'track' => $track,
+            'reviewForms' => $reviewForms
+        ]);
     }
 
     /**
@@ -77,13 +92,8 @@ class TrackController extends BaseConferenceController
                 ->withErrors($validator)
                 ->withInput();
         }
-        $track = Track::find($trackId);
-        $track->name = $request->name;
-        $track->abbrev = $request->abbrev;
-        $track->policy = $request->policy;
-        $track->description = $request->description;
-        $track->save();
-        return redirect()->route('admin_track_list', ['id' => $request->conference_id])->with('success', 'Update ' . $track->name . ' successful !');
+        $track = $this->tracks->update($trackId, $request->all());
+        return redirect()->route('admin_track_list', ['id' => $this->conferenceId])->with('success', 'Update ' . $track->name . ' successful !');
     }
 
     public function destroy()
@@ -97,6 +107,7 @@ class TrackController extends BaseConferenceController
     public function validateData($data)
     {
         return Validator::make($data, [
+            'conference_id' => 'required|numeric',
             'name' => 'required|max:45',
             'abbrev' => 'required|max:45',
         ]);

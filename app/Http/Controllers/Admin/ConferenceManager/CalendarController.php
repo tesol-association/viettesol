@@ -11,6 +11,7 @@ use App\Models\Paper;
 use App\Models\Schedule;
 use App\Models\TimeBlock;
 use App\ConferenceRepositories\PaperRepository;
+use App\Models\Conference;
 
 class CalendarController extends BaseConferenceController
 {
@@ -22,7 +23,7 @@ class CalendarController extends BaseConferenceController
 	}
 	public function index()
 	{
-		return view('layouts.admin.conference_manager.calendar.list',['conference_id'=>$this->conferenceId]);
+		return view('layouts.admin.conference_manager.calendar.paperCalendar',['conference_id'=>$this->conferenceId]);
 	}
 	public function getData()
 	{
@@ -90,5 +91,31 @@ class CalendarController extends BaseConferenceController
 	public function calendarConference()
 	{
 		return view('layouts.admin.conference_manager.calendar.conferenceCalendar',['conference_id'=>$this->conferenceId]);
+	}
+	public function getDataConference()
+	{
+		$dataConferences = Conference::where('id',$this->conferenceId)->get()->toArray();
+		$conference = array();
+
+		foreach ($dataConferences as $dataConference) {
+			$conference[] =array(
+                'title' => $dataConference['title'],
+                'start' => $dataConference['start_time'],
+                'end'   => $dataConference['end_time']
+			); 
+		}
+
+		if(!empty($dataConferences)){
+			$data = array(
+               'status'     => true,
+               'conference' => $conference
+			);
+			echo json_encode($data ,true) ; 
+		}else {
+			$data = array(
+               'status'   => false
+			);
+			echo json_encode($data ,true) ; 
+		}
 	}
 }

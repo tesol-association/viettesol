@@ -23,4 +23,9 @@ class Track extends Model
     {
         return $this->belongsTo('App\Models\Conference', 'conference_id');
     }
+
+    public function reviewForm()
+    {
+        return $this->belongsTo('App\Models\ReviewForm', 'review_form_id');
+    }
 }
