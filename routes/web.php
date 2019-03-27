@@ -322,6 +322,12 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::post('/update/{id}', 'Admin\ConferenceManager\UserConferenceRoleController@update')->name('admin_user_conference_roles_update');
         });
 
+        Route::group(['prefix'=>'/conference_gallery'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\ConferenceGalleryController@index')->name('admin_conference_gallery_list');
+            Route::post('/store', 'Admin\ConferenceManager\ConferenceGalleryController@store')->name('admin_conference_gallery_store');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\ConferenceGalleryController@destroy')->name('admin_conference_gallery_delete');
+        });
+
         Route::group(['prefix'=>'/review_form'], function() {
             Route::get('/list', 'Admin\ReviewFormController@index')->name('admin_review_form_list');
             Route::get('/create', 'Admin\ReviewFormController@create')->name('admin_review_form_create');
