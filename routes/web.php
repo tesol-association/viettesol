@@ -435,3 +435,7 @@ Route::group(['prefix'=>'home'],function(){
         Route::post('/save','Home\ChangePasswordController@store')->name('home_changepassword_save');
     });
 });
+
+Route::group(['prefix'=>'/conference/{conference_path}'], function() {
+         Route::get('/home','Conference\ConferenceController@index')->name('conference_home');
+});
