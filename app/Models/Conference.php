@@ -22,4 +22,5 @@ class Conference extends Model
     {
         return $this->hasOne('App\Models\ConferenceTimeline', 'conference_id');
     }
+
 }

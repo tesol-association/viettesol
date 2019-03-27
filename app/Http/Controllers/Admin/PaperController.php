@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\ConferenceRepositories\AuthorRepository;
+use App\ConferenceRepositories\ReviewAssignmentRepository;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\Author;
+use App\Models\ConferenceRole;
 use App\Models\PaperAuthor;
 use App\ConferenceRepositories\PaperRepository;
+use App\Models\ReviewAssignment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -75,11 +78,20 @@ class PaperController extends BaseConferenceController
         return redirect()->route('admin_paper_list', ["conference_id" => $this->conferenceId])->with('success', 'Submission ' . $paper->title . ' successful !');
     }
 
-    public function submission($conferenceId, $paperId)
+    public function submission($conferenceId, $paperId, ReviewAssignmentRepository $reviewAssignmentRepository)
     {
         $paper = $this->papers->find($paperId);
+        $reviewerRole = ConferenceRole::where('name', ConferenceRole::REVIEWER)->where('conference_id', $this->conferenceId)->first();
+        $reviewers = $reviewerRole->user;
+        $reviewAssignments = $reviewAssignmentRepository->get(['paper_id' => $paperId]);
+        $reviewAssignmentIds = $reviewAssignments->pluck('reviewer_id')->all();
+        $INDEX_ASSIGNMENT = ReviewAssignment::INDEX_ASSIGNMENT;
         return view('layouts.admin.paper.submission', [
-            'paper' => $paper
+            'paper' => $paper,
+            'reviewers' => $reviewers,
+            'reviewAssignments' => $reviewAssignments,
+            'reviewAssignmentIds' => $reviewAssignmentIds,
+            'INDEX_ASSIGNMENT' => $INDEX_ASSIGNMENT,
         ]);
     }
 

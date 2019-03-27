@@ -29,6 +29,19 @@
   /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); */
   margin-left: 30px;
 }
+.khoito {
+  width: 98%;
+  height: 101%;
+  border: 1px solid lightgray;
+  padding: 8px 5px;
+  margin-bottom: -30px;
+}
+.khoinho {
+  width: 270px;
+  height: 150px;
+  border: 1px solid black;
+  margin-left: 11px;
+}
 
 #slideshow_1 > div {
   position: absolute;
@@ -39,16 +52,16 @@
 }
 
 .module-title {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 .module-title {
-    background: linear-gradient(#a0a0a0, #868784);
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 400;
-    margin: 0 0px 25px 30px;
-    padding: 10px 15px 10px 15px;
-    letter-spacing: 0.5px;
+  background: linear-gradient(#a0a0a0, #868784);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0 0px 25px 30px;
+  padding: 10px 15px 10px 15px;
+  letter-spacing: 0.5px;
 }
 
 @media(max-width: 576px){
@@ -62,26 +75,40 @@
     letter-spacing: 0.5px;
   }
   #slideshow {
-  margin: -22px auto;
-  position: relative;
-  width: 330px;
-  height: 290px;
-  padding: 10px;
-  /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); */
-  border-left: 1px solid lightgray;
-  border-right: 1px solid lightgray;
-  margin-left: 0px;
-}
-#slideshow_1 {
-  margin: 12px auto;
-  position: relative;
-  width: 330px;
-  height: 280px;
-  padding: 10px;
-  border-left: 1px solid lightgray;
-  border-right: 1px solid lightgray;
-  border-bottom: 1px solid lightgray;
-  /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); */
-  margin-left: 0px;
-}
+    margin: -22px auto;
+    position: relative;
+    width: 344px;
+    height: 290px;
+    padding: 10px;
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); */
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    margin-left: 0px;
+  }
+  #slideshow_1 {
+    margin: 12px auto;
+    position: relative;
+    width: 344px;
+    height: 280px;
+    padding: 10px;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); */
+    margin-left: 0px;
+  }
+  .khoito {
+    width: 98%;
+    height: 101%;
+    border: 1px solid lightgray;
+    padding: 8px 23px;
+    margin-bottom: 15px;
+  }
+  .khoinho {
+    width: 270px;
+    height: 133px;
+    border: 1px solid black;
+    margin-left: 11px;
+    margin-bottom: 20px;
+  }
 }

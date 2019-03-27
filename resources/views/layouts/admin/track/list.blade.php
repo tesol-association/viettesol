@@ -26,6 +26,7 @@
                                     <th>Abbrev</th>
                                     <th>Description</th>
                                     <th>Policy</th>
+                                    <th>Review Form</th>
                                     <th>Created At</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
@@ -38,7 +39,12 @@
                                         <td>{{ $track->name }}</td>
                                         <td>{{ $track->abbrev }}</td>
                                         <td>{{ $track->description }}</td>
-                                        <td>{{ $track->policy }}</td>
+                                        <td>{!! $track->policy !!}</td>
+                                        <td>
+                                            @if ($track->review_form_id)
+                                                {{ $track->reviewForm->name }}
+                                            @endif
+                                        </td>
                                         <td>{{ $track->created_at }}</td>
                                         <td>
                                             <a href="{{ route('admin_track_edit', ["conference_id" => $conference->id, "id" => $track->id]) }}" class="btn btn-info">Edit</a>

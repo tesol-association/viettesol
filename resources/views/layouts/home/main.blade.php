@@ -75,7 +75,7 @@
 		<div class="post-body">
 			<div class="post-category">
 				@foreach( $event->categoryLinks as $categoryLink)
-				    <a href="{{ route('home-event_category',['slug'=>$categoryLink->category->slug]) }}">{{ $categoryLink->category->name }}</a>
+				<a href="{{ route('home-event_category',['slug'=>$categoryLink->category->slug]) }}">{{ $categoryLink->category->name }}</a>
 				@endforeach
 			</div>
 			<h3 class="post-title"><a href="{{ route('home-eventDetail',['slug'=>$event->slug]) }}">{{ $event->title }}</a></h3>
@@ -87,6 +87,25 @@
 	</div>
 	@endforeach
 </div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 khoito" >
+			<div class="col-md-3 khoinho">
+				Link
+			</div>
+			<div class="col-md-3 khoinho">
+				Other Menu
+			</div>
+			<div class="col-md-3 khoinho">
+				Contact us
+			</div>
+			<div class="col-md-3 khoinho">
+				Facebook
+			</div>
+		</div>
+	</div>
+</div>
+
 @endsection
 @section('js')
 <script src="{{ asset('home/js/slider-main.js') }}"></script>

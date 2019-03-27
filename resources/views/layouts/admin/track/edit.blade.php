@@ -47,6 +47,21 @@
                             <span class="help-block">{{ $errors->first('description') }}</span>
                         @endif
                     </div>
+
+                    <div class="form-group">
+                        <label for="review_form_id">Choose Review Form</label>
+                        <select id="review_form_id" name="review_form_id" class="form-control">
+                            <option value=""></option>
+                            @foreach($reviewForms as $reviewForm)
+                                @if (isset($track->review_form_id) && ($track->review_form_id == $reviewForm->id))
+                                    <option value="{{ $reviewForm->id }}" selected>{{ $reviewForm->name }}</option>
+                                @else
+                                    <option value="{{ $reviewForm->id }}">{{ $reviewForm->name }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <input type="hidden" name="conference_id" value="{{ $conference->id }}"/>
                 </div>
 
                 <div class="box-footer">
