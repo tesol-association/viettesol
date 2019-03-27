@@ -15,6 +15,11 @@ class SessionType extends Model
     	'conference_id'
     ];
 
+    public function papers()
+    {
+    	return $this->hasMany('App\Models\Paper', 'session_type_id');
+    }
+    
     public function conference()
     {
         return $this->belongsTo('App\Models\Conference');

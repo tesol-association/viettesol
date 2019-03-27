@@ -87,7 +87,8 @@
                     <button class="aside-btn"><i class="fa fa-bars"></i></button>
                     <button class="search-btn"><i class="fa fa-search"></i></button>
                     <div id="nav-search">
-                        <form>
+                        <form method="post" action="{{ route('home-search') }}">
+                            @csrf
                             <input class="input" name="search" placeholder="Enter your search...">
                         </form>
                         <button class="nav-close search-close">

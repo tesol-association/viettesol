@@ -41,10 +41,22 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-calendar"></i> Schedule</a></li>
-            <li><a href="#"><i class="fa fa-clock-o"></i> Time Block</a></li>
+            <li><a href="{{ route('admin_schedule_list', ["conference_id" => $conference->id]) }}"><i class="fa fa-calendar"></i> Schedule</a></li>
+            <li><a href="{{ route('admin_time_block_list', ["conference_id" => $conference->id]) }}"><i class="fa fa-clock-o"></i> Time Block</a></li>
             <li><a href="{{ route('admin_buildings_list', ["conference_id" => $conference->id]) }}"><i class="fa fa-building"></i> Building & Room</a></li>
             <li><a href="{{ route('admin_special_event_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-star-half-full"></i>  Special Event</a></li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="#"><i class="fa fa-calendar-o"></i> <span>Calendar</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ route('admin_calendar_list', ["conference_id" => $conference->id]) }}"><i class="fa fa-calendar"></i> Calendar for paper</a></li>
+            <li><a href="{{ route('admin_calendar_calendarConference', ["conference_id" => $conference->id]) }}"><i class="fa fa-calendar"></i> Calendar for conference</a></li>
         </ul>
     </li>
 
