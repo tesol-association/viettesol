@@ -45,4 +45,14 @@ class ConferenceRoleRepository
         return $conferenceRole;
     }
 
+    public function getTrackDirectors($conferenceId)
+    {
+        $trackDirectorRole = ConferenceRole::where('name', ConferenceRole::TRACK_DIRECTOR)->where('conference_id', $conferenceId)->first();
+        if (!$trackDirectorRole) {
+            return null;
+        }
+        $trackDirectors = $trackDirectorRole->user;
+        return $trackDirectors;
+    }
+
 }

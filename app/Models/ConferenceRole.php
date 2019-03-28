@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConferenceRole extends Model
 {
-    const TRACK_DIRECTOR = 'track_director';
+    const TRACK_DIRECTOR = 'Track Director';
     const REVIEWER = 'Reviewer';
     const AUTHOR = 'author';
     protected $table = 'conference_roles';
@@ -20,4 +20,5 @@ class ConferenceRole extends Model
     {
     	return $this->belongsToMany('App\Models\User', 'user_conference_roles', 'conference_role_id', 'user_id');
     }
+
 }
