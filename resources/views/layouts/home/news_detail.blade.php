@@ -41,7 +41,7 @@
 		<!-- comment -->
 		<div class="media">
 			<div class="media-left">
-				<img class="media-object" src="{{ $comment->createdBy->image }}" alt="">
+				<img class="media-object" src="{{ asset('storage/'.$comment->createdBy->image) }}" alt="">
 			</div>
 			<div class="media-body">
 				<div class="media-heading">

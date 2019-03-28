@@ -32,7 +32,7 @@ class MainController extends HomeController
 	}
 	public function getNews()
 	{
-		$news = News::orderBy('id', 'DESC')->get();
+		$news = News::orderBy('id', 'DESC')->paginate(4);
 		return view('layouts.home.news',['news' => $news]);
 	}
 	public function getNewsDetail($slug)
@@ -61,7 +61,7 @@ class MainController extends HomeController
 	}
 	public function getEvent()
 	{
-		$events= Event::orderBy('id', 'DESC')->get();
+		$events= Event::orderBy('id', 'DESC')->paginate(4);
 		return view('layouts.home.event',['events' => $events]);
 	}
 	public function getEventDetail($slug)
@@ -108,5 +108,11 @@ class MainController extends HomeController
         ]);
         Session::flash('success','successful registration !');
         return redirect()->back();
+	}
+	public function searchPost(Request $request)
+	{
+		$news= News::where('tags','like','%' .$request->search. '%')->orderBy('id', 'DESC')->get();
+		$events= Event::where('tags','like','%' .$request->search. '%')->orderBy('id', 'DESC')->get();
+        return view('layouts.home.search',['events'=> $events,'news'=>$news]); 
 	}
 }
