@@ -6,7 +6,6 @@ ALTER TABLE `session_types` CHANGE `description` `description` TEXT CHARACTER SE
 ALTER TABLE `papers` ADD `session_type_id` INT NOT NULL AFTER `track_id`;
 --- 19/03/2019
 RENAME TABLE paper_authors to authors;
-RENAME TABLE paper_authors to authors;
 ALTER TABLE `authors` DROP `seq`;
 
 CREATE TABLE `viettesol`.`paper_author` (
