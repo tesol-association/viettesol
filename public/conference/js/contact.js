@@ -18,7 +18,7 @@ $(document).ready(function()
 {
 	"use strict";
 
-	/* 
+	/*
 
 	1. Vars and Inits
 
@@ -47,7 +47,7 @@ $(document).ready(function()
 	initMenu();
 	initGoogleMap();
 
-	/* 
+	/*
 
 	2. IE Check
 
@@ -60,11 +60,11 @@ $(document).ready(function()
 
 		if(version === false)
 		{
-			
+
 		}
 		else if(version >= 12)
 		{
-			
+
 		}
 		else
 		{
@@ -99,7 +99,7 @@ $(document).ready(function()
 		return false;
 	}
 
-	/* 
+	/*
 
 	3. Set Header
 
@@ -117,7 +117,7 @@ $(document).ready(function()
 		}
 	}
 
-	/* 
+	/*
 
 	3. Init Search
 
@@ -136,7 +136,7 @@ $(document).ready(function()
 		}
 	}
 
-	/* 
+	/*
 
 	4. Init Menu
 
@@ -173,7 +173,7 @@ $(document).ready(function()
 				}
 			});
 
-	
+
 		}
 	}
 
@@ -189,7 +189,7 @@ $(document).ready(function()
 		menuActive = false;
 	}
 
-	/* 
+	/*
 
 	6. Init Google Map
 
@@ -197,8 +197,8 @@ $(document).ready(function()
 
 	function initGoogleMap()
 	{
-		var myLatlng = new google.maps.LatLng(34.043238,-118.258338);
-    	var mapOptions = 
+		var myLatlng = new google.maps.LatLng(21.032892 ,105.858879);
+    	var mapOptions =
     	{
     		center: myLatlng,
 	       	zoom: 13,

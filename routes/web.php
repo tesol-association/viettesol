@@ -437,5 +437,7 @@ Route::group(['prefix'=>'home'],function(){
 });
 
 Route::group(['prefix'=>'/conference/{conference_path}'], function() {
-         Route::get('/home','Conference\ConferenceController@index')->name('conference_home');
+        Route::get('/home','Conference\ConferenceController@index')->name('conference_home');
+
+        Route::get('/contact','Conference\ContactController@index')->name('conference_contact');
 });
