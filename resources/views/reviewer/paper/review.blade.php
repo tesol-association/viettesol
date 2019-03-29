@@ -1,4 +1,4 @@
-@extends('layouts.admin.conference_layout')
+@extends('layouts.admin.reviewer_layout')
 @section('title','Edit Review Form')
 @section('css')
     <link href="{{ asset('js/lib/summernote/dist/summernote.css') }}" rel="stylesheet">
@@ -8,215 +8,174 @@
 @section('page-header') ABSTRACT REVIEW
 @endsection
 @section('content')
-    <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#review" data-toggle="tab" aria-expanded="true">REVIEW</a></li>
-            <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">SUMMARY</a></li>
-            <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">HISTORY</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" id="review">
-                <!-- Start: Paper Info-->
-                <div class="box box-solid">
-                    <div class="box-header with-border">
-                        <i class="fa fa-text-width"></i>
-                        <h3 class="box-title">TITLE AND ABSTRACT</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <dl class="dl-horizontal">
-                            <dt>Author</dt>
-                            <dd>
-                                @foreach($paper->authors as $author)
-                                    {{ $author->first_name }} {{ $author->last_name }} ,
-                                @endforeach
-                            </dd>
-                            <dt>Title</dt>
-                            <dd>{{ $paper->title }}</dd>
-                            <dt>Track</dt>
-                            <dd>{{ $paper->track->name }}</dd>
-                            <dt>Review Form</dt>
-                            <dd>
-                                @if($paper->track->review_form_id)
-                                    {{ $paper->track->reviewForm->name }}
-                                @else
-                                    No Review Form
-                                @endif
-                            </dd>
-                            <dt>Session Type</dt>
-                            <dd>{{ $paper->sessionType->name }}</dd>
-                            <dt>Track Director</dt>
-                            <dd>??</dd>
-                            <dt>Abstract</dt>
-                            <dd>{!! $paper->abstract !!}</dd>
-                        </dl>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- End: Paper Info-->
-
-                <!-- Start: Review Assignment List-->
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <div class="col-md-4">
-                            <h3 class="box-title">Review Assignment</h3>
-                        </div>
-                        <div class="col-md-2 col-md-offset-6">
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#assign_reviewer"><i class="fa fa-plus"></i> Assign to Reviewer</button>
-                            <!-- Start:: Delete Modal Conference -->
-                            <div class="modal fade" id="assign_reviewer" role="dialog">
-                                <form method="post" action="{{ route('admin_review_assignment_store', [ "conference_id" => $conference->id, 'paper_id'=> $paper->id ]) }}">
-                                    @csrf
-                                    <div class="modal-dialog">
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">Assign to Reviewer</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <label>Choose Reviewer</label>
-                                                    <select name="reviewer_id" id="add_reviewer" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                                                        @foreach($reviewers as $reviewer)
-                                                            @if (in_array($reviewer->id, $reviewAssignmentIds))
-                                                                <option value="{{ $reviewer->id }}" disabled> {{ $reviewer->first_name }} {{ $reviewer->last_name }} (Assigned)</option>
-                                                            @else
-                                                                <option value="{{ $reviewer->id }}"> {{ $reviewer->first_name }} {{ $reviewer->last_name }}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                    <input name="paper_id" type="hidden" value="{{ $paper->id }}">
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-danger">Assign</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- End:: Delete Modal Conference -->
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="table-responsive">
-                            <table id="review_form_list" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Index</th>
-                                    <th>Name</th>
-                                    <th>Assigned At</th>
-                                    <th>Request</th>
-                                    <th>Underway</th>
-                                    <th>Due</th>
-                                    <th>Review Response</th>
-                                    <th>Response At</th>
-                                    <th>Review Comment</th>
-                                    <th>Attach File</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($reviewAssignments as $index => $reviewAssignment)
-                                    <tr>
-                                        <td>REVIEWER {{ $INDEX_ASSIGNMENT[$index] }}</td>
-                                        <td>{{ $reviewAssignment->reviewer->first_name }} {{ $reviewAssignment->reviewer->last_name }}</td>
-                                        <td>{{ $reviewAssignment->date_assigned }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        {{--<td>--}}
-                                            {{--@if ($reviewForm->attach_file)--}}
-                                                {{--<a target="_blank" href="{{ asset('/storage/' . $reviewForm->attach_file) }}" class="btn btn-primary"><span class="fa fa-download"></span> Attach File</a>--}}
-                                            {{--@endif--}}
-                                        {{--</td>--}}
-                                        {{--<td>--}}
-                                            {{--@if ($reviewForm->status == 'active')--}}
-                                                {{--<span class="label label-success">{{ $reviewForm->status }}</span>--}}
-                                            {{--@else--}}
-                                                {{--<span class="label label-danger">{{ $reviewForm->status }}</span>--}}
-                                            {{--@endif--}}
-                                        {{--</td>--}}
-                                        {{--<td>{{ $reviewForm->created_at }}</td>--}}
-                                        {{--<td>--}}
-                                            {{--<a href="{{ route('admin_criteria_review_list', ["conference_id" => $conference->id, "review_form_id" => $reviewForm->id]) }}" class="btn btn-info">--}}
-                                                {{--<i class="fa fa-eye"></i>--}}
-                                            {{--</a>--}}
-                                        {{--</td>--}}
-                                        {{--<td>--}}
-                                            {{--<a href="{{ route('admin_review_form_edit', ["conference_id" => $conference->id, "id" => $reviewForm->id]) }}" class="btn btn-info">--}}
-                                                {{--<i class="fa fa-edit"></i>--}}
-                                            {{--</a>--}}
-                                        {{--</td>--}}
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_assignment_{{ $reviewAssignment->id }}">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <!-- Start:: Delete Modal Conference -->
-                                    <div class="modal" id="delete_assignment_{{ $reviewAssignment->id }}" role="dialog">
-                                        <form method="post" action="">
-                                            @csrf
-                                            <div class="modal-dialog">
-                                                <!-- Modal content-->
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <h4 class="modal-title">Are you sure delete: {{ $reviewAssignment->reviewer->first_name }} {{ $reviewAssignment->reviewer->last_name }} ?</h4>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <!-- End:: Delete Modal Conference -->
-                                @endforeach
-                                </tbody>
-                                <tfoot>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- End: Review Assignment List-->
-            </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="tab_2">
-                The European languages are members of the same family. Their separate existence is a myth.
-                For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                new common language would be desirable: one could refuse to pay expensive translators. To
-                achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                words. If several languages coalesce, the grammar of the resulting language is more simple
-                and regular than that of the individual languages.
-            </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="tab_3">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                like Aldus PageMaker including versions of Lorem Ipsum.
-            </div>
-            <!-- /.tab-pane -->
+<!-- Start: Paper Info-->
+<div class="box box-solid">
+    <div class="box-header with-border">
+        <i class="fa fa-newspaper-o"></i>
+        <h3 class="box-title">TITLE AND ABSTRACT</h3>
+        <div class="box-tools pull-right">
+            <a href="{{ route('reviewer_paper_list', [ 'conference_id' => $conference->id]) }}" class="btn btn-primary"><i class="fa fa-backward"></i> Paper List</a>
         </div>
-        <!-- /.tab-content -->
     </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <dl class="dl-horizontal">
+            <dt>Title</dt>
+            <dd>{{ $paper->title }}</dd>
+            <dt>Track</dt>
+            <dd>{{ $paper->track->name }}</dd>
+            <dt>Review Form</dt>
+            <dd>
+                @if($paper->track->review_form_id)
+                    {{ $paper->track->reviewForm->name }}
+                @else
+                    No Review Form
+                @endif
+            </dd>
+            <dt>Session Type</dt>
+            <dd>{{ $paper->sessionType->name }}</dd>
+            <dt>Track Director</dt>
+            <dd>??</dd>
+            <dt>Abstract</dt>
+            <dd>{!! $paper->abstract !!}</dd>
+            <dt>Decided</dt>
+            <dd>
+            @if ($reviewAssignment->date_confirmed)
+                @if ($reviewAssignment->declined)
+                    <span class="label label-danger">Rejected</span>
+                @else
+                    <span class="label label-success">Accepted</span>
+                @endif
+            @else
+                <span class="label label-warning">Not Decided</span>
+            @endif
+            </dd>
+        </dl>
+    </div>
+    @if (!$reviewAssignment->date_confirmed)
+        <div class="box-footer">
+            <div class="col-md-2">
+                <form action="{{ route('reviewer_accept_assignment', ['conference_id' => $conference->id, 'assignment_id' => $reviewAssignment->id]) }}" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#accept_assignment"><i class="fa fa-check"></i> Accept</button>
+                </form>
+            </div>
+            <div class="col-md-10">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#reject_assignment"><i class="fa fa-remove"></i> Reject</button>
+            </div>
+        </div>
+        <!-- Start:: Reject Paper -->
+        <div class="modal fade" id="reject_assignment" role="dialog">
+            <form method="post" action="{{ route('reviewer_reject_assignment', [ "conference_id" => $conference->id, 'assignment_id'=> $reviewAssignment->id ]) }}">
+                @csrf
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Are you sure reject: {{ $paper->title }} ?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                            <button type="submit" class="btn btn-danger">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- End:: Reject Paper -->
+    @endif
+</div>
+<!-- End: Paper Info-->
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">DO REVIEW</h3>
+    </div>
+    <!-- form start -->
+    <form role="form" method="POST" action="{{ route('reviewer_store_assignment', ['conference_id' => $conference->id, 'assignment_id' => $reviewAssignment->id]) }}">
+        @csrf
+        <div class="box-body">
+            <div class="box-body">
+                @if (isset($reviewAssignment->date_confirmed) && $reviewAssignment->declined == Config::get('constants.REVIEW_ASSIGNMENT.ACCEPTED_ASSIGNMENT'))
+                    @foreach ($reviewForm->criteriaReviews as $criteriaReview)
+                        <div class="form-group">
+                            <label>{{ $criteriaReview->name }}</label>
+                            @if ($reviewAssignment->date_completed)
+                                <select disabled class="form-control">
+                                    <option selected>{{ $reviewAssignment->reviewer_response[$criteriaReview->name] }}</option>
+                                </select>
+                            @else
+                                <select name="review_form[{{ $criteriaReview->name }}]" class="form-control">
+                                    @if (isset($criteriaReview->possible_values) && count($criteriaReview->possible_values))
+                                        @foreach($criteriaReview->possible_values as $possibleValue)
+                                            <option value="{{ $possibleValue }}">{{ $possibleValue }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            @endif
+                        </div>
+                    @endforeach
+                @endif
+                <div class="form-group">
+                    <label for="total">Total*
+                    @if ($reviewAssignment->date_completed)
+                        <input id="total" type="text" class="form-control" placeholder="Enter Total" name="total" value="{{ $reviewAssignment->total }}" disabled>
+                    @else
+                        <input id="total" type="text" class="form-control" placeholder="Enter Total" name="total" required="" value="{{ old('total') }}">
+                    @endif
+                </div>
+                <div class="form-group">
+                    <label for="comment">Comment</label>
+                    @if ($reviewAssignment->date_completed)
+                        <textarea name="comment" id="comment" class="form-control" rows="3" placeholder="Enter comment ..." disabled>{{ $reviewAssignment->comment }}</textarea>
+                    @else
+                        <textarea name="comment" id="comment" class="form-control" rows="3" placeholder="Enter comment ...">{{ old('comment') }}</textarea>
+                    @endif
+                </div>
+                <div class="form-group">
+                    <label for="upload_file">Upload File</label>
+                    @if ($reviewAssignment->date_completed)
+                        <input type="file" id="upload_file" name="upload_file" disabled>
+                    @else
+                        <input type="file" id="upload_file" name="upload_file">
+                    @endif
+                </div>
+                <div class="form-group">
+                    <label for="recommendation">Recommendation</label>
+                    @if ($reviewAssignment->date_completed)
+                        <div class="form-control">
+                        @switch($reviewAssignment->recomendation)
+                            @case(Config::get('constants.REVIEW_ASSIGNMENT.ACCEPT_RECOMMENDATION'))
+                                <span class="label label-success">Accept Paper</span>
+                                @break
+                            @case(Config::get('constants.REVIEW_ASSIGNMENT.REVISION_RECOMMENDATION'))
+                                <span class="label label-success">Revision Paper</span>
+                                @break
+                            @case(Config::get('constants.REVIEW_ASSIGNMENT.REJECT_RECOMMENDATION'))
+                                <span class="label label-success">Reject Paper</span>
+                                @break
+                        @endswitch
+                            <span>At {{ date('H:i d/m/Y', strtotime($reviewAssignment->date_completed)) }}</span>
+                        </div>
+                    @else
+                        <select name="recommendation" class="form-control" title="Choose One" required>
+                            <option value=""></option>
+                            <option value="{{ Config::get('constants.REVIEW_ASSIGNMENT.ACCEPTED_ASSIGNMENT') }}">Accept Paper</option>
+                            <option value="{{ \App\Models\ReviewAssignment::REVISION_RECOMMENDATION }}">Revision Paper</option>
+                            <option value="{{ Config::get('constants.REVIEW_ASSIGNMENT.REJECTED_ASSIGNMENT') }}">Reject Paper</option>
+                        </select>
+                    @endif
+                </div>
+            </div>
+        </div>
+        @if (!$reviewAssignment->date_completed)
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        @endif
+    </form>
+</div>
+
 @endsection
 @section('js')
     <script src="{{ asset('js/lib/summernote/dist/summernote.min.js') }}"></script>

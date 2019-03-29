@@ -9,6 +9,8 @@
 namespace App\ConferenceRepositories;
 
 use App\Models\Paper;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 class PaperRepository
 {
@@ -16,6 +18,7 @@ class PaperRepository
     {
         $paper = Paper::find($paperId);
         $paper->load('track', 'sessionType');
+        $paper->track->load('reviewForm');
         return $paper;
     }
 
@@ -43,7 +46,8 @@ class PaperRepository
         $paper->abstract = $data['abstract'];
         $paper->track_id = $data['track_id'];
         $paper->session_type_id = $data['session_type_id'];
-        $paper->status = Paper::STATUS_SUBMITTED;
+        $paper->status = Config::get('constants.PAPER_STATUS.SUBMITTED');
+        $paper->submission_by = Auth::id();
         $paper->save();
         return $paper;
     }

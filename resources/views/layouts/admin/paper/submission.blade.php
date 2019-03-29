@@ -109,11 +109,10 @@
                                     <th>Name</th>
                                     <th>Assigned At</th>
                                     <th>Request</th>
-                                    <th>Underway</th>
                                     <th>Due</th>
+                                    <th>Reply</th>
                                     <th>Review Response</th>
                                     <th>Response At</th>
-                                    <th>Review Comment</th>
                                     <th>Attach File</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
@@ -124,13 +123,84 @@
                                     <tr>
                                         <td>REVIEWER {{ $INDEX_ASSIGNMENT[$index] }}</td>
                                         <td>{{ $reviewAssignment->reviewer->first_name }} {{ $reviewAssignment->reviewer->last_name }}</td>
-                                        <td>{{ $reviewAssignment->date_assigned }}</td>
+                                        <td>{{ date('H:i d/m/Y',strtotime($reviewAssignment->date_assigned))  }}</td>
+                                        <td><i class="fa fa-envelope-o"> Send</i></td>
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>
+                                            @if ($reviewAssignment->date_confirmed)
+                                                @if ($reviewAssignment->declined)
+                                                    <span class="label label-danger"><i class="fa fa-close"></i> Rejected</span>
+                                                @else
+                                                    <span class="label label-success"><i class="fa fa-check"></i> Accepted</span>
+                                                @endif
+                                                At <span>{{ date('H:i d/m/Y', strtotime($reviewAssignment->date_confirmed)) }}</span>
+                                            @else
+                                                <span class="label label-warning"><i class="fa fa-hourglass-o"></i> Not Yet</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($reviewAssignment->date_completed)
+                                            <span class="label label-info" data-toggle="modal" data-target="#result_{{ $reviewAssignment->id }}"><i class="fa fa-check-square-o"></i> Result</span> At {{ date('H:i d/m/Y', strtotime($reviewAssignment->date_completed)) }}
+                                            <!-- Start:: Show result Assignment -->
+                                            <div class="modal" id="result_{{ $reviewAssignment->id }}" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title">Result Review</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            @if (isset($reviewAssignment->date_confirmed) && $reviewAssignment->declined == Config::get('constants.REVIEW_ASSIGNMENT.ACCEPTED_ASSIGNMENT'))
+                                                                @foreach ($reviewForm->criteriaReviews as $criteriaReview)
+                                                                    <div class="form-group">
+                                                                        <label>{{ $criteriaReview->name }}</label>
+                                                                        <select disabled class="form-control">
+                                                                            <option selected>{{ $reviewAssignment->reviewer_response[$criteriaReview->name] }}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                @endforeach
+                                                            @endif
+                                                            <div class="form-group">
+                                                                <label for="total">Total*
+                                                                <input id="total" type="text" class="form-control" placeholder="Enter Total" name="total" value="{{ $reviewAssignment->total }}" disabled>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="comment">Comment</label>
+                                                                <textarea name="comment" id="comment" class="form-control" rows="3" placeholder="Enter comment ..." disabled>{{ $reviewAssignment->comment }}</textarea>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="upload_file">Upload File</label>
+                                                                <input type="file" id="upload_file" name="upload_file" disabled>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="recommendation">Recommendation</label>
+                                                                <div class="form-control">
+                                                                    @switch($reviewAssignment->recomendation)
+                                                                        @case(Config::get('constants.REVIEW_ASSIGNMENT.ACCEPT_RECOMMENDATION'))
+                                                                        <span class="label label-success">Accept Paper</span>
+                                                                        @break
+                                                                        @case(Config::get('constants.REVIEW_ASSIGNMENT.REVISION_RECOMMENDATION'))
+                                                                        <span class="label label-success">Revision Paper</span>
+                                                                        @break
+                                                                        @case(Config::get('constants.REVIEW_ASSIGNMENT.REJECT_RECOMMENDATION'))
+                                                                        <span class="label label-success">Reject Paper</span>
+                                                                        @break
+                                                                    @endswitch
+                                                                    <span>At {{ date('H:i d/m/Y', strtotime($reviewAssignment->date_completed)) }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End:: Show result Assignment -->
+                                            @endif
+                                        </td>
+                                        <td>{{ date('H:i d/m/Y',strtotime($reviewAssignment->date_completed)) }}</td>
                                         <td></td>
                                         <td></td>
                                         {{--<td>--}}

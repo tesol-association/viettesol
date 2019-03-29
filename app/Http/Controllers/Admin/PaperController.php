@@ -12,6 +12,7 @@ use App\ConferenceRepositories\PaperRepository;
 use App\Models\ReviewAssignment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
 
 class PaperController extends BaseConferenceController
@@ -81,17 +82,20 @@ class PaperController extends BaseConferenceController
     public function submission($conferenceId, $paperId, ReviewAssignmentRepository $reviewAssignmentRepository)
     {
         $paper = $this->papers->find($paperId);
+        $reviewForm = $paper->track->reviewForm;
+        $reviewForm = $reviewForm->load('criteriaReviews');
         $reviewerRole = ConferenceRole::where('name', ConferenceRole::REVIEWER)->where('conference_id', $this->conferenceId)->first();
         $reviewers = $reviewerRole->user;
         $reviewAssignments = $reviewAssignmentRepository->get(['paper_id' => $paperId]);
         $reviewAssignmentIds = $reviewAssignments->pluck('reviewer_id')->all();
-        $INDEX_ASSIGNMENT = ReviewAssignment::INDEX_ASSIGNMENT;
+        $INDEX_ASSIGNMENT = Config::get('constants.REVIEW_ASSIGNMENT.INDEX_ASSIGNMENT');
         return view('layouts.admin.paper.submission', [
             'paper' => $paper,
             'reviewers' => $reviewers,
             'reviewAssignments' => $reviewAssignments,
             'reviewAssignmentIds' => $reviewAssignmentIds,
             'INDEX_ASSIGNMENT' => $INDEX_ASSIGNMENT,
+            'reviewForm' => $reviewForm,
         ]);
     }
 

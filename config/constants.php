@@ -15,9 +15,12 @@ return [
     'REVIEW_ASSIGNMENT' => [
         'INDEX_ASSIGNMENT' => ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
         'ACCEPTED_ASSIGNMENT' => 0,
-        'REJECTED_ASSIGNMENT' => 0,
+        'REJECTED_ASSIGNMENT' => 1,
         'ACCEPT_RECOMMENDATION' => 0,
-        'REVISION_RECOMMENDATION' => 0,
-        'REJECT_RECOMMENDATION' => 1,
+        'REVISION_RECOMMENDATION' => 1,
+        'REJECT_RECOMMENDATION' => 2,
     ],
+    'PAPER_STATUS' => [
+        'SUBMITTED' => 'submitted'
+    ]
 ];
