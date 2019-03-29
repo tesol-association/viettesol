@@ -17,4 +17,9 @@ class Speakers extends Model
     	'attach_file',
     	'conference_id'
     ];
+
+    public function conference()
+    {
+        return $this->belongsTo('App\Models\Conference', 'conference_id');
+    }
 }
