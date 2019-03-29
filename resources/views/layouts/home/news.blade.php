@@ -24,6 +24,7 @@
 		</div>
 	 @endif	
 	@endforeach
+	{{ $news->links() }}
 @endsection
 @section('js')
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\ConferenceRepositories\ReviewFormRepository;
 use App\ConferenceRepositories\TrackRepository;
+use App\ConferenceRepositories\ConferenceRoleRepository;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\Conference;
 use App\Models\Track;
@@ -14,11 +15,13 @@ class TrackController extends BaseConferenceController
 {
     protected $tracks;
     protected $reviewForms;
-    public function __construct(Request $request, TrackRepository $trackRepository, ReviewFormRepository $reviewFormRepository)
+    protected $conferenceRoles;
+    public function __construct(Request $request, TrackRepository $trackRepository, ReviewFormRepository $reviewFormRepository, ConferenceRoleRepository $conferenceRoleRepository)
     {
         parent::__construct($request);
         $this->tracks = $trackRepository;
         $this->reviewForms = $reviewFormRepository;
+        $this->conferenceRoles = $conferenceRoleRepository;
     }
 
     /**
@@ -36,11 +39,13 @@ class TrackController extends BaseConferenceController
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create($conferenceId)
     {
+        $users = $this->conferenceRoles->getTrackDirectors($conferenceId);
         $reviewForms = $this->reviewForms->all();
         return view('layouts.admin.track.create', [
-            'reviewForms' => $reviewForms
+            'reviewForms' => $reviewForms,
+            'users' => $users
         ]);
     }
 
@@ -69,11 +74,14 @@ class TrackController extends BaseConferenceController
      */
     public function edit($conferenceId, $trackId)
     {
+        $users = $this->conferenceRoles->getTrackDirectors($conferenceId);
         $track = $this->tracks->find($trackId);
+        $track->trackDirectorId = $track->users->pluck('id')->all();
         $reviewForms = $this->reviewForms->all();
         return view('layouts.admin.track.edit', [
             'track' => $track,
-            'reviewForms' => $reviewForms
+            'reviewForms' => $reviewForms,
+            'users' => $users
         ]);
     }
 
