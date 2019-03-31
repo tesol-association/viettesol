@@ -41,8 +41,8 @@
 
 			<div class="row row-lg-eq-height">
 				<div class="col-lg-6 speaker_col reset_col">
-					<div class="speaker_image" style="background-image:url({{ asset('conference/images/speaker_1.jpg') }})"> 
-						&nbsp;&nbsp;&nbsp; SAMPLE PICTURE
+					<div class="speaker_image" style="background-image:url({{ asset('/storage/'.$speaker->image) }})"> 
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SAMPLE PICTURE
 					</div>
 				</div>
 				<div class="col-lg-6">
@@ -75,8 +75,8 @@
 					</div>
 				</div>
 				<div class="col-lg-6 speaker_col reset_col">
-					<div class="speaker_image" style="background-image:url({{ asset('conference/images/speaker_1.jpg') }})">
-						&nbsp;&nbsp;&nbsp; SAMPLE PICTURE
+					<div class="speaker_image" style="background-image:url({{ asset('/storage/'.$speaker->image) }})">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SAMPLE PICTURE
 					</div>
 				</div>
 			</div>
