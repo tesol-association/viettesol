@@ -1,4 +1,4 @@
-@extends('layouts.admin.reviewer_layout')
+@extends('layouts.admin.conference_layout')
 @section('title','Edit Review Form')
 @section('css')
     <link href="{{ asset('js/lib/summernote/dist/summernote.css') }}" rel="stylesheet">
@@ -161,7 +161,7 @@
                         <select name="recommendation" class="form-control" title="Choose One" required>
                             <option value=""></option>
                             <option value="{{ Config::get('constants.REVIEW_ASSIGNMENT.ACCEPTED_ASSIGNMENT') }}">Accept Paper</option>
-                            <option value="{{ \App\Models\ReviewAssignment::REVISION_RECOMMENDATION }}">Revision Paper</option>
+                            <option value="{{ Config::get('constants.REVIEW_ASSIGNMENT.REVISION_RECOMMENDATION') }}">Revision Paper</option>
                             <option value="{{ Config::get('constants.REVIEW_ASSIGNMENT.REJECTED_ASSIGNMENT') }}">Reject Paper</option>
                         </select>
                     @endif

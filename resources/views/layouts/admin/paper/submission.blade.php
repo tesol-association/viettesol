@@ -11,8 +11,7 @@
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#review" data-toggle="tab" aria-expanded="true">REVIEW</a></li>
-            <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">SUMMARY</a></li>
-            <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">HISTORY</a></li>
+            <li class=""><a href="#paper_history" data-toggle="tab" aria-expanded="false">HISTORY</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="review">
@@ -22,7 +21,6 @@
                         <i class="fa fa-text-width"></i>
                         <h3 class="box-title">TITLE AND ABSTRACT</h3>
                     </div>
-                    <!-- /.box-header -->
                     <div class="box-body">
                         <dl class="dl-horizontal">
                             <dt>Author</dt>
@@ -51,7 +49,6 @@
                             <dd>{!! $paper->abstract !!}</dd>
                         </dl>
                     </div>
-                    <!-- /.box-body -->
                 </div>
                 <!-- End: Paper Info-->
 
@@ -63,7 +60,7 @@
                         </div>
                         <div class="col-md-2 col-md-offset-6">
                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#assign_reviewer"><i class="fa fa-plus"></i> Assign to Reviewer</button>
-                            <!-- Start:: Delete Modal Conference -->
+                            <!-- Start:: Delete Assignment -->
                             <div class="modal fade" id="assign_reviewer" role="dialog">
                                 <form method="post" action="{{ route('admin_review_assignment_store', [ "conference_id" => $conference->id, 'paper_id'=> $paper->id ]) }}">
                                     @csrf
@@ -97,7 +94,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <!-- End:: Delete Modal Conference -->
+                            <!-- End:: Delete Assignment -->
                         </div>
                     </div>
                     <div class="box-body">
@@ -200,7 +197,11 @@
                                             <!-- End:: Show result Assignment -->
                                             @endif
                                         </td>
-                                        <td>{{ date('H:i d/m/Y',strtotime($reviewAssignment->date_completed)) }}</td>
+                                        <td>
+                                            @if ($reviewAssignment->date_completed)
+                                                {{ date('H:i d/m/Y',strtotime($reviewAssignment->date_completed)) }}
+                                            @endif
+                                        </td>
                                         <td></td>
                                         <td></td>
                                         {{--<td>--}}
@@ -262,19 +263,71 @@
                     <!-- /.box-body -->
                 </div>
                 <!-- End: Review Assignment List-->
+
+                <!-- Start: Track Director Decision-->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">DECISION</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Choose One</label>
+                            </div>
+                            <div class="col-md-8">
+                                <select class="form-control" id="decision_paper">
+                                    <option value="{{ Config::get('constants.PAPER.ACCEPTED') }}">Accept</option>
+                                    <option value="{{ Config::get('constants.PAPER.REVISION') }}">Revision</option>
+                                    <option value="{{ Config::get('constants.PAPER.REJECTED') }}">Reject</option>
+                                </select>
+                                <span class="help-block" style="display: inline-block;">
+                                    @if ($trackDecision = $trackDecisions->first())
+                                        @switch($trackDecision->decision)
+                                            @case(Config::get('constants.PAPER.ACCEPTED'))
+                                            <span id="last_decided" class="text-green">Accepted At {{ $trackDecision->date_decided }}</span>
+                                            @break
+                                            @case(Config::get('constants.PAPER.REVISION'))
+                                            <span id="last_decided" class="text-yellow">Revision At {{ $trackDecision->date_decided }}</span>
+                                            @break
+                                            @case(Config::get('constants.PAPER.REJECTED'))
+                                            <span id="last_decided" class="text-red">Rejected At {{ $trackDecision->date_decided }}</span>
+                                            @break
+                                        @endswitch
+                                    @else
+                                        <span id="last_decided"></span>
+                                    @endif
+                                    @if (count($trackDecisions) > 1)
+                                    <i class="fa fa-history"></i> history
+                                    @endif
+                                </span>
+                                {{--@foreach ($trackDecisions as $trackDecision)--}}
+                                    {{--@switch($trackDecision->decision)--}}
+                                        {{--@case(Config::get('constants.PAPER.ACCEPTED'))--}}
+                                            {{--<p class="text-green">Accepted At {{ $trackDecision->date_decided }}</p>--}}
+                                            {{--@break--}}
+                                        {{--@case(Config::get('constants.PAPER.REVISION'))--}}
+                                            {{--<p class="text-yellow">Revision At {{ $trackDecision->date_decided }}</p>--}}
+                                            {{--@break--}}
+                                        {{--@case(Config::get('constants.PAPER.REJECTED'))--}}
+                                            {{--<p class="text-red">Rejected At {{ $trackDecision->date_decided }}</p>--}}
+                                            {{--@break--}}
+                                    {{--@endswitch--}}
+                                {{--@endforeach--}}
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary" id="record_decision"
+                                        data-track_director_id="{{ Auth::id() }}"
+                                        data-conference_id="{{ $conference->id }}"
+                                        data-paper_id="{{ $paper->id }}">
+                                    <i class="fa fa-send"></i> Record</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End: Track Director Decision-->
             </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="tab_2">
-                The European languages are members of the same family. Their separate existence is a myth.
-                For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                new common language would be desirable: one could refuse to pay expensive translators. To
-                achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                words. If several languages coalesce, the grammar of the resulting language is more simple
-                and regular than that of the individual languages.
-            </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="tab_3">
+            <!-- start::HISTORY PAPER -->
+            <div class="tab-pane" id="paper_history">
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
@@ -283,7 +336,7 @@
                 sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
                 like Aldus PageMaker including versions of Lorem Ipsum.
             </div>
-            <!-- /.tab-pane -->
+            <!-- end::HISTORY PAPER -->
         </div>
         <!-- /.tab-content -->
     </div>

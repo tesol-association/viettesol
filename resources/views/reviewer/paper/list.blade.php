@@ -1,4 +1,4 @@
-@extends('layouts.admin.reviewer_layout')
+@extends('layouts.admin.conference_layout')
 @section('title','Paper Management')
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">

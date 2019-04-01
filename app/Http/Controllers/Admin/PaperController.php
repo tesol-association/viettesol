@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\ConferenceRepositories\AuthorRepository;
 use App\ConferenceRepositories\ReviewAssignmentRepository;
+use App\Events\PaperSubmitted;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\Author;
 use App\Models\ConferenceRole;
 use App\Models\PaperAuthor;
 use App\ConferenceRepositories\PaperRepository;
-use App\Models\ReviewAssignment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -65,6 +65,7 @@ class PaperController extends BaseConferenceController
         $authorDatas = $request->authors;
         $paperData = $request->paper;
         $paper = $this->papers->createSubmittedPaper($paperData);
+        event(new PaperSubmitted($paper));
         foreach ($authorDatas as $seq => $authorData) {
             $author = Author::where('email', $authorData['email'])->first();
             if (empty($author)) {
@@ -86,17 +87,32 @@ class PaperController extends BaseConferenceController
         $reviewForm = $reviewForm->load('criteriaReviews');
         $reviewerRole = ConferenceRole::where('name', ConferenceRole::REVIEWER)->where('conference_id', $this->conferenceId)->first();
         $reviewers = $reviewerRole->user;
+        $reviewerAccepted = $reviewers->filter(function ($reviewer) use ($paper) {
+            return $reviewer->id !== $paper->submission_by;
+        });
         $reviewAssignments = $reviewAssignmentRepository->get(['paper_id' => $paperId]);
         $reviewAssignmentIds = $reviewAssignments->pluck('reviewer_id')->all();
         $INDEX_ASSIGNMENT = Config::get('constants.REVIEW_ASSIGNMENT.INDEX_ASSIGNMENT');
+        $trackDecisions = $this->papers->getTrackDecisions($paperId);
         return view('layouts.admin.paper.submission', [
             'paper' => $paper,
-            'reviewers' => $reviewers,
+            'reviewers' => $reviewerAccepted,
             'reviewAssignments' => $reviewAssignments,
             'reviewAssignmentIds' => $reviewAssignmentIds,
             'INDEX_ASSIGNMENT' => $INDEX_ASSIGNMENT,
             'reviewForm' => $reviewForm,
+            'trackDecisions' => $trackDecisions
         ]);
+    }
+
+    public function decisionAjax(Request $request, $conferenceId, $paperId)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+            $decision = $this->papers->decision($data);
+            return $decision;
+        }
+        return null;
     }
 
     /**

@@ -343,6 +343,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::post('/update/{id}', 'Admin\PaperController@update')->name('admin_paper_update');
             Route::post('/delete/{id}', 'Admin\PaperController@destroy')->name('admin_paper_delete');
             Route::get('/submission/{id}', 'Admin\PaperController@submission')->name('admin_paper_submission');
+            Route::post('/decision/{id}', 'Admin\PaperController@decisionAjax')->name('admin_paper_decision');
         });
 
         Route::group(['prefix'=>'/time_block'], function(){
