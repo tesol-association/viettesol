@@ -11,6 +11,7 @@ namespace App\ConferenceRepositories;
 
 use App\Models\ReviewAssignment;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Config;
 
 class ReviewAssignmentRepository
 {
@@ -46,6 +47,13 @@ class ReviewAssignmentRepository
         return $reviewAssignment;
     }
 
+    public function destroy($id)
+    {
+        $track = ReviewAssignment::find($id);
+        $track->delete();
+        return $track;
+    }
+
     /**
      * @param $data
      * @return ReviewAssignment
@@ -63,27 +71,46 @@ class ReviewAssignmentRepository
     }
 
     /**
-     * @param $id
+     * @param $assignId
+     * @return mixed
+     */
+    public function rejectAssignment($assignId)
+    {
+        $reviewAssignment = ReviewAssignment::find($assignId);
+        $reviewAssignment->declined = Config::get('constants.REVIEW_ASSIGNMENT.REJECTED_ASSIGNMENT');
+        $reviewAssignment->date_confirmed = Carbon::now();
+        $reviewAssignment->save();
+        return $reviewAssignment;
+    }
+
+    /**
+     * @param $assignId
+     * @return mixed
+     */
+    public function acceptAssignment($assignId)
+    {
+        $reviewAssignment = ReviewAssignment::find($assignId);
+        $reviewAssignment->declined = Config::get('constants.REVIEW_ASSIGNMENT.ACCEPTED_ASSIGNMENT');
+        $reviewAssignment->date_confirmed = Carbon::now();
+        $reviewAssignment->save();
+        return $reviewAssignment;
+    }
+
+    /**
+     * @param $assignId
      * @param $data
      * @return mixed
      */
-    public function update($id, $data)
+    public function storeAssignment($assignId, $data)
     {
-        $track = ReviewAssignment::find($id);
-        $track->name = $data['name'];
-        $track->abbrev = $data['abbrev'];
-        $track->policy = $data['policy'];
-        $track->description = $data['description'];
-        $track->review_form_id = $data['review_form_id'];
-        $track->save();
-        return $track;
-    }
-
-    public function destroy($id)
-    {
-        $track = ReviewAssignment::find($id);
-        $track->delete();
-        return $track;
+        $reviewAssignment = ReviewAssignment::find($assignId);
+        $reviewAssignment->reviewer_response = $data['review_form'];
+        $reviewAssignment->total = $data['total'];
+        $reviewAssignment->comment = $data['comment'];
+        $reviewAssignment->date_completed = Carbon::now();
+        $reviewAssignment->recommendation = $data['recommendation'];
+        $reviewAssignment->save();
+        return $reviewAssignment;
     }
 
 }

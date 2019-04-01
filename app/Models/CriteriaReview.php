@@ -12,4 +12,20 @@ class CriteriaReview extends Model
     {
         return $this->belongsTo('App\Models\ReviewForm', 'review_form_id');
     }
+
+    /**
+     * @param $value
+     */
+    public function setPossibleValuesAttribute($value)
+    {
+        $this->attributes['possible_values'] = json_encode($value);
+    }
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function getPossibleValuesAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 }
