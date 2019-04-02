@@ -45,5 +45,9 @@ return [
     ],
     'PAPER_STATUS' => [
         'SUBMITTED' => 'submitted'
+    ],
+    'PAPER_AUTHOR' => [
+        'AUTHOR' => 0,
+        'CO_AUTHOR' => 1,
     ]
 ];

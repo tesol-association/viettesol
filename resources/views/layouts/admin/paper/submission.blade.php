@@ -44,7 +44,13 @@
                             <dt>Session Type</dt>
                             <dd>{{ $paper->sessionType->name }}</dd>
                             <dt>Track Director</dt>
-                            <dd>??</dd>
+                            <dd>
+                                @if (isset($users) && count($users))
+                                    @foreach ($users as $user)
+                                         {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }},
+                                    @endforeach
+                                @endif
+                            </dd>
                             <dt>Abstract</dt>
                             <dd>{!! $paper->abstract !!}</dd>
                         </dl>
@@ -235,7 +241,7 @@
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->
                                     <div class="modal" id="delete_assignment_{{ $reviewAssignment->id }}" role="dialog">
-                                        <form method="post" action="">
+                                        <form method="post" action="{{ route('reviewer_delete_assignment', ['conference_id' => $conference->id,'id' => $reviewAssignment->id ]) }}">
                                             @csrf
                                             <div class="modal-dialog">
                                                 <!-- Modal content-->
@@ -297,7 +303,41 @@
                                         <span id="last_decided"></span>
                                     @endif
                                     @if (count($trackDecisions) > 1)
-                                    <i class="fa fa-history"></i> history
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#history">
+                                            <i class="fa fa-history"></i> history
+                                        </button>
+                                        <div class="modal fade" id="history" role="dialog">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h3>History</h3>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        @foreach($trackDecisions as $trackDecision)
+                                                            <p>
+                                                                @switch($trackDecision->decision)
+                                                                    @case(Config::get('constants.PAPER.ACCEPTED'))
+                                                                    <span id="last_decided" class="text-green">Accepted At {{ $trackDecision->date_decided }} By {{ $trackDecision->user->first_name }} {{ $trackDecision->user->middle_name }} {{ $trackDecision->user->last_name }} </span>
+                                                                    @break
+                                                                    @case(Config::get('constants.PAPER.REVISION'))
+                                                                    <span id="last_decided" class="text-yellow">Revision At {{ $trackDecision->date_decided }} By {{ $trackDecision->user->first_name }} {{ $trackDecision->user->middle_name }} {{ $trackDecision->user->last_name }}</span>
+                                                                    @break
+                                                                    @case(Config::get('constants.PAPER.REJECTED'))
+                                                                    <span id="last_decided" class="text-red">Rejected At {{ $trackDecision->date_decided }} By {{ $trackDecision->user->first_name }} {{ $trackDecision->user->middle_name }} {{ $trackDecision->user->last_name }}</span>
+                                                                    @break
+                                                                @endswitch
+                                                            </p>
+                                                        @endforeach
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                            Close
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @endif
                                 </span>
                                 {{--@foreach ($trackDecisions as $trackDecision)--}}

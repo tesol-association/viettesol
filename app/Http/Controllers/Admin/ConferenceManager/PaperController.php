@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\ConferenceManager;
 
 use App\ConferenceRepositories\AuthorRepository;
 use App\ConferenceRepositories\ReviewAssignmentRepository;
@@ -83,6 +83,7 @@ class PaperController extends BaseConferenceController
     public function submission($conferenceId, $paperId, ReviewAssignmentRepository $reviewAssignmentRepository)
     {
         $paper = $this->papers->find($paperId);
+        $users = $paper->track->users->all();
         $reviewForm = $paper->track->reviewForm;
         $reviewForm = $reviewForm->load('criteriaReviews');
         $reviewerRole = ConferenceRole::where('name', ConferenceRole::REVIEWER)->where('conference_id', $this->conferenceId)->first();
@@ -93,7 +94,7 @@ class PaperController extends BaseConferenceController
         $reviewAssignments = $reviewAssignmentRepository->get(['paper_id' => $paperId]);
         $reviewAssignmentIds = $reviewAssignments->pluck('reviewer_id')->all();
         $INDEX_ASSIGNMENT = Config::get('constants.REVIEW_ASSIGNMENT.INDEX_ASSIGNMENT');
-        $trackDecisions = $this->papers->getTrackDecisions($paperId);
+        $trackDecisions = $this->papers->getTrackDecisions($paperId);;
         return view('layouts.admin.paper.submission', [
             'paper' => $paper,
             'reviewers' => $reviewerAccepted,
@@ -101,7 +102,8 @@ class PaperController extends BaseConferenceController
             'reviewAssignmentIds' => $reviewAssignmentIds,
             'INDEX_ASSIGNMENT' => $INDEX_ASSIGNMENT,
             'reviewForm' => $reviewForm,
-            'trackDecisions' => $trackDecisions
+            'trackDecisions' => $trackDecisions,
+            'users' => $users,
         ]);
     }
 

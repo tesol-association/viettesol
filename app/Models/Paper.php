@@ -22,7 +22,7 @@ class Paper extends Model
 
     public function authors()
     {
-        return $this->belongsToMany('App\Models\Author', 'paper_author', 'paper_id', 'author_id');
+        return $this->belongsToMany('App\Models\Author', 'paper_author', 'paper_id', 'author_id')->withPivot('seq');
     }
 
     public function sessionType()

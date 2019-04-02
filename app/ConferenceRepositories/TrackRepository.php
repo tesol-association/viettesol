@@ -78,8 +78,10 @@ class TrackRepository
         $track->description = $data['description'];
         $track->review_form_id = $data['review_form_id'];
         $track->save();
-        $track->users()->detach($track->users->pluck('id')->all());
-        $track->users()->attach($data['user_id']);
+        if(isset($data['user_id'])){
+            $track->users()->detach($track->users->pluck('id')->all());
+            $track->users()->attach($data['user_id']);
+        }
 
         return $track;
     }

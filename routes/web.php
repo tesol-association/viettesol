@@ -336,14 +336,14 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         });
 
         Route::group(['prefix'=>'/paper'], function() {
-            Route::get('/list', 'Admin\PaperController@index')->name('admin_paper_list');
-            Route::get('/create', 'Admin\PaperController@create')->name('admin_paper_create');
-            Route::post('/store', 'Admin\PaperController@store')->name('admin_paper_store');
-            Route::get('/edit/{id}', 'Admin\PaperController@edit')->name('admin_paper_edit');
-            Route::post('/update/{id}', 'Admin\PaperController@update')->name('admin_paper_update');
-            Route::post('/delete/{id}', 'Admin\PaperController@destroy')->name('admin_paper_delete');
-            Route::get('/submission/{id}', 'Admin\PaperController@submission')->name('admin_paper_submission');
-            Route::post('/decision/{id}', 'Admin\PaperController@decisionAjax')->name('admin_paper_decision');
+            Route::get('/list', 'Admin\ConferenceManager\PaperController@index')->name('admin_paper_list');
+            Route::get('/create', 'Admin\ConferenceManager\PaperController@create')->name('admin_paper_create');
+            Route::post('/store', 'Admin\ConferenceManager\PaperController@store')->name('admin_paper_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\PaperController@edit')->name('admin_paper_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\PaperController@update')->name('admin_paper_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\PaperController@destroy')->name('admin_paper_delete');
+            Route::get('/submission/{id}', 'Admin\ConferenceManager\PaperController@submission')->name('admin_paper_submission');
+            Route::post('/decision/{id}', 'Admin\ConferenceManager\PaperController@decisionAjax')->name('admin_paper_decision');
         });
 
         Route::group(['prefix'=>'/time_block'], function(){
@@ -397,7 +397,18 @@ Route::group(['prefix'=>'/conf/{conference_id}','middleware' => ['auth']], funct
         Route::post('/accept/{assignment_id}', 'Admin\ConferenceManager\ReviewAssignmentController@acceptAssignment')->name('reviewer_accept_assignment');
 //        Route::get('/edit/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@edit')->name('reviewer_paper_edit');
 //        Route::post('/update/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@update')->name('reviewer_paper_update');
-//        Route::post('/delete/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@destroy')->name('reviewer_paper_delete');
+        Route::post('/delete/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@destroy')->name('reviewer_delete_assignment');
+    });
+
+    Route::group(['prefix' => '/author'], function () {
+        Route::get('/paper/list', 'Admin\ConferenceManager\Author\PaperController@listPaper')->name('author_paper_list');
+        Route::get('/paper/send', 'Admin\ConferenceManager\Author\PaperController@sendPaper')->name('author_paper_create');
+        Route::post('/paper/store', 'Admin\ConferenceManager\Author\PaperController@savePaper')->name('author_paper_store');
+        Route::get('/paper/edit/{id}', 'Admin\ConferenceManager\Author\PaperController@editPaper')->name('author_paper_edit');
+        Route::post('/paper/update/{id}', 'Admin\ConferenceManager\Author\PaperController@updatePaper')->name('author_paper_update');
+        Route::post('/add/paper/{id}', 'Admin\ConferenceManager\Author\PaperController@addCoAuthor')->name('author_for_paper_add');
+        Route::post('/delete/{author_id}/paper/{id}', 'Admin\ConferenceManager\Author\PaperController@deleteCoAuthor')->name('author_of_paper_delete');
+        Route::post('/update/{author_id}/paper/{id}', 'Admin\ConferenceManager\Author\PaperController@updateAuthor')->name('author_of_paper_update');
     });
 });
 
@@ -443,5 +454,7 @@ Route::group(['prefix'=>'home'],function(){
 });
 
 Route::group(['prefix'=>'/conference/{conference_path}'], function() {
-         Route::get('/home','Conference\ConferenceController@index')->name('conference_home');
+        Route::get('/home','Conference\ConferenceController@index')->name('conference_home');
+
+        Route::get('/contact','Conference\ContactController@index')->name('conference_contact');
 });

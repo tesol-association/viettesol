@@ -251,6 +251,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         @endswitch
                     @endforeach
                 @endif
+            @else
+                @if (Auth::user()->conferenceRoles)
+                    @foreach(Auth::user()->conferenceRoles as $conferenceRole)
+                        @switch($conferenceRole->name)
+                            @case(Config::get('constants.CONFERENCE_ROLE.DIRECTOR'))
+                                @include('layouts.sidebar.director', ['conference' => $conference])
+                                @break
+                            @case(Config::get('constants.CONFERENCE_ROLE.TRACK_DIRECTOR'))
+                                @include('layouts.sidebar.track_director', ['conference' => $conference])
+                                @break
+                            @case(Config::get('constants.CONFERENCE_ROLE.REVIEWER'))
+                                @include('layouts.sidebar.reviewer', ['conference' => $conference])
+                                @break
+                            @case(Config::get('constants.CONFERENCE_ROLE.AUTHOR'))
+                                @include('layouts.sidebar.author', ['conference' => $conference])
+                                @break
+                        @endswitch
+                    @endforeach
+                @endif
             @endif
             <!-- end::SIDEBAR ROLE -->
         </section>

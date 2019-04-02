@@ -21,6 +21,7 @@ class PaperRepository
         $paper = Paper::find($paperId);
         $paper->load('track', 'sessionType');
         $paper->track->load('reviewForm');
+        $paper->load('authors');
         return $paper;
     }
 
@@ -50,6 +51,16 @@ class PaperRepository
         $paper->session_type_id = $data['session_type_id'];
         $paper->status = Config::get('constants.PAPER_STATUS.SUBMITTED');
         $paper->submission_by = Auth::id();
+        $paper->save();
+        return $paper;
+    }
+
+    public function updatePaper(array $data, $id)
+    {
+        $paper = Paper::find($id);
+        $paper->title = $data['title'];
+        $paper->abstract = $data['abstract'];
+
         $paper->save();
         return $paper;
     }
