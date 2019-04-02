@@ -52,12 +52,14 @@ class ReviewAssignmentController extends BaseConferenceController
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $conferenceId, $id)
     {
     }
 
-    public function destroy($id)
+    public function destroy($conferenceId, $id)
     {
+        $reviewAssignment = $this->reviewAssignments->destroy($id);
+        return redirect()->back()->with('success', 'Review Assignment '.$reviewAssignment->reviewer->first_name.$reviewAssignment->reviewer->last_name .' has been deleted successful');
     }
 
     /**
