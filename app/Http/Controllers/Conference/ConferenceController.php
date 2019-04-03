@@ -9,6 +9,13 @@ class ConferenceController extends BaseConferenceController
 {
     public function index()
     {
-    	dd($this->conferencePath);
+    	$conference = $this->conference;
+    	return view('layouts.conference.home',['conference_path'=>$this->conferencePath]);
     }
+    public function getNews()
+    {
+    	
+    	return view('layouts.conference.news',['conference_path'=>$this->conferencePath]); 
+    }
+
 }
