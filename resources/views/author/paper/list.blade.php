@@ -59,7 +59,7 @@
                                         </td>
                                         <td>
                                             @if ( $paper->file_id )
-                                                <button type="button" data-toggle="modal" data-target="#update_attach_file_{{ $paper->id }}"class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                                                <button type="button" data-toggle="modal" data-target="#update_attach_file_{{ $paper->id }}"class="btn btn-success"><i class="fa fa-eye"></i></button>
                                                 <div class="modal fade" id="update_attach_file_{{ $paper->id }}" role="dialog">
                                                     <form method="post" action="{{ route('author_paper_file_update', ['conference_id' => $conference->id, 'paper_id' => $paper->id, 'id' => $paper->attachFile->id]) }}" enctype="multipart/form-data">
                                                         @csrf

@@ -1,0 +1,190 @@
+<?php
+
+namespace App\Http\Controllers\Admin\ConferenceManager\Director;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
+use App\ConferenceRepositories\PaperRepository;
+use App\ConferenceRepositories\TrackRepository;
+use App\ConferenceRepositories\AuthorRepository;
+use App\Events\PaperSubmitted;
+use App\ConferenceRepositories\ReviewAssignmentRepository;
+use App\Models\Author;
+use App\Models\ConferenceRole;
+use App\Models\PaperAuthor;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
+class PaperController extends BaseConferenceController
+{
+    protected $papers;
+    protected $tracks;
+    protected $authors;
+    public function __construct(Request $request, PaperRepository $paperRepository, TrackRepository $trackRepository, AuthorRepository $authorRepository)
+    {
+        parent::__construct($request);
+        $this->papers = $paperRepository;
+        $this->tracks = $trackRepository;
+        $this->authors = $authorRepository;
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index($conferenceId)
+    {
+        $conferenceId = $this->conferenceId;
+        $papers = $this->papers->get($conferenceId);
+        return view('director.paper.list', [
+            'papers'=> $papers
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $tracks = $this->conference->tracks;
+        $sessionTypes = $this->conference->sessionTypes;
+        $author = Auth::user();
+        return view('director.paper.create', [
+            'tracks' => $tracks,
+            'sessionTypes' => $sessionTypes,
+            'author' => $author
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+   public function store(Request $request)
+    {
+        $validator = $this->validateData($request->all());
+        if ($validator->fails()) {
+            return redirect()
+                ->route('diector_paper_create', ['id' => $this->conferenceId])
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $authorDatas = $request->authors;
+        $paperData = $request->paper;
+        $paper = $this->papers->createSubmittedPaper($paperData);
+        event(new PaperSubmitted($paper));
+        foreach ($authorDatas as $seq => $authorData) {
+            $author = Author::where('email', $authorData['email'])->first();
+            if (empty($author)) {
+                $author = $this->authors->create($authorData);
+            }
+            $paperAuthor = new PaperAuthor();
+            $paperAuthor->paper_id = $paper->id;
+            $paperAuthor->author_id = $author->id;
+            $paperAuthor->seq = $seq;
+            $paperAuthor->save();
+        }
+        return redirect()->route('director_paper_list', ["conference_id" => $this->conferenceId])->with('success', 'Submission ' . $paper->title . ' successful !');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+
+    public function submission($conferenceId, $paperId, ReviewAssignmentRepository $reviewAssignmentRepository)
+    {
+        $paper = $this->papers->find($paperId);
+        $users = $paper->track->users->all();
+        $reviewForm = $paper->track->reviewForm;
+        $reviewForm = $reviewForm->load('criteriaReviews');
+        $reviewerRole = ConferenceRole::where('name', ConferenceRole::REVIEWER)->where('conference_id', $this->conferenceId)->first();
+        $reviewers = $reviewerRole->user;
+        $reviewerAccepted = $reviewers->filter(function ($reviewer) use ($paper) {
+            return $reviewer->id !== $paper->submission_by;
+        });
+        $reviewAssignments = $reviewAssignmentRepository->get(['paper_id' => $paperId]);
+        $reviewAssignmentIds = $reviewAssignments->pluck('reviewer_id')->all();
+        $INDEX_ASSIGNMENT = Config::get('constants.REVIEW_ASSIGNMENT.INDEX_ASSIGNMENT');
+        $trackDecisions = $this->papers->getTrackDecisions($paperId);;
+        return view('director.paper.submission', [
+            'paper' => $paper,
+            'reviewers' => $reviewerAccepted,
+            'reviewAssignments' => $reviewAssignments,
+            'reviewAssignmentIds' => $reviewAssignmentIds,
+            'INDEX_ASSIGNMENT' => $INDEX_ASSIGNMENT,
+            'reviewForm' => $reviewForm,
+            'trackDecisions' => $trackDecisions,
+            'users' => $users,
+        ]);
+    }
+
+    public function decisionAjax(Request $request, $conferenceId, $paperId)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+            $decision = $this->papers->decision($data);
+            return $decision;
+        }
+        return null;
+    }
+
+    public function validateData($data)
+    {
+        return Validator::make($data, [
+            'paper.track_id' => 'required|numeric',
+            'paper.session_type_id' => 'required|numeric',
+            'paper.title' => 'required',
+            'paper.abstract' => 'required',
+            'authors.*.first_name' => 'required',
+            'authors.*.last_name' => 'required',
+            'authors.*.email' => 'required',
+            'authors.*.affiliation' => 'required',
+        ]);
+    }
+}

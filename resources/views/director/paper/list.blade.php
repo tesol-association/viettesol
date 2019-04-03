@@ -13,7 +13,7 @@
                             <h3 class="box-title">Paper List</h3>
                         </div>
                         <div class="col-md-2 col-md-offset-6">
-                            <a href="{{ route('admin_paper_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Send Paper</a>
+                            <a href="{{ route('director_paper_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Send Paper</a>
                         </div>
                     </div>
                     <div class="box-body">
@@ -40,47 +40,45 @@
                                         <td>{{ $paper->title }}</td>
                                         <td>{!! $paper->abstract !!}</td>
                                         <td>
-                                            @if ($paper->attach_file)
-                                                <a target="_blank" href="{{ asset('/storage/' . $paper->attach_file) }}" class="btn btn-primary"><span class="fa fa-download"></span> Attach File</a>
+                                            @if ($paper->file_id)
+                                                <a target="_blank" href="{{ asset('/storage/' . $paper->attachFile->path) }}" class="btn btn-primary"><span class="fa fa-download"></span> {{ $paper->attachFile->original_file_name }}</a>
                                             @endif
                                         </td>
                                         <td>{{ $paper->track->name }}</td>
                                         <td>{{ $paper->status }}</td>
                                         <td>{{ $paper->created_at }}</td>
                                         <td>
-                                            <a href="{{ route('admin_paper_submission', ["conference_id" => $conference->id, "id" => $paper->id]) }}" class="btn btn-primary">Assign</a>
+                                            <a href="{{ route('director_paper_submission', ['conference_id'=>$conference->id, 'id'=>$paper->id]) }}" class="btn btn-primary">Assign</a>
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin_paper_edit', ["conference_id" => $conference->id, "id" => $paper->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                                            <a href="{{ route('director_paper_edit', ["conference_id" => $conference->id, "id" => $paper->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_paper_{{ $paper->id }}"><i class="fa fa-trash"></i></button>
                                         </td>
                                         <!-- Start:: Delete Modal Conference -->
                                         <div class="modal fade" id="delete_paper_{{ $paper->id }}" role="dialog">
-                                            <form method="post" action="{{ route('admin_paper_delete', [ "conference_id" => $conference->id, 'id'=> $paper->id ]) }}">
+                                            <form method="post" action="{{ route('director_paper_delete', [ "conference_id" => $conference->id, 'id'=> $paper->id ]) }}">
                                                 @csrf
                                                 <div class="modal-dialog">
-                                                 <!-- Modal content-->
-                                                 <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <h4 class="modal-title">Are you sure delete: {{ $paper->title }} ?</h4>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                     <!-- Modal content-->
+                                                     <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title">Are you sure delete: {{ $paper->title }} ?</h4>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                                            </form>
+                                        </div>
                                     <!-- End:: Delete Modal Conference -->
                                     </tr>
                                 @endforeach
                                 </tbody>
-                                <tfoot>
-                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -99,5 +97,5 @@
     <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
-    <script src="{{ asset('js/admin/paper/list.js') }}"></script>
+    <script src="{{ asset('js/director/paper/list.js') }}"></script>
 @endsection

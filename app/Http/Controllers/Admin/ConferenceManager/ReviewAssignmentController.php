@@ -168,5 +168,21 @@ class ReviewAssignmentController extends BaseConferenceController
         ])->with('success', 'Accepted ' . $reviewAssignment->title . ' successful !');
     }
 
+    public function save(Request $request, $conferenceId, $paperId)
+    {
+        $data = $request->all();
+        $validator = $this->validateData($data);
+        if ($validator->fails()) {
+            return redirect()
+                ->route('admin_paper_submission', ['conference_id' => $this->conferenceId, 'paper_id' => $paperId])
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $reviewAssignment = $this->reviewAssignments->assignReviewer($data);
+        return redirect()->route('track_director_paper_submission', [
+            'conference_id' => $this->conferenceId,
+            'paper_id' => $paperId
+        ])->with('success', 'Assign Reviewer ' . $reviewAssignment->reviewer->first_name . ' ' . $reviewAssignment->reviewer->last_name . ' successful !');
+    }
 
 }

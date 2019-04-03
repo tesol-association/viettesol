@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\ConferenceRole', 'user_conference_roles', 'user_id', 'conference_role_id');
     }
+
+    public function tracks()
+    {
+        return $this->belongsToMany('App\Models\Track', 'track_director', 'user_id', 'track_id');
+    }
 }

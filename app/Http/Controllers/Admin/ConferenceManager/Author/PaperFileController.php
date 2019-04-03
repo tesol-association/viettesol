@@ -80,14 +80,14 @@ class PaperFileController extends BaseConferenceController
             //Save paper
             $dataPaperFile['file_id'] = $paperFile->id;
             $dataPaperFile['full_paper'] = $request->full_paper;
-            $paper = $this->papers->updatePaperFile($dataPaperFile, $paperId);
+            $paper = $this->papers->updatePaperFile($paperId, $dataPaperFile);
 
             return redirect()->back()->with('success', 'File '.$paperFile->original_file_name.' had been uploaded successful !');
         }else{
             //Find paper and update full paper
             $data['full_paper'] = $request->full_paper;
             $data['file_id'] = null;
-            $paper = $this->papers->updatePaperFile($data, $paperId);
+            $paper = $this->papers->updatePaperFile($paperId, $data);
             return redirect()->back()->with('success', $paper->title.' had been updated Full Paper successful !');
         }
     }

@@ -44,7 +44,10 @@ return [
         'REJECT_RECOMMENDATION' => 2,
     ],
     'PAPER_STATUS' => [
-        'SUBMITTED' => 'submitted'
+        'SUBMITTED' => 'submitted',
+        'ACCEPTED' => 'accepted',
+        'REJECTED' => 'rejected',
+        'REVISION' => 'revision',
     ],
     'PAPER_AUTHOR' => [
         'AUTHOR' => 0,

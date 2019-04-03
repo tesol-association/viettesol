@@ -2,7 +2,7 @@ $(document).ready(function () {
     const ACCEPTED = '0';
     const REVISION = '1';
     const REJECTED = '2';
-    const url = '/admin/conf';
+    const url = '/conf';
     console.log(url);
     $('#add_reviewer').select2();
     $('#decision_paper').select2();
@@ -25,7 +25,7 @@ $(document).ready(function () {
             decision: $('#decision_paper').val(),
         };
         $.ajax({
-            url: url + '/' + conferenceId + '/paper/decision/' + paperId,
+            url: url + '/' + conferenceId + '/track_director/paper/decision/' + paperId,
             type: "POST",
             dataType: 'json',
             data: formData,
@@ -35,7 +35,7 @@ $(document).ready(function () {
                 switch (data.decision) {
                     case ACCEPTED:
                         toastr.success('Accepted At ' + data.date_decided.date);
-                        $('#last_decided').attr('class', 'text-green').text('Accepted At' + data.date_decided.date);
+                        $('#last_decided').attr('class', 'text-green').text('Accepted At ' + data.date_decided.date);
                         break;
                     case REVISION:
                         toastr.success('Revision At ' + data.date_decided.date);

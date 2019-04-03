@@ -30,11 +30,17 @@ class PaperRepository
         if (empty($filters)) {
             $papers = Paper::with('track.conference')->get();
         } else {
-            $conditions = [];
+            $papersQuery = Paper::with('track.conference');
             foreach ($filters as $key => $filter) {
-                $conditions[] = [$key, '=', $filter];
+                if (is_array($filter)) {
+                    $papersQuery->whereIn($key, $filter);
+                }
+                if (is_string($filter))
+                {
+                    $papersQuery->where($key, '=', $filter);
+                }
             }
-            $papers = Paper::with('track.conference')->where($conditions)->get();
+            $papers = $papersQuery->get();
         }
         $papers = $papers->filter(function($paper) use ($conferenceId) {
             return $paper->track->conference->id == $conferenceId;

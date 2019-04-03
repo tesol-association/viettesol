@@ -398,8 +398,6 @@ Route::group(['prefix'=>'/conf/{conference_id}','middleware' => ['auth']], funct
         Route::post('/store_assignment/{assignment_id}', 'Admin\ConferenceManager\ReviewAssignmentController@storeAssignment')->name('reviewer_store_assignment');
         Route::post('/reject/{assignment_id}', 'Admin\ConferenceManager\ReviewAssignmentController@rejectAssignment')->name('reviewer_reject_assignment');
         Route::post('/accept/{assignment_id}', 'Admin\ConferenceManager\ReviewAssignmentController@acceptAssignment')->name('reviewer_accept_assignment');
-//        Route::get('/edit/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@edit')->name('reviewer_paper_edit');
-//        Route::post('/update/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@update')->name('reviewer_paper_update');
         Route::post('/delete/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@destroy')->name('reviewer_delete_assignment');
     });
 
@@ -432,6 +430,47 @@ Route::group(['prefix'=>'/conf/{conference_id}','middleware' => ['auth']], funct
     Route::group(['prefix' => 'track_director'], function () {
         Route::group(['prefix' => 'session_type'], function () {
             Route::get('/list', 'Admin\ConferenceManager\SessionTypeController@index')->name('track_director_session_type_list');
+        });
+
+        Route::group(['prefix' => 'paper'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\TrackDirector\PaperController@index')->name('track_director_paper_list');
+            Route::get('/submission/{id}', 'Admin\ConferenceManager\TrackDirector\PaperController@submission')->name('track_director_paper_submission');
+            Route::post('/decision/{id}', 'Admin\ConferenceManager\TrackDirector\PaperController@decisionAjax')->name('track_director_paper_decision');
+        });
+
+        Route::group(['prefix'=>'/{paper_id}/review_assignment'], function() {
+            Route::post('/store', 'Admin\ConferenceManager\ReviewAssignmentController@save')->name('track_director_review_assignment_store');
+        });
+
+        Route::group(['prefix'=>'/reviewer'], function() {
+            Route::get('/list', 'Admin\ConferenceManager\TrackDirector\ReviewerController@index')->name('track_director_user_list');
+            Route::get('/view/{id}', 'Admin\UserManagerController@show')->name('track_director_user_view');
+        });
+    });
+
+
+     Route::group(['prefix'=>'director'], function() {
+        Route::group(['prefix'=>'/track'], function() {
+                Route::get('/list', 'Admin\TrackController@index')->name('director_track_list');
+        });
+
+        Route::group(['prefix' => 'session_type'], function () {
+            Route::get('/list', 'Admin\ConferenceManager\SessionTypeController@index')->name('director_session_type_list');
+        });
+
+        Route::group(['prefix' => 'paper'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\Director\PaperController@index')->name('director_paper_list');
+            Route::get('/create', 'Admin\ConferenceManager\Director\PaperController@create')->name('director_paper_create');
+            Route::post('/store', 'Admin\ConferenceManager\Director\PaperController@store')->name('director_paper_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\Director\PaperController@edit')->name('director_paper_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\Director\PaperController@update')->name('director_paper_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\Director\PaperController@destroy')->name('director_paper_delete');
+            Route::get('/submission/{id}', 'Admin\ConferenceManager\Director\PaperController@submission')->name('director_paper_submission');
+            Route::post('/decision/{id}', 'Admin\ConferenceManager\Director\PaperController@decisionAjax')->name('director_paper_decision');
+        });
+
+        Route::group(['prefix'=>'/reviewer'], function() {
+            Route::get('/list', 'Admin\ConferenceManager\TrackDirector\ReviewerController@index')->name('director_user_list');
         });
     });
 });
