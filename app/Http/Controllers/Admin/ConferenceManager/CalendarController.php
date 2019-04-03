@@ -12,6 +12,7 @@ use App\Models\Schedule;
 use App\Models\TimeBlock;
 use App\ConferenceRepositories\PaperRepository;
 use App\Models\Conference;
+use App\Models\ConferenceTimeline;
 
 class CalendarController extends BaseConferenceController
 {
@@ -103,6 +104,32 @@ class CalendarController extends BaseConferenceController
                 'start' => $dataConference['start_time'],
                 'end'   => $dataConference['end_time']
 			); 
+		}
+
+		$conferenceTimelines= ConferenceTimeline::where('conference_id',$this->conferenceId)->get()->toArray();
+
+		foreach ($conferenceTimelines as $conferenceTimeline) {
+			$conference[]=array(
+                'title'  => 'author_registration',
+                'start'  => $conferenceTimeline['author_registration_opened'],
+                'end'    => $conferenceTimeline['author_registration_closed']
+			);
+
+			$conference[]=array(
+                'title'  => 'submission_accepted',
+                'start'  => $conferenceTimeline['submission_accepted']
+			);
+
+			$conference[] = array(
+                'title'  => 'submission_closed',
+                'start'  => $conferenceTimeline['submission_closed']
+			);
+
+			$conference[]=array(
+                'title'  => 'reviewer_registration',
+                'start'  => $conferenceTimeline['reviewer_registration_opened'],
+                'end'    => $conferenceTimeline['reviewer_registration_closed']  
+			);
 		}
 
 		if(!empty($dataConferences)){

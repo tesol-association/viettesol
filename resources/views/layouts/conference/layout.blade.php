@@ -11,8 +11,8 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('conference/plugins/OwlCarousel2-2.2.1/owl.carousel.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('conference/plugins/OwlCarousel2-2.2.1/owl.theme.default.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('conference/plugins/OwlCarousel2-2.2.1/animate.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('conference/styles/main_styles.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('conference/styles/responsive.css') }}">
+{{-- <link rel="stylesheet" type="text/css" href="{{ asset('conference/styles/main_styles.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('conference/styles/responsive.css') }}"> --}}
 @yield('css')
 </head>
 <body>
@@ -29,19 +29,19 @@
 					<div class="logo_container d-flex flex-row align-items-start justify-content-start">
 						<div class="logo_image"><div><img src="{{ asset('conference/images/logo.png') }}" alt=""></div></div>
 						<div class="logo_content">
-							<div class="logo_text logo_text_not_ie">The Conference</div>
-							<div class="logo_sub">August 25, 2018 - Miami Marina Bay</div>
+							<div class="logo_text logo_text_not_ie">{{ $conference->title }}</div>
+							<div class="logo_sub">{{ \Carbon\Carbon::parse($conference->start_time)->format('d/m/Y') }}-{{ \Carbon\Carbon::parse($conference->end_time)->format('d/m/Y') }} - {{ $conference->venue }}</div>
 						</div>
 					</div>
 				</a>
 			</div>
 			<ul>
-				<li class="menu_item"><a href="index.html">Home</a></li>
-				<li class="menu_item"><a href="#">About us</a></li>
-				<li class="menu_item"><a href="#">Speakers</a></li>
-				<li class="menu_item"><a href="#">Tickets</a></li>
-				<li class="menu_item"><a href="news.html">News</a></li>
-				<li class="menu_item"><a href="contact.html">Contact</a></li>
+				<li class="menu_item"><a href="">Home</a></li>
+				<li class="menu_item"><a href="">About us</a></li>
+				<li class="menu_item"><a href="">Speakers</a></li>
+				<li class="menu_item"><a href="">Tickets</a></li>
+				<li class="menu_item"><a href="">News</a></li>
+				<li class="menu_item"><a href="">Contact</a></li>
 			</ul>
 		</div>
 		<div class="menu_social">
@@ -77,8 +77,8 @@
 											<div class="logo_container d-flex flex-row align-items-start justify-content-start">
 												<div class="logo_image"><div><img src="{{ asset('conference/images/logo.png') }}" alt=""></div></div>
 												<div class="logo_content">
-													<div id="logo_text" class="logo_text logo_text_not_ie">The Conference</div>
-													<div class="logo_sub">August 25, 2018 - Miami Marina Bay</div>
+													<div id="logo_text" class="logo_text logo_text_not_ie">{{ $conference->title }}</div>
+													<div class="logo_sub">{{ \Carbon\Carbon::parse($conference->start_time)->format('d/m/Y') }}-{{ \Carbon\Carbon::parse($conference->end_time)->format('d/m/Y') }} - {{ $conference->venue }}</div>
 												</div>
 											</div>
 										</a>	
@@ -108,17 +108,17 @@
 										<div class="header_nav_content d-flex flex-row align-items-center justify-content-start">
 											<nav class="main_nav">
 												<ul>
-													<li class="active"><a href="index.html">Home</a></li>
-													<li><a href="#">About Us</a></li>
-													<li><a href="speakers.html">Speakers</a></li>
-													<li><a href="events.html">Events</a></li>
-													<li><a href="news.html">News</a></li>
-													<li><a href="contact.html">Contact</a></li>
+													<li><a href="{{ route('conference_home',['conference_path'=>$conference->path]) }}">Home</a></li>
+													<li><a href="">About Us</a></li>
+													<li><a href="">Speakers</a></li>
+													<li><a href="">Events</a></li>
+													<li><a href="{{ route('conference_news',['conference_path'=>$conference->path]) }}">News</a></li>
+													<li><a href="">Contact</a></li>
 												</ul>
 											</nav>
 											<div class="header_extra ml-auto">
 												<div class="header_search"><i class="fa fa-search" aria-hidden="true"></i></div>
-												<div class="button header_button"><a href="#">Buy Tickets Now!</a></div>
+												<div class="button header_button"><a href="">Registration</a></div>
 											</div>
 										</div>
 									</div>
@@ -158,7 +158,7 @@
 				<div class="col">
 					<div class="cta_content text-center">
 						<div class="cta_title">Get your tickets now!</div>
-						<div class="button cta_button"><a href="#">Find out more</a></div>
+						<div class="button cta_button"><a href="#">Regiatration</a></div>
 					</div>
 				</div>
 			</div>
@@ -180,14 +180,14 @@
 									<div class="logo_container d-flex flex-row align-items-start justify-content-start">
 										<div class="logo_image"><div><img src="{{ asset('conference/images/logo.png') }}" alt=""></div></div>
 										<div class="logo_content">
-											<div id="logo_text" class="logo_text logo_text_not_ie">The Conference</div>
-											<div class="logo_sub">August 25, 2018 - Miami Marina Bay</div>
+											<div id="logo_text" class="logo_text logo_text_not_ie">{{ $conference->title }}</div>
+											<div class="logo_sub">{{ \Carbon\Carbon::parse($conference->start_time)->format('d/m/Y') }}-{{ \Carbon\Carbon::parse($conference->end_time)->format('d/m/Y') }} - {{ $conference->venue }}</div>
 										</div>
 									</div>
 								</a>	
 							</div>
 							<div class="footer_about_text">
-								<p>Donec quis metus ac arcu luctus accumsan. Nunc in justo tincidunt, sodales nunc id, finibus nibh. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+								<p>{{ $conference->slogan }}</p>
 							</div>
 						</div>
 					</div>
@@ -262,7 +262,7 @@
 									</ul>
 								</div>
 								<div class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | VietTESOL Association</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
 							</div>
 						</div>
@@ -280,7 +280,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="{{ asset('conference/plugins/OwlCarousel2-2.2.1/owl.carousel.js') }}"></script>
 <script src="{{ asset('conference/plugins/easing/easing.js') }}"></script>
 <script src="{{ asset('conference/plugins/parallax-js-master/parallax.min.js') }}"></script>
-<script src="{{ asset('conference/js/custom.js') }}"></script>
+{{-- <script src="{{ asset('conference/js/custom.js') }}"></script> --}}
 @yield('js')
 </body>
 </html>

@@ -166,6 +166,18 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
         Route::post('/delete/{id}', 'Admin\EventCategoryController@destroy')->name('admin_events_category_delete');
     });
 
+    Route::group(['prefix'=> 'event_registration_form'],function(){
+        Route::get('/list','Home\MainController@listRegistrationForm')->name('event_registration_form_list');
+
+        Route::get('/{id}/list_criteria_additional','Home\MainController@listCriteriaAdditional')->name('criteria_additional_list');
+
+        Route::get('/{id}/criteria/create','Home\MainController@createCriteria')->name('event_registration_form_createCriteria');
+
+        Route::post('/criteria/store','Home\MainController@addCriteria')->name('event_registration_form_addCriteria');
+
+        Route::post('/criteria/delete/{id}','Home\MainController@deleteCriteria')->name('event_registration_form_deleteCriteria');
+    });
+
 
     Route::group(['prefix'=>'contact'],function(){
       Route::get('/list', 'Admin\ContactController@index')->name('admin_contact_list');
@@ -438,4 +450,6 @@ Route::group(['prefix'=>'home'],function(){
 
 Route::group(['prefix'=>'/conference/{conference_path}'], function() {
          Route::get('/home','Conference\ConferenceController@index')->name('conference_home');
+
+         Route::get('/news','Conference\ConferenceController@getNews')->name('conference_news');
 });
