@@ -28,4 +28,9 @@ class Track extends Model
     {
         return $this->belongsTo('App\Models\ReviewForm', 'review_form_id');
     }
+
+     public function users()
+    {
+        return $this->belongsToMany('App\Models\User', 'track_director', 'track_id', 'user_id');
+    }
 }

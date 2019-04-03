@@ -10,6 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <title>@yield('title')</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('admin/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('admin/bower_components/font-awesome/css/font-awesome.min.css') }}">
@@ -229,9 +230,48 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
             </form>
             <!-- /.search form -->
-            @section('sidebar')
+            <!-- start::SIDEBAR ROLE -->
+            @if (Auth::user()->is_admin == Config::get('constants.USER.ADMIN'))
                 @include('layouts.sidebar.conference_manager', ['conference' => $conference])
-            @show
+                @if (Auth::user()->conferenceRoles)
+                    @foreach(Auth::user()->conferenceRoles as $conferenceRole)
+                        @switch($conferenceRole->name)
+                            @case(Config::get('constants.CONFERENCE_ROLE.DIRECTOR'))
+                                @include('layouts.sidebar.director', ['conference' => $conference])
+                                @break
+                            @case(Config::get('constants.CONFERENCE_ROLE.TRACK_DIRECTOR'))
+                                @include('layouts.sidebar.track_director', ['conference' => $conference])
+                                @break
+                            @case(Config::get('constants.CONFERENCE_ROLE.REVIEWER'))
+                                @include('layouts.sidebar.reviewer', ['conference' => $conference])
+                                @break
+                            @case(Config::get('constants.CONFERENCE_ROLE.AUTHOR'))
+                                @include('layouts.sidebar.author', ['conference' => $conference])
+                                @break
+                        @endswitch
+                    @endforeach
+                @endif
+            @else
+                @if (Auth::user()->conferenceRoles)
+                    @foreach(Auth::user()->conferenceRoles as $conferenceRole)
+                        @switch($conferenceRole->name)
+                            @case(Config::get('constants.CONFERENCE_ROLE.DIRECTOR'))
+                                @include('layouts.sidebar.director', ['conference' => $conference])
+                                @break
+                            @case(Config::get('constants.CONFERENCE_ROLE.TRACK_DIRECTOR'))
+                                @include('layouts.sidebar.track_director', ['conference' => $conference])
+                                @break
+                            @case(Config::get('constants.CONFERENCE_ROLE.REVIEWER'))
+                                @include('layouts.sidebar.reviewer', ['conference' => $conference])
+                                @break
+                            @case(Config::get('constants.CONFERENCE_ROLE.AUTHOR'))
+                                @include('layouts.sidebar.author', ['conference' => $conference])
+                                @break
+                        @endswitch
+                    @endforeach
+                @endif
+            @endif
+            <!-- end::SIDEBAR ROLE -->
         </section>
     </aside>
 

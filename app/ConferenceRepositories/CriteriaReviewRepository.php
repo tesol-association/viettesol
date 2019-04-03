@@ -23,9 +23,7 @@ class CriteriaReviewRepository
             }
             $criteriaReviews = CriteriaReview::with('reviewForm')->where($conditions)->get();
         }
-        foreach ($criteriaReviews as $criteriaReview) {
-            $criteriaReview->possible_values = json_decode($criteriaReview->possible_values, true);
-        }
+
         return $criteriaReviews;
     }
 
@@ -37,7 +35,6 @@ class CriteriaReviewRepository
     public function find($criteriaId)
     {
         $criteriaReview =  CriteriaReview::find($criteriaId);
-        $criteriaReview->possible_values = json_decode($criteriaReview->possible_values);
         return $criteriaReview;
     }
 
@@ -51,7 +48,7 @@ class CriteriaReviewRepository
         $criteria->review_form_id = $data['review_form_id'];
         $criteria->name = $data['name'];
         $criteria->description = $data['description'];
-        $criteria->possible_values = json_encode($data['possible_values']);
+        $criteria->possible_values = $data['possible_values'];
         $criteria->save();
         return $criteria;
     }
@@ -67,7 +64,7 @@ class CriteriaReviewRepository
         $criteria->review_form_id = $data['review_form_id'];
         $criteria->name = $data['name'];
         $criteria->description = $data['description'];
-        $criteria->possible_values = json_encode($data['possible_values']);
+        $criteria->possible_values = $data['possible_values'];
         $criteria->save();
         return $criteria;
     }

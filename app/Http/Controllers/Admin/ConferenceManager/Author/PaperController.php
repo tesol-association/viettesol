@@ -1,0 +1,142 @@
+<?php
+
+namespace App\Http\Controllers\Admin\ConferenceManager\Author;
+
+use App\ConferenceRepositories\AuthorRepository;
+use App\ConferenceRepositories\ReviewAssignmentRepository;
+use App\Events\PaperSubmitted;
+use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
+use App\Models\Author;
+use App\Models\ConferenceRole;
+use App\Models\PaperAuthor;
+use App\ConferenceRepositories\PaperRepository;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Validator;
+
+class PaperController extends BaseConferenceController
+{
+    protected $papers;
+    protected $authors;
+    public function __construct(Request $request, PaperRepository $paperRepository, AuthorRepository $authorRepository)
+    {
+        parent::__construct($request);
+        $this->papers = $paperRepository;
+        $this->authors = $authorRepository;
+    }
+
+    public function listPaper()
+    {
+        $conferenceId = $this->conferenceId;
+        $papers = $this->papers->get($conferenceId, ['submission_by' => Auth::id()]);
+
+        return view('author.paper.list', [
+            'conference_id' => $this->conferenceId,
+            'papers'=> $papers
+        ]);
+    }
+
+    public function sendPaper()
+    {
+        $tracks = $this->conference->tracks;
+        $sessionTypes = $this->conference->sessionTypes;
+        $author = Auth::user();
+        return view('author.paper.create', [
+            'conference_id' => $this->conferenceId,
+            'tracks' => $tracks,
+            'sessionTypes' => $sessionTypes,
+            'author' => $author
+        ]);
+    }
+
+    public function savePaper(Request $request)
+    {
+        $validator = $this->validateData($request->all());
+        if ($validator->fails()) {
+            return redirect()
+                ->route('author_paper_create', ['id' => $this->conferenceId])
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $authorData = $request->author;
+        $paperData = $request->paper;
+        $paper = $this->papers->createSubmittedPaper($paperData);
+        event(new PaperSubmitted($paper));
+        $author = Author::where('email', $authorData['email'])->first();
+        if (empty($author)) {
+            $author = $this->authors->create($authorData);
+        }
+        $author->papers()->attach($paper->id, ['seq' => Config::get('constants.PAPER_AUTHOR.AUTHOR')]);
+        return redirect()->route('author_paper_list', ["conference_id" => $this->conferenceId])->with('success', 'Submission ' . $paper->title . ' successful !');
+    }
+
+    public function editPaper(Request $request,$conferenceId, $id)
+    {
+        $paper = $this->papers->find($id);
+        $tracks = $this->conference->tracks;
+        $sessionTypes = $this->conference->sessionTypes;
+        return view('author.paper.edit', [
+            'conference_id' => $this->conferenceId,
+            'paper' => $paper,
+            'tracks' => $tracks,
+            'sessionTypes' => $sessionTypes,
+        ]);
+    }
+
+    public function updatePaper(Request $request, $conferenceId, $id)
+    {
+        $request->validate([
+            'paper.title' => 'required',
+            'paper.abstract' => 'required',
+        ]);
+        $paper = $this->papers->updatePaper($request->paper, $id);
+        return redirect()->route('author_paper_list', ["conference_id" => $this->conferenceId])->with('success', 'Updated ' . $paper->title . ' successful !');
+    }
+
+    public function addCoAuthor(Request $request, $conferenceId, $id)
+    {
+        $paper = $this->papers->find($id);
+        $author = Author::where('email', $request->email)->first();
+        if (empty($author)) {
+            $author = $this->authors->create($request->all());
+        }
+
+        $author->papers()->attach($id, ['seq' => Config::get('constants.PAPER_AUTHOR.CO_AUTHOR')]);
+
+        return redirect()->back()->with('success', 'Added '.$author->first_name.' '.$author->middle_name.' '.$author->last_name.' for paper '.$paper->title.' successful !');
+    }
+
+    public function deleteCoAuthor($conferenceId, $authorId, $id)
+    {
+        $paper = $this->papers->find($id);
+        $paper->authors()->detach($authorId);
+
+        return redirect()->back()->with('success', 'Deleted co author for paper '.$paper->title.' successful !');
+    }
+
+    public function updateAuthor(Request $request, $conferenceId, $authorId, $id)
+    {
+        $author = $this->authors->update($authorId, $request->all());
+
+        return redirect()->back()->with('success', 'Updated '.$author->first_name.' '.$author->middle_name.' '.$author->last_name.' information successful !');
+    }
+
+    /**
+     * @param $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validateData($data)
+    {
+        return Validator::make($data, [
+            'paper.track_id' => 'required|numeric',
+            'paper.session_type_id' => 'required|numeric',
+            'paper.title' => 'required',
+            'paper.abstract' => 'required',
+            'author.first_name' => 'required',
+            'author.last_name' => 'required',
+            'author.email' => 'required',
+            'author.affiliation' => 'required',
+        ]);
+    }
+}

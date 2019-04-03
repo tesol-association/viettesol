@@ -1,12 +1,12 @@
 @extends('layouts.admin.conference_layout')
-@section('title','Edit Review Form')
+@section('title','Send Paper')
 @section('css')
     <link href="{{ asset('js/lib/summernote/dist/summernote.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/dist/css/AdminLTE.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
-<form method="POST" action="{{ route('admin_paper_store', ["id" => $conference->id]) }}">
+<form method="POST" action="{{ route('author_paper_store', ["id" => $conference->id]) }}">
     @csrf
     <div class="box box-primary">
         <div class="box-header with-border">
@@ -60,7 +60,7 @@
         <div class="box-body">
             <div class="form-group {{ $errors->first('first_name') ? 'has-error' : ''}}">
                 <label for="first_name">First Name*</label>
-                <input id="first_name" type="text" class="form-control" name="authors[0][first_name]" required value="{{ $author->first_name }}">
+                <input id="first_name" type="text" class="form-control" name="author[first_name]" required value="{{ $author->first_name }}">
                 @if ($errors->has('first_name'))
                     <span class="help-block">{{ $errors->first('first_name') }}</span>
                 @endif
@@ -68,7 +68,7 @@
 
             <div class="form-group {{ $errors->first('middle_name') ? 'has-error' : ''}}">
                 <label for="middle_name">Middle Name</label>
-                <input id="middle_name" type="text" class="form-control" name="authors[0][middle_name]" value="{{ $author->middle_name }}">
+                <input id="middle_name" type="text" class="form-control" name="author[middle_name]" value="{{ $author->middle_name }}">
                 @if ($errors->has('middle_name'))
                     <span class="help-block">{{ $errors->first('middle_name') }}</span>
                 @endif
@@ -76,7 +76,7 @@
 
             <div class="form-group {{ $errors->first('last_name') ? 'has-error' : ''}}">
                 <label for="last_name">Last Name*</label>
-                <input id="last_name" type="text" class="form-control" name="authors[0][last_name]" required value="{{ $author->last_name }}">
+                <input id="last_name" type="text" class="form-control" name="author[last_name]" required value="{{ $author->last_name }}">
                 @if ($errors->has('last_name'))
                     <span class="help-block">{{ $errors->first('last_name') }}</span>
                 @endif
@@ -84,7 +84,7 @@
 
             <div class="form-group {{ $errors->first('email') ? 'has-error' : ''}}">
                 <label for="email">Email*</label>
-                <input id="email" type="email" class="form-control" name="authors[0][email]" required value="{{ $author->email }}">
+                <input id="email" type="email" class="form-control" name="author[email]" required value="{{ $author->email }}">
                 @if ($errors->has('email'))
                     <span class="help-block">{{ $errors->first('email') }}</span>
                 @endif
@@ -92,7 +92,7 @@
 
             <div class="form-group {{ $errors->first('affiliation') ? 'has-error' : ''}}">
                 <label for="affiliation">Affiliation*</label>
-                <input id="affiliation" type="text" class="form-control" name="authors[0][affiliation]" required value="{{ $author->affiliation }}">
+                <input id="affiliation" type="text" class="form-control" name="author[affiliation]" required value="{{ $author->affiliation }}">
                 @if ($errors->has('affiliation'))
                     <span class="help-block">{{ $errors->first('affiliation') }}</span>
                 @endif
@@ -100,7 +100,7 @@
 
             <div class="form-group {{ $errors->first('site_url') ? 'has-error' : ''}}">
                 <label for="site_url">Site URL</label>
-                <input id="site_url" type="text" class="form-control" name="authors[0][site_url]" value="{{ $author->site_url }}">
+                <input id="site_url" type="text" class="form-control" name="author[site_url]" value="{{ $author->site_url }}">
                 @if ($errors->has('site_url'))
                     <span class="help-block">{{ $errors->first('site_url') }}</span>
                 @endif
@@ -108,7 +108,7 @@
 
             <div class="form-group">
                 <label for="country">Country</label>
-                <select class="form-control {{ $errors->has('country') ? ' is-invalid' : '' }}" id="country" name="authors[0][country]" data-value="{{ $author->country }}">
+                <select class="form-control {{ $errors->has('country') ? ' is-invalid' : '' }}" id="country" name="author[country]" data-value="{{ $author->country }}">
                     @include('helper.country')
                 </select>
 
@@ -149,7 +149,7 @@
         </div>
         <div class="box-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="{{ route('admin_paper_list', ["conference_id" => $conference->id]) }}" class="btn btn-info">
+            <a href="{{ route('author_paper_list', ["conference_id" => $conference->id]) }}" class="btn btn-info">
                 <i class="fa fa-backward"></i> Paper List
             </a>
         </div>
@@ -159,5 +159,5 @@
 @section('js')
     <script src="{{ asset('js/lib/summernote/dist/summernote.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('js/admin/paper/create.js') }}"></script>
+    <script src="{{ asset('js/author/create.js') }}"></script>
 @endsection

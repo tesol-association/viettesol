@@ -36,12 +36,12 @@
 				</a>
 			</div>
 			<ul>
-				<li class="menu_item"><a href="">Home</a></li>
+				<li class="menu_item"><a href="{{ route('conference_home', $conference->path) }}">Home</a></li>
 				<li class="menu_item"><a href="">About us</a></li>
 				<li class="menu_item"><a href="">Speakers</a></li>
 				<li class="menu_item"><a href="">Tickets</a></li>
 				<li class="menu_item"><a href="">News</a></li>
-				<li class="menu_item"><a href="">Contact</a></li>
+				<li class="menu_item"><a href="{{ route('conference_contact', $conference->path) }}">Contact</a></li>
 			</ul>
 		</div>
 		<div class="menu_social">
@@ -56,7 +56,7 @@
 			</ul>
 		</div>
 	</div>
-	
+
 	<!-- Home -->
 
 	<div class="home">
@@ -81,7 +81,7 @@
 													<div class="logo_sub">{{ \Carbon\Carbon::parse($conference->start_time)->format('d/m/Y') }}-{{ \Carbon\Carbon::parse($conference->end_time)->format('d/m/Y') }} - {{ $conference->venue }}</div>
 												</div>
 											</div>
-										</a>	
+										</a>
 									</div>
 									<div class="header_social ml-auto">
 										<ul>
@@ -113,7 +113,7 @@
 													<li><a href="">Speakers</a></li>
 													<li><a href="">Events</a></li>
 													<li><a href="{{ route('conference_news',['conference_path'=>$conference->path]) }}">News</a></li>
-													<li><a href="">Contact</a></li>
+													<li><a href="{{ route('conference_contact',[$conference->path]) }}">Contact</a></li>
 												</ul>
 											</nav>
 											<div class="header_extra ml-auto">
@@ -140,7 +140,7 @@
 							</div>
 						</div>
 					</div>
-				</div>	
+				</div>
 			</div>
 		</header>
 
@@ -171,7 +171,7 @@
 		<div class="footer_content">
 			<div class="container">
 				<div class="row">
-					
+
 					<!-- Footer Column -->
 					<div class="col-lg-4 footer_col">
 						<div class="footer_about">
@@ -184,7 +184,7 @@
 											<div class="logo_sub">{{ \Carbon\Carbon::parse($conference->start_time)->format('d/m/Y') }}-{{ \Carbon\Carbon::parse($conference->end_time)->format('d/m/Y') }} - {{ $conference->venue }}</div>
 										</div>
 									</div>
-								</a>	
+								</a>
 							</div>
 							<div class="footer_about_text">
 								<p>{{ $conference->slogan }}</p>
@@ -215,7 +215,7 @@
 								<li><a href="#">Testimonials</a></li>
 								<li><a href="#">Price Plans</a></li>
 								<li><a href="#">News</a></li>
-								<li><a href="#">Contact</a></li>
+								<li><a href="{{ route('conference_contact', $conference->path) }}">Contact</a></li>
 							</ul>
 						</div>
 					</div>
@@ -256,7 +256,7 @@
 							<div class="footer_extra_right ml-lg-auto text-lg-right">
 								<div class="footer_extra_links">
 									<ul>
-										<li><a href="contact.html">Contact us</a></li>
+										<li><a href="{{route('conference_contact', $conference->path)}}">Contact us</a></li>
 										<li><a href="#">Sitemap</a></li>
 										<li><a href="#">Privacy</a></li>
 									</ul>
@@ -271,7 +271,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			</div>
 		</div>
 	</footer>
-		
+
 </div>
 
 <script src="{{ asset('conference/js/jquery-3.2.1.min.js') }}"></script>

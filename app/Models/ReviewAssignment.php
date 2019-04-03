@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ReviewAssignment extends Model
 {
-    const INDEX_ASSIGNMENT = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+
     protected $table = 'review_assignments';
 
     public function paper()
@@ -17,5 +17,22 @@ class ReviewAssignment extends Model
     public function reviewer()
     {
         return $this->belongsTo('App\Models\User', 'reviewer_id');
+    }
+
+    /**
+     * @param $value
+     */
+    public function setReviewerResponseAttribute($value)
+    {
+        $this->attributes['reviewer_response'] = json_encode($value);
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function getReviewerResponseAttribute($value)
+    {
+        return json_decode($value, true);
     }
 }

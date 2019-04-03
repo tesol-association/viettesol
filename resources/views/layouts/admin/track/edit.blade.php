@@ -1,6 +1,9 @@
 @extends('layouts.admin.conference_layout')
 @section('title','Edit Track')
 @section('css')
+    <link href="{{ asset('admin/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('js/lib/summernote/dist/summernote.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/dist/css/AdminLTE.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
     <div class="box">
@@ -61,6 +64,25 @@
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group {{ $errors->first('user_id') ? 'has-error' : ''}}">
+                        <label for="choose_user">Choose Track Director</label>
+                        <select id="choose_user" name="user_id[]" class="form-control" multiple="multiple" data-placeholder="Select a Track Director" style="width: 100%;">
+                            <option value=""></option>
+                            @if (isset($users) && count($users))
+                                @foreach ($users as $user)
+                                    @if (in_array($user->id, $track->trackDirectorId))
+                                        <option value="{{ $user->id }}" selected>{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</option>
+                                    @else
+                                        <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</option>
+                                    @endif
+                                @endforeach
+                            @endif
+                        </select>
+                        @if ($errors->has('user_id'))
+                            <span class="help-block">{{ $errors->first('body') }}</span>
+                        @endif
+                    </div>
                     <input type="hidden" name="conference_id" value="{{ $conference->id }}"/>
                 </div>
 
@@ -73,4 +95,7 @@
     </div>
 @endsection
 @section('js')
+    <script src="{{ asset('js/lib/summernote/dist/summernote.min.js') }}"></script>
+    <script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('js/admin/track/create.js') }}"></script>
 @endsection
