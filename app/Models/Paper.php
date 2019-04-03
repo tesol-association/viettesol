@@ -39,4 +39,9 @@ class Paper extends Model
     {
         return $this->belongsToMany('App\Models\User', 'review_assignments', 'paper_id', 'reviewer_id');
     }
+
+    public function attachFile()
+    {
+        return $this->belongsTo('App\Models\PaperFile', 'file_id');
+    }
 }

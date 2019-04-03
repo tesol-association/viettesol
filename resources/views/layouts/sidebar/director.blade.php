@@ -1,6 +1,6 @@
 <!-- Sidebar Menu -->
 <ul class="sidebar-menu" data-widget="tree">
-    <li class="header">Conference: {{ $conference->title }}</li>
+    <li class="header">DIRECTOR Conference: {{ $conference->title }}</li>
     <li><a href="#"><i class="fa fa-code-fork"></i> Track List</a></li>
     <li><a href="#"><i class="fa fa-asterisk"></i> Session Type List</a></li>
     <li><a href="#"><i class="fa fa-newspaper-o"></i> Paper List</a></li>

@@ -49,5 +49,9 @@ return [
     'PAPER_AUTHOR' => [
         'AUTHOR' => 0,
         'CO_AUTHOR' => 1,
-    ]
+    ],
+    'PAPER_FILE'=>[
+        'FULL_PAPER'=> 'full_paper',
+        'REVIEW_FILE'=> 'review_file',
+    ],
 ];

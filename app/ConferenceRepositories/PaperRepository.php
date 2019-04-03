@@ -82,4 +82,13 @@ class PaperRepository
         return $decisions;
     }
 
+    public function updatePaperFile($paperId, array $data)
+    {
+        $paper = Paper::find($paperId);
+        $paper->full_paper = $data['full_paper'];
+        $paper->file_id = $data['file_id'];
+        $paper->save();
+        return $paper;
+    }
+
 }
