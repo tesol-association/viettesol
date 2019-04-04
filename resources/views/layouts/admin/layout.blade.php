@@ -319,6 +319,7 @@ desired effect
             <li><a href="{{ route('admin_news_category_list') }}"><i class="fa fa-file-text"></i><span>News Category Management</span></a></li>
             <li><a href="{{ route('admin_event_list') }}"><i class="fa fa-volume-up"></i><span>Events Management</span></a></li>
             <li><a href="{{ route('admin_events_category_list') }}"><i class="fa fa-hand-paper-o"></i><span>Events Category Manager</span></a></li>
+            <li><a href="{{ route('event_registration_form_list') }}"><i class="fa fa-bookmark-o"></i><span>Event Registration Form</span></a></li>
           </ul>
         </li>
         <li class="treeview">
