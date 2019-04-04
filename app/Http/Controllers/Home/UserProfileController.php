@@ -89,7 +89,7 @@ class UserProfileController extends HomeController
 
         if ($request->hasFile('image')) {
             $path = Storage::disk('public')->put(self::AVATAR_FOLDER, $request->image);
-            if(!$user->image == env('AVATAR_DEFAULT')){
+            if($user->image != env('AVATAR_DEFAULT')){
                 Storage::disk('public')->delete($user->image);
             }
             $user->image = $path;
@@ -111,7 +111,7 @@ class UserProfileController extends HomeController
             return redirect()->route('home_profile_view')->with('success', 'User has been update successfully');
         }else{
             return redirect()->back()->with('errors', 'Error');
-        } 
+        }
     }
 
     /**
