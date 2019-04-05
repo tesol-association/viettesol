@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\ConferenceRepositories\PaperRepository;
 use App\ConferenceRepositories\TrackRepository;
 use App\ConferenceRepositories\ReviewAssignmentRepository;
+use App\Events\PaperEvent\TrackDecided;
 use App\Models\ConferenceRole;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Auth;
@@ -100,42 +101,5 @@ class PaperController extends BaseConferenceController
     public function destroy($id)
     {
         //
-    }
-
-    public function submission($conferenceId, $paperId, ReviewAssignmentRepository $reviewAssignmentRepository)
-    {
-        $paper = $this->papers->find($paperId);
-        $users = $paper->track->users->all();
-        $reviewForm = $paper->track->reviewForm;
-        $reviewForm = $reviewForm->load('criteriaReviews');
-        $reviewerRole = ConferenceRole::where('name', ConferenceRole::REVIEWER)->where('conference_id', $this->conferenceId)->first();
-        $reviewers = $reviewerRole->user;
-        $reviewerAccepted = $reviewers->filter(function ($reviewer) use ($paper) {
-            return $reviewer->id !== $paper->submission_by;
-        });
-        $reviewAssignments = $reviewAssignmentRepository->get(['paper_id' => $paperId]);
-        $reviewAssignmentIds = $reviewAssignments->pluck('reviewer_id')->all();
-        $INDEX_ASSIGNMENT = Config::get('constants.REVIEW_ASSIGNMENT.INDEX_ASSIGNMENT');
-        $trackDecisions = $this->papers->getTrackDecisions($paperId);;
-        return view('track_director.paper.submission', [
-            'paper' => $paper,
-            'reviewers' => $reviewerAccepted,
-            'reviewAssignments' => $reviewAssignments,
-            'reviewAssignmentIds' => $reviewAssignmentIds,
-            'INDEX_ASSIGNMENT' => $INDEX_ASSIGNMENT,
-            'reviewForm' => $reviewForm,
-            'trackDecisions' => $trackDecisions,
-            'users' => $users,
-        ]);
-    }
-
-    public function decisionAjax(Request $request, $conferenceId, $paperId)
-    {
-        if ($request->ajax()) {
-            $data = $request->all();
-            $decision = $this->papers->decision($data);
-            return $decision;
-        }
-        return null;
     }
 }

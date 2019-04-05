@@ -20,7 +20,7 @@ class PaperRepository
     {
         $paper = Paper::find($paperId);
         $paper->load('track', 'sessionType');
-        $paper->track->load('reviewForm');
+        $paper->track->load('reviewForm.criteriaReviews');
         $paper->load('authors');
         return $paper;
     }
@@ -69,17 +69,6 @@ class PaperRepository
 
         $paper->save();
         return $paper;
-    }
-
-    public function decision(array $data)
-    {
-        $trackDecision = new TrackDecision();
-        $trackDecision->paper_id = $data['paper_id'];
-        $trackDecision->track_director_id = $data['track_director_id'];
-        $trackDecision->decision = $data['decision'];
-        $trackDecision->date_decided = Carbon::now();
-        $trackDecision->save();
-        return $trackDecision;
     }
 
     public function getTrackDecisions($paperId)

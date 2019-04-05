@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\ConferenceManager\Author;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
+use App\Events\PaperEvent\SendFullPaper;
 use App\ConferenceRepositories\PaperRepository;
 use App\ConferenceRepositories\PaperFileRepository;
 use App\ConferenceRepositories\AuthorRepository;
@@ -81,6 +82,7 @@ class PaperFileController extends BaseConferenceController
             $dataPaperFile['file_id'] = $paperFile->id;
             $dataPaperFile['full_paper'] = $request->full_paper;
             $paper = $this->papers->updatePaperFile($paperId, $dataPaperFile);
+            event(new SendFullPaper($paper));
 
             return redirect()->back()->with('success', 'File '.$paperFile->original_file_name.' had been uploaded successful !');
         }else{
@@ -88,6 +90,7 @@ class PaperFileController extends BaseConferenceController
             $data['full_paper'] = $request->full_paper;
             $data['file_id'] = null;
             $paper = $this->papers->updatePaperFile($paperId, $data);
+            event(new SendFullPaper($paper));
             return redirect()->back()->with('success', $paper->title.' had been updated Full Paper successful !');
         }
     }

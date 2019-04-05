@@ -43,7 +43,7 @@
                                         <td>{{ $paper->status }}</td>
                                         <td>{{ $paper->created_at }}</td>
                                         <td>
-                                            <a href="{{ route('track_director_paper_submission', ['conference_id'=>$conference->id, 'id'=>$paper->id]) }}" class="btn btn-primary">Assign</a>
+                                            <a href="{{ route('admin_paper_submission', ['conference_id'=>$conference->id, 'id'=>$paper->id]) }}" class="btn btn-primary">Assign</a>
                                         </td>
                                     </tr>
                                 @endforeach
