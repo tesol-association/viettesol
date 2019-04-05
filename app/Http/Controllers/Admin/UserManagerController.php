@@ -66,7 +66,7 @@ class UserManagerController extends Controller
             'password' => Hash::make($request->get('password')),
             'image' => env('AVATAR_DEFAULT'),
         ]);
-        
+
         if ($users->save()) {
             return redirect()->route('admin_user_list')->with('success', 'Account has been added successfully');
         } else{
@@ -139,7 +139,7 @@ class UserManagerController extends Controller
             return redirect()->route('admin_user_view',$id)->with('success', 'User has been update successfully');
         }else{
             return redirect()->route('admin_user_update',$id)->with('errors', 'Error');
-        } 
+        }
     }
 
     /**
@@ -151,8 +151,10 @@ class UserManagerController extends Controller
     public function destroy($id)
     {
         $users = User::find($id);
-        if($users->delete()){
-            Storage::disk('public')->delete($users->image);
+        if($user->delete()){
+            if($user->image != env('AVATAR_DEFAULT')){
+                Storage::disk('public')->delete($users->image);
+            }
             return redirect()->route('admin_user_list')->with('success', 'Account has been deleted successfully');
         }else{
             return redirect()->route('admin_user_list')->with('errors', 'Error');
@@ -161,7 +163,7 @@ class UserManagerController extends Controller
 
     public function enable($id)
     {
-        
+
 
         $users = User::find($id);
         $users->disable = '0';

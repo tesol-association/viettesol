@@ -20,7 +20,7 @@ class PaperRepository
     {
         $paper = Paper::find($paperId);
         $paper->load('track', 'sessionType');
-        $paper->track->load('reviewForm');
+        $paper->track->load('reviewForm.criteriaReviews');
         $paper->load('authors');
         return $paper;
     }
@@ -30,11 +30,17 @@ class PaperRepository
         if (empty($filters)) {
             $papers = Paper::with('track.conference')->get();
         } else {
-            $conditions = [];
+            $papersQuery = Paper::with('track.conference');
             foreach ($filters as $key => $filter) {
-                $conditions[] = [$key, '=', $filter];
+                if (is_array($filter)) {
+                    $papersQuery->whereIn($key, $filter);
+                }
+                if (is_string($filter))
+                {
+                    $papersQuery->where($key, '=', $filter);
+                }
             }
-            $papers = Paper::with('track.conference')->where($conditions)->get();
+            $papers = $papersQuery->get();
         }
         $papers = $papers->filter(function($paper) use ($conferenceId) {
             return $paper->track->conference->id == $conferenceId;
@@ -65,21 +71,19 @@ class PaperRepository
         return $paper;
     }
 
-    public function decision(array $data)
-    {
-        $trackDecision = new TrackDecision();
-        $trackDecision->paper_id = $data['paper_id'];
-        $trackDecision->track_director_id = $data['track_director_id'];
-        $trackDecision->decision = $data['decision'];
-        $trackDecision->date_decided = Carbon::now();
-        $trackDecision->save();
-        return $trackDecision;
-    }
-
     public function getTrackDecisions($paperId)
     {
         $decisions = TrackDecision::where('paper_id', $paperId)->orderBy('date_decided', 'DESC')->get();
         return $decisions;
+    }
+
+    public function updatePaperFile($paperId, array $data)
+    {
+        $paper = Paper::find($paperId);
+        $paper->full_paper = $data['full_paper'];
+        $paper->file_id = $data['file_id'];
+        $paper->save();
+        return $paper;
     }
 
 }

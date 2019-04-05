@@ -30,7 +30,7 @@ Route::get('/home/contact_form/create','Home\ContactFormController@create')->nam
 Route::post('/home/contact_form/store','Home\ContactFormController@store')->name('home_contactForm_store');
 
 //'middleware'=>'auth'
-Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
+Route::group(['prefix'=>'admin', 'middleware' => ['auth']],function(){
     Route::get('/index',function () {
         return view('layouts.admin.layout');
     });
@@ -346,7 +346,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
                 Route::post('/delete/{id}', 'Admin\CriteriaReviewController@destroy')->name('admin_criteria_review_delete');
             });
         });
-
+        //director and admin
         Route::group(['prefix'=>'/paper'], function() {
             Route::get('/list', 'Admin\ConferenceManager\PaperController@index')->name('admin_paper_list');
             Route::get('/create', 'Admin\ConferenceManager\PaperController@create')->name('admin_paper_create');
@@ -355,6 +355,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
             Route::post('/update/{id}', 'Admin\ConferenceManager\PaperController@update')->name('admin_paper_update');
             Route::post('/delete/{id}', 'Admin\ConferenceManager\PaperController@destroy')->name('admin_paper_delete');
             Route::get('/submission/{id}', 'Admin\ConferenceManager\PaperController@submission')->name('admin_paper_submission');
+            //track director
             Route::post('/decision/{id}', 'Admin\ConferenceManager\PaperController@decisionAjax')->name('admin_paper_decision');
         });
 
@@ -401,26 +402,77 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
  * PAGE FOR REVIEWER
  */
 Route::group(['prefix'=>'/conf/{conference_id}','middleware' => ['auth']], function() {
+    /*
+    * REVIEWER
+     */
     Route::group(['prefix' => '/reviewer'], function () {
         Route::get('/paper/list', 'Admin\ConferenceManager\ReviewAssignmentController@showPaperList')->name('reviewer_paper_list');
         Route::get('/do_review/{assignment_id}', 'Admin\ConferenceManager\ReviewAssignmentController@showAssignment')->name('reviewer_do_review');
         Route::post('/store_assignment/{assignment_id}', 'Admin\ConferenceManager\ReviewAssignmentController@storeAssignment')->name('reviewer_store_assignment');
         Route::post('/reject/{assignment_id}', 'Admin\ConferenceManager\ReviewAssignmentController@rejectAssignment')->name('reviewer_reject_assignment');
         Route::post('/accept/{assignment_id}', 'Admin\ConferenceManager\ReviewAssignmentController@acceptAssignment')->name('reviewer_accept_assignment');
-//        Route::get('/edit/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@edit')->name('reviewer_paper_edit');
-//        Route::post('/update/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@update')->name('reviewer_paper_update');
         Route::post('/delete/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@destroy')->name('reviewer_delete_assignment');
     });
 
+    /*
+    * AUTHOR
+     */
     Route::group(['prefix' => '/author'], function () {
-        Route::get('/paper/list', 'Admin\ConferenceManager\Author\PaperController@listPaper')->name('author_paper_list');
-        Route::get('/paper/send', 'Admin\ConferenceManager\Author\PaperController@sendPaper')->name('author_paper_create');
-        Route::post('/paper/store', 'Admin\ConferenceManager\Author\PaperController@savePaper')->name('author_paper_store');
-        Route::get('/paper/edit/{id}', 'Admin\ConferenceManager\Author\PaperController@editPaper')->name('author_paper_edit');
-        Route::post('/paper/update/{id}', 'Admin\ConferenceManager\Author\PaperController@updatePaper')->name('author_paper_update');
+
+        Route::group(['prefix' => '/paper'], function () {
+            Route::get('/list', 'Admin\ConferenceManager\Author\PaperController@listPaper')->name('author_paper_list');
+            Route::get('/send', 'Admin\ConferenceManager\Author\PaperController@sendPaper')->name('author_paper_create');
+            Route::post('/store', 'Admin\ConferenceManager\Author\PaperController@savePaper')->name('author_paper_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\Author\PaperController@editPaper')->name('author_paper_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\Author\PaperController@updatePaper')->name('author_paper_update');
+
+            Route::group(['prefix' => '/attach_file'], function () {
+                Route::post('{paper_id}/store', 'Admin\ConferenceManager\Author\PaperFileController@savePaper')->name('author_paper_file_store');
+                Route::post('{paper_id}/update/{id}', 'Admin\ConferenceManager\Author\PaperFileController@updatePaper')->name('author_paper_file_update');
+            });
+        });
+
         Route::post('/add/paper/{id}', 'Admin\ConferenceManager\Author\PaperController@addCoAuthor')->name('author_for_paper_add');
         Route::post('/delete/{author_id}/paper/{id}', 'Admin\ConferenceManager\Author\PaperController@deleteCoAuthor')->name('author_of_paper_delete');
         Route::post('/update/{author_id}/paper/{id}', 'Admin\ConferenceManager\Author\PaperController@updateAuthor')->name('author_of_paper_update');
+    });
+
+    /*
+    *Track Director
+     */
+    Route::group(['prefix' => 'track_director'], function () {
+        Route::group(['prefix' => 'session_type'], function () {
+            Route::get('/list', 'Admin\ConferenceManager\SessionTypeController@index')->name('track_director_session_type_list');
+        });
+
+        Route::group(['prefix' => 'paper'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\TrackDirector\PaperController@index')->name('track_director_paper_list');
+            Route::get('/submission/{id}', 'Admin\ConferenceManager\PaperController@submission')->name('track_director_paper_submission');
+        });
+
+        Route::group(['prefix'=>'/{paper_id}/review_assignment'], function() {
+            Route::post('/store', 'Admin\ConferenceManager\ReviewAssignmentController@save')->name('track_director_review_assignment_store');
+        });
+
+        Route::group(['prefix'=>'/reviewer'], function() {
+            Route::get('/list', 'Admin\ConferenceManager\TrackDirector\ReviewerController@index')->name('track_director_user_list');
+            Route::get('/view/{id}', 'Admin\UserManagerController@show')->name('track_director_user_view');
+        });
+    });
+
+
+     Route::group(['prefix'=>'director'], function() {
+        Route::group(['prefix'=>'/track'], function() {
+                Route::get('/list', 'Admin\TrackController@index')->name('director_track_list');
+        });
+
+        Route::group(['prefix' => 'session_type'], function () {
+            Route::get('/list', 'Admin\ConferenceManager\SessionTypeController@index')->name('director_session_type_list');
+        });
+
+        Route::group(['prefix'=>'/reviewer'], function() {
+            Route::get('/list', 'Admin\ConferenceManager\TrackDirector\ReviewerController@index')->name('director_user_list');
+        });
     });
 });
 

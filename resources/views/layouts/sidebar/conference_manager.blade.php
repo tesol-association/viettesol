@@ -1,6 +1,6 @@
 <!-- Sidebar Menu -->
 <ul class="sidebar-menu" data-widget="tree">
-    <li class="header">Conference: {{ $conference->title }}</li>
+    <li class="header">ADMIN Conference: {{ $conference->title }}</li>
     <li class="treeview">
         <a href="#"><i class="fa fa-cogs"></i> <span>Set Up Conference</span>
             <span class="pull-right-container">

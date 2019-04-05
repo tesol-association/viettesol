@@ -46,6 +46,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->middle_name} {$this->last_name}";
+    }
+
     public function news()
     {
         return $this->hasMany('App\Models\News');
@@ -54,5 +59,10 @@ class User extends Authenticatable
     public function conferenceRoles()
     {
         return $this->belongsToMany('App\Models\ConferenceRole', 'user_conference_roles', 'user_id', 'conference_role_id');
+    }
+
+    public function tracks()
+    {
+        return $this->belongsToMany('App\Models\Track', 'track_director', 'user_id', 'track_id');
     }
 }
