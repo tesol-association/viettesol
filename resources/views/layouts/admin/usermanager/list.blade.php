@@ -46,7 +46,7 @@
                                         <a href="{{ route('admin_user_view',$user->id )}}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin_user_edit',$user->id )}}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                                        <a href="{{ route('admin_user_edit',['id'=>$user->id] )}}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
                                     </td>
                                     <td>
                                         <form method="post" action="{{ route('admin_user_delete',['id'=> $user->id ]) }}">

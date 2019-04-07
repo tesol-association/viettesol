@@ -69,13 +69,15 @@
                         <label for="choose_user">Choose Track Director</label>
                         <select id="choose_user" name="user_id[]" class="form-control" multiple="multiple" data-placeholder="Select a Track Director" style="width: 100%;">
                             <option value=""></option>
-                            @foreach ($users as $user)
-                                @if (in_array($user->id, $track->trackDirectorId))
-                                    <option value="{{ $user->id }}" selected>{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</option>
-                                @else
-                                    <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</option>
-                                @endif
-                            @endforeach
+                            @if (isset($users) && count($users))
+                                @foreach ($users as $user)
+                                    @if (in_array($user->id, $track->trackDirectorId))
+                                        <option value="{{ $user->id }}" selected>{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</option>
+                                    @else
+                                        <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</option>
+                                    @endif
+                                @endforeach
+                            @endif
                         </select>
                         @if ($errors->has('user_id'))
                             <span class="help-block">{{ $errors->first('body') }}</span>

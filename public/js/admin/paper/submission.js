@@ -35,7 +35,7 @@ $(document).ready(function () {
                 switch (data.decision) {
                     case ACCEPTED:
                         toastr.success('Accepted At ' + data.date_decided.date);
-                        $('#last_decided').attr('class', 'text-green').text('Accepted At ' + data.date_decided.date);
+                        $('#last_decided').attr('class', 'text-green').text('Accepted At' + data.date_decided.date);
                         break;
                     case REVISION:
                         toastr.success('Revision At ' + data.date_decided.date);

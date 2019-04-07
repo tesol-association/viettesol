@@ -7,4 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class TrackDecision extends Model
 {
     protected $table = 'track_decisions';
+
+    public function user()
+    {
+        return $this->beLongsTo('App\Models\User', 'track_director_id');
+    }
+
+    public function paper()
+    {
+        return $this->beLongsTo('App\Models\Paper', 'paper_id');
+    }
 }

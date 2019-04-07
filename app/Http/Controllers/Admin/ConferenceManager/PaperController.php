@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\ConferenceManager;
 
 use App\ConferenceRepositories\AuthorRepository;
 use App\ConferenceRepositories\ReviewAssignmentRepository;
 use App\Events\PaperSubmitted;
+use App\Events\PaperEvent\TrackDecided;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\Author;
 use App\Models\ConferenceRole;
 use App\Models\PaperAuthor;
 use App\ConferenceRepositories\PaperRepository;
+use App\ConferenceRepositories\TrackDecisionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -83,8 +85,8 @@ class PaperController extends BaseConferenceController
     public function submission($conferenceId, $paperId, ReviewAssignmentRepository $reviewAssignmentRepository)
     {
         $paper = $this->papers->find($paperId);
+        $users = $paper->track->users->all();
         $reviewForm = $paper->track->reviewForm;
-        $reviewForm = $reviewForm->load('criteriaReviews');
         $reviewerRole = ConferenceRole::where('name', ConferenceRole::REVIEWER)->where('conference_id', $this->conferenceId)->first();
         $reviewers = $reviewerRole->user;
         $reviewerAccepted = $reviewers->filter(function ($reviewer) use ($paper) {
@@ -101,15 +103,17 @@ class PaperController extends BaseConferenceController
             'reviewAssignmentIds' => $reviewAssignmentIds,
             'INDEX_ASSIGNMENT' => $INDEX_ASSIGNMENT,
             'reviewForm' => $reviewForm,
-            'trackDecisions' => $trackDecisions
+            'trackDecisions' => $trackDecisions,
+            'users' => $users,
         ]);
     }
 
-    public function decisionAjax(Request $request, $conferenceId, $paperId)
+    public function decisionAjax(Request $request, $conferenceId, $paperId, TrackDecisionRepository $trackDecisionRepository)
     {
         if ($request->ajax()) {
             $data = $request->all();
-            $decision = $this->papers->decision($data);
+            $decision = $trackDecisionRepository->create($data);
+            event(new TrackDecided($decision));
             return $decision;
         }
         return null;

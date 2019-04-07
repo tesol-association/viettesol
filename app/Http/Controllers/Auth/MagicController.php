@@ -44,7 +44,7 @@ class MagicController extends HomeController
                 'email' => $request->email,
             ]));
         Mail::to($user->email)->send(new SendMagicLink($url));
-        return back()->with('success', 'We\'ve sent you a magic link! The link expires in ' . Config::get('constants.TIME_TOKEN_EXPIRED') . ' minutes');
+        return back()->with('success', 'We\'ve sent you a magic link! The link expires in ' . Config::get('constants.TIME_EMAIL_TOKEN_EXPIRED') . ' minutes');
     }
 
     public function authenticate(Request $request)

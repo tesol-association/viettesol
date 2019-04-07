@@ -66,7 +66,7 @@ class ReviewAssignmentRepository
         $reviewAssignment->reviewer_id = $data['reviewer_id'];
         $reviewAssignment->date_assigned = Carbon::now();
         $reviewAssignment->save();
-        $reviewAssignment->load('reviewer');
+        $reviewAssignment->load('reviewer', 'paper');
         return $reviewAssignment;
     }
 

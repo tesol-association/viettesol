@@ -22,7 +22,7 @@ class Paper extends Model
 
     public function authors()
     {
-        return $this->belongsToMany('App\Models\Author', 'paper_author', 'paper_id', 'author_id');
+        return $this->belongsToMany('App\Models\Author', 'paper_author', 'paper_id', 'author_id')->withPivot('seq');
     }
 
     public function sessionType()
@@ -38,5 +38,10 @@ class Paper extends Model
     public function reviewers()
     {
         return $this->belongsToMany('App\Models\User', 'review_assignments', 'paper_id', 'reviewer_id');
+    }
+
+    public function attachFile()
+    {
+        return $this->belongsTo('App\Models\PaperFile', 'file_id');
     }
 }
