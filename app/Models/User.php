@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -61,6 +60,11 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\ConferenceRole', 'user_conference_roles', 'user_id', 'conference_role_id');
     }
 
+    public function token()
+    {
+        return $this->hasOne('App\Models\UserToken');
+    }
+    
     public function tracks()
     {
         return $this->belongsToMany('App\Models\Track', 'track_director', 'user_id', 'track_id');

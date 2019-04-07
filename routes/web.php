@@ -474,9 +474,20 @@ Route::group(['prefix'=>'/conf/{conference_id}','middleware' => ['auth']], funct
             Route::get('/list', 'Admin\ConferenceManager\TrackDirector\ReviewerController@index')->name('director_user_list');
         });
     });
-});
 
+});
+Route::get('/mail/test', 'Admin\ConferenceManager\ReviewAssignmentController@testMail');
+/**
+ * AUTHENTICATION
+ */
 Auth::routes();
+Route::get('/login/magic_link', 'Auth\MagicController@show')->name('show_login_magic_link');
+Route::post('/login/magic_link', 'Auth\MagicController@sendToken')->name('send_magic_link');
+Route::get('/magic_link', 'Auth\MagicController@authenticate')->name('authenticate_using_token');
+/**
+ *
+ */
+Route::post('/notify', 'EmailController@notify');
 
 Route::group(['prefix'=>'home'],function(){
     Route::get('/index','Home\MainController@index')->name('home_page');
