@@ -45,5 +45,6 @@ return [
     ],
     'PAPER_STATUS' => [
         'SUBMITTED' => 'submitted'
-    ]
+    ],
+    'TIME_TOKEN_EXPIRED' => 5
 ];

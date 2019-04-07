@@ -50,7 +50,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <div class="col-md-4 col-md-offset-4">
                             <br>
@@ -73,11 +73,9 @@
                                 {{ __('Login') }}
                             </button>
 
-                            @if (Route::has('password.request'))
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                            @endif
+                            <a class="btn btn-link" href="{{ route('show_login_magic_link') }}">
+                                {{ __('Send Url Link to mail?') }}
+                            </a>
                         </div>
                     </div>
                 </form>
