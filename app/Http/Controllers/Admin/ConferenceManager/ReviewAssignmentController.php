@@ -8,7 +8,6 @@ use App\ConferenceRepositories\TrackRepository;
 use App\Events\PaperEvent\AssignReviewer;
 use App\Events\PaperEvent\Unassigned;
 use App\Events\PaperEvent\SendReviewResult;
-use App\Models\Paper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;

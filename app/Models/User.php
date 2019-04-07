@@ -64,7 +64,7 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\UserToken');
     }
-    
+
     public function tracks()
     {
         return $this->belongsToMany('App\Models\Track', 'track_director', 'user_id', 'track_id');
