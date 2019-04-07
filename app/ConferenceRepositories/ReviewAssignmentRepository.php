@@ -26,7 +26,7 @@ class ReviewAssignmentRepository
 
     public function find($id)
     {
-        return ReviewAssignment::find($id);
+        return ReviewAssignment::with('paper', 'reviewer')->where('id', $id)->first();
     }
 
     /**
