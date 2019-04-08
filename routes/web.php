@@ -478,6 +478,13 @@ Route::group(['prefix'=>'/conf/{conference_id}','middleware' => ['auth']], funct
         Route::group(['prefix'=>'/reviewer'], function() {
             Route::get('/list', 'Admin\ConferenceManager\TrackDirector\ReviewerController@index')->name('director_user_list');
         });
+
+        Route::group(['prefix'=>'paper'], function() {
+            Route::get('/list_paper_schedule', 'Admin\ConferenceManager\Director\PaperController@showPaperUnSchedule')->name('director_paper_un_schedule_list');
+            Route::post('/change_paper_un_schedule/{id}', 'Admin\ConferenceManager\Director\PaperController@changePaperStatus')->name('director_change_paper_un_schedule');
+            Route::post('/change_paper_redo_un_schedule/{id}', 'Admin\ConferenceManager\Director\PaperController@changeRedoPaperStatus')->name('director_change_paper_redo_un_schedule');
+        });
+
     });
 
 });

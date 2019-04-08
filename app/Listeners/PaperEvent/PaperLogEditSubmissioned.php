@@ -5,7 +5,7 @@ namespace App\Listeners\PaperEvent;
 use App\Events\PaperEvent\PaperEditSubmissioned;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PaperEventLog;
 use Carbon\Carbon;
@@ -33,7 +33,7 @@ class PaperLogEditSubmissioned
         $paperEventLog = new PaperEventLog();
         $paperEventLog->paper_id = $event->paper->id;
         $paperEventLog->user_id = Auth::id();
-        $paperEventLog->type = Config::get('constants.PAPER_EVENT.AUTHOR_EDIT_SUBMISSION');
+        $paperEventLog->type = Config::get('constants.PAPER_EVENT.EDIT_SUBMISSION');
         $paperEventLog->message = sprintf(Config::get('constants.PAPER_EVENT.EDIT_SUBMISSION_MESSAGE'), Auth::user()->full_name, $event->paper->title, Carbon::now()->format('H:i d/m/Y'));
         $paperEventLog->save();
     }
