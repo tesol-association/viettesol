@@ -394,6 +394,11 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']],function(){
         Route::group(['prefix'=>'/{paper_id}/review_assignment'], function() {
             Route::post('/store', 'Admin\ConferenceManager\ReviewAssignmentController@store')->name('admin_review_assignment_store');
         });
+
+        Route::group(['prefix'=>'/emails'], function() {
+            Route::get('/{review_assignment_id}/reviewer_request/show', 'Admin\ConferenceManager\PreparedEmailController@showReviewerRequest')->name('email_reviewer_request_show');
+            Route::post('/{review_assignment_id}/reviewer_request/store', 'Admin\ConferenceManager\PreparedEmailController@storeReviewerRequest')->name('email_reviewer_request_store');
+        });
     });
 
 });
@@ -481,9 +486,19 @@ Route::group(['prefix'=>'/conf/{conference_id}','middleware' => ['auth']], funct
         });
 
     });
-});
 
+});
+/**
+ * AUTHENTICATION
+ */
 Auth::routes();
+Route::get('/login/magic_link', 'Auth\MagicController@show')->name('show_login_magic_link');
+Route::post('/login/magic_link', 'Auth\MagicController@sendToken')->name('send_magic_link');
+Route::get('/magic_link', 'Auth\MagicController@authenticate')->name('authenticate_using_token');
+/**
+ * SEND MAIL USING MAILCHIMP
+ */
+Route::get('/notify', 'EmailController@notify');
 
 Route::group(['prefix'=>'home'],function(){
     Route::get('/index','Home\MainController@index')->name('home_page');

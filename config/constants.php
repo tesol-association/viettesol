@@ -81,4 +81,5 @@ return [
         'FULL_PAPER'=> 'full_paper',
         'REVIEW_FILE'=> 'review_file',
     ],
+    'TIME_EMAIL_TOKEN_EXPIRED' => 5
 ];
