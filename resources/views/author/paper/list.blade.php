@@ -1,10 +1,10 @@
 @extends('layouts.admin.conference_layout')
 @section('title','Paper Management')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
-    <link href="{{ asset('admin/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/dist/css/AdminLTE.min.css') }}" rel="stylesheet">
     <link href="{{ asset('js/lib/summernote/dist/summernote.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link href="{{ asset('admin/dist/css/AdminLTE.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
     <section class="content">
@@ -93,7 +93,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group {{ $errors->first('full_paper') ? 'has-error' : ''}}">
-                                                                        <textarea name="full_paper" class="full_paper form-control" rows="3" placeholder="Enter full_paper ...">{{ $paper->full_paper }}</textarea>
+                                                                        <textarea name="full_paper" class="full_paper form-control" rows="3" placeholder="Enter Full Paper ...">{{ $paper->full_paper }}</textarea>
                                                                         @if ($errors->has('full_paper'))
                                                                             <span class="help-block">{{ $errors->first('full_paper') }}</span>
                                                                         @endif
@@ -181,11 +181,7 @@
 @endsection
 @section('js')
     <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
-    <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
-    <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
     <script src="{{ asset('js/lib/summernote/dist/summernote.min.js') }}"></script>
     <script src="{{ asset('js/author/list.js') }}"></script>
 @endsection

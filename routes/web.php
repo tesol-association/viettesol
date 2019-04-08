@@ -399,6 +399,15 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']],function(){
             Route::get('/{review_assignment_id}/reviewer_request/show', 'Admin\ConferenceManager\PreparedEmailController@showReviewerRequest')->name('email_reviewer_request_show');
             Route::post('/{review_assignment_id}/reviewer_request/store', 'Admin\ConferenceManager\PreparedEmailController@storeReviewerRequest')->name('email_reviewer_request_store');
         });
+
+        Route::group(['prefix'=>'/fee'], function(){
+            Route::get('/list', 'Admin\ConferenceManager\FeeController@index')->name('admin_fee_list');
+            Route::get('/create', 'Admin\ConferenceManager\FeeController@create')->name('admin_fee_create');
+            Route::post('/store', 'Admin\ConferenceManager\FeeController@store')->name('admin_fee_store');
+            Route::get('/edit/{id}', 'Admin\ConferenceManager\FeeController@edit')->name('admin_fee_edit');
+            Route::post('/update/{id}', 'Admin\ConferenceManager\FeeController@update')->name('admin_fee_update');
+            Route::post('/delete/{id}', 'Admin\ConferenceManager\FeeController@destroy')->name('admin_fee_delete');
+        });
     });
 
 });
