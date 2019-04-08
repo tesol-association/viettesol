@@ -34,24 +34,24 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\PaperEvent\AssignReviewer' => [
             'App\Listeners\PaperEvent\LogAssignReviewer',
+            'App\Listeners\PaperEvent\PaperChangeStatusWhenAssignReviewer',
         ],
         'App\Events\PaperEvent\Unassigned' => [
             'App\Listeners\PaperEvent\LogUnassigned',
         ],
         'App\Events\PaperEvent\TrackDecided' => [
             'App\Listeners\PaperEvent\LogTrackDecided',
+            'App\Listeners\PaperEvent\PaperChangeStatusWhenLogTrackDecided',
         ],
         'App\Events\PaperEvent\SendReviewResult' => [
             'App\Listeners\PaperEvent\LogSendReviewResult',
+            'App\Listeners\PaperEvent\PaperChangeStatusWhenSendReviewResult',
         ],
         'App\Events\PaperEvent\AttachFileReview' => [
             'App\Listeners\PaperEvent\LogAttachFileReview',
         ],
         'App\Events\PaperEvent\AddPresentationList' => [
             'App\Listeners\PaperEvent\LogAddPresentationList',
-        ],
-        'App\Events\PaperEvent\RemovePresentation_list' => [
-            'App\Listeners\PaperEvent\LogRemovePresentation_list',
         ],
     ];
 

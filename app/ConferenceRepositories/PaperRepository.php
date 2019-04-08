@@ -22,6 +22,7 @@ class PaperRepository
         $paper->load('track', 'sessionType');
         $paper->track->load('reviewForm.criteriaReviews');
         $paper->load('authors');
+        $paper->load('attachFile');
         return $paper;
     }
 

@@ -41,7 +41,7 @@ return [
         'UN_ASSIGNMENT_MESSAGE' => '<strong> %s </strong>  unassign reviewer %s for paper title <strong> %s  </strong> at <strong> %s </strong>', // TrackDirectorName, ReviewerName, PaperTitle, TimeAt
 
         'TRACK_DICIDED' => 'track_decided',
-        'TRACK_DICIDED_MESSAGE' => 'Tracck <strong> %s </strong>  decided %s for paper title <strong> %s  </strong> at <strong> %s </strong>', // TrackDirectorName, disicion, PaperTitle, TimeAt
+        'TRACK_DICIDED_MESSAGE' => 'Track <strong> %s </strong>  decided %s for paper title <strong> %s  </strong> at <strong> %s </strong>', // TrackDirectorName, disicion, PaperTitle, TimeAt
 
         // Reviewer
         'SEND_REVIEW_RESULT' => 'send_review_result',
@@ -65,9 +65,13 @@ return [
     ],
     'PAPER_STATUS' => [
         'SUBMITTED' => 'submitted',
+        'IN_REVIEW' => 'in_review',
+        'ALL_REVIEWER_RECOMMENDATION' => 'reviewer_result',
         'ACCEPTED' => 'accepted',
         'REJECTED' => 'rejected',
         'REVISION' => 'revision',
+        'UNSCHEDULED' => 'unscheduled',
+        'SCHEDULED' => 'scheduled',
     ],
     'PAPER_AUTHOR' => [
         'AUTHOR' => 0,
