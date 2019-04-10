@@ -123,7 +123,8 @@ class MainController extends HomeController
            'full_name'  => 'required',
            'gender'     => 'required',
            'affiliation'=> 'required',
-           'email'      => 'required'
+           'email'      => 'required',
+           'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha]
         ]);
         EventRegistration::create([
            'full_name'     => $request->full_name,

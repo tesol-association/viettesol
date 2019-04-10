@@ -100,13 +100,13 @@ class ScheduleController extends BaseConferenceController
 		$authors= array();
 		$papers = Schedule::where('time_block_id' , '=' , $timeBlockId)->get();
 
-        $i= 0 ;
+		$i= 0 ;
 		if(!empty($papers)){
 			foreach ($papers as $paper) {
-			    $author_id=  PaperAuthor::where(['paper_id' => $paper->paper_id, 'seq'=>0 ])->first()->author_id;	
-			    if($authorId == $author_id){
-			    	$i++;
-			    }
+				$author_id=  PaperAuthor::where(['paper_id' => $paper->paper_id, 'seq'=>0 ])->first()->author_id;	
+				if($authorId == $author_id){
+					$i++;
+				}
 			}
 		}
 
@@ -116,12 +116,20 @@ class ScheduleController extends BaseConferenceController
 			'conference_id' => $request->conferenceId
 		])->count();
 
-		if($count > 0 || $i >0) {
+		if($count > 0) {
 			$data=array(
-				'status' => false
+				'status' => false,
+				'notify' => 'This paper cannot be placed in the room you choose because there were other paper presented there.Please choose again !'
 			); 
 			echo json_encode($data);
-		}else{
+		}elseif ($i >0) {
+			$data=array(
+				'status' => false,
+				'notify' => 'The author of this article cannot present in the time block you choose.Please choose again !'
+			); 
+			echo json_encode($data);
+		}
+		else{
 			$schedule= Schedule::create([
 				'paper_id'      => $paperId,
 				'time_block_id' => $timeBlockId,

@@ -37,7 +37,6 @@
 			</div>
 			<ul>
 				<li class="menu_item"><a href="{{ route('conference_home', $conference->path) }}">Home</a></li>
-				<li class="menu_item"><a href="">About us</a></li>
 				<li class="menu_item"><a href="">Speakers</a></li>
 				<li class="menu_item"><a href="">Tickets</a></li>
 				<li class="menu_item"><a href="">News</a></li>
@@ -109,7 +108,6 @@
 											<nav class="main_nav">
 												<ul>
 													<li><a href="{{ route('conference_home',['conference_path'=>$conference->path]) }}">Home</a></li>
-													<li><a href="">About Us</a></li>
 													<li><a href="">Speakers</a></li>
 													<li><a href="">Events</a></li>
 													<li><a href="{{ route('conference_news',['conference_path'=>$conference->path]) }}">News</a></li>

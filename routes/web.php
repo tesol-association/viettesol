@@ -470,5 +470,7 @@ Route::group(['prefix'=>'/conference/{conference_path}'], function() {
 
          Route::get('/news','Conference\ConferenceController@getNews')->name('conference_news');
 
+         Route::get('/news/{id}','Conference\ConferenceController@getNewsDetail')->name('conference_news_detail');
+
         Route::get('/contact','Conference\ContactController@index')->name('conference_contact');
 });
