@@ -15,7 +15,7 @@
             <li><a href="{{ route('admin_session_type_list', ["conference_id" => $conference->id]) }}"><i class="fa fa-asterisk"></i> Session Types</a></li>
             <li><a href="{{ route('admin_speakers_list', ["conference_id" => $conference->id]) }}"><i class="fa fa-users"></i> Keynote Speakers</a></li>
             <li><a href="{{ route('admin_conference_partners_sponsers_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-star"></i>Partner Sponser</a></li>
-            <li><a href="#"><i class="fa fa-money"></i> Fee</a></li>
+            <li><a href="{{ route('admin_fee_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-money"></i> Fee</a></li>
             <li><a href="#"><i class="fa fa-envelope-o"></i> Prepaired email</a></li>
         </ul>
     </li>
