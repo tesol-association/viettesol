@@ -1,6 +1,6 @@
 @extends('layouts.conference.layout')
 
-@section('title','News')
+@section('title','News Detail')
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('conference/styles/news.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('conference/styles/news_responsive.css') }}">
@@ -35,20 +35,9 @@
 
 				<div class="news_items">
 
-					@foreach($announcements as $announcement )
 					<!-- News Item -->
 					<div class="news_item">
-						<div class="news_image_container">
-							<div class="news_image"><img src="{{ asset('conference/images/news_1.jpg') }}" alt=""></div>
-							<div class="date_container">
-								<a href="#">
-									<span class="date_content d-flex flex-column align-items-center justify-content-center">
-										<div class="date_day">{{ \Carbon\Carbon::parse($announcement->expiry_date)->format('j')}}</div>
-										<div class="date_month">{{ \Carbon\Carbon::parse($announcement->expiry_date)->format('F')}}</div>
-									</span>
-								</a>	
-							</div>
-						</div>
+						
 						<div class="news_body">
 							<div class="news_title"><a href="{{ route('conference_news_detail',['id'=>$announcement->id, 'conference_path'=>$conference->path]) }}">{{ $announcement->title }}</a></div>
 							<div class="news_info">
@@ -65,17 +54,10 @@
 								</ul>
 							</div>
 							<div class="news_text">
-								<p>{!! $announcement->short_content !!}</p>
+								<p>{!! $announcement->body !!}</p>
 							</div>
 						</div>
 					</div>
-					@endforeach
-
-					<!-- Pagination -->
-					<div>
-						{{ $announcements->links() }}
-					</div>
-
 				</div>
 
 			</div>
