@@ -1,0 +1,25 @@
+.title{
+    margin-left: 380px;
+    margin-top: -9%;
+    margin-bottom: 5%;
+}
+ .intro {
+  max-width: 100%;
+}
+
+.intro img {
+    display: inline-block;
+    max-width: 90%;
+    height: auto;
+    width: 22%;
+    margin: 1%;
+}
+@media(max-width: 576px){
+    .title{
+        margin-left: 50px;
+        margin-top: -45%;
+    }
+    .title .widget-content{
+        font-size: 30px;
+    }
+}
