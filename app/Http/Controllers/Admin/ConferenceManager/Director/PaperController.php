@@ -20,7 +20,7 @@ class PaperController extends BaseConferenceController
     public function showPaperUnSchedule()
     {
         $paperResults = $this->papers->get($this->conferenceId, ['status' => [Config::get('constants.PAPER_STATUS.ACCEPTED'), Config::get('constants.PAPER_STATUS.REJECTED'), Config::get('constants.PAPER_STATUS.REVISION')]]);
-        $paperUnschedules = $this->papers->get($this->conferenceId, ['status' => [Config::get('constants.PAPER_STATUS.UNSCHEDULED')]]);
+        $paperUnschedules = $this->papers->get($this->conferenceId, ['status' => Config::get('constants.PAPER_STATUS.UNSCHEDULED')]);
         return view('director.paper.show_paper_un_schedule', [
             'paperResults'=> $paperResults,
             'paperUnschedules'=> $paperUnschedules,
@@ -50,10 +50,10 @@ class PaperController extends BaseConferenceController
                     $paper->status = Config::get('constants.PAPER_STATUS.ACCEPTED');
                     break;
                 case (Config::get('constants.PAPER.REVISION')):
-                    $paper->status = Config::get('constants.PAPER_STATUS.ACCEPTED');
+                    $paper->status = Config::get('constants.PAPER_STATUS.REVISION');
                     break;
                 case (Config::get('constants.PAPER.REJECTED')):
-                    $paper->status = Config::get('constants.PAPER_STATUS.ACCEPTED');
+                    $paper->status = Config::get('constants.PAPER_STATUS.REJECTED');
                     break;
             }
             $paper->save();

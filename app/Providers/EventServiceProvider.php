@@ -2,7 +2,19 @@
 
 namespace App\Providers;
 
+use App\Events\PaperEvent\AddCoAuthor;
+use App\Events\PaperEvent\AssignReviewer;
+use App\Events\PaperEvent\PaperEditSubmissioned;
+use App\Events\PaperEvent\SendFullPaper;
+use App\Events\PaperEvent\SendReviewResult;
 use App\Events\PaperSubmitted;
+use App\Listeners\PaperEvent\LogAddCoAuthor;
+use App\Listeners\PaperEvent\LogAssignReviewer;
+use App\Listeners\PaperEvent\LogSendFullPaper;
+use App\Listeners\PaperEvent\LogSendReviewResult;
+use App\Listeners\PaperEvent\PaperChangeStatusWhenAssignReviewer;
+use App\Listeners\PaperEvent\PaperChangeStatusWhenSendReviewResult;
+use App\Listeners\PaperEvent\PaperLogEditSubmissioned;
 use App\Listeners\SendSubmissionNotification;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
@@ -23,29 +35,29 @@ class EventServiceProvider extends ServiceProvider
         PaperSubmitted::class => [
             SendSubmissionNotification::class,
         ],
-        'App\Events\PaperEvent\PaperEditSubmissioned' => [
-            'App\Listeners\PaperEvent\PaperLogEditSubmissioned',
+        PaperEditSubmissioned::class => [
+            PaperLogEditSubmissioned::class,
         ],
-        'App\Events\PaperEvent\AddCoAuthor' => [
-            'App\Listeners\PaperEvent\LogAddCoAuthor',
+        AddCoAuthor::class => [
+            LogAddCoAuthor::class,
         ],
-        'App\Events\PaperEvent\SendFullPaper' => [
-            'App\Listeners\PaperEvent\LogSendFullPaper',
+        SendFullPaper::class => [
+            LogSendFullPaper::class,
         ],
-        'App\Events\PaperEvent\AssignReviewer' => [
-            'App\Listeners\PaperEvent\LogAssignReviewer',
-            'App\Listeners\PaperEvent\PaperChangeStatusWhenAssignReviewer',
+        AssignReviewer::class => [
+            LogAssignReviewer::class,
+            PaperChangeStatusWhenAssignReviewer::class,
         ],
-        'App\Events\PaperEvent\Unassigned' => [
-            'App\Listeners\PaperEvent\LogUnassigned',
+        SendReviewResult::class => [
+            LogSendReviewResult::class,
+            PaperChangeStatusWhenSendReviewResult::class,
         ],
         'App\Events\PaperEvent\TrackDecided' => [
             'App\Listeners\PaperEvent\LogTrackDecided',
             'App\Listeners\PaperEvent\PaperChangeStatusWhenLogTrackDecided',
         ],
-        'App\Events\PaperEvent\SendReviewResult' => [
-            'App\Listeners\PaperEvent\LogSendReviewResult',
-            'App\Listeners\PaperEvent\PaperChangeStatusWhenSendReviewResult',
+        'App\Events\PaperEvent\Unassigned' => [
+            'App\Listeners\PaperEvent\LogUnassigned',
         ],
         'App\Events\PaperEvent\AttachFileReview' => [
             'App\Listeners\PaperEvent\LogAttachFileReview',

@@ -16,11 +16,13 @@ class ReviewAssignmentController extends BaseConferenceController
 {
     protected $reviewAssignments;
     protected $tracks;
-    public function __construct(Request $request, ReviewAssignmentRepository $reviewAssignmentRepository, TrackRepository $trackRepository)
+    protected $papers;
+    public function __construct(Request $request, ReviewAssignmentRepository $reviewAssignmentRepository, TrackRepository $trackRepository, PaperRepository $paperRepository)
     {
         parent::__construct($request);
         $this->reviewAssignments = $reviewAssignmentRepository;
         $this->tracks = $trackRepository;
+        $this->papers = $paperRepository;
     }
 
     public function index()
@@ -108,12 +110,16 @@ class ReviewAssignmentController extends BaseConferenceController
     {
         $reviewAssignment = $this->reviewAssignments->find($assignmentId);
         $paper = $paperRepository->find($reviewAssignment->paper_id);
+        $trackDirectors = $paper->track->users;
         $reviewForm = $paper->track->reviewForm;
-        $reviewForm = $reviewForm->load('criteriaReviews');
+        if ($reviewForm) {
+            $reviewForm = $reviewForm->load('criteriaReviews');
+        }
         return view('reviewer.paper.review', [
             'reviewForm' => $reviewForm,
             'paper' => $paper,
             'reviewAssignment' => $reviewAssignment,
+            'trackDirectors' => $trackDirectors,
         ]);
     }
 

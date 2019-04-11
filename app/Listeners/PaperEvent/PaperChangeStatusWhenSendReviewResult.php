@@ -2,6 +2,8 @@
 
 namespace App\Listeners\PaperEvent;
 
+use App\ConferenceRepositories\PaperRepository;
+use App\ConferenceRepositories\ReviewAssignmentRepository;
 use App\Events\PaperEvent\SendReviewResult;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -9,14 +11,17 @@ use Illuminate\Support\Facades\Config;
 
 class PaperChangeStatusWhenSendReviewResult
 {
+    protected $reviewAssignmentRepository;
+    protected $paperRepository;
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ReviewAssignmentRepository $reviewAssignmentRepository, PaperRepository $paperRepository)
     {
-        //
+        $this->reviewAssignmentRepository = $reviewAssignmentRepository;
+        $this->paperRepository = $paperRepository;
     }
 
     /**
@@ -28,19 +33,10 @@ class PaperChangeStatusWhenSendReviewResult
     public function handle(SendReviewResult $event)
     {
         $paper =  $event->reviewAssignment->paper;
-        if($paper->status == Config::get('constants.PAPER_STATUS.IN_REVIEW')){
-            $recommendations = $paper->reviewAssignment->pluck('reviewAssignment')->all();
-            $test = TRUE;
-            foreach ($recommendations as $recommendation) {
-                if(empty($recommendation)){
-                    $test = FALSE;
-                    break;
-                }
-            }
-            if($test){
-                $paper->status = Config::get('constants.PAPER_STATUS.ALL_REVIEWER_RECOMMENDATION');
-                $paper->save();
-            }
+        $dateCompleteReviewAssignents = $this->reviewAssignmentRepository->get(['paper_id' => $paper->id])->pluck('date_completed')->all();
+        // All date completed has value
+        if (!in_array(null, $dateCompleteReviewAssignents, true)) {
+            $this->paperRepository->changePaperStatus($paper, Config::get('constants.PAPER_STATUS.ALL_REVIEWER_RECOMMENDATION'));
         }
     }
 }

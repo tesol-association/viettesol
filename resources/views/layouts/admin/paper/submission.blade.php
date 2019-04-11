@@ -29,7 +29,9 @@
             </div>
             <!-- start::HISTORY PAPER -->
             <div class="tab-pane" id="paper_history">
-                @include('layouts.admin.paper.sub_view.paper_history')
+                @include('layouts.admin.paper.sub_view.paper_history', [
+                    'histories' => $paperHistories
+                ])
             </div>
             <!-- end::HISTORY PAPER -->
         </div>

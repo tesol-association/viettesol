@@ -2,6 +2,7 @@
 
 namespace App\Listeners\PaperEvent;
 
+use App\ConferenceRepositories\PaperRepository;
 use App\Events\PaperEvent\AssignReviewer;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -9,14 +10,15 @@ use Illuminate\Support\Facades\Config;
 
 class PaperChangeStatusWhenAssignReviewer
 {
+    protected $papers;
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(PaperRepository $paperRepository)
     {
-        //
+        $this->papers = $paperRepository;
     }
 
     /**
@@ -29,9 +31,6 @@ class PaperChangeStatusWhenAssignReviewer
     {
         //Change paper status
         $paper =  $event->reviewAssignment->paper;
-        if(($paper->status == Config::get('constants.PAPER_STATUS.SUBMITTED')) || ($paper->status == Config::get('constants.PAPER_STATUS.ALL_REVIEWER_RECOMMENDATION'))){
-            $paper->status = Config::get('constants.PAPER_STATUS.IN_REVIEW');
-            $paper->save();
-        }
+        $this->papers->changePaperStatus($paper, Config::get('constants.PAPER_STATUS.IN_REVIEW'));
     }
 }
