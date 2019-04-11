@@ -1,7 +1,21 @@
-Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-It has survived not only five centuries, but also the leap into electronic typesetting,
-remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-like Aldus PageMaker including versions of Lorem Ipsum.
+<!-- Box Comment -->
+<div class="box box-widget">
+    <!-- /.box-body -->
+    <div class="box-footer box-comments">
+        @foreach ($histories as $history)
+            <div class="box-comment">
+                <!-- User image -->
+                <img class="img-circle img-sm" src="{{ asset('/storage/' . $history->user->image) }}" alt="User Image">
+                <div class="comment-text">
+                      <span class="username">
+                        {{ $history->user->full_name }}
+                        <span class="text-muted pull-right">{{ date('H:i d/m/Y', strtotime($history->created_at)) }}</span>
+                      </span><!-- /.username -->
+                      {!! $history->message !!}
+                </div>
+                <!-- /.comment-text -->
+            </div>
+        @endforeach
+    </div>
+</div>
+<!-- /.box -->

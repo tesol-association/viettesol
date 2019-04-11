@@ -18,11 +18,10 @@ class PaperRepository
 {
     public function find($paperId)
     {
-        $paper = Paper::find($paperId);
-        $paper->load('track', 'sessionType');
-        $paper->track->load('reviewForm.criteriaReviews');
-        $paper->load('authors');
-        $paper->load('attachFile');
+        $paper = Paper::with('track.users', 'sessionType', 'authors', 'attachFile')->where('id', $paperId)->first();
+        if ($paper->track) {
+            $paper->track->load('reviewForm.criteriaReviews');
+        }
         return $paper;
     }
 
@@ -35,9 +34,7 @@ class PaperRepository
             foreach ($filters as $key => $filter) {
                 if (is_array($filter)) {
                     $papersQuery->whereIn($key, $filter);
-                }
-                if (is_string($filter))
-                {
+                } else {
                     $papersQuery->where($key, '=', $filter);
                 }
             }
@@ -85,6 +82,37 @@ class PaperRepository
         $paper->file_id = $data['file_id'];
         $paper->save();
         return $paper;
+    }
+
+    /**
+     * @param $paper
+     * @param $status
+     * @return mixed
+     */
+    public function changePaperStatus($paper, $status)
+    {
+        $currentStatus = $paper->status;
+        $decisionStatus = [
+            Config::get('constants.PAPER_STATUS.ACCEPTED'),
+            Config::get('constants.PAPER_STATUS.REJECTED'),
+            Config::get('constants.PAPER_STATUS.REVISION'),
+        ];
+        if (in_array($currentStatus, $decisionStatus) && in_array($status, $decisionStatus)) {
+            $paper->status = $status;
+            $paper->save();
+            return $status;
+        }
+        $paperStatusList = Config::get('constants.PAPER_STATUS');
+        $paperStatusList = array_values($paperStatusList);
+        $indexCurrentStatus = array_search($currentStatus, $paperStatusList);
+        $indexStatus = array_search($status, $paperStatusList);
+        if ($indexStatus > $indexCurrentStatus) {
+            $paper->status = $status;
+            $paper->save();
+            return $status;
+        } else {
+            return $currentStatus;
+        }
     }
 
 }
