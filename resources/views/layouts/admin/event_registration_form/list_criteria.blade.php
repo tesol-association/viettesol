@@ -74,7 +74,7 @@ List criteria other of event registration
 											</div>
 										</form>
 										<!-- </div> -->
-										<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal_{{ $criteriaAdditional->id }}">Delete</button>
+										<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal_{{ $criteriaAdditional->id }}"><i class="fa fa-trash"></i></button>
 									</td>
 								</tr>
 								@endforeach 

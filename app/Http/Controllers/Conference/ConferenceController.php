@@ -4,18 +4,28 @@ namespace App\Http\Controllers\Conference;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Announcements;
+use App\Models\ConferenceTimeline;
+use App\Models\ConferencePartnerSponser;
 
 class ConferenceController extends BaseConferenceController
 {
     public function index()
     {
     	$conference = $this->conference;
-    	return view('layouts.conference.home',['conference_path'=>$this->conferencePath]);
+    	$conferenceTimeline= ConferenceTimeline::where('conference_id', $conference->id)->first();
+        $conferencePartnerSponsers= ConferencePartnerSponser::orderBy('id', 'DESC')->limit(8)->offset(0)->get();
+    	return view('layouts.conference.home',['conference_path'=>$this->conferencePath, 'conferenceTimeline'=> $conferenceTimeline, 'conferencePartnerSponsers'=> $conferencePartnerSponsers]);
     }
     public function getNews()
     {
-    	
-    	return view('layouts.conference.news',['conference_path'=>$this->conferencePath]); 
+    	$announcements = Announcements::orderBy('id', 'DESC')->paginate(4);
+    	return view('layouts.conference.news',['conference_path'=>$this->conferencePath,'announcements'=> $announcements]); 
+    }
+    public function getNewsDetail($conferencePath, $id)
+    {
+       $announcement =	Announcements::where('id',$id)->first();
+       return view('layouts.conference.news_detail',['conference_path'=>$this->conferencePath,'announcement'=> $announcement]);
     }
 
 }

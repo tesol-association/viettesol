@@ -2,6 +2,7 @@
 @section('title','Event registration')
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
+<script src='https://www.google.com/recaptcha/api.js'></script>
 @endsection
 @section('content')
 <div class="box box-primary">
@@ -96,7 +97,9 @@
 			@endif
 			@endforeach
 			@endif
-
+			<div class="form-group">
+				<div class="g-recaptcha" data-sitekey="6LcEXZwUAAAAABhKWftEDkR2P5gdCrlsnJ61LHA0"></div>
+			</div>
 		</div>
 		<!-- /.box-body -->
 
