@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\ConferenceManager;
 
 use App\ConferenceRepositories\AuthorRepository;
 use App\ConferenceRepositories\ConferenceRoleRepository;
+use App\ConferenceRepositories\PaperEventLogRepository;
 use App\ConferenceRepositories\ReviewAssignmentRepository;
 use App\Events\PaperSubmitted;
 use App\Events\PaperEvent\TrackDecided;
@@ -82,7 +83,7 @@ class PaperController extends BaseConferenceController
         return redirect()->route('admin_paper_list', ["conference_id" => $this->conferenceId])->with('success', 'Submission ' . $paper->title . ' successful !');
     }
 
-    public function submission($conferenceId, $paperId, ReviewAssignmentRepository $reviewAssignmentRepository, ConferenceRoleRepository $conferenceRoleRepository)
+    public function submission($conferenceId, $paperId, ReviewAssignmentRepository $reviewAssignmentRepository, ConferenceRoleRepository $conferenceRoleRepository, PaperEventLogRepository $paperEventLogRepository)
     {
         $paper = $this->papers->find($paperId);
         $trackDirectors = $paper->track->users->all(); //get Track Directors
@@ -95,6 +96,7 @@ class PaperController extends BaseConferenceController
         $reviewAssignmentIds = $reviewAssignments->pluck('reviewer_id')->all();
         $trackDecisions = $this->papers->getTrackDecisions($paperId);
         $INDEX_ASSIGNMENT = Config::get('constants.REVIEW_ASSIGNMENT.INDEX_ASSIGNMENT');
+        $paperHistories = $paperEventLogRepository->get(['paper_id' => $paperId]);
         return view('layouts.admin.paper.submission', [
             'paper' => $paper,
             'reviewers' => $reviewerAccepted,
@@ -104,6 +106,7 @@ class PaperController extends BaseConferenceController
             'reviewForm' => $reviewForm,
             'trackDecisions' => $trackDecisions,
             'users' => $trackDirectors,
+            'paperHistories' => $paperHistories,
         ]);
     }
 

@@ -30,11 +30,8 @@ class PaperController extends BaseConferenceController
 
     public function listPaper()
     {
-        $conferenceId = $this->conferenceId;
-        $papers = $this->papers->get($conferenceId, ['submission_by' => Auth::id()]);
-
+        $papers = $this->papers->get($this->conferenceId, ['submission_by' => Auth::id()]);
         return view('author.paper.list', [
-            'conference_id' => $this->conferenceId,
             'papers'=> $papers
         ]);
     }
@@ -45,7 +42,6 @@ class PaperController extends BaseConferenceController
         $sessionTypes = $this->conference->sessionTypes;
         $author = Auth::user();
         return view('author.paper.create', [
-            'conference_id' => $this->conferenceId,
             'tracks' => $tracks,
             'sessionTypes' => $sessionTypes,
             'author' => $author
@@ -79,7 +75,6 @@ class PaperController extends BaseConferenceController
         $tracks = $this->conference->tracks;
         $sessionTypes = $this->conference->sessionTypes;
         return view('author.paper.edit', [
-            'conference_id' => $this->conferenceId,
             'paper' => $paper,
             'tracks' => $tracks,
             'sessionTypes' => $sessionTypes,

@@ -19,6 +19,9 @@ class UserConferenceRoleController extends BaseConferenceController
         $conferenceRoles = ConferenceRole::where('conference_id', $conferenceId)->get();
         $users = User::all();
         foreach ($users as $user) {
+            $user->conferenceRoles = $user->conferenceRoles->filter(function ($conferenceRole) {
+                return $conferenceRole->conference_id == $this->conferenceId;
+            });
             $user->conferenceRoleIds = $user->conferenceRoles->pluck('id')->all();
         }
         return view('layouts.admin.conference_manager.user_conference_role.list', ['conferenceRoles' => $conferenceRoles, 'users' => $users]);
@@ -80,7 +83,7 @@ class UserConferenceRoleController extends BaseConferenceController
         $data = $request->name;
         $user->conferenceRoles()->detach();
         $user->conferenceRoles()->attach($data);
-        
+
         return redirect()->route('admin_user_conference_roles_list', $conferenceId)->with('success', 'User Conference Role has been update successfully');
     }
 

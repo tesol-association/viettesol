@@ -67,7 +67,7 @@
                         <select id="choose_user" name="user_id[]" class="form-control" multiple="multiple" data-placeholder="Select a Track Director" style="width: 100%;">
                             @if (isset($users) && count($users))
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</option>
+                                    <option value="{{ $user->id }}">{{ $user->full_name }}</option>
                                 @endforeach
                             @endif
                         </select>

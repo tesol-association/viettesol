@@ -13,4 +13,14 @@ class PaperEventLog extends Model
         'message',
         'type'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
+    public function paper()
+    {
+        return $this->belongsTo('App\Models\Paper', 'paper_id');
+    }
 }
