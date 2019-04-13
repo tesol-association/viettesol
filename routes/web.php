@@ -210,6 +210,16 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']],function(){
         Route::post('/update/{id}', 'Admin\MembershipController@update')->name('admin_membership_update');
         Route::post('/delete/{id}', 'Admin\MembershipController@destroy')->name('admin_membership_delete');
         Route::get('/make/{id}', 'Admin\ContactController@make')->name('admin_membership_make');
+        Route::get('/show/{id}', 'Admin\MembershipController@show')->name('admin_membership_show');
+    });
+
+    Route::group(['prefix'=>'membertype'],function(){
+        Route::get('/list', 'Admin\MemberTypeController@index')->name('admin_membertype_list');
+        Route::get('/create', 'Admin\MemberTypeController@create')->name('admin_membertype_create');
+        Route::post('/store', 'Admin\MemberTypeController@store')->name('admin_membertype_store');
+        Route::get('/edit/{id}', 'Admin\MemberTypeController@edit')->name('admin_membertype_edit');
+        Route::post('/update/{id}', 'Admin\MemberTypeController@update')->name('admin_membertype_update');
+        Route::post('/delete/{id}', 'Admin\MemberTypeController@destroy')->name('admin_membertype_delete');
     });
 
 
@@ -558,6 +568,7 @@ Route::group(['prefix'=>'home'],function(){
 });
 
 Route::group(['prefix'=>'/conference/{conference_path}'], function() {
+
          Route::get('/home','Conference\ConferenceController@index')->name('conference_home');
 
          Route::get('/news','Conference\ConferenceController@getNews')->name('conference_news');
@@ -565,4 +576,17 @@ Route::group(['prefix'=>'/conference/{conference_path}'], function() {
          Route::get('/news/{id}','Conference\ConferenceController@getNewsDetail')->name('conference_news_detail');
 
         Route::get('/contact','Conference\ContactController@index')->name('conference_contact');
+
+        Route::get('/home','Conference\ConferenceController@index')->name('conference_home');
+        Route::get('/speakers', 'Conference\ConferenceController@speaker')->name('conference_speakers');
+});
+
+Route::get('/somethingcool1', function()
+{
+    return view('layouts.conference.layout');
+});
+Route::get('/somethingcool2', function()
+{
+    return view('layouts.conference.speakers');
+
 });

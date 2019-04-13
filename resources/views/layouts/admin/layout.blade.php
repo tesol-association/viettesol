@@ -498,12 +498,14 @@ desired effect
           </a>
 
           <ul class="treeview-menu">
+
             <li><a href="{{ route('admin_contact_list') }}"><i class="fa fa-tty"></i><span> Contact Management </span></a></li>
             <li><a href="{{ route('admin_contact_type_list') }}"><i class="fa fa-list-ol"></i><span> Contact Type Management </span></a></li>
             <li><a href="{{ route('admin_membership_list') }}"><i class="fa fa-user"></i><span> Membership </span></a></li>
             <li><a href="{{ route('admin_contribution_list') }}"><i class="fa fa-hand-o-right"></i><span> Contribution </span></a></li>
             <li><a href="#"><i class="fa fa-credit-card"></i><span> Member Payment </span></a></li>
             <li><a href="#"><i class="fa fa-sticky-note-o"></i><span> Notification </span></a></li>
+
           </ul>
         </li>
 

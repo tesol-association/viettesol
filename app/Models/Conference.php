@@ -23,4 +23,9 @@ class Conference extends Model
         return $this->hasOne('App\Models\ConferenceTimeline', 'conference_id');
     }
 
+    public function speakers()
+    {
+        return $this->hasMany('App\Models\Speakers', 'conference_id');
+    }
+
 }

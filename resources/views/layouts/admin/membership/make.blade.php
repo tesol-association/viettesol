@@ -40,8 +40,13 @@ Add a New Member
             <div class="form-group">
                 <label> Membership Type*: </label>
                 <select class="form-control" name="type_id">
+
                     @foreach( $msTypes as $type )
                         <option value="{{ $type->id }}"> {{ $type->name }} </option>   
+
+                    @foreach( $memberTypes as $type )
+                        <option value="{{ $type->id }}"> {{ $type->name }} </option>
+
                     @endforeach
                 </select>
             </div>

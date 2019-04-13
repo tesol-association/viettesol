@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\MemberType;
 use Session;
-use App\Models\Contribution;
 
-class ContributionController extends Controller
+class MemberTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,9 @@ class ContributionController extends Controller
     public function index()
     {
         //
-        $contributions = Contribution::all();
+        $memberTypes = MemberType::all();
 
-        return view('layouts.admin.contribution.list', ['contributions' => $contributions]);
+        return view('layouts.admin.membertype.list', ['memberTypes' => $memberTypes]);
     }
 
     /**
@@ -30,6 +30,7 @@ class ContributionController extends Controller
     public function create()
     {
         //
+        return view('layouts.admin.membertype.create');
     }
 
     /**
@@ -42,21 +43,17 @@ class ContributionController extends Controller
     {
         //
         $request->validate([
-            'contact_id' => 'required',
-            'amount' => 'required',
-            'unit' => 'required',
-            'payment_method_id' => 'required',
-            'transacion_id' => 'required'
+            'name' => 'required|unique:membership_types',
         ]);
 
-        $contribution = new Contribution();
-        $contribution->contact_id = $request->get('contact_id');
-        $contribution->amount = $request->get('amount');
-        $contribution->unit = $request->get('unit');
-        $contribution->payment_method_id = $request->get('payment_method_id');
-        $contribution->transaction_id = $request->get('transaction_id');
+        $memberType = new MemberType([
+            'name' => $request->get('name'),
+            'description' => $request->get('description')
+        ]);
 
-        $contribution->save();
+        $memberType->save();
+        
+        return redirect()->route('admin_membertype_list')->with('success', 'Successfully created type '. $memberType->name);
     }
 
     /**
@@ -79,6 +76,9 @@ class ContributionController extends Controller
     public function edit($id)
     {
         //
+        $memberType = MemberType::find($id);
+
+        return view('layouts.admin.membertype.edit', ['memberType' => $memberType]);
     }
 
     /**
@@ -91,6 +91,14 @@ class ContributionController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $memberType = MemberType::find($id);
+
+        $memberType->name = $request->get('name');
+        $memberType->description = $request->get('description');
+
+        $memberType->save();
+
+        return redirect()->route('admin_membertype_list')->with('success', 'The change you have made has been saved.');
     }
 
     /**
@@ -101,9 +109,10 @@ class ContributionController extends Controller
      */
     public function destroy($id)
     {
-        $contribution = Contribution::find($id);
-        $contribution->delete();
+        //
+        $memberType = MemberType::find($id);
+        $memberType->delete();
 
-        return redirect()->route('admin_contribution_list')->with('success', 'A contribution history has been removed.');
+        return redirect()->route('admin_membertype_list')->with('success', $memberType->name.' has been removed as a Membership Type.');
     }
 }
