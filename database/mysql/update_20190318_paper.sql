@@ -43,3 +43,18 @@ CREATE TABLE `viettesol`.`track_decisions` ( `id` INT NOT NULL AUTO_INCREMENT ,
 `date_decided` DATETIME NOT NULL , `created_at` TIMESTAMP NULL,
 `updated_at` TIMESTAMP NULL ,
 PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+/* 02/04/2019 */
+CREATE TABLE `viettesol`.`user_token` ( `id` INT NOT NULL AUTO_INCREMENT ,
+`user_id` INT NOT NULL ,
+`token` VARCHAR(255) NOT NULL ,
+`expired_time` INT NOT NULL DEFAULT '15' ,
+`created_at` TIMESTAMP NULL , `updated_at` TIMESTAMP NULL ,
+PRIMARY KEY (`id`)) ENGINE = InnoDB;
+/* 02/04/2019 */
+ALTER TABLE `prepared_emails` CHANGE `code` `email_key` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
+ALTER TABLE `prepared_emails` CHANGE `code` `email_key` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
+ALTER TABLE `prepared_emails` CHANGE `subject` `subject` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
+ALTER TABLE `prepared_emails` CHANGE `body` `body` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
+
+/* 11/04/2019 */

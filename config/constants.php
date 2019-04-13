@@ -25,15 +25,35 @@ return [
         //Author
         'SUBMITTED' => 'submitted',
         'EDIT_SUBMISSION' => 'edit_submission',
-        'ADD_AUTHOR' => 'add_author',
+        'EDIT_SUBMISSION_MESSAGE' => '<strong> %s </strong>  update for paper title <strong> %s  </strong> at <strong> %s </strong>', // AuthorName, PaperTitle, TimeAt
+
+        'ADD_CO_AUTHOR' => 'add_co_author',
+        'ADD_CO_AUTHOR_MESSAGE' => '<strong> %s </strong>  add co-author <strong> %s </strong>  for paper title <strong> %s  </strong> at <strong> %s </strong>', // AuthorName, CoAuthorName, PaperTitle, TimeAt
+
+        'SEND_FULL_PAPER' => 'send_full_paper',
+        'SEND_FULL_PAPE_MESSAGE' => '<strong> %s </strong>  send full paper for paper title <strong> %s  </strong> at <strong> %s </strong>', // AuthorName,PaperTitle, TimeAt
+
         //Track Director
-        'ASSIGNMENT' => 'assigned',
-        'UN_ASSIGNMENT' => 'unassigned',
-        'DECIDED' => 'decided',
+        'ASSIGN_REVIEWER' => 'assign_reviewer',
+        'ASSIGN_REVIEWER_MESSAGE' => '<strong> %s </strong>  assign reviewer <strong> %s </strong>  for paper title <strong> %s  </strong> at <strong> %s </strong>', // TrackDirectorName, ReviewerName, PaperTitle, TimeAt
+
+        'UN_ASSIGNMENT' => 'unassigned_reviewer',
+        'UN_ASSIGNMENT_MESSAGE' => '<strong> %s </strong>  unassign reviewer <strong> %s </strong>  for paper title <strong> %s  </strong> at <strong> %s </strong>', // TrackDirectorName, ReviewerName, PaperTitle, TimeAt
+
+        'TRACK_DICIDED' => 'track_decided',
+        'TRACK_DICIDED_MESSAGE' => 'Track Director <strong> %s </strong>  decided <strong> %s </strong>  for paper title <strong> %s  </strong> at <strong> %s </strong>', // TrackDirectorName, disicion, PaperTitle, TimeAt
+
         // Reviewer
-        'ACCEPT_REVIEW' => 'accept_assign',
-        'REJECT_REVIEW' => 'reject_assign',
-        'REVIEW_COMPLETE' => 'complete_review',
+        'SEND_REVIEW_RESULT' => 'send_review_result',
+        'SEND_REVIEW_RESULT_MESSAGE' => '<strong> %s </strong> send review result for paper title <strong> %s  </strong> at <strong> %s </strong>', // ReviewrerName, PaperTitle, TimeAt
+
+        'ATTACH_FILE_REVIEW' => 'attach_file_review',
+        'ATTACH_FILE_REVIEW_MESAGE' => 'message ???', //Chua lam
+        //Director
+        'DIRECTOR_ADD_PRESENTATION_LIST' => 'add_presentation_list',
+        'DIRECTOR_REMOVE_PRESENTATION_LIST' => 'remove_presentation_list',
+        //ADMIN
+        'SCHEDULE_PAPER' => 'paper_scheduled',
     ],
     'REVIEW_ASSIGNMENT' => [
         'INDEX_ASSIGNMENT' => ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
@@ -44,10 +64,22 @@ return [
         'REJECT_RECOMMENDATION' => 2,
     ],
     'PAPER_STATUS' => [
-        'SUBMITTED' => 'submitted'
+        'SUBMITTED' => 'submitted',
+        'IN_REVIEW' => 'in_review',
+        'ALL_REVIEWER_RECOMMENDATION' => 'reviewer_result',
+        'ACCEPTED' => 'accepted',
+        'REJECTED' => 'rejected',
+        'REVISION' => 'revision',
+        'UNSCHEDULED' => 'unscheduled',
+        'SCHEDULED' => 'scheduled',
     ],
     'PAPER_AUTHOR' => [
         'AUTHOR' => 0,
         'CO_AUTHOR' => 1,
-    ]
+    ],
+    'PAPER_FILE'=>[
+        'FULL_PAPER'=> 'full_paper',
+        'REVIEW_FILE'=> 'review_file',
+    ],
+    'TIME_EMAIL_TOKEN_EXPIRED' => 5
 ];

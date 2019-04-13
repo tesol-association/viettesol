@@ -2,11 +2,11 @@
 		//$('.list').css('display', 'block');
 		var roomName= $('#room :selected').text();
 		//console.log(roomName);
-		$("#room option").each(function(){
-			if ($(this).text() == roomName) {
-				$(this).attr("disabled", "disabled");
-			}
-		});
+		// $("#room option").each(function(){
+		// 	if ($(this).text() == roomName) {
+		// 		$(this).attr("disabled", "disabled");
+		// 	}
+		// });
 		$.ajax({
 			url: "getTable",
 			headers: {
@@ -75,7 +75,7 @@
 					$('#timeblock_'+idPaper).attr("disabled", "disabled");
 					toastr.success('Schedule has been created successfully');
 				}else{
-					toastr.error('Duplicate record. Please choose again');
+					toastr.error(res.notify);
 				}
 			},error:function(res){
 				console.log('Ajax call fail');

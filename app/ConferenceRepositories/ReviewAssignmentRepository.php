@@ -26,7 +26,7 @@ class ReviewAssignmentRepository
 
     public function find($id)
     {
-        return ReviewAssignment::find($id);
+        return ReviewAssignment::with('paper', 'reviewer')->where('id', $id)->first();
     }
 
     /**
@@ -66,7 +66,7 @@ class ReviewAssignmentRepository
         $reviewAssignment->reviewer_id = $data['reviewer_id'];
         $reviewAssignment->date_assigned = Carbon::now();
         $reviewAssignment->save();
-        $reviewAssignment->load('reviewer');
+        $reviewAssignment->load('reviewer', 'paper');
         return $reviewAssignment;
     }
 

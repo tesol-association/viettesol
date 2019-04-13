@@ -1,7 +1,7 @@
 <!-- Sidebar Menu -->
 <ul class="sidebar-menu" data-widget="tree">
-    <li class="header">Conference: {{ $conference->title }}</li>
-    <li><a href="#"><i class="fa fa-newspaper-o"></i> Paper List</a></li>
+    <li class="header"> REVIEWER: Conference: {{ $conference->title }}</li>
+    <li><a href="{{ route('reviewer_paper_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-newspaper-o"></i> Paper List</a></li>
     <li><a href="#"><i class="fa fa-star"></i> Submission Active</a></li>
 
     <li>

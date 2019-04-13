@@ -1,7 +1,8 @@
 @extends('layouts.home.layout')
 @section('title','Event registration')
 @section('css')
-  <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
+<script src='https://www.google.com/recaptcha/api.js'></script>
 @endsection
 @section('content')
 <div class="box box-primary">
@@ -63,7 +64,42 @@
 			<div class="form-group">
 				<input type="hidden" class="form-control" name="event_id" value="{{ $event->id }}">
 			</div>
-
+			@if(!empty($criteriaOthers))
+			@foreach($criteriaOthers as $criteriaOther)
+			@if($criteriaOther['type'] == 1)
+			<div class="form-group">
+				<label for="exampleInputEmail1">{{ $criteriaOther['name'] }}</label>
+				<input type="text" class="form-control" name="criteriaText[]" placeholder="" value="">
+			</div>
+			@endif
+			@if($criteriaOther['type'] == 2)
+			<div class="form-group">
+				<label>{{ $criteriaOther['name'] }}</label>
+				<select class="form-control" name="criteriaSelect[]">
+					@foreach($criteriaOther['possible_values'] as $key => $value)
+					<option value="{{ $value }}">{{ $value }}</option>
+					@endforeach
+				</select>
+			</div>
+			@endif
+			@if($criteriaOther['type'] == 3)
+			<div class="form-group">
+				<label for="exampleInputEmail1">{{ $criteriaOther['name'] }}</label>
+				@foreach($criteriaOther['possible_values'] as $criteria)
+				<div class="radio">
+					<label>
+						<input type="radio" name="criteriaRadio[]" value="{{ $criteria }}">
+						{{ $criteria }}
+					</label>
+				</div>
+				@endforeach
+			</div>
+			@endif
+			@endforeach
+			@endif
+			<div class="form-group">
+				<div class="g-recaptcha" data-sitekey="6LcEXZwUAAAAABhKWftEDkR2P5gdCrlsnJ61LHA0"></div>
+			</div>
 		</div>
 		<!-- /.box-body -->
 
@@ -78,17 +114,17 @@
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
-<script>
-        @if(Session::has('success'))
-           toastr.success('{{ Session::get("success") }}');
-        @endif
-        @if(Session::has('error'))
-          toastr.error('{{ Session::get("error") }}');
-        @endif
-        @if($errors->any())
-          @foreach($errors->all() as $error)
-            toastr.error('{{ $error }}');
-          @endforeach
-       @endif
-</script>
-@endsection
+     <script>
+     	@if(Session::has('success'))
+     	toastr.success('{{ Session::get("success") }}');
+     	@endif
+     	@if(Session::has('error'))
+     	toastr.error('{{ Session::get("error") }}');
+     	@endif
+     	@if($errors->any())
+     	@foreach($errors->all() as $error)
+     	toastr.error('{{ $error }}');
+     	@endforeach
+     	@endif
+     </script>
+     @endsection

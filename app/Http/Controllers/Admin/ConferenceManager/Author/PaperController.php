@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin\ConferenceManager\Author;
 
 use App\ConferenceRepositories\AuthorRepository;
 use App\ConferenceRepositories\ReviewAssignmentRepository;
+use App\Events\PaperEvent\AddCoAuthor;
 use App\Events\PaperSubmitted;
+use App\Events\PaperEvent\PaperEditSubmissioned;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\Author;
 use App\Models\ConferenceRole;
@@ -28,11 +30,8 @@ class PaperController extends BaseConferenceController
 
     public function listPaper()
     {
-        $conferenceId = $this->conferenceId;
-        $papers = $this->papers->get($conferenceId, ['submission_by' => Auth::id()]);
-
+        $papers = $this->papers->get($this->conferenceId, ['submission_by' => Auth::id()]);
         return view('author.paper.list', [
-            'conference_id' => $this->conferenceId,
             'papers'=> $papers
         ]);
     }
@@ -43,7 +42,6 @@ class PaperController extends BaseConferenceController
         $sessionTypes = $this->conference->sessionTypes;
         $author = Auth::user();
         return view('author.paper.create', [
-            'conference_id' => $this->conferenceId,
             'tracks' => $tracks,
             'sessionTypes' => $sessionTypes,
             'author' => $author
@@ -77,7 +75,6 @@ class PaperController extends BaseConferenceController
         $tracks = $this->conference->tracks;
         $sessionTypes = $this->conference->sessionTypes;
         return view('author.paper.edit', [
-            'conference_id' => $this->conferenceId,
             'paper' => $paper,
             'tracks' => $tracks,
             'sessionTypes' => $sessionTypes,
@@ -91,26 +88,26 @@ class PaperController extends BaseConferenceController
             'paper.abstract' => 'required',
         ]);
         $paper = $this->papers->updatePaper($request->paper, $id);
+        event(new PaperEditSubmissioned($paper));
         return redirect()->route('author_paper_list', ["conference_id" => $this->conferenceId])->with('success', 'Updated ' . $paper->title . ' successful !');
     }
 
     public function addCoAuthor(Request $request, $conferenceId, $id)
     {
         $paper = $this->papers->find($id);
-        $author = Author::where('email', $request->email)->first();
-        if (empty($author)) {
-            $author = $this->authors->create($request->all());
-        }
+        $author = $this->authors->create($request->all());
 
         $author->papers()->attach($id, ['seq' => Config::get('constants.PAPER_AUTHOR.CO_AUTHOR')]);
+        event(new AddCoAuthor($paper, $author));
 
-        return redirect()->back()->with('success', 'Added '.$author->first_name.' '.$author->middle_name.' '.$author->last_name.' for paper '.$paper->title.' successful !');
+        return redirect()->back()->with('success', 'Added '.$author->full_name .' for paper '.$paper->title.' successful !');
     }
 
     public function deleteCoAuthor($conferenceId, $authorId, $id)
     {
         $paper = $this->papers->find($id);
         $paper->authors()->detach($authorId);
+        $this->authors->destroy($authorId);
 
         return redirect()->back()->with('success', 'Deleted co author for paper '.$paper->title.' successful !');
     }

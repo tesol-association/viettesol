@@ -5,11 +5,11 @@
 @section('content')
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Create criteria of Review Form {{ $reviewForm->name }}</h3>
-            <div class="box-tools pull-right">
-                <a href="{{ route('admin_criteria_review_list', ["conference_id" => $conference->id, 'review_form_id' => $reviewForm->id]) }}" class="btn btn-block btn-info"><i class="fa fa-backward"></i> Criteria Review List</a>
-            </div>
+        <h3 class="box-title">Create criteria of Review Form {{ $reviewForm->name }}</h3>
+        <div class="box-tools pull-right">
+            <a href="{{ route('admin_criteria_review_list', ["conference_id" => $conference->id, 'review_form_id' => $reviewForm->id]) }}" class="btn btn-block btn-info"><i class="fa fa-backward"></i> Criteria Review List</a>
         </div>
+    </div>
 
         <div class="box-body">
             <!-- form start -->

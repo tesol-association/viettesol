@@ -1,6 +1,6 @@
 <!-- Sidebar Menu -->
 <ul class="sidebar-menu" data-widget="tree">
-    <li class="header">Conference: {{ $conference->title }}</li>
+    <li class="header">ADMIN Conference: {{ $conference->title }}</li>
     <li class="treeview">
         <a href="#"><i class="fa fa-cogs"></i> <span>Set Up Conference</span>
             <span class="pull-right-container">
@@ -15,7 +15,7 @@
             <li><a href="{{ route('admin_session_type_list', ["conference_id" => $conference->id]) }}"><i class="fa fa-asterisk"></i> Session Types</a></li>
             <li><a href="{{ route('admin_speakers_list', ["conference_id" => $conference->id]) }}"><i class="fa fa-users"></i> Keynote Speakers</a></li>
             <li><a href="{{ route('admin_conference_partners_sponsers_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-star"></i>Partner Sponser</a></li>
-            <li><a href="#"><i class="fa fa-money"></i> Fee</a></li>
+            <li><a href="{{ route('admin_fee_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-money"></i> Fee</a></li>
             <li><a href="#"><i class="fa fa-envelope-o"></i> Prepaired email</a></li>
         </ul>
     </li>
