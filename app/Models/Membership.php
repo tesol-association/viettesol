@@ -13,4 +13,9 @@ class Membership extends Model
     {
     	return $this->belongsTo('App\Models\Contact', 'contact_id');
     }
+
+    public function msType()
+    {
+    	return $this->belongsTo('App\Models\MembershipType', 'type_id');
+    }
 }

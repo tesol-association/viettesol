@@ -38,6 +38,18 @@ Edit this Membership
             </div>
 
             <div class="form-group">
+                <label> Membership Type*: </label>
+                <select class="form-control" name="type_id">
+                    @foreach( $msTypes as $type )
+                        @if( $type->name === $member->msType->name ) 
+                        <option value="{{ $type->id }}" selected="selected"> {{ $type->name }} </option>}
+                        @else
+                        <option value="{{ $type->id }}"> {{ $type->name }} </option>}
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
 
                 <table style="width: 100%">
                     <tr>

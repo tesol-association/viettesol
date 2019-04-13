@@ -451,6 +451,15 @@ Route::group(['prefix'=>'home'],function(){
         Route::get('/view','Home\ChangePasswordController@index')->name('home_changepassword_view');
         Route::post('/save','Home\ChangePasswordController@store')->name('home_changepassword_save');
     });
+
+    //Donations and Payments
+    Route::group(['prefix' => 'donate'], function() {
+        Route::get('/viapaypal', 'Home\DonationController@getPayPalForm')->name('home_donate_paypal');
+    });
+
+    Route::group(['prefix' => 'fee'], function() {
+        Route::get('/payment', 'Home\PaymentController@getPaymentForm')->name('home_payment');
+    });
 });
 
 Route::group(['prefix'=>'/conference/{conference_path}'], function() {
