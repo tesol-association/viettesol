@@ -3,7 +3,6 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
-
 @endsection
 
 @section('page-header')
@@ -35,6 +34,20 @@ Edit this Membership
                 @else
                 <i> Contact Name: {{ $member->contact->organize_name }} ({{ $member->contact->contactType->name }}) </i>
                 @endif
+            </div>
+
+            <div class="form-group">
+                <label> Membership Type*: </label>
+                <select class="form-control" name="type_id">
+                    @foreach( $msTypes as $type )
+                        @if( $member->msType->name === $type->name )
+                        <option value="{{ $type->id }}" selected="selected"> {{ $type->name }} </option>
+                        @else
+                        <option value="{{ $type->id }}"> {{ $type->name }} </option>
+                        @endif
+
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">

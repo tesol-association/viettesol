@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Membership;
+use App\Models\MembershipType;
 use App\Models\Contact;
+use App\Models\MemberType;
 use Session;
 
 class MembershipController extends Controller
@@ -32,7 +34,12 @@ class MembershipController extends Controller
     {
         //
         $contacts = Contact::all();
-        return view("layouts.admin.membership.create", ['contacts' => $contacts]);
+
+        $msTypes = MembershipType::all();
+        return view("layouts.admin.membership.create", ['contacts' => $contacts, 'msTypes' => $msTypes]);
+
+        $memberTypes = MemberType::all();
+        return view("layouts.admin.membership.create", ['contacts' => $contacts], ['memberTypes' => $memberTypes]);
     }
 
     /**
@@ -46,16 +53,26 @@ class MembershipController extends Controller
 
         $request->validate([
             'contact_id'=>'required|integer|unique:membership',
+
+            'type_id'=>'required',
+            'mscode'=>'unique:membership',
             'start_date'=>'required|date',
             'end_date'=>'required|date|after:start_date',
-            'num_of_term'=>'required'
+
+            'type_id' => 'required',
+            'start_date'=>'required|date',
+            'end_date'=>'required|date|after:start_date'
+
         ]);
 
         $member = new Membership();
         $member->contact_id = $request->get('contact_id');
+        $member->type_id = $request->get('type_id');
         $member->start_date = $request->get('start_date');
         $member->end_date = $request->get('end_date');
-        $member->num_of_term = $request->get('num_of_term');
+
+        $member->mscode = $this->codeGenerate();
+
 
         $member->save();
 
@@ -71,6 +88,9 @@ class MembershipController extends Controller
     public function show($id)
     {
         //
+        $member = Membership::find($id);
+
+        return view('layouts.admin.membership.show', ['member' => $member]);
     }
 
     /**
@@ -84,7 +104,13 @@ class MembershipController extends Controller
         //
         $member = Membership::find($id);
 
-        return view('layouts.admin.membership.edit',['member' => $member]);
+        $msTypes = MembershipType::all();
+
+        return view('layouts.admin.membership.edit', ['member' => $member, 'msTypes' => $msTypes]);
+
+        $memberTypes = MemberType::all();
+        return view('layouts.admin.membership.edit',['member' => $member], ['memberTypes' => $memberTypes]);
+
     }
 
     /**
@@ -99,17 +125,23 @@ class MembershipController extends Controller
         //
         $request->validate([
             'contact_id'=>'required|integer|unique:membership',
+
+            'type_id'=>'required',
             'start_date'=>'required|date',
             'end_date'=>'required|date|after:start_date',
-            'num_of_term'=>'required'
+
+            'type_id' => 'required',
+            'start_date'=>'required|date',
+            'end_date'=>'required|date|after:start_date'
+
         ]);
 
         $member = Membership::find($id);
 
         $member->contact_id = $request->get('contact_id');
+        $member->type_id = $request->get('type_id');
         $member->start_date = $request->get('start_date');
         $member->end_date = $request->get('end_date');
-        $member->num_of_term = $request->get('num_of_term');
 
         $member->save();
 
@@ -129,5 +161,18 @@ class MembershipController extends Controller
         $member->delete();
 
         return redirect()->route('admin_membership_list')->with('success', 'A membership has been removed.');
+    }
+
+    public function codeGenerate()
+    {
+        $char = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        $code = "VTS";
+        for ($i = 0; $i < 7; $i++)
+        {
+            $code .= $char[ rand(0, strlen($char) - 1) ];
+        }
+
+        return $code;
     }
 }
