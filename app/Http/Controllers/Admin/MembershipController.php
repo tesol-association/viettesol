@@ -34,13 +34,12 @@ class MembershipController extends Controller
     {
         //
         $contacts = Contact::all();
-<<<<<<< HEAD
+
         $msTypes = MembershipType::all();
         return view("layouts.admin.membership.create", ['contacts' => $contacts, 'msTypes' => $msTypes]);
-=======
+
         $memberTypes = MemberType::all();
         return view("layouts.admin.membership.create", ['contacts' => $contacts], ['memberTypes' => $memberTypes]);
->>>>>>> ba88a9a26f479319b5c9c4645e7b5cbcfe0c688b
     }
 
     /**
@@ -54,16 +53,16 @@ class MembershipController extends Controller
 
         $request->validate([
             'contact_id'=>'required|integer|unique:membership',
-<<<<<<< HEAD
+
             'type_id'=>'required',
             'mscode'=>'unique:membership',
             'start_date'=>'required|date',
             'end_date'=>'required|date|after:start_date',
-=======
+
             'type_id' => 'required',
             'start_date'=>'required|date',
             'end_date'=>'required|date|after:start_date'
->>>>>>> ba88a9a26f479319b5c9c4645e7b5cbcfe0c688b
+
         ]);
 
         $member = new Membership();
@@ -71,10 +70,9 @@ class MembershipController extends Controller
         $member->type_id = $request->get('type_id');
         $member->start_date = $request->get('start_date');
         $member->end_date = $request->get('end_date');
-<<<<<<< HEAD
+
         $member->mscode = $this->codeGenerate();
-=======
->>>>>>> ba88a9a26f479319b5c9c4645e7b5cbcfe0c688b
+
 
         $member->save();
 
@@ -105,14 +103,14 @@ class MembershipController extends Controller
     {
         //
         $member = Membership::find($id);
-<<<<<<< HEAD
+
         $msTypes = MembershipType::all();
 
         return view('layouts.admin.membership.edit', ['member' => $member, 'msTypes' => $msTypes]);
-=======
+
         $memberTypes = MemberType::all();
         return view('layouts.admin.membership.edit',['member' => $member], ['memberTypes' => $memberTypes]);
->>>>>>> ba88a9a26f479319b5c9c4645e7b5cbcfe0c688b
+
     }
 
     /**
@@ -127,15 +125,15 @@ class MembershipController extends Controller
         //
         $request->validate([
             'contact_id'=>'required|integer|unique:membership',
-<<<<<<< HEAD
+
             'type_id'=>'required',
             'start_date'=>'required|date',
             'end_date'=>'required|date|after:start_date',
-=======
+
             'type_id' => 'required',
             'start_date'=>'required|date',
             'end_date'=>'required|date|after:start_date'
->>>>>>> ba88a9a26f479319b5c9c4645e7b5cbcfe0c688b
+
         ]);
 
         $member = Membership::find($id);

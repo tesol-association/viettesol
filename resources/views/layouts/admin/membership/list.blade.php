@@ -61,12 +61,9 @@ All Members
                                     <p> {{ $member->contact->organize_name }} </p>
                                     @endif
                                 </td>
-<<<<<<< HEAD
                                 <td> {{ $member->msType->name }} </td>
                                 <td> {{ $member->mscode }} </td>
-=======
                                 <td><b> {{ $member->memberType->name }} </b></td>
->>>>>>> ba88a9a26f479319b5c9c4645e7b5cbcfe0c688b
                                 <td>
                                     <!--
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#view_membership{{ $member->id }}"> <i class="fa fa-eye">  </i>  </button>

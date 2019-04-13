@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\MemberType;
+use App\Models\MembershipType;
 use Session;
 
-class MemberTypeController extends Controller
+class MembershipTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class MemberTypeController extends Controller
     public function index()
     {
         //
-        $memberTypes = MemberType::all();
+        $memberTypes = MembershipType::all();
 
         return view('layouts.admin.membertype.list', ['memberTypes' => $memberTypes]);
     }
@@ -46,7 +46,7 @@ class MemberTypeController extends Controller
             'name' => 'required|unique:membership_types',
         ]);
 
-        $memberType = new MemberType([
+        $memberType = new MembershipType([
             'name' => $request->get('name'),
             'description' => $request->get('description')
         ]);
@@ -76,7 +76,7 @@ class MemberTypeController extends Controller
     public function edit($id)
     {
         //
-        $memberType = MemberType::find($id);
+        $memberType = MembershipType::find($id);
 
         return view('layouts.admin.membertype.edit', ['memberType' => $memberType]);
     }
@@ -91,7 +91,7 @@ class MemberTypeController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $memberType = MemberType::find($id);
+        $memberType = MembershipType::find($id);
 
         $memberType->name = $request->get('name');
         $memberType->description = $request->get('description');
@@ -110,7 +110,7 @@ class MemberTypeController extends Controller
     public function destroy($id)
     {
         //
-        $memberType = MemberType::find($id);
+        $memberType = MembershipType::find($id);
         $memberType->delete();
 
         return redirect()->route('admin_membertype_list')->with('success', $memberType->name.' has been removed as a Membership Type.');

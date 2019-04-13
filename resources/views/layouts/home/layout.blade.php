@@ -120,7 +120,10 @@
                                 </div>
                             </div>
                         </li>
-                    @endforeach   
+                    @endforeach
+                    <li>
+                        <a class="btn btn-primary" href="{{ route('home_donate_paypal') }}" role="button"><i class="fa fa-paypal"> Donate Now </i></a>
+                    </li>
                 </ul>
                 <!-- /nav -->
             </div>
@@ -175,7 +178,7 @@
                 @yield('content')
             </div>
             <div class="col-md-4">
-                <h3 class="module-title "><span>VIC 2018 Sponsors</span></h3>
+                <h3 class="module-title "><span>Sponsors</span></h3>
                 <!-- Right Side Of Navbar -->
                 <div id="slideshow">
                 @foreach($partners as $partner)

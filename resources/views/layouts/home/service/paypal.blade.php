@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <h3> If you are on this site, thank you for your generosity. </h3>
-        <h3> To donate to us via PayPal, if you have an active PayPal account, do: </h3>
+
         <div class="col-md-8">
             <fieldset class="form-border">
                 <legend class="form-border">{{ __('Click the button below') }}</legend>

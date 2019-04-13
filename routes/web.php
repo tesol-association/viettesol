@@ -214,12 +214,12 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']],function(){
     });
 
     Route::group(['prefix'=>'membertype'],function(){
-        Route::get('/list', 'Admin\MemberTypeController@index')->name('admin_membertype_list');
-        Route::get('/create', 'Admin\MemberTypeController@create')->name('admin_membertype_create');
-        Route::post('/store', 'Admin\MemberTypeController@store')->name('admin_membertype_store');
-        Route::get('/edit/{id}', 'Admin\MemberTypeController@edit')->name('admin_membertype_edit');
-        Route::post('/update/{id}', 'Admin\MemberTypeController@update')->name('admin_membertype_update');
-        Route::post('/delete/{id}', 'Admin\MemberTypeController@destroy')->name('admin_membertype_delete');
+        Route::get('/list', 'Admin\MembershipTypeController@index')->name('admin_membertype_list');
+        Route::get('/create', 'Admin\MembershipTypeController@create')->name('admin_membertype_create');
+        Route::post('/store', 'Admin\MembershipTypeController@store')->name('admin_membertype_store');
+        Route::get('/edit/{id}', 'Admin\MembershipTypeController@edit')->name('admin_membertype_edit');
+        Route::post('/update/{id}', 'Admin\MembershipTypeController@update')->name('admin_membertype_update');
+        Route::post('/delete/{id}', 'Admin\MembershipTypeController@destroy')->name('admin_membertype_delete');
     });
 
 
@@ -563,7 +563,7 @@ Route::group(['prefix'=>'home'],function(){
     });
 
     Route::group(['prefix' => 'fee'], function() {
-        Route::get('/payment', 'Home\PaymentController@getPaymentForm')->name('home_payment');
+        Route::get('/payment', 'Home\PaymentController@getPaymentForm')->name('home_fee_payment');
     });
 });
 
@@ -579,14 +579,4 @@ Route::group(['prefix'=>'/conference/{conference_path}'], function() {
 
         Route::get('/home','Conference\ConferenceController@index')->name('conference_home');
         Route::get('/speakers', 'Conference\ConferenceController@speaker')->name('conference_speakers');
-});
-
-Route::get('/somethingcool1', function()
-{
-    return view('layouts.conference.layout');
-});
-Route::get('/somethingcool2', function()
-{
-    return view('layouts.conference.speakers');
-
 });

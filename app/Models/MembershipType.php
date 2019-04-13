@@ -8,6 +8,12 @@ class MembershipType extends Model
 {
     protected $table = "membership_types";
 
+    protected $fillable = 
+    [
+    	'name',
+    	'description'
+    ];
+
     public function membership()
     {
     	return $this->hasMany('App\Models\Membership', 'type_id');
