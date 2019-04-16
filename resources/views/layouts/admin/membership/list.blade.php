@@ -37,7 +37,12 @@ All Members
                                 <td> ID </td>
                                 <td> Contact ID </td>
                                 <td> Name </td>
-                                <td>  </td>
+
+                                <td> Type </td>
+                                <td> Secret Code </td>
+
+                                <td> Membership Type </td>
+
                                 <td> View </td>
                                 <td> Edit </td>
                                 <td> Delete </td>
@@ -56,8 +61,11 @@ All Members
                                     <p> {{ $member->contact->organize_name }} </p>
                                     @endif
                                 </td>
-                                <td>  </td>
+                                <td> {{ $member->msType->name }} </td>
+                                <td> {{ $member->mscode }} </td>
+                                <td><b> {{ $member->memberType->name }} </b></td>
                                 <td>
+                                    <!--
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#view_membership{{ $member->id }}"> <i class="fa fa-eye">  </i>  </button>
 
                                     <form method="post" action="#">
@@ -65,7 +73,6 @@ All Members
                                             <div class="modal fade" id="view_membership{{ $member->id }}" role="dialog">
                                               <div class="modal-dialog">
                                               
-                                                <!-- Modal content-->
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -94,6 +101,8 @@ All Members
                                               </div>
                                             </div>
                                         </form>
+                                    -->
+                                    <a href="{{ route('admin_membership_show', ["id" => $member->id]) }}" class="btn btn-primary"> <i class="fa fa-eye"> </i> </a>
                                 </td>
                                 <td><a href="{{ route('admin_membership_edit', ["id" => $member->id]) }}" class="btn btn-primary"> <i class="fa fa-edit"> </i> </a></td>
                                 <td>
