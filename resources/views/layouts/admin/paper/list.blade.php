@@ -23,7 +23,6 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Title</th>
-                                    <th>Abstract</th>
                                     <th>Attach File</th>
                                     <th>Track</th>
                                     <th>Status</th>
@@ -37,8 +36,7 @@
                                 @foreach($papers as $paper)
                                     <tr>
                                         <td>{{ $paper->id }}</td>
-                                        <td>{{ $paper->title }}</td>
-                                        <td>{!! $paper->abstract !!}</td>
+                                        <td><a target="_blank" href="{{ route('admin_author_paper_view', ['conference_id' => $conference->id, 'id' => $paper->id]) }}">{{ $paper->title }}</a></td>
                                         <td>
                                             @if ($paper->attach_file)
                                                 <a target="_blank" href="{{ asset('/storage/' . $paper->attach_file) }}" class="btn btn-primary"><span class="fa fa-download"></span> Attach File</a>

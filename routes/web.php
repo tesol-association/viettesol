@@ -408,6 +408,15 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']],function(){
             Route::post('/update/{id}', 'Admin\ConferenceManager\FeeController@update')->name('admin_fee_update');
             Route::post('/delete/{id}', 'Admin\ConferenceManager\FeeController@destroy')->name('admin_fee_delete');
         });
+
+        Route::group(['prefix'=>'/author'], function() {
+            Route::get('/view/{id}', 'Admin\ConferenceManager\AuthorController@showAuthor')->name('admin_author_view');
+
+            Route::group(['prefix'=>'/paper'], function() {
+                Route::get('/list', 'Admin\ConferenceManager\AuthorController@index')->name('admin_author_paper_list');
+                Route::get('/view/{id}', 'Admin\ConferenceManager\AuthorController@show')->name('admin_author_paper_view');
+            });
+        });
     });
 
 });

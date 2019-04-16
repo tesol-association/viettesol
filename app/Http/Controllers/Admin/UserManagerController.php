@@ -70,7 +70,7 @@ class UserManagerController extends Controller
         if ($users->save()) {
             return redirect()->route('admin_user_list')->with('success', 'Account has been added successfully');
         } else{
-            return redirect()->route('admin_user_create')->with('errors', 'Error');
+            return redirect()->route('admin_user_create')->with('error', 'Error');
         }
 
     }
@@ -84,7 +84,8 @@ class UserManagerController extends Controller
     public function show($id)
     {
         $users = User::find($id);
-
+        if(empty($users))
+            return  redirect()->back()->with('error', 'No Information');
         return view('layouts.admin.usermanager.view',compact('users'));
     }
 
@@ -138,7 +139,7 @@ class UserManagerController extends Controller
         if($users->save()){
             return redirect()->route('admin_user_view',$id)->with('success', 'User has been update successfully');
         }else{
-            return redirect()->route('admin_user_update',$id)->with('errors', 'Error');
+            return redirect()->route('admin_user_update',$id)->with('error', 'Error');
         }
     }
 
@@ -150,14 +151,14 @@ class UserManagerController extends Controller
      */
     public function destroy($id)
     {
-        $users = User::find($id);
+        $user = User::find($id);
         if($user->delete()){
             if($user->image != env('AVATAR_DEFAULT')){
                 Storage::disk('public')->delete($users->image);
             }
             return redirect()->route('admin_user_list')->with('success', 'Account has been deleted successfully');
         }else{
-            return redirect()->route('admin_user_list')->with('errors', 'Error');
+            return redirect()->route('admin_user_list')->with('error', 'Error');
         }
     }
 
@@ -170,7 +171,7 @@ class UserManagerController extends Controller
         if($users->save()){
             return redirect()->route('admin_user_list')->with('success', 'Account has been enable successfully');
         }else{
-            return redirect()->route('admin_user_list')->with('errors', 'Error');
+            return redirect()->route('admin_user_list')->with('error', 'Error');
         }
     }
 
@@ -181,7 +182,7 @@ class UserManagerController extends Controller
         if($users->save()){
             return redirect()->route('admin_user_list')->with('success', 'Account has been disable Successfully');
         }else{
-            return redirect()->route('admin_user_list')->with('errors', 'Error');
+            return redirect()->route('admin_user_list')->with('error', 'Error');
         }
     }
 }
