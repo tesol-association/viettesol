@@ -47,10 +47,10 @@
                                         </td>
                                         <td>{{ $track->created_at }}</td>
                                         <td>
-                                            <a href="{{ route('admin_track_edit', ["conference_id" => $conference->id, "id" => $track->id]) }}" class="btn btn-info">Edit</a>
+                                            <a href="{{ route('admin_track_edit', ["conference_id" => $conference->id, "id" => $track->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_track_{{ $track->id }}">Delete</button>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_track_{{ $track->id }}"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->

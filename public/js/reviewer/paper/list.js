@@ -4,7 +4,7 @@ $(document).ready(function() {
         //Setup - add a select to each footer cell
         initComplete: function () {
             this.api().columns().every( function (i) {
-                if (i == 3 || i == 4){
+                if (i == 1 || i == 5){
                     var column = this;
                     var select = $('<select style="width: 100%;"><option value=""></option></select>')
                         .appendTo( $(column.header()).empty() )
@@ -28,7 +28,7 @@ $(document).ready(function() {
 
     // Setup - add a text input to each footer cell
     $('#paper_list .filters td').each( function (i) {
-        if(i == 1){
+        if(i == 3){
             var title = $('#paper_list thead th').eq( $(this).index() ).text();
             $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
         }

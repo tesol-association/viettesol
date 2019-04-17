@@ -22,27 +22,49 @@
                     <div class="box-body">
                         <div class="table-responsive">
                             <table id="paper_list" class="table table-bordered table-striped">
+                                <thead class="filters">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
                                 <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Title</th>
-                                    <th>Abstract</th>
-                                    <th>Track</th>
-                                    <th>Status</th>
-                                    <th>Author</th>
-                                    <th>Created At</th>
-                                    <th>Edit</th>
-                                    <th>Send Full Paper</th>
-                                </tr>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Title</th>
+                                        <th>Track</th>
+                                        <th>Status</th>
+                                        <th>Author</th>
+                                        <th>Created At</th>
+                                        <th>Edit</th>
+                                        <th>Send Full Paper</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($papers as $paper)
                                     <tr>
                                         <td>{{ $paper->id }}</td>
-                                        <td>{{ $paper->title }}</td>
-                                        <td>{!! $paper->abstract !!}</td>
+                                        <td><a target="_blank" href="{{ route('admin_author_paper_view', ['conference_id' => $conference->id, 'id' => $paper->id]) }}">{{ $paper->title }}</a></td>
                                         <td>{{ $paper->track->name }}</td>
-                                        <td>{{ $paper->status }}</td>
+                                        <td>
+                                            @switch($paper->status)
+                                                @case(Config::get('constants.PAPER_STATUS.ACCEPTED'))
+                                                <span class="label label-success">Accept Paper</span>
+                                                @break
+                                                @case(Config::get('constants.PAPER_STATUS.REVISION'))
+                                                <span class="label label-info">Revision Paper</span>
+                                                @break
+                                                @case(Config::get('constants.PAPER_STATUS.REJECTED'))
+                                                <span class="label label-danger">Reject Paper</span>
+                                                @break
+                                            @endswitch
+                                        </td>
                                         <td>
                                             @foreach($paper->authors as $author)
                                                 @if($author->pivot->seq == Config::get('constants.PAPER_AUTHOR.AUTHOR'))

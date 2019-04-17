@@ -18,6 +18,15 @@
                     <div class="box-body">
                         <div class="table-responsive">
                             <table id="user_conference_role_list" class="table table-bordered table-striped">
+                                <thead class="filters">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
                                 <thead>
 	                                <tr>
 	                                    <th>User Name</th>

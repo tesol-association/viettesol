@@ -2,6 +2,7 @@
 @section('title','Paper Management')
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link href="{{ asset('admin/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
     <section class="content">
@@ -17,24 +18,33 @@
                     <div class="box-body">
                         <div class="table-responsive">
                             <table id="paper_result_list" class="table table-bordered table-striped">
+                                <thead class="filter_result">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
                                 <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Title</th>
-                                    <th>Abstract</th>
-                                    <th>Attach File</th>
-                                    <th>Track</th>
-                                    <th>Status</th>
-                                    <th>Created At</th>
-                                    <th>Schedule</th>
-                                </tr>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Title</th>
+                                        <th>Attach File</th>
+                                        <th>Track</th>
+                                        <th>Status</th>
+                                        <th>Created At</th>
+                                        <th>Schedule</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($paperResults as $paper)
                                     <tr>
                                         <td>{{ $paper->id }}</td>
-                                        <td>{{ $paper->title }}</td>
-                                        <td>{!! $paper->abstract !!}</td>
+                                        <td><a target="_blank" href="{{ route('admin_author_paper_view', ['conference_id' => $conference->id, 'id' => $paper->id]) }}">{{ $paper->title }}</a></td>
                                         <td>
                                             @if ($paper->file_id)
                                                 <a target="_blank" href="{{ asset('/storage/' . $paper->attachFile->path) }}" class="btn btn-primary"><span class="fa fa-download"></span> {{ $paper->attachFile->original_file_name }}</a>
@@ -74,24 +84,33 @@
                     <div class="box-body">
                         <div class="table-responsive">
                             <table id="paper_unschedule_list" class="table table-bordered table-striped">
+                                <thead class="filter_unschedule">
+                                    <tr>
+                                        <td></td>
+                                        <td>Title</td>
+                                        <td></td>
+                                        <td>Track</td>
+                                        <td>Status</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
                                 <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Title</th>
-                                    <th>Abstract</th>
-                                    <th>Attach File</th>
-                                    <th>Track</th>
-                                    <th>Status</th>
-                                    <th>Created At</th>
-                                    <th>Un Schedule</th>
-                                </tr>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Title</th>
+                                        <th>Attach File</th>
+                                        <th>Track</th>
+                                        <th>Status</th>
+                                        <th>Created At</th>
+                                        <th>Un Schedule</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($paperUnschedules as $paper)
                                     <tr >
                                         <td>{{ $paper->id }}</td>
-                                        <td>{{ $paper->title }}</td>
-                                        <td>{!! $paper->abstract !!}</td>
+                                        <td><a target="_blank" href="{{ route('admin_author_paper_view', ['conference_id' => $conference->id, 'id' => $paper->id]) }}">{{ $paper->title }}</a></td>
                                         <td>
                                             @if ($paper->file_id)
                                                 <a target="_blank" href="{{ asset('/storage/' . $paper->attachFile->path) }}" class="btn btn-primary"><span class="fa fa-download"></span> {{ $paper->attachFile->original_file_name }}</a>
@@ -121,6 +140,7 @@
 @section('js')
     <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>

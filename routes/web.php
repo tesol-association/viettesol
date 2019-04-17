@@ -511,6 +511,7 @@ Route::group(['prefix'=>'/conf/{conference_id}','middleware' => ['auth']], funct
             Route::get('/list_paper_schedule', 'Admin\ConferenceManager\Director\PaperController@showPaperUnSchedule')->name('director_paper_un_schedule_list');
             Route::post('/change_paper_un_schedule/{id}', 'Admin\ConferenceManager\Director\PaperController@changePaperStatus')->name('director_change_paper_un_schedule');
             Route::post('/change_paper_redo_un_schedule/{id}', 'Admin\ConferenceManager\Director\PaperController@changeRedoPaperStatus')->name('director_change_paper_redo_un_schedule');
+            Route::get('/view/{id}', 'Admin\ConferenceManager\AuthorController@show')->name('director_paper_un_schedule_view');
         });
 
     });
