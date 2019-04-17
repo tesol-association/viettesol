@@ -35,4 +35,9 @@ class ReviewAssignment extends Model
     {
         return json_decode($value, true);
     }
+
+    public function attachFile()
+    {
+        return $this->belongsTo('App\Models\PaperFile', 'review_file_id');
+    }
 }
