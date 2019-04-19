@@ -35,15 +35,18 @@ $(document).ready(function () {
                 switch (data.decision) {
                     case ACCEPTED:
                         toastr.success('Accepted At ' + data.date_decided.date);
-                        $('#last_decided').attr('class', 'text-green').text('Accepted At ' + data.date_decided.date);
+                        $('#last_decided').attr('class', 'text-green').text('Accepted At' + data.date_decided.date);
+                        $('#edit_decision_histories').prepend('<span class="text-green">Accepted At ' + data.date_decided.date + ' By ' + data.user.user_name +  '</span>');
                         break;
                     case REVISION:
                         toastr.success('Revision At ' + data.date_decided.date);
                         $('#last_decided').attr('class', 'text-yellow').text('Revision At ' + data.date_decided.date);
+                        $('#edit_decision_histories').prepend('<span class="text-yellow">Revision At ' + data.date_decided.date + ' By ' + data.user.user_name +  '</span>');
                         break;
                     case REJECTED:
                         toastr.success('Rejected At ' + data.date_decided.date);
                         $('#last_decided').attr('class', 'text-red').text('Rejected At ' + data.date_decided.date);
+                        $('#edit_decision_histories').prepend('<span class="text-red">Rejected At ' + data.date_decided.date + ' By ' + data.user.user_name +  '</span>');
                         break;
                 }
                 console.log('change');

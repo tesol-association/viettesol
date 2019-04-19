@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Announcements;
 use App\Models\ConferenceTimeline;
 use App\Models\ConferencePartnerSponser;
+use App\Models\Fee;
 
 class ConferenceController extends BaseConferenceController
 {
@@ -14,8 +15,9 @@ class ConferenceController extends BaseConferenceController
     {
     	$conference = $this->conference;
     	$conferenceTimeline= ConferenceTimeline::where('conference_id', $conference->id)->first();
+    	$fees = Fee::where('conference_id', $conference->id)->get();
         $conferencePartnerSponsers= ConferencePartnerSponser::orderBy('id', 'DESC')->limit(8)->offset(0)->get();
-    	return view('layouts.conference.home',['conference_path'=>$this->conferencePath, 'conferenceTimeline'=> $conferenceTimeline, 'conferencePartnerSponsers'=> $conferencePartnerSponsers]);
+    	return view('layouts.conference.home',['conference_path'=>$this->conferencePath, 'conferenceTimeline'=> $conferenceTimeline, 'conferencePartnerSponsers'=> $conferencePartnerSponsers, 'fees'=> $fees]);
     }
     public function getNews()
     {

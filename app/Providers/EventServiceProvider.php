@@ -22,7 +22,37 @@ class EventServiceProvider extends ServiceProvider
         ],
         PaperSubmitted::class => [
             SendSubmissionNotification::class,
-        ]
+        ],
+        'App\Events\PaperEvent\PaperEditSubmissioned' => [
+            'App\Listeners\PaperEvent\PaperLogEditSubmissioned',
+        ],
+        'App\Events\PaperEvent\AddCoAuthor' => [
+            'App\Listeners\PaperEvent\LogAddCoAuthor',
+        ],
+        'App\Events\PaperEvent\SendFullPaper' => [
+            'App\Listeners\PaperEvent\LogSendFullPaper',
+        ],
+        'App\Events\PaperEvent\AssignReviewer' => [
+            'App\Listeners\PaperEvent\LogAssignReviewer',
+            'App\Listeners\PaperEvent\PaperChangeStatusWhenAssignReviewer',
+        ],
+        'App\Events\PaperEvent\Unassigned' => [
+            'App\Listeners\PaperEvent\LogUnassigned',
+        ],
+        'App\Events\PaperEvent\TrackDecided' => [
+            'App\Listeners\PaperEvent\LogTrackDecided',
+            'App\Listeners\PaperEvent\PaperChangeStatusWhenLogTrackDecided',
+        ],
+        'App\Events\PaperEvent\SendReviewResult' => [
+            'App\Listeners\PaperEvent\LogSendReviewResult',
+            'App\Listeners\PaperEvent\PaperChangeStatusWhenSendReviewResult',
+        ],
+        'App\Events\PaperEvent\AttachFileReview' => [
+            'App\Listeners\PaperEvent\LogAttachFileReview',
+        ],
+        'App\Events\PaperEvent\AddPresentationList' => [
+            'App\Listeners\PaperEvent\LogAddPresentationList',
+        ],
     ];
 
     /**

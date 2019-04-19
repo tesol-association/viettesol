@@ -88,7 +88,7 @@
 						<div class="tickets_inner text-center">
 							<div class="tickets_title">Registration</div>
 							<div class="tickets_text">{{ $conference->title }}</div>
-							<div class="button tickets_button"><a href="">Regiatration</a></div>
+							<div class="button tickets_button"><a href="{{ route('admin_registration_create',['conference_id'=>$conference->id]) }}">Registration</a></div>
 						</div>
 					</div>
 				</div>

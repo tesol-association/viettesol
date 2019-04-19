@@ -55,4 +55,14 @@ class ConferenceRoleRepository
         return $trackDirectors;
     }
 
+    public function getReviewers($conferenceId)
+    {
+        $reviewerRole = ConferenceRole::where('name', ConferenceRole::REVIEWER)->where('conference_id', $conferenceId)->first();
+        if(!$reviewerRole){
+            return null;
+        }
+        $reviewer = $reviewerRole->user;
+        return $reviewer;
+    }
+
 }
