@@ -56,3 +56,5 @@ ALTER TABLE `prepared_emails` CHANGE `code` `email_key` VARCHAR(255) CHARACTER S
 ALTER TABLE `prepared_emails` CHANGE `code` `email_key` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
 ALTER TABLE `prepared_emails` CHANGE `subject` `subject` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
 ALTER TABLE `prepared_emails` CHANGE `body` `body` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
+
+/* 11/04/2019 */

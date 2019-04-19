@@ -44,4 +44,9 @@ class Paper extends Model
     {
         return $this->belongsTo('App\Models\PaperFile', 'file_id');
     }
+
+    public function histories()
+    {
+        return $this->hasMany('App\Models\PaperEventLog', 'paper_id');
+    }
 }

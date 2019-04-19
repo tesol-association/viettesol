@@ -210,6 +210,16 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']],function(){
         Route::post('/update/{id}', 'Admin\MembershipController@update')->name('admin_membership_update');
         Route::post('/delete/{id}', 'Admin\MembershipController@destroy')->name('admin_membership_delete');
         Route::get('/make/{id}', 'Admin\ContactController@make')->name('admin_membership_make');
+        Route::get('/show/{id}', 'Admin\MembershipController@show')->name('admin_membership_show');
+    });
+
+    Route::group(['prefix'=>'membertype'],function(){
+        Route::get('/list', 'Admin\MembershipTypeController@index')->name('admin_membertype_list');
+        Route::get('/create', 'Admin\MembershipTypeController@create')->name('admin_membertype_create');
+        Route::post('/store', 'Admin\MembershipTypeController@store')->name('admin_membertype_store');
+        Route::get('/edit/{id}', 'Admin\MembershipTypeController@edit')->name('admin_membertype_edit');
+        Route::post('/update/{id}', 'Admin\MembershipTypeController@update')->name('admin_membertype_update');
+        Route::post('/delete/{id}', 'Admin\MembershipTypeController@destroy')->name('admin_membertype_delete');
     });
 
 
@@ -553,9 +563,19 @@ Route::group(['prefix'=>'home'],function(){
         Route::get('/view','Home\ChangePasswordController@index')->name('home_changepassword_view');
         Route::post('/save','Home\ChangePasswordController@store')->name('home_changepassword_save');
     });
+
+    //Donations and Payments
+    Route::group(['prefix' => 'donate'], function() {
+        Route::get('/viapaypal', 'Home\DonationController@getPayPalForm')->name('home_donate_paypal');
+    });
+
+    Route::group(['prefix' => 'fee'], function() {
+        Route::get('/payment', 'Home\PaymentController@getPaymentForm')->name('home_fee_payment');
+    });
 });
 
 Route::group(['prefix'=>'/conference/{conference_path}'], function() {
+
          Route::get('/home','Conference\ConferenceController@index')->name('conference_home');
 
          Route::get('/news','Conference\ConferenceController@getNews')->name('conference_news');
@@ -563,4 +583,7 @@ Route::group(['prefix'=>'/conference/{conference_path}'], function() {
          Route::get('/news/{id}','Conference\ConferenceController@getNewsDetail')->name('conference_news_detail');
 
         Route::get('/contact','Conference\ContactController@index')->name('conference_contact');
+
+        Route::get('/home','Conference\ConferenceController@index')->name('conference_home');
+        Route::get('/speakers', 'Conference\ConferenceController@speaker')->name('conference_speakers');
 });

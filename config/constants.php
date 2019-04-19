@@ -28,20 +28,20 @@ return [
         'EDIT_SUBMISSION_MESSAGE' => '<strong> %s </strong>  update for paper title <strong> %s  </strong> at <strong> %s </strong>', // AuthorName, PaperTitle, TimeAt
 
         'ADD_CO_AUTHOR' => 'add_co_author',
-        'ADD_CO_AUTHOR_MESSAGE' => '<strong> %s </strong>  add co-author %s for paper title <strong> %s  </strong> at <strong> %s </strong>', // AuthorName, CoAuthorName, PaperTitle, TimeAt
+        'ADD_CO_AUTHOR_MESSAGE' => '<strong> %s </strong>  add co-author <strong> %s </strong>  for paper title <strong> %s  </strong> at <strong> %s </strong>', // AuthorName, CoAuthorName, PaperTitle, TimeAt
 
         'SEND_FULL_PAPER' => 'send_full_paper',
         'SEND_FULL_PAPE_MESSAGE' => '<strong> %s </strong>  send full paper for paper title <strong> %s  </strong> at <strong> %s </strong>', // AuthorName,PaperTitle, TimeAt
 
         //Track Director
         'ASSIGN_REVIEWER' => 'assign_reviewer',
-        'ASSIGN_REVIEWER_MESSAGE' => '<strong> %s </strong>  assign reviewer %s for paper title <strong> %s  </strong> at <strong> %s </strong>', // TrackDirectorName, ReviewerName, PaperTitle, TimeAt
+        'ASSIGN_REVIEWER_MESSAGE' => '<strong> %s </strong>  assign reviewer <strong> %s </strong>  for paper title <strong> %s  </strong> at <strong> %s </strong>', // TrackDirectorName, ReviewerName, PaperTitle, TimeAt
 
         'UN_ASSIGNMENT' => 'unassigned_reviewer',
-        'UN_ASSIGNMENT_MESSAGE' => '<strong> %s </strong>  unassign reviewer %s for paper title <strong> %s  </strong> at <strong> %s </strong>', // TrackDirectorName, ReviewerName, PaperTitle, TimeAt
+        'UN_ASSIGNMENT_MESSAGE' => '<strong> %s </strong>  unassign reviewer <strong> %s </strong>  for paper title <strong> %s  </strong> at <strong> %s </strong>', // TrackDirectorName, ReviewerName, PaperTitle, TimeAt
 
         'TRACK_DICIDED' => 'track_decided',
-        'TRACK_DICIDED_MESSAGE' => 'Track <strong> %s </strong>  decided %s for paper title <strong> %s  </strong> at <strong> %s </strong>', // TrackDirectorName, disicion, PaperTitle, TimeAt
+        'TRACK_DICIDED_MESSAGE' => 'Track Director <strong> %s </strong>  decided <strong> %s </strong>  for paper title <strong> %s  </strong> at <strong> %s </strong>', // TrackDirectorName, disicion, PaperTitle, TimeAt
 
         // Reviewer
         'SEND_REVIEW_RESULT' => 'send_review_result',

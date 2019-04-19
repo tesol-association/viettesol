@@ -8,6 +8,8 @@ use App\Models\Announcements;
 use App\Models\ConferenceTimeline;
 use App\Models\ConferencePartnerSponser;
 use App\Models\Fee;
+use App\Models\Conference;
+use App\Models\Speakers;
 
 class ConferenceController extends BaseConferenceController
 {
@@ -30,4 +32,10 @@ class ConferenceController extends BaseConferenceController
        return view('layouts.conference.news_detail',['conference_path'=>$this->conferencePath,'announcement'=> $announcement]);
     }
 
+    public function speaker()
+    {
+    	$speakers = $this->conference->speakers;
+
+    	return view('layouts.conference.speakers', ["speakers" => $speakers]);
+    }
 }
