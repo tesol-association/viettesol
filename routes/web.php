@@ -418,6 +418,13 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']],function(){
             Route::post('/update/{id}', 'Admin\ConferenceManager\FeeController@update')->name('admin_fee_update');
             Route::post('/delete/{id}', 'Admin\ConferenceManager\FeeController@destroy')->name('admin_fee_delete');
         });
+
+        Route::group(['prefix'=>'registration'],function (){
+            Route::get('/create','Admin\ConferenceManager\RegistrationController@create')->name('admin_registration_create');
+            Route::post('/store','Admin\ConferenceManager\RegistrationController@store')->name('admin_registration_store');
+            Route::get('/list','Admin\ConferenceManager\RegistrationController@getList')->name('admin_registration_list');
+            Route::get('/update','Admin\ConferenceManager\RegistrationController@update')->name('admin_registration_update');
+        });
     });
 
 });

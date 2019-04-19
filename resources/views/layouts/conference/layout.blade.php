@@ -119,7 +119,6 @@
 <<<<<<< HEAD
 													<li><a href="{{ route('conference_home',['conference_path'=>$conference->path]) }}">Home</a></li>
 													<li><a href="">Speakers</a></li>
-													<li><a href="">Events</a></li>
 													<li><a href="{{ route('conference_news',['conference_path'=>$conference->path]) }}">News</a></li>
 													<li><a href="{{ route('conference_contact',[$conference->path]) }}">Contact</a></li>
 =======
@@ -134,7 +133,7 @@
 											</nav>
 											<div class="header_extra ml-auto">
 												<div class="header_search"><i class="fa fa-search" aria-hidden="true"></i></div>
-												<div class="button header_button"><a href="">Registration</a></div>
+												<div class="button header_button"><a href="{{ route('admin_registration_create',['conference_id'=>$conference->id]) }}">Registration</a></div>
 											</div>
 										</div>
 									</div>
@@ -174,7 +173,7 @@
 				<div class="col">
 					<div class="cta_content text-center">
 						<div class="cta_title">Get your tickets now!</div>
-						<div class="button cta_button"><a href="#">Regiatration</a></div>
+						<div class="button cta_button"><a href="{{ route('admin_registration_create',['conference_id'=>$conference->id]) }}">Regiatration</a></div>
 					</div>
 				</div>
 			</div>

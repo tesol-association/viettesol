@@ -3,8 +3,9 @@
     margin-top: -9%;
     margin-bottom: 5%;
 }
- .intro {
+.intro {
   max-width: 100%;
+  margin-top: 40px;
 }
 
 .intro img {
@@ -15,6 +16,9 @@
     margin: 1%;
 }
 @media(max-width: 576px){
+    .intro{
+        margin-top: 60px;
+    }
     .title{
         margin-left: 50px;
         margin-top: -45%;
