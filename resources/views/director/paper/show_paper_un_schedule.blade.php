@@ -31,9 +31,9 @@
                                 </thead>
                                 <thead>
                                     <tr>
+                                        <th><input type="checkbox" class="checkall_result"></th>
                                         <th>Id</th>
                                         <th>Title</th>
-                                        <th>Attach File</th>
                                         <th>Track</th>
                                         <th>Status</th>
                                         <th>Created At</th>
@@ -42,14 +42,10 @@
                                 </thead>
                                 <tbody>
                                 @foreach($paperResults as $paper)
-                                    <tr>
+                                    <tr data-conference_id="{{ $conference->id }}" data-paper_id="{{ $paper->id }}">
+                                        <td><input type="checkbox" class="checkbox_result"></td>
                                         <td>{{ $paper->id }}</td>
                                         <td><a target="_blank" href="{{ route('admin_author_paper_view', ['conference_id' => $conference->id, 'id' => $paper->id]) }}">{{ $paper->title }}</a></td>
-                                        <td>
-                                            @if ($paper->file_id)
-                                                <a target="_blank" href="{{ asset('/storage/' . $paper->attachFile->path) }}" class="btn btn-primary"><span class="fa fa-download"></span> {{ $paper->attachFile->original_file_name }}</a>
-                                            @endif
-                                        </td>
                                         <td>{{ $paper->track->name }}</td>
                                         <td>
                                             @switch($paper->status)
@@ -71,6 +67,13 @@
                                     </tr>
                                 @endforeach
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>
+                                            <button type="button" class="btn_paper_result_all btn btn-primary"> Add </button>
+                                        </th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -87,19 +90,19 @@
                                 <thead class="filter_unschedule">
                                     <tr>
                                         <td></td>
-                                        <td>Title</td>
                                         <td></td>
-                                        <td>Track</td>
-                                        <td>Status</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
                                 </thead>
                                 <thead>
                                     <tr>
+                                        <th><input type="checkbox" class="checkall_unschedule"></th>
                                         <th>Id</th>
                                         <th>Title</th>
-                                        <th>Attach File</th>
                                         <th>Track</th>
                                         <th>Status</th>
                                         <th>Created At</th>
@@ -108,14 +111,10 @@
                                 </thead>
                                 <tbody>
                                 @foreach($paperUnschedules as $paper)
-                                    <tr >
+                                    <tr data-conference_id="{{ $conference->id }}" data-paper_id="{{ $paper->id }}">
+                                        <td><input type="checkbox" class="checkbox_unschedule"></td>
                                         <td>{{ $paper->id }}</td>
                                         <td><a target="_blank" href="{{ route('admin_author_paper_view', ['conference_id' => $conference->id, 'id' => $paper->id]) }}">{{ $paper->title }}</a></td>
-                                        <td>
-                                            @if ($paper->file_id)
-                                                <a target="_blank" href="{{ asset('/storage/' . $paper->attachFile->path) }}" class="btn btn-primary"><span class="fa fa-download"></span> {{ $paper->attachFile->original_file_name }}</a>
-                                            @endif
-                                        </td>
                                         <td>{{ $paper->track->name }}</td>
                                         <td><span class="label label-primary">{{ $paper->status }} Paper</span></td>
                                         <td>{{ $paper->created_at }}</td>
@@ -125,6 +124,13 @@
                                     </tr>
                                 @endforeach
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>
+                                            <button type="button" class="btn_paper_unchedule_all btn btn-danger"> Remove </button>
+                                        </th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
