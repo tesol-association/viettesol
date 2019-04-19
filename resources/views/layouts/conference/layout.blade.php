@@ -116,19 +116,10 @@
 										<div class="header_nav_content d-flex flex-row align-items-center justify-content-start">
 											<nav class="main_nav">
 												<ul>
-<<<<<<< HEAD
 													<li><a href="{{ route('conference_home',['conference_path'=>$conference->path]) }}">Home</a></li>
 													<li><a href="">Speakers</a></li>
 													<li><a href="{{ route('conference_news',['conference_path'=>$conference->path]) }}">News</a></li>
 													<li><a href="{{ route('conference_contact',[$conference->path]) }}">Contact</a></li>
-=======
-													<li class="active"><a href="index.html">Home</a></li>
-													<li><a href="#">About Us</a></li>
-													<li><a href="#">Speakers</a></li>
-													<li><a href="#">Events</a></li>
-													<li><a href="#">News</a></li>
-													<li><a href="#">Contact</a></li>
->>>>>>> ba88a9a26f479319b5c9c4645e7b5cbcfe0c688b
 												</ul>
 											</nav>
 											<div class="header_extra ml-auto">

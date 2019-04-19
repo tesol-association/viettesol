@@ -3,6 +3,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<link href="{{ asset('admin/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
 <style type="text/css">
 	td{
 		text-align: center;
@@ -18,7 +19,7 @@ Contribution History
 <section class="content">
 	<div class="row">
 		<div class="col-xs-12">
-	  
+
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">Data Table With All Contribution History</h3>
@@ -55,14 +56,14 @@ Contribution History
 								<td> {{ $contribution->unit }} {{ $contribution->amount }} </td>
 								<td> {{ $contribution->payment_method_id }} </td>
 								<td> {{ $contribution->transaction_id }} </td>
-								<td> 
+								<td>
 									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_contribution{{ $contribution->id }}"> <i class="fa fa-trash">  </i> </button>
 
 									<form method="post" action="{{ route('admin_contribution_delete',['id'=> $contribution->id ]) }}">
 										@csrf
 										<div class="modal fade" id="delete_contribution{{ $contribution->id }}" role="dialog">
 										  <div class="modal-dialog">
-										  
+
 											<!-- Modal content-->
 											<div class="modal-content">
 											  <div class="modal-header">
@@ -74,7 +75,7 @@ Contribution History
 												<button type="submit" class="btn btn-danger">Delete</button>
 											  </div>
 											</div>
-											
+
 										  </div>
 										</div>
 									</form>
@@ -95,12 +96,15 @@ Contribution History
 @section('js')
 <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('admin/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
 <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
 <script>
 	$(function () {
-		$('#example1').DataTable()
+		$('#example1').DataTable({
+            responsive: true,
+        });
 		$('#example2').DataTable({
 			'paging'      : true,
 			'lengthChange': false,
