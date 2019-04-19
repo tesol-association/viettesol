@@ -312,9 +312,6 @@ $(document).ready(function() {
             });
             rusult.row($($trows[i])).remove().draw();
         }
-        // $trows.fadeOut(function(){
-        //     $trows.remove();
-        // });
     });
 
     $('#paper_unschedule_list tfoot').on('click', '.btn_paper_unchedule_all', function(){
@@ -376,8 +373,5 @@ $(document).ready(function() {
             });
             unschedule.row($($trows[i])).remove().draw();
         }
-        // $trows.fadeOut(function(){
-        //     $trows.remove();
-        // });
     });
 });
