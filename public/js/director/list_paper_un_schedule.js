@@ -2,7 +2,6 @@ $(document).ready(function() {
 
     var rusult = $('#paper_result_list').DataTable({
         'order': [[0, 'desc']],
-        select: true,
         initComplete: function () {
             this.api().columns().every( function (i) {
                 if (i == 3){

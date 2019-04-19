@@ -2,6 +2,7 @@
 @section('title','Event registration form')
 @section('css')
 <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<link href="{{ asset('admin/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
 @endsection
 @section('page-header')
 List event
@@ -28,7 +29,7 @@ List event
 									<td>{{ $event->title }}</td>
 									<td><a href="{{ route('criteria_additional_list',['id'=> $event->id]) }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
 								</tr>
-                                    @endforeach 
+                                    @endforeach
 							</tbody>
 							<tfoot>
 							</tfoot>
@@ -48,12 +49,15 @@ List event
 @section('js')
 <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('admin/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
 <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
 <script>
 	$(function () {
-		$('#example1').DataTable()
+		$('#example1').DataTable({
+            responsive: true,
+        });
 		$('#example2').DataTable({
 			'paging'      : true,
 			'lengthChange': false,

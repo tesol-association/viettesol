@@ -2,6 +2,7 @@
 @section('title','Paper Author Management')
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link href="{{ asset('admin/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
@@ -17,13 +18,6 @@
                     <div class="box-body">
                         <div class="table-responsive">
                             <table id="paper_list" class="table table-bordered table-striped">
-                                <thead class="filters">
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </thead>
                                 <thead>
                                     <tr>
                                         <th>Id</th>
@@ -44,6 +38,13 @@
                                     </tr>
                                 @endforeach
                                 </tbody>
+                                <tfoot class="filters">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -59,6 +60,7 @@
 @section('js')
     <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>

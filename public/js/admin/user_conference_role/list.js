@@ -1,13 +1,14 @@
 $(document).ready(function() {
     var table = $('#user_conference_role_list').DataTable({
         'order': [[0, 'desc']],
+        responsive: true,
         initComplete: function () {
             this.api().columns().every( function (i) {
                 if (i == 3 ){
                     var column = this;
                     var value = [];
                     var select = $('<select style="width: 100%;"><option value=""></option></select>')
-                        .appendTo( $(column.header()).empty() )
+                        .appendTo( $(column.footer()).empty() )
                         .on( 'change', function () {
                             var val = $.fn.dataTable.util.escapeRegex(
                                 $(this).val()

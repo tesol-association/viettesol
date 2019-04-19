@@ -3,6 +3,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<link href="{{ asset('admin/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
 <style type="text/css">
     td{
         text-align: center;
@@ -18,7 +19,7 @@ All Membership Type
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-      
+
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Data Table With All Membership Types</h3>
@@ -62,7 +63,7 @@ All Membership Type
                                             @csrf
                                             <div class="modal fade" id="delete_membertype{{ $type->id }}" role="dialog">
                                               <div class="modal-dialog">
-                                              
+
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
                                                   <div class="modal-header">
@@ -74,7 +75,7 @@ All Membership Type
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                   </div>
                                                 </div>
-                                                
+
                                               </div>
                                             </div>
                                         </form>
@@ -94,12 +95,15 @@ All Membership Type
 @section('js')
 <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('admin/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
 <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
 <script>
     $(function () {
-        $('#example1').DataTable();
+        $('#example1').DataTable({
+            responsive: true,
+        });
     })
 </script>
 @endsection

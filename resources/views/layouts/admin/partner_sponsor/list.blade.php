@@ -2,6 +2,7 @@
 @section('title','Partner-Sponsor Management')
 @section('css')
 <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<link href="{{ asset('admin/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
 @endsection
 @section('page-header')
 List partner-sponsor
@@ -10,7 +11,7 @@ List partner-sponsor
 <section class="content">
       <div class="row">
         <div class="col-xs-12">
-      
+
           <div class="box">
             <div class="box-header">
               <div class="row">
@@ -54,7 +55,7 @@ List partner-sponsor
                         @csrf
                         <div class="modal fade" id="myModal_{{ $partner->id }}" role="dialog">
                           <div class="modal-dialog">
-                          
+
                             <!-- Modal content-->
                             <div class="modal-content">
                               <div class="modal-header">
@@ -66,7 +67,7 @@ List partner-sponsor
                                 <button type="submit" class="btn btn-danger">Delete</button>
                               </div>
                             </div>
-                            
+
                           </div>
                         </div>
                     </form>
@@ -96,12 +97,15 @@ List partner-sponsor
 @section('js')
 <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('admin/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
 <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
 <script>
   $(function () {
-    $('#example1').DataTable()
+    $('#example1').DataTable([
+        responsive: true,
+    ]);
     $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': false,

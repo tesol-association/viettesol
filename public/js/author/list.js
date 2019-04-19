@@ -1,13 +1,14 @@
 $(document).ready(function() {
     var table = $('#paper_list').DataTable({
         'order': [[0, 'desc']],
+        responsive: true,
         //Setup - add a select to each footer cell
         initComplete: function () {
             this.api().columns().every( function (i) {
                 if (i == 2){
                     var column = this;
                     var select = $('<select style="width: 100%;"><option value=""></option></select>')
-                        .appendTo( $(column.header()).empty() )
+                        .appendTo( $(column.footer()).empty() )
                         .on( 'change', function () {
                             var val = $.fn.dataTable.util.escapeRegex(
                                 $(this).val()
@@ -26,7 +27,7 @@ $(document).ready(function() {
                     var column = this;
                     var value = [];
                     var select = $('<select style="width: 100%;"><option value=""></option></select>')
-                        .appendTo( $(column.header()).empty() )
+                        .appendTo( $(column.footer()).empty() )
                         .on( 'change', function () {
                             var val = $.fn.dataTable.util.escapeRegex(
                                 $(this).val()
