@@ -69,4 +69,22 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Track', 'track_director', 'user_id', 'track_id');
     }
+
+    public function isSuperAdmin(): bool
+    {
+        if ($this->is_admin == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    public function hasAccess(string $permission): bool
+    {
+        foreach ($this->conferenceRoles as $conferenceRole) {
+            if ($conferenceRole->hasPermission($permission)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

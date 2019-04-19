@@ -12,9 +12,11 @@
                         <div class="col-md-4">
                             <h3 class="box-title">Track List</h3>
                         </div>
+                        @can('update-session-type', \App\Models\SessionType::class)
                         <div class="col-md-2 col-md-offset-6">
                             <a href="{{ route('admin_track_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add Track</a>
                         </div>
+                        @can('update-session-type', \App\Models\SessionType::class)
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">

@@ -21,4 +21,15 @@ class ConferenceRole extends Model
     	return $this->belongsToMany('App\Models\User', 'user_conference_roles', 'conference_role_id', 'user_id');
     }
 
+    public function permissions()
+    {
+        return $this->belongsToMany('App\Models\ConferencePermission', 'conference_roles_permissions', 'conference_role_id', 'conference_permission_id')->withPivot('allowed');
+    }
+
+    public function hasPermission(string $permission): bool
+    {
+        $permissions = $this->permissions()->where('allowed', 1)->pluck('name')->all();
+        return in_array($permission, $permissions);
+    }
+
 }

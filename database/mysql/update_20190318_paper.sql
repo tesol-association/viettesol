@@ -53,8 +53,10 @@ CREATE TABLE `viettesol`.`user_token` ( `id` INT NOT NULL AUTO_INCREMENT ,
 PRIMARY KEY (`id`)) ENGINE = InnoDB;
 /* 02/04/2019 */
 ALTER TABLE `prepared_emails` CHANGE `code` `email_key` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
-ALTER TABLE `prepared_emails` CHANGE `code` `email_key` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
 ALTER TABLE `prepared_emails` CHANGE `subject` `subject` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
 ALTER TABLE `prepared_emails` CHANGE `body` `body` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
 
 /* 11/04/2019 */
+CREATE TABLE `viettesol`.`conference_permissions` ( `id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(255) NOT NULL , `description` TEXT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+ALTER TABLE `conference_permissions` ADD UNIQUE( `name`);
+CREATE TABLE `viettesol`.`conference_roles_permissions` ( `id` INT NOT NULL AUTO_INCREMENT , `conference_role_id` INT NOT NULL , `conference_permission_id` INT NOT NULL , `allowed` TINYINT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

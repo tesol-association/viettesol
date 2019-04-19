@@ -38,6 +38,7 @@ class PaperController extends BaseConferenceController
 
     public function sendPaper()
     {
+        $this->authorize('send-paper');
         $tracks = $this->conference->tracks;
         $sessionTypes = $this->conference->sessionTypes;
         $author = Auth::user();
@@ -72,6 +73,7 @@ class PaperController extends BaseConferenceController
     public function editPaper(Request $request,$conferenceId, $id)
     {
         $paper = $this->papers->find($id);
+        $this->authorize('update-paper', $paper);
         $tracks = $this->conference->tracks;
         $sessionTypes = $this->conference->sessionTypes;
         return view('author.paper.edit', [
@@ -83,6 +85,8 @@ class PaperController extends BaseConferenceController
 
     public function updatePaper(Request $request, $conferenceId, $id)
     {
+        $paper = $this->papers->find($id);
+        $this->authorize('update-paper', $paper);
         $request->validate([
             'paper.title' => 'required',
             'paper.abstract' => 'required',
@@ -95,6 +99,7 @@ class PaperController extends BaseConferenceController
     public function addCoAuthor(Request $request, $conferenceId, $id)
     {
         $paper = $this->papers->find($id);
+        $this->authorize('update-paper', $paper);
         $author = $this->authors->create($request->all());
 
         $author->papers()->attach($id, ['seq' => Config::get('constants.PAPER_AUTHOR.CO_AUTHOR')]);
@@ -106,6 +111,7 @@ class PaperController extends BaseConferenceController
     public function deleteCoAuthor($conferenceId, $authorId, $id)
     {
         $paper = $this->papers->find($id);
+        $this->authorize('update-paper', $paper);
         $paper->authors()->detach($authorId);
         $this->authors->destroy($authorId);
 
