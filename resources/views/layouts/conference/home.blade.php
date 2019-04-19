@@ -2,6 +2,7 @@
 
 @section('title','Home')
 @section('css')
+<link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('conference/styles/main_styles.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('conference/styles/responsive.css') }}"> 
 <link rel="stylesheet" type="text/css" href="{{ asset('conference/styles/custom.css') }}"> 
@@ -20,7 +21,7 @@
 					<div class="home_location">{{ $conference->venue }}</div>
 					<div class="home_text">{{ $conference->slogan }}</div>
 					<div class="home_buttons">
-						<div class="button home_button"><a href="#">Registration</a></div>
+						<div class="button home_button"><a href="{{ route('admin_registration_create',['conference_id'=>$conference->id]) }}">Registration</a></div>
 					</div>
 				</div>
 			</div>
@@ -130,7 +131,7 @@
 <!-- Pricing -->
 
 <div class="pricing">
-	<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/pricing.jpg" data-speed="0.8"></div>
+	<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('conference/images/pricing.jpg') }}" data-speed="0.8"></div>
 	<div class="container">
 		<div class="row">
 			<div class="col text-center">
@@ -139,27 +140,25 @@
 		</div>
 		<div class="row pricing_row">
 
+			@foreach($fees as $fee)
 			<!-- Pricing Item -->
 			<div class="col-lg-4 pricing_col">
 				<div class="pricing_item">
 					<div class="pricing_item_content">
-						<div class="pricing_level">Beginner</div>
-						<div class="pricing_price">Free</div>
+						<div class="pricing_level">{{ $fee->category }} </div>
+						<div class="pricing_price">{{ $fee->price_before_time }} $</div>
 						<ul class="pricing_list">
-							<li>3 Conference Tickets</li>
-							<li>Vip Table</li>
-							<li>Drinks</li>
-							<li>Special PASS</li>
-							<li>VIP Dinner</li>
+							<li>{{ $fee->description }}</li>
 						</ul>
 						<div class="pricing_info">
-							<a href="#">i</a>
+							{{-- <a href="#">i</a> --}}
 						</div>
-						<div class="button pricing_button"><a href="#">Order plan</a></div>
+						{{-- <div class="button pricing_button"><a href="#">Registration</a></div> --}}
 					</div>
 				</div>
 			</div>
 
+			@endforeach
 		</div>
 	</div>
 </div>
@@ -174,5 +173,22 @@
 @endsection
 @section('js')
 <script src="{{ asset('conference/js/custom.js') }}"></script>
-@endsection
+<script src="{{ asset('js/lib/toastr.min.js') }}"></script>
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
+ <script>
+ 	@if(Session::has('success'))
+ 	toastr.success('{{ Session::get("success") }}');
+ 	@endif
+ 	@if(Session::has('error'))
+ 	toastr.error('{{ Session::get("error") }}');
+ 	@endif
+ 	@if($errors->any())
+ 	@foreach($errors->all() as $error)
+ 	toastr.error('{{ $error }}');
+ 	@endforeach
+ 	@endif
+ </script>
+ @endsection
 
