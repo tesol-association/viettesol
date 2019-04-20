@@ -2,6 +2,8 @@
 @section('title','Paper Management')
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link href="{{ asset('admin/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
     <section class="content">
@@ -20,25 +22,23 @@
                         <div class="table-responsive">
                             <table id="paper_list" class="table table-bordered table-striped">
                                 <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Title</th>
-                                    <th>Abstract</th>
-                                    <th>Attach File</th>
-                                    <th>Track</th>
-                                    <th>Status</th>
-                                    <th>Created At</th>
-                                    <th>Assign</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                </tr>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Title</th>
+                                        <th>Attach File</th>
+                                        <th>Track</th>
+                                        <th>Status</th>
+                                        <th>Created At</th>
+                                        <th>Assign</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($papers as $paper)
                                     <tr>
                                         <td>{{ $paper->id }}</td>
-                                        <td>{{ $paper->title }}</td>
-                                        <td>{!! $paper->abstract !!}</td>
+                                        <td><a target="_blank" href="{{ route('admin_author_paper_view', ['conference_id' => $conference->id, 'id' => $paper->id]) }}">{{ $paper->title }}</a></td>
                                         <td>
                                             @if ($paper->attach_file)
                                                 <a target="_blank" href="{{ asset('/storage/' . $paper->attach_file) }}" class="btn btn-primary"><span class="fa fa-download"></span> Attach File</a>
@@ -79,7 +79,18 @@
                                     </tr>
                                 @endforeach
                                 </tbody>
-                                <tfoot>
+                                <tfoot class="filters">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -96,6 +107,8 @@
 @section('js')
     <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>

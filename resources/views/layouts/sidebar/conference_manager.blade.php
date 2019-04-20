@@ -28,7 +28,7 @@
         </a>
         <ul class="treeview-menu">
             <li><a href="{{ route('admin_paper_list', ["conference_id" => $conference->id]) }}"><i class="fa fa-newspaper-o"></i> List Paper</a></li>
-            <li><a href="#"><i class="fa fa-user"></i> Paper author</a></li>
+            <li><a href="{{ route('admin_author_paper_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-user"></i> Paper author</a></li>
             <li><a href="#">Paper File</a></li>
             <li><a href="#">Review Assignment</a></li>
         </ul>
@@ -71,7 +71,7 @@
             <li><a href="{{ route('admin_conference_roles_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-unlock-alt"></i>List Conference Roles</a></li>
         </ul>
     </li>
-    <li><a href="#"><i class="fa fa-bookmark-o"></i> Register</a></li>
+    <li><a href="{{ route('admin_registration_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-bookmark-o"></i>List Register</a></li>
     <li class="treeview">
         <a href="#"><i class="fa fa-link"></i> <span>{{ $conference->title }}</span>
             <span class="pull-right-container">

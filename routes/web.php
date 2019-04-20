@@ -418,6 +418,22 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']],function(){
             Route::post('/update/{id}', 'Admin\ConferenceManager\FeeController@update')->name('admin_fee_update');
             Route::post('/delete/{id}', 'Admin\ConferenceManager\FeeController@destroy')->name('admin_fee_delete');
         });
+
+        Route::group(['prefix'=>'/author'], function() {
+            Route::get('/view/{id}', 'Admin\ConferenceManager\AuthorController@showAuthor')->name('admin_author_view');
+
+            Route::group(['prefix'=>'/paper'], function() {
+                Route::get('/list', 'Admin\ConferenceManager\AuthorController@index')->name('admin_author_paper_list');
+                Route::get('/view/{id}', 'Admin\ConferenceManager\AuthorController@show')->name('admin_author_paper_view');
+            });
+        });
+
+        Route::group(['prefix'=>'registration'],function (){
+            Route::get('/create','Admin\ConferenceManager\RegistrationController@create')->name('admin_registration_create');
+            Route::post('/store','Admin\ConferenceManager\RegistrationController@store')->name('admin_registration_store');
+            Route::get('/list','Admin\ConferenceManager\RegistrationController@getList')->name('admin_registration_list');
+            Route::get('/update','Admin\ConferenceManager\RegistrationController@update')->name('admin_registration_update');
+        });
     });
 
 });
@@ -485,7 +501,7 @@ Route::group(['prefix'=>'/conf/{conference_id}','middleware' => ['auth']], funct
     });
 
 
-     Route::group(['prefix'=>'director'], function() {
+    Route::group(['prefix'=>'director'], function() {
         Route::group(['prefix'=>'/track'], function() {
                 Route::get('/list', 'Admin\TrackController@index')->name('director_track_list');
         });
@@ -502,6 +518,7 @@ Route::group(['prefix'=>'/conf/{conference_id}','middleware' => ['auth']], funct
             Route::get('/list_paper_schedule', 'Admin\ConferenceManager\Director\PaperController@showPaperUnSchedule')->name('director_paper_un_schedule_list');
             Route::post('/change_paper_un_schedule/{id}', 'Admin\ConferenceManager\Director\PaperController@changePaperStatus')->name('director_change_paper_un_schedule');
             Route::post('/change_paper_redo_un_schedule/{id}', 'Admin\ConferenceManager\Director\PaperController@changeRedoPaperStatus')->name('director_change_paper_redo_un_schedule');
+            Route::get('/view/{id}', 'Admin\ConferenceManager\AuthorController@show')->name('director_paper_un_schedule_view');
         });
 
     });
@@ -569,11 +586,11 @@ Route::group(['prefix'=>'home'],function(){
 
 Route::group(['prefix'=>'/conference/{conference_path}'], function() {
 
-         Route::get('/home','Conference\ConferenceController@index')->name('conference_home');
+        Route::get('/home','Conference\ConferenceController@index')->name('conference_home');
 
-         Route::get('/news','Conference\ConferenceController@getNews')->name('conference_news');
+        Route::get('/news','Conference\ConferenceController@getNews')->name('conference_news');
 
-         Route::get('/news/{id}','Conference\ConferenceController@getNewsDetail')->name('conference_news_detail');
+        Route::get('/news/{id}','Conference\ConferenceController@getNewsDetail')->name('conference_news_detail');
 
         Route::get('/contact','Conference\ContactController@index')->name('conference_contact');
 

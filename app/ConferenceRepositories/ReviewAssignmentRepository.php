@@ -109,6 +109,7 @@ class ReviewAssignmentRepository
         $reviewAssignment->comment = $data['comment'];
         $reviewAssignment->date_completed = Carbon::now();
         $reviewAssignment->recommendation = $data['recommendation'];
+        $reviewAssignment->review_file_id = $data['review_file_id'];
         $reviewAssignment->save();
         return $reviewAssignment;
     }

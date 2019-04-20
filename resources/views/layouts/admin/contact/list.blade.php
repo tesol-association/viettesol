@@ -3,6 +3,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<link href="{{ asset('admin/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
 <style type="text/css">
 	td{
 		text-align: center;
@@ -18,7 +19,7 @@ All Contacts
 <section class="content">
 	<div class="row">
 		<div class="col-xs-12">
-	  
+
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">Data Table With All Contacts</h3>
@@ -67,7 +68,7 @@ All Contacts
 										@csrf
 										<div class="modal fade" id="showDetails{{ $contact->id }}" role="dialog">
 										  <div class="modal-dialog">
-										  
+
 											<!-- Modal content-->
 											<div class="modal-content">
 											  <div class="modal-header">
@@ -82,7 +83,7 @@ All Contacts
 
 													<tr>
 														<td> <p> Name: </p></td>
-														<td> 
+														<td>
 															@if($contact->contactType->name != "Individual")
 															<i style="color: red"> {{ "Not used with this type." }} </i>
 															@else
@@ -92,7 +93,7 @@ All Contacts
 													</tr>
 													<tr>
 														<td> <p> Organization Name: </p></td>
-														<td> 
+														<td>
 															@if($contact->contactType->name === "Individual")
 															<i style="color: red"> {{ "Not used with this type." }} </i>
 															@else
@@ -133,7 +134,7 @@ All Contacts
 												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 											  </div>
 											</div>
-											
+
 										  </div>
 										</div>
 									</form>
@@ -153,7 +154,7 @@ All Contacts
 										@csrf
 										<div class="modal fade" id="delete_contact{{ $contact->id }}" role="dialog">
 										  <div class="modal-dialog">
-										  
+
 											<!-- Modal content-->
 											<div class="modal-content">
 											  <div class="modal-header">
@@ -165,7 +166,7 @@ All Contacts
 												<button type="submit" class="btn btn-danger">Delete</button>
 											  </div>
 											</div>
-											
+
 										  </div>
 										</div>
 									</form>
@@ -186,20 +187,23 @@ All Contacts
 @section('js')
 <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('admin/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
 <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
 <script>
 	$(function () {
-		$('#example1').DataTable()
+		$('#example1').DataTable({
+            responsive: true,
+        });
 		$('#example2').DataTable({
 			'paging'      : true,
 			'lengthChange': false,
 			'searching'   : false,
 			'ordering'    : true,
 			'info'        : true,
-			'autoWidth'   : false
-		})
+			'autoWidth'   : false,
+		});
 	})
 </script>
 @endsection

@@ -27,7 +27,7 @@ List comment
                 </tr>
               </thead>
               <tbody>
-                @foreach($comments as $comment)	
+                @foreach($comments as $comment)
                 <tr>
                 	<td>{{ $comment->id }}</td>
                 	<td>{{ $comment->body }}</td>
@@ -36,9 +36,9 @@ List comment
                 	<td>
                     <div class="form-group">
 		                {{-- <select class="form-control select2 select2-hidden-accessible" id="status_{{ $comment->id }}" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateStatus(this)">
-		                @foreach($status as $_status)	
+		                @foreach($status as $_status)
 		                  <option value="{{ $_status }}" @if($_status == $comment->status) {{ 'selected' }} @endif>{{ $_status }}</option>
-		                @endforeach  
+		                @endforeach
                   </select> --}}
                   <input type="checkbox" id="status_{{ $comment->id }}" name="status[]" value="{{ $comment->status }}" @if($comment->status=='approved') {{ 'checked' }} @endif onchange="updateStatus(this)"><br>
                 </div>
@@ -64,6 +64,7 @@ List comment
 @section('js')
 <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+
 <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
 <script src="{{ asset('admin/dist/js/demo.js') }}"></script>

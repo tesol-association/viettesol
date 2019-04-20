@@ -2,6 +2,7 @@
 @section('title','Track Management')
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link href="{{ asset('admin/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
     <section class="content">
@@ -49,10 +50,10 @@
                                         </td>
                                         <td>{{ $track->created_at }}</td>
                                         <td>
-                                            <a href="{{ route('admin_track_edit', ["conference_id" => $conference->id, "id" => $track->id]) }}" class="btn btn-info">Edit</a>
+                                            <a href="{{ route('admin_track_edit', ["conference_id" => $conference->id, "id" => $track->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_track_{{ $track->id }}">Delete</button>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_track_{{ $track->id }}"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->
@@ -94,6 +95,7 @@
 @section('js')
     <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
