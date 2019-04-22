@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\PaperEvent;
 
 use App\Models\Paper;
 use Illuminate\Broadcasting\Channel;
@@ -24,4 +24,5 @@ class PaperSubmitted
     {
         $this->paper = $paper;
     }
+
 }

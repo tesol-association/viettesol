@@ -7,7 +7,6 @@ use App\Events\PaperEvent\AssignReviewer;
 use App\Events\PaperEvent\PaperEditSubmissioned;
 use App\Events\PaperEvent\SendFullPaper;
 use App\Events\PaperEvent\SendReviewResult;
-use App\Events\PaperSubmitted;
 use App\Listeners\PaperEvent\LogAddCoAuthor;
 use App\Listeners\PaperEvent\LogAssignReviewer;
 use App\Listeners\PaperEvent\LogSendFullPaper;
@@ -15,7 +14,6 @@ use App\Listeners\PaperEvent\LogSendReviewResult;
 use App\Listeners\PaperEvent\PaperChangeStatusWhenAssignReviewer;
 use App\Listeners\PaperEvent\PaperChangeStatusWhenSendReviewResult;
 use App\Listeners\PaperEvent\PaperLogEditSubmissioned;
-use App\Listeners\SendSubmissionNotification;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -32,8 +30,8 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        PaperSubmitted::class => [
-            SendSubmissionNotification::class,
+        'App\Events\PaperEvent\PaperSubmitted' => [
+            'App\Listeners\PaperEvent\LogPaperSubmitted',
         ],
         PaperEditSubmissioned::class => [
             PaperLogEditSubmissioned::class,

@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\Admin\ConferenceManager\Author;
 
 use App\ConferenceRepositories\AuthorRepository;
-use App\ConferenceRepositories\ReviewAssignmentRepository;
 use App\Events\PaperEvent\AddCoAuthor;
-use App\Events\PaperSubmitted;
 use App\Events\PaperEvent\PaperEditSubmissioned;
+use App\Events\PaperEvent\PaperSubmitted;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\Author;
-use App\Models\ConferenceRole;
-use App\Models\PaperAuthor;
 use App\ConferenceRepositories\PaperRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,10 +48,11 @@ class PaperController extends BaseConferenceController
 
     public function savePaper(Request $request)
     {
+        $this->authorize('send-paper');
         $validator = $this->validateData($request->all());
         if ($validator->fails()) {
             return redirect()
-                ->route('author_paper_create', ['id' => $this->conferenceId])
+                ->back()
                 ->withErrors($validator)
                 ->withInput();
         }

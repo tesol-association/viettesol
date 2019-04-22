@@ -24,6 +24,7 @@ return [
     'PAPER_EVENT' => [
         //Author
         'SUBMITTED' => 'submitted',
+        'SUBMITTED_MESSAGE' => '<strong> %s </strong>  submitted paper: <strong> %s  </strong> at <strong> %s </strong>', // AuthorName, PaperTitle, TimeAt
         'EDIT_SUBMISSION' => 'edit_submission',
         'EDIT_SUBMISSION_MESSAGE' => '<strong> %s </strong>  update for paper title <strong> %s  </strong> at <strong> %s </strong>', // AuthorName, PaperTitle, TimeAt
 
