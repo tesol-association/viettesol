@@ -28,9 +28,9 @@ class PaperRepository
     public function get($conferenceId, array $filters = null)
     {
         if (empty($filters)) {
-            $papers = Paper::with('track.conference')->get();
+            $papers = Paper::with('track.conference', 'authors')->get();
         } else {
-            $papersQuery = Paper::with('track.conference');
+            $papersQuery = Paper::with('track.conference', 'authors');
             foreach ($filters as $key => $filter) {
                 if (is_array($filter)) {
                     $papersQuery->whereIn($key, $filter);
