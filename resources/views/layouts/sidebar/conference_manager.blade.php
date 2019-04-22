@@ -69,6 +69,8 @@
         <ul class="treeview-menu">
             <li><a href="{{ route('admin_user_conference_roles_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-user-circle"></i> User Conference Roles</a></li>
             <li><a href="{{ route('admin_conference_roles_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-unlock-alt"></i>List Conference Roles</a></li>
+            <li><a href="{{ route('conference_acl_access_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-unlock-alt"></i>Set Up Permission</a></li>
+            <li><a href="{{ route('conference_acl_permission_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-unlock-alt"></i>Permission List</a></li>
         </ul>
     </li>
     <li><a href="{{ route('admin_registration_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-bookmark-o"></i>List Register</a></li>

@@ -13,11 +13,11 @@
                         <div class="col-md-4">
                             <h3 class="box-title">Track List</h3>
                         </div>
-                        @can('update-session-type', \App\Models\SessionType::class)
-                        <div class="col-md-2 col-md-offset-6">
-                            <a href="{{ route('admin_track_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add Track</a>
-                        </div>
-                        @can('update-session-type', \App\Models\SessionType::class)
+                        @can('create-track')
+                            <div class="col-md-2 col-md-offset-6">
+                                <a href="{{ route('admin_track_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add Track</a>
+                            </div>
+                        @endcan
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
@@ -31,8 +31,12 @@
                                     <th>Policy</th>
                                     <th>Review Form</th>
                                     <th>Created At</th>
+                                    @can('update-track')
                                     <th>Edit</th>
+                                    @endcan
+                                    @can('delete-track')
                                     <th>Delete</th>
+                                    @endcan
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -49,12 +53,16 @@
                                             @endif
                                         </td>
                                         <td>{{ $track->created_at }}</td>
+                                        @can('update-track')
                                         <td>
                                             <a href="{{ route('admin_track_edit', ["conference_id" => $conference->id, "id" => $track->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
                                         </td>
+                                        @endcan
+                                        @can('delete-track')
                                         <td>
                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_track_{{ $track->id }}"><i class="fa fa-trash"></i></button>
                                         </td>
+                                        @endcan
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->
                                     <div class="modal fade" id="delete_track_{{ $track->id }}" role="dialog">

@@ -11,13 +11,10 @@ class SessionTypePolicies
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view the session type.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\SessionType  $sessionType
-     * @return mixed
+     * @param User $user
+     * @return bool
      */
-    public function view(User $user, SessionType $sessionType)
+    public function view(User $user)
     {
         return $user->hasAccess('view-session-type');
     }
@@ -57,27 +54,4 @@ class SessionTypePolicies
         return $user->hasAccess('delete-session-type');
     }
 
-    /**
-     * Determine whether the user can restore the session type.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\SessionType  $sessionType
-     * @return mixed
-     */
-    public function restore(User $user, SessionType $sessionType)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the session type.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\SessionType  $sessionType
-     * @return mixed
-     */
-    public function forceDelete(User $user, SessionType $sessionType)
-    {
-        //
-    }
 }

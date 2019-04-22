@@ -17,7 +17,7 @@ class TrackPolicies
      * @param  \App\Track  $track
      * @return mixed
      */
-    public function view(User $user, Track $track)
+    public function view(User $user)
     {
         return $user->hasAccess('view-track');
     }
@@ -40,7 +40,7 @@ class TrackPolicies
      * @param  \App\Track  $track
      * @return mixed
      */
-    public function update(User $user, Track $track)
+    public function update(User $user)
     {
         return $user->hasAccess('update-track');
     }
@@ -52,7 +52,7 @@ class TrackPolicies
      * @param  \App\Track  $track
      * @return mixed
      */
-    public function delete(User $user, Track $track)
+    public function delete(User $user)
     {
         //
     }

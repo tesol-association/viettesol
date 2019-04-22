@@ -16,28 +16,31 @@ class SessionTypeController extends BaseConferenceController
      */
     public function index($conferenceId)
     {
+        $this->authorize('view-session-type');
         $sessionTypes = SessionType::where('conference_id', $conferenceId)->get();
         return view('layouts.admin.conference_manager.session_type.list', ['conference_id' => $conferenceId, 'sessionTypes' => $sessionTypes]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param $conferenceId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create($conferenceId)
     {
+        $this->authorize('create-session-type');
         return view('layouts.admin.conference_manager.session_type.create', ['conference_id' => $conferenceId]); 
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $conferenceId
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request, $conferenceId)
     {
+        $this->authorize('create-session-type');
         $request->validate([
             'name' => ['required', 'string', 'max:255']
         ]);
@@ -69,27 +72,29 @@ class SessionTypeController extends BaseConferenceController
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $conferenceId
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit($conferenceId, $id)
     {
+        $this->authorize('update-session-type');
         $sessionType = SessionType::find($id);
 
         return view('layouts.admin.conference_manager.session_type.edit', ['conference_id' => $conferenceId, 'sessionType' => $sessionType]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $conferenceId
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, $conferenceId, $id)
     {
+        $this->authorize('update-session-type');
         $request->validate([
             'name' => ['required', 'string', 'max:255']
         ]);
@@ -109,13 +114,14 @@ class SessionTypeController extends BaseConferenceController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $conferenceId
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy($conferenceId, $id)
     {
+        $this->authorize('delete-session-type');
         $sessionType = SessionType::find($id);
 
         if($sessionType->delete()){

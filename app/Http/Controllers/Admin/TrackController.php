@@ -30,6 +30,7 @@ class TrackController extends BaseConferenceController
      */
     public function index($conferenceId)
     {
+        $this->authorize('view-track');
         $tracks = $this->tracks->get(['conference_id' => $conferenceId]);
         return view('layouts.admin.track.list', [
             'tracks'=> $tracks
@@ -41,6 +42,7 @@ class TrackController extends BaseConferenceController
      */
     public function create($conferenceId)
     {
+        $this->authorize('create-track');
         $users = $this->conferenceRoles->getTrackDirectors($conferenceId);
         $reviewForms = $this->reviewForms->all();
         return view('layouts.admin.track.create', [
@@ -55,6 +57,7 @@ class TrackController extends BaseConferenceController
      */
     public function store(Request $request)
     {
+        $this->authorize('create-track');
         $data = $request->all();
         $validator = $this->validateData($data);
         if ($validator->fails()) {
@@ -74,6 +77,7 @@ class TrackController extends BaseConferenceController
      */
     public function edit($conferenceId, $trackId)
     {
+        $this->authorize('update-track');
         $users = $this->conferenceRoles->getTrackDirectors($conferenceId);
         $track = $this->tracks->find($trackId);
         $track->trackDirectorId = $track->users->pluck('id')->all();
@@ -93,6 +97,7 @@ class TrackController extends BaseConferenceController
      */
     public function update(Request $request, $conferenceId, $trackId)
     {
+        $this->authorize('update-track');
         $validator = $this->validateData($request->all());
         if ($validator->fails()) {
             return redirect()

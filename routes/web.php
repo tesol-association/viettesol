@@ -361,9 +361,6 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']],function(){
             Route::get('/list', 'Admin\ConferenceManager\PaperController@index')->name('admin_paper_list');
             Route::get('/create', 'Admin\ConferenceManager\PaperController@create')->name('admin_paper_create');
             Route::post('/store', 'Admin\ConferenceManager\PaperController@store')->name('admin_paper_store');
-            Route::get('/edit/{id}', 'Admin\ConferenceManager\PaperController@edit')->name('admin_paper_edit');
-            Route::post('/update/{id}', 'Admin\ConferenceManager\PaperController@update')->name('admin_paper_update');
-            Route::post('/delete/{id}', 'Admin\ConferenceManager\PaperController@destroy')->name('admin_paper_delete');
             Route::get('/submission/{id}', 'Admin\ConferenceManager\PaperController@submission')->name('admin_paper_submission');
             //track director
             Route::post('/decision/{id}', 'Admin\ConferenceManager\PaperController@decisionAjax')->name('admin_paper_decision');
@@ -523,7 +520,19 @@ Route::group(['prefix'=>'/conf/{conference_id}','middleware' => ['auth']], funct
 
     });
 
+
 });
+
+Route::group(['prefix'=>'/conf/{conference_id}','middleware' => ['auth']], function() {
+    Route::group(['prefix' => 'acl'], function () {
+        Route::get('/list', 'Authorization\ACLConferenceController@permissionList')->name('conference_acl_permission_list');
+        Route::post('/store', 'Authorization\ACLConferenceController@storePermission')->name('conference_acl_permission_store');
+        Route::post('/update/{permission_id}', 'Authorization\ACLConferenceController@updatePermission')->name('conference_acl_permission_update');
+        Route::get('/access_list', 'Authorization\ACLConferenceController@accessList')->name('conference_acl_access_list');
+        Route::post('/access_allow', 'Authorization\ACLConferenceController@switchAccessAllow');
+    });
+});
+
 /**
  * AUTHENTICATION
  */
