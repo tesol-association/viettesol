@@ -1,0 +1,203 @@
+    .css-treeview ul,
+    .css-treeview li
+    {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .css-treeview input
+    {
+        position: absolute;
+        opacity: 0;
+    }
+
+    .css-treeview
+    {
+        font: normal 15px "Segoe UI", 'Sansita', sans-serif;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .css-treeview a
+    {
+        color: #00f;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .css-treeview a:hover
+    {
+        text-decoration: underline;
+    }
+
+    .css-treeview input + label + ul
+    {
+        margin: 0 0 0 30px;
+    }
+
+    .css-treeview input ~ ul
+    {
+        display: none;
+    }
+
+    .css-treeview label,
+    .css-treeview label::before
+    {
+        cursor: pointer;
+    }
+
+    .css-treeview input:disabled + label
+    {
+        cursor: default;
+        opacity: .9;
+    }
+
+    .css-treeview input:checked:not(:disabled) ~ ul
+    {
+        display: block;
+    }
+
+    .css-treeview label
+    {
+        background: url("/admin/image/icon.png") no-repeat;
+    }
+
+    .css-treeview label::before
+    {
+        background: url("/admin/image/add.png");
+    }
+
+    .css-treeview label,
+    .css-treeview a,
+    .css-treeview label::before
+    {
+        height: 20px;
+        line-height: 20px;
+        vertical-align: middle;
+    }
+
+    .css-treeview label
+    {
+        display: inline;
+        background-position: 18px 0;
+    }
+
+    .css-treeview label::before
+    {
+        content: "";
+        width: 20px;
+        margin: 0 20px 0 0;
+        vertical-align: middle;
+        background-position: 0px;
+        display: inline-block;
+    }
+
+    .css-treeview input:checked + label::before
+    {
+        background-position: 0px;
+        background: url("/admin/image/minus.png") no-repeat;
+    }
+
+    /* webkit adjacent element selector bugfix */
+    @media screen and (-webkit-min-device-pixel-ratio:0)
+    {
+        .css-treeview
+        {
+            -webkit-animation: webkit-adjacent-element-selector-bugfix infinite 1s;
+        }
+
+        @-webkit-keyframes webkit-adjacent-element-selector-bugfix
+        {
+            from
+            {
+                padding: 0;
+            }
+            to
+            {
+                padding: 0;
+            }
+        }
+    }
+    .pb-filemng-template {
+        margin-top: 40px;
+        font-family: 'Sansita', sans-serif;
+    }
+
+    .pb-filemng-navbar {
+        margin-bottom: 0;
+    }
+
+    .treeview-toggle-btn {
+        margin-left: 15px;
+    }
+
+    .pb-filemng-template-btn {
+        background-color: Transparent;
+        background-repeat:no-repeat;
+        border: none;
+        cursor:pointer;
+        outline:none;
+        color: gray;
+        padding: 0px 13px 0px 13px;
+    }
+
+    .pb-filemng-active {
+        border-bottom: 2px solid #6d97db;
+        color: #5f6977;
+    }
+
+    .pb-filemng-template-btn:hover {
+        color: blue;
+    }
+
+    .pb-filemng-body-folders > img:hover {
+        cursor: pointer;
+    }
+
+    .btn-align {
+        margin-top: 7px;
+    }
+
+    .pb-filemng-template-treeview {
+        border-right: 1px solid gray;
+    }
+
+    .pb-filemng-folder {
+        color: orange;
+        padding-bottom: 3px;
+    }
+
+    .pb-filemng-paragraphs {
+        margin-top: -20px;
+        text-align: center;
+    }
+
+    .img-responsive {
+        margin: 0 auto;
+    }
+
+@media screen and (max-width: 767px) {
+
+    .pb-filemng-template-treeview {
+        border-right: none;
+    }
+
+    #options {
+        text-align: center;
+    }
+
+    #options > li {
+        display: inline-block;
+    }
+
+    #pb-filemng-navigation > ul {
+        text-align: center;
+    }
+
+    #pb-filemng-navigation > ul > li {
+        display: inline-block;
+    }
+
+}
