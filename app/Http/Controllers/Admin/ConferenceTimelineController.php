@@ -49,6 +49,7 @@ class ConferenceTimelineController extends BaseConferenceController
             $timeLine->submission_closed = $request->submission_closed;
             $timeLine->reviewer_registration_opened = $request->reviewer_registration_opened;
             $timeLine->reviewer_registration_closed = $request->reviewer_registration_closed;
+            $timeLine->review_deadline = $request->review_deadline;
             $timeLine->save();
         }
         return redirect()->route('admin_timeline_view', ["conference_id" => $this->conferenceId])->with('success', 'Create Timeline successful !');
@@ -83,6 +84,7 @@ class ConferenceTimelineController extends BaseConferenceController
         $timeLine->submission_closed = $request->submission_closed;
         $timeLine->reviewer_registration_opened = $request->reviewer_registration_opened;
         $timeLine->reviewer_registration_closed = $request->reviewer_registration_closed;
+        $timeLine->review_deadline = $request->review_deadline;
         $timeLine->save();
         return redirect()->route('admin_timeline_view', ["conference_id" => $this->conferenceId])->with('success', 'Update Timeline successful !');
     }
@@ -109,6 +111,7 @@ class ConferenceTimelineController extends BaseConferenceController
             'submission_closed' => 'required|date|after:submission_accepted|before:conference_start',
             'reviewer_registration_opened' => 'required|date|before:reviewer_registration_closed|before:conference_start',
             'reviewer_registration_closed' => 'required|date|after:reviewer_registration_opened|before:conference_start',
+            'review_deadline' => 'required|date|before:conference_start'
         ]);
     }
 }
