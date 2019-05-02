@@ -492,6 +492,7 @@ Route::group(['prefix'=>'/conf/{conference_id}','middleware' => ['auth']], funct
 
         Route::group(['prefix'=>'/{paper_id}/review_assignment'], function() {
             Route::post('/store', 'Admin\ConferenceManager\ReviewAssignmentController@save')->name('track_director_review_assignment_store');
+            Route::post('/change/{review_assignment_id}', 'Admin\ConferenceManager\ReviewAssignmentController@changeDateDue')->name('track_director_review_assignment_change_date');
         });
 
         Route::group(['prefix'=>'/reviewer'], function() {
