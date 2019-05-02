@@ -25,8 +25,7 @@
 	                                    <th>Id</th>
 	                                    <th>Name</th>
 	                                    <th>Description</th>
-	                                    <th>Edit</th>
-	                                    <th>Delete</th>
+	                                    <th>Action</th>
 	                                </tr>
                                 </thead>
                                 <tbody>
@@ -37,8 +36,6 @@
                                         <td>{{ $conferenceRole->description }}</td>
                                         <td>
                                             <a href="{{ route('admin_conference_roles_edit', ['conference_id' => $conference->id, 'id' => $conferenceRole->id]) }}" class="btn btn-info fa fa-edit"></a>
-                                        </td>
-                                        <td>
                                             <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_conference_roles_{{ $conferenceRole->id }}"></button>
                                         </td>
                                     </tr>
