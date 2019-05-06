@@ -28,4 +28,9 @@ class Conference extends Model
         return $this->hasMany('App\Models\Speakers', 'conference_id');
     }
 
+    public function sponsers()
+    {
+        return $this->hasMany('App\Models\ConferencePartnerSponser', 'conference_id');
+    }
+
 }

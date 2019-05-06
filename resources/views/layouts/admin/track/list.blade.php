@@ -29,8 +29,7 @@
                                     <th>Policy</th>
                                     <th>Review Form</th>
                                     <th>Created At</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -49,8 +48,6 @@
                                         <td>{{ $track->created_at }}</td>
                                         <td>
                                             <a href="{{ route('admin_track_edit', ["conference_id" => $conference->id, "id" => $track->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
-                                        </td>
-                                        <td>
                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_track_{{ $track->id }}"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>

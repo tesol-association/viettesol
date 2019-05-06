@@ -26,8 +26,7 @@
 	                                    <th>Date</th>
 	                                    <th>Start time</th>
 	                                    <th>End time</th>
-	                                    <th>Edit</th>
-	                                    <th>Delete</th>
+	                                    <th>Action</th>
 	                                </tr>
                                 </thead>
                                 <tbody>
@@ -39,8 +38,6 @@
                                         <td>{{ \Carbon\Carbon::createFromFormat('H:i:s',$timeBlock->end_time)->format('H:i') }}</td>
                                         <td>
                                             <a href="{{ route('admin_time_block_edit', ["conference_id" => $conference->id, "id" => $timeBlock->id]) }}" class="btn btn-info fa fa-edit"></a>
-                                        </td>
-                                        <td>
                                             <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_time_block_{{ $timeBlock->id }}"></button>
                                         </td>
                                     </tr>
