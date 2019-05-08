@@ -51,6 +51,7 @@ class ChangePasswordController extends HomeController
             'new-password' => 'required|string|min:6|confirmed',
             'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha]
         ]);
+
         //Change Password
         $user = Auth::user();
         $user->password = bcrypt($request->get('new-password'));
@@ -77,7 +78,7 @@ class ChangePasswordController extends HomeController
      */
     public function edit($id)
     {
-        
+
     }
 
     /**
@@ -89,7 +90,7 @@ class ChangePasswordController extends HomeController
      */
 public function update(Request $request, $id)
     {
-        
+
     }
 
     /**
