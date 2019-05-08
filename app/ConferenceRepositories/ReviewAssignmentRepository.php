@@ -9,13 +9,13 @@
 namespace App\ConferenceRepositories;
 
 
+use App\Models\ConferenceTimeline;
 use App\Models\ReviewAssignment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
 
 class ReviewAssignmentRepository
 {
-
     /**
      * @return ReviewForm[]|\Illuminate\Database\Eloquent\Collection
      */
@@ -59,12 +59,16 @@ class ReviewAssignmentRepository
      * @return ReviewAssignment
      * @throws \Exception
      */
-    public function assignReviewer($data)
+    public function assignReviewer($conferenceId, $data)
     {
         $reviewAssignment = new ReviewAssignment();
         $reviewAssignment->paper_id = $data['paper_id'];
         $reviewAssignment->reviewer_id = $data['reviewer_id'];
         $reviewAssignment->date_assigned = Carbon::now();
+        $timeline = ConferenceTimeline::where('conference_id', $conferenceId)->first();
+        if ($timeline) {
+            $reviewAssignment->date_due = $timeline->review_deadline;
+        }
         $reviewAssignment->save();
         $reviewAssignment->load('reviewer', 'paper');
         return $reviewAssignment;
@@ -109,6 +113,7 @@ class ReviewAssignmentRepository
         $reviewAssignment->comment = $data['comment'];
         $reviewAssignment->date_completed = Carbon::now();
         $reviewAssignment->recommendation = $data['recommendation'];
+        $reviewAssignment->review_file_id = $data['review_file_id'];
         $reviewAssignment->save();
         return $reviewAssignment;
     }

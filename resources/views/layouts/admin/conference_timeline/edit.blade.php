@@ -132,6 +132,19 @@
                     <span class="help-block">{{ $errors->first('reviewer_registration_closed') }}</span>
                 @endif
             </div>
+
+            <div class="form-group {{ $errors->first('review_deadline') ? 'has-error' : ''}}">
+                <label for="review_deadline">Review Deadline:</label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="text" required class="form-control pull-right" name="review_deadline" id="review_deadline" value="{{  $timeline->review_deadline  }}">
+                </div>
+                @if ($errors->has('review_deadline'))
+                    <span class="help-block">{{ $errors->first('review_deadline') }}</span>
+                @endif
+            </div>
         </div>
         <div class="box-footer">
             <button type="submit" class="btn btn-primary">Submit</button>

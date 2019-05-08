@@ -2,6 +2,7 @@
 @section('title','Conference Partners Sponsers Management')
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link href="{{ asset('admin/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
     <section class="content">
@@ -23,12 +24,11 @@
                                 <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Name</th>                                   
+                                    <th>Name</th>
                                     <th>Logo</th>
                                     <th>Type</th>
                                     <th>Description</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -45,8 +45,6 @@
                                             <a href="{{ route('admin_conference_partners_sponsers_edit', ['conference_id' => $conference->id, 'id' => $conferencePartnersSponser->id]) }}" class="btn btn-info">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                        </td>
-                                        <td>
                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_conference_partners_sponsers_{{ $conferencePartnersSponser->id }}">
                                                 <i class="fa fa-trash"></i>
                                             </button>
@@ -91,6 +89,7 @@
 @section('js')
     <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>

@@ -5,24 +5,28 @@ namespace App\Http\Controllers\Admin\ConferenceManager;
 use App\ConferenceRepositories\PaperRepository;
 use App\ConferenceRepositories\ReviewAssignmentRepository;
 use App\ConferenceRepositories\TrackRepository;
+use App\ConferenceRepositories\PaperFileRepository;
 use App\Events\PaperEvent\AssignReviewer;
 use App\Events\PaperEvent\Unassigned;
 use App\Events\PaperEvent\SendReviewResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Config;
 
 class ReviewAssignmentController extends BaseConferenceController
 {
     protected $reviewAssignments;
     protected $tracks;
     protected $papers;
-    public function __construct(Request $request, ReviewAssignmentRepository $reviewAssignmentRepository, TrackRepository $trackRepository, PaperRepository $paperRepository)
+    public function __construct(Request $request, ReviewAssignmentRepository $reviewAssignmentRepository, TrackRepository $trackRepository, PaperRepository $paperRepository, PaperFileRepository $paperFileRepository)
     {
         parent::__construct($request);
         $this->reviewAssignments = $reviewAssignmentRepository;
         $this->tracks = $trackRepository;
         $this->papers = $paperRepository;
+        $this->paperFile = $paperFileRepository;
     }
 
     public function index()
@@ -44,12 +48,34 @@ class ReviewAssignmentController extends BaseConferenceController
                 ->withErrors($validator)
                 ->withInput();
         }
-        $reviewAssignment = $this->reviewAssignments->assignReviewer($data);
+        $reviewAssignment = $this->reviewAssignments->assignReviewer($conferenceId,$data);
         event(new AssignReviewer($reviewAssignment));
         return redirect()->route('admin_paper_submission', [
             'conference_id' => $this->conferenceId,
             'paper_id' => $paperId
         ])->with('success', 'Assign Reviewer ' . $reviewAssignment->reviewer->first_name . ' ' . $reviewAssignment->reviewer->last_name . ' successful !');
+    }
+
+    public function changeDateDue(Request $request, $conferenceId, $paperId, $reviewAssignmentId)
+    {
+        $data = $request->all();
+        $data["date_due"] = date('Y-m-d', strtotime($data["date_due"]));
+        $validator = Validator::make($data, [
+            'date_due' => 'required|date',
+        ]);
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $reviewAssignment = $this->reviewAssignments->find($reviewAssignmentId);
+        $reviewAssignment->date_due = $data['date_due'];
+        $reviewAssignment->save();
+        return redirect()->route('admin_paper_submission', [
+            'conference_id' => $this->conferenceId,
+            'paper_id' => $paperId,
+        ])->with('success', 'change date due successful !');
     }
 
     public function edit($id)
@@ -138,6 +164,33 @@ class ReviewAssignmentController extends BaseConferenceController
                 ->route('reviewer_do_review', ['conference_id' => $this->conferenceId, 'assignment_id' => $assignmentId])
                 ->withErrors($validator)
                 ->withInput();
+        }
+
+        if ($request->hasFile('upload_file')){
+            //set path
+            $reviewAssignment = $this->reviewAssignments->find($assignmentId);
+            $paper = $reviewAssignment->paper;
+            $path = 'Conference_'.$conferenceId.'/Reviewer_'.$assignmentId.'/Paper_'.$paper->id;
+
+            //set file name
+            $name = $reviewAssignment->reviewer->full_name;
+            $fileName = $name.'-'.$request->file('upload_file')->getClientOriginalName();
+
+            //Save attach file
+            $path = Storage::disk('public')->putFileAs($path, $request->upload_file, $fileName);
+
+            $riviewerFile['paper_id'] = $paper->id;
+            $riviewerFile['revision'] = null;
+            $riviewerFile['path'] = $path;
+            $riviewerFile['file_type'] = $request->file('upload_file')->getClientOriginalExtension();
+            $riviewerFile['file_size'] = $request->file('upload_file')->getSize();
+            $riviewerFile['original_file_name'] = $request->file('upload_file')->getClientOriginalName();
+            $riviewerFile['type'] = Config::get('constants.PAPER_FILE.REVIEW_FILE');
+
+            //Save paper_file
+            $paperFile = $this->paperFile->create($riviewerFile);
+            $data['review_file_id'] = $paperFile->id;
+
         }
         $reviewAssignment = $this->reviewAssignments->storeAssignment($assignmentId, $data);
         event(new SendReviewResult($reviewAssignment));

@@ -119,6 +119,16 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="review_deadline">Review Deadline:</label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="text" class="form-control pull-right" name="review_deadline" id="review_deadline" value="{{ $timeline ? date('Y/m/d', strtotime($timeline->review_deadline)) : "" }}" disabled>
+                </div>
+            </div>
+
         </div>
     </div>
     </form>

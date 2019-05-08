@@ -4,7 +4,7 @@
         <h3 class="box-title">DO REVIEW</h3>
     </div>
     <!-- form start -->
-    <form role="form" method="POST" action="{{ route('reviewer_store_assignment', ['conference_id' => $conference->id, 'assignment_id' => $reviewAssignment->id]) }}">
+    <form role="form" method="POST" action="{{ route('reviewer_store_assignment', ['conference_id' => $conference->id, 'assignment_id' => $reviewAssignment->id]) }}" enctype="multipart/form-data">
         @csrf
         <div class="box-body">
             <div class="box-body">
@@ -45,9 +45,8 @@
                     @endif
                 </div>
                 <div class="form-group">
-                    <label for="upload_file">Upload File</label>
                     @if ($reviewAssignment->date_completed)
-                        <input type="file" id="upload_file" name="upload_file" disabled>
+                        <a target="_blank" href="{{ asset('/storage/' . $reviewAssignment->attachFile->path) }}" class="btn btn-primary"><span class="fa fa-download"></span> Attach File</a>
                     @else
                         <input type="file" id="upload_file" name="upload_file">
                     @endif

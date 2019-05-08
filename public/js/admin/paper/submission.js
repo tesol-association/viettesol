@@ -6,6 +6,9 @@ $(document).ready(function () {
     console.log(url);
     $('#add_reviewer').select2();
     $('#decision_paper').select2();
+    $('.review_deadline').datetimepicker({
+        'format': 'YYYY/MM/DD',
+    });
     /**
      * AJAX SETUP
      */

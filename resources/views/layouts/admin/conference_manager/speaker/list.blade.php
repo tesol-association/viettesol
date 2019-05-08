@@ -2,6 +2,7 @@
 @section('title','Speakers Management')
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+     <link href="{{ asset('admin/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
 	<section class="content">
@@ -25,9 +26,7 @@
 	                                    <th>Full Name</th>
                                         <th>Image</th>
                                         <th>Affiliate</th>
-	                                    <th>Edit</th>
-                                        <th>View</th>
-	                                    <th>Delete</th>
+	                                    <th style="width: 150px">Action</th>
 	                                </tr>
                                 </thead>
                                 <tbody>
@@ -38,12 +37,8 @@
                                         <td><img class="img-circle" src="{{ asset('/storage/' . $speaker->image) }}" alt="Avatar" height="50" width="50"></td>
                                         <td>{{ $speaker->affiliate }}</td>
                                         <td>
-                                            <a href="{{ route('admin_speakers_edit', ["conference_id" => $conference->id, "id" => $speaker->id]) }}" class="btn btn-info fa fa-edit"></a>
-                                        </td>
-                                        <td>
                                             <a href="{{ route('admin_speakers_view', ["conference_id" => $conference->id, "speaker_id" => $speaker->id]) }}" class="btn btn-primary fa fa-eye"></a>
-                                        </td>
-                                        <td>
+                                            <a href="{{ route('admin_speakers_edit', ["conference_id" => $conference->id, "id" => $speaker->id]) }}" class="btn btn-info fa fa-edit"></a>
                                             <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_speakers_{{ $speaker->id }}"></button>
                                         </td>
                                     </tr>
@@ -86,6 +81,7 @@
 @section('js')
     <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>

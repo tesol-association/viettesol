@@ -2,6 +2,7 @@
 @section('title','Review Form Management')
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link href="{{ asset('admin/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
     <section class="content">
@@ -23,12 +24,10 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Name</th>
-                                    <th>Attach File</th>
                                     <th>Status</th>
                                     <th>Created At</th>
-                                    <th>Criteria</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>File</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -36,11 +35,6 @@
                                     <tr>
                                         <td>{{ $reviewForm->id }}</td>
                                         <td>{{ $reviewForm->name }}</td>
-                                        <td>
-                                            @if ($reviewForm->attach_file)
-                                                <a target="_blank" href="{{ asset('/storage/' . $reviewForm->attach_file) }}" class="btn btn-primary"><span class="fa fa-download"></span> Attach File</a>
-                                            @endif
-                                        </td>
                                         <td>
                                             @if ($reviewForm->status == 'active')
                                                 <span class="label label-success">{{ $reviewForm->status }}</span>
@@ -50,16 +44,17 @@
                                         </td>
                                         <td>{{ $reviewForm->created_at }}</td>
                                         <td>
-                                            <a href="{{ route('admin_criteria_review_list', ["conference_id" => $conference->id, "review_form_id" => $reviewForm->id]) }}" class="btn btn-info">
-                                                <i class="fa fa-eye"></i>
-                                            </a>
+                                            @if ($reviewForm->attach_file)
+                                                <a target="_blank" href="{{ asset('/storage/' . $reviewForm->attach_file) }}" class="btn btn-primary"><span class="fa fa-download"></span> Attach File</a>
+                                            @endif
                                         </td>
                                         <td>
+                                            <a href="{{ route('admin_criteria_review_list', ["conference_id" => $conference->id, "review_form_id" => $reviewForm->id]) }}" class="btn btn-primary">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
                                             <a href="{{ route('admin_review_form_edit', ["conference_id" => $conference->id, "id" => $reviewForm->id]) }}" class="btn btn-info">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                        </td>
-                                        <td>
                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_review_form_{{ $reviewForm->id }}">
                                                 <i class="fa fa-trash"></i>
                                             </button>
@@ -104,6 +99,7 @@
 @section('js')
     <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>

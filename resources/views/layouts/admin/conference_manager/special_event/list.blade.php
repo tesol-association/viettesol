@@ -2,6 +2,7 @@
 @section('title','Special Event Management')
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link href="{{ asset('admin/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
 	<section class="content">
@@ -28,8 +29,7 @@
                                         <th>End time</th>
                                         <th>Room</th>
                                         <th>Description</th>
-	                                    <th>Edit</th>
-	                                    <th>Delete</th>
+	                                    <th>Action</th>
 	                                </tr>
                                 </thead>
                                 <tbody>
@@ -48,8 +48,6 @@
                                         <td>{{ $specialEvent->description }}</td>
                                         <td>
                                             <a href="{{ route('admin_special_event_edit', ['conference_id' => $conference_id, 'id' => $specialEvent->id]) }}" class="btn btn-info fa fa-edit"></a>
-                                        </td>
-                                        <td>
                                             <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_special_event_{{ $specialEvent->id }}"></button>
                                         </td>
                                     </tr>
@@ -92,6 +90,7 @@
 @section('js')
     <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
