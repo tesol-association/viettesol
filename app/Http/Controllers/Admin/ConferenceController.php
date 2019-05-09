@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Auth;
 use App\ConferenceRepositories\TrackRepository;
 use App\ConferenceRepositories\PaperRepository;
 use App\Models\Announcements;
@@ -41,9 +42,14 @@ class ConferenceController extends Controller
         $paperAccepted = [];
         $paperUnscheduled = [];
         $paperScheduled = [];
+        $paperAuthor = [];
+        $paperReviewerNoAnswer = [];
+        $paperReviewerAccept = [];
+        $paperReviewerReject = [];
 
         //track
         $tracks = $trackRepository->get(['conference_id'=>$conferenceId]);
+
         //khai bao author, reviewer, review assignment
         $author = [];
         $reviewer = [];
@@ -60,6 +66,9 @@ class ConferenceController extends Controller
                 if($authors->pivot->seq == Config::get('constants.PAPER_AUTHOR.AUTHOR')){
                     if(!in_array($authors->id, array_pluck($author, 'id'))){
                         array_push($author, $authors);
+                    }
+                    if($authors->id == Auth::id()){
+                        array_push($paperAuthor, $paper);
                     }
                 }
             }
@@ -83,6 +92,19 @@ class ConferenceController extends Controller
                         array_push($reviewerAssignmentDeadlive, $reviewAssign);
                     }else{
                         array_push($reviewerAssignmentCompleted, $reviewAssign);
+                    }
+                }
+
+                //Paper Reviwer no answer, accept, reject
+                if($reviewAssign->reviewer_id == Auth::id()){
+                    if ($reviewAssign->declined == 1) {
+                        array_push($paperReviewerReject, $paper);
+                    }else{
+                        if(empty($reviewAssign->date_confirmed)){
+                            array_push($paperReviewerNoAnswer, $paper);
+                        }else{
+                            array_push($paperReviewerAccept, $paper);
+                        }
                     }
                 }
             }
@@ -139,7 +161,11 @@ class ConferenceController extends Controller
             'timeLine'=>$timeLine,
             'reviewerAssignmentUnfinish'=>$reviewerAssignmentUnfinish,
             'reviewerAssignmentCompleted'=>$reviewerAssignmentCompleted,
-            'reviewerAssignmentDeadlive'=>$reviewerAssignmentDeadlive
+            'reviewerAssignmentDeadlive'=>$reviewerAssignmentDeadlive,
+            'paperAuthor'=>$paperAuthor,
+            'paperReviewerAccept'=>$paperReviewerAccept,
+            'paperReviewerReject'=>$paperReviewerReject,
+            'paperReviewerNoAnswer'=>$paperReviewerNoAnswer,
         ]);
     }
 

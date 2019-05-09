@@ -48,40 +48,142 @@ $(document).ready(function() {
         }
         e.chart.render();
     }
-    //ChartJs
-    // var adminChart = new Chart($('#admin_chart'), {
-    //     type: 'pie',
-    //     data: {
-    //         labels: ['Submitted', 'InReview', 'ReviewResult', 'ReJected', 'Revision', 'Accepted', 'Unscheduled', 'Scheduled'],
-    //         datasets: [{
-    //             backgroundColor: [
-    //                 '#cceeff',
-    //                 '#66ccff',
-    //                 '#0000ff',
-    //                 '#ff0000',
-    //                 '#ff9933',
-    //                 '#33cc33',
-    //                 '#ffff00',
-    //                 '#660066',
-    //             ],
-    //           data: [paperSubmitted, paperInReview, paperReviewResult, paperReJected, paperRevision, paperAccepted, paperUnscheduled, paperScheduled]
-    //         }]
-    //     },
-    //     options: {
-    //         title: {
-    //             display: true,
-    //             fontColor: 'black',
-    //             fontFamily: 'sans-serif',
-    //             fontSize: 20,
-    //             text: 'Paper Status'
-    //         },
-    //         responsive: true,
-    //         legend: {
-    //             position: 'right',
-    //             fontFamily: 'sans-serif',
-    //             fontSize: 20,
-    //             display: true,
-    //         },
-    //     }
-    // });
+
+    var table = $('#paper_submitted').DataTable({
+        'order': [[0, 'desc']],
+        responsive: true,
+        //Setup - add a select to each footer cell
+        initComplete: function () {
+            this.api().columns().every( function (i) {
+                if (i == 2){
+                    var column = this;
+                    var select = $('<select style="width: 100%;"><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } ).select2();
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                }
+            } );
+        }
+    });
+
+    // Setup - add a text input to each footer cell
+    $('#paper_submitted .filters td').each( function (i) {
+        if(i == 1){
+            var title = $('#paper_submitted thead th').eq( $(this).index() ).text();
+            $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+        }
+    } );
+
+    // Apply the search
+    table.columns().eq( 0 ).each( function ( colIdx ) {
+        $( 'input', $('.filters td')[colIdx] ).on( 'keyup change', function () {
+            table
+                .column( colIdx )
+                .search( this.value )
+                .draw();
+        } );
+    } );
+
+    var table = $('#paper_review_result').DataTable({
+        'order': [[0, 'desc']],
+        responsive: true,
+        //Setup - add a select to each footer cell
+        initComplete: function () {
+            this.api().columns().every( function (i) {
+                if (i == 2){
+                    var column = this;
+                    var select = $('<select style="width: 100%;"><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } ).select2();
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                }
+            } );
+        }
+    });
+
+    // Setup - add a text input to each footer cell
+    $('#paper_review_result .filters td').each( function (i) {
+        if(i == 1){
+            var title = $('#paper_review_result thead th').eq( $(this).index() ).text();
+            $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+        }
+    } );
+
+    // Apply the search
+    table.columns().eq( 0 ).each( function ( colIdx ) {
+        $( 'input', $('.filters td')[colIdx] ).on( 'keyup change', function () {
+            table
+                .column( colIdx )
+                .search( this.value )
+                .draw();
+        } );
+    } );
+
+    var table = $('#paper_accept_rivision_reject').DataTable({
+        'order': [[0, 'desc']],
+        responsive: true,
+        //Setup - add a select to each footer cell
+        initComplete: function () {
+            this.api().columns().every( function (i) {
+                if (i == 2 || i == 3){
+                    var column = this;
+                    var select = $('<select style="width: 100%;"><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } ).select2();
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                }
+            } );
+        }
+    });
+
+    // Setup - add a text input to each footer cell
+    $('#paper_accept_rivision_reject .filters td').each( function (i) {
+        if(i == 1){
+            var title = $('#paper_accept_rivision_reject thead th').eq( $(this).index() ).text();
+            $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+        }
+    } );
+
+    // Apply the search
+    table.columns().eq( 0 ).each( function ( colIdx ) {
+        $( 'input', $('.filters td')[colIdx] ).on( 'keyup change', function () {
+            table
+                .column( colIdx )
+                .search( this.value )
+                .draw();
+        } );
+    } );
 });
