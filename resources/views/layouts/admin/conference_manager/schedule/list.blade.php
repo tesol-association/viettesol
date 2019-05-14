@@ -1,5 +1,5 @@
 @extends('layouts.admin.conference_layout')
-@section('title','Schedule Management')
+@section('title','Suggest Schedule')
 @section('css')
 <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 <link href="{{ asset('admin/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
@@ -10,8 +10,8 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <div class="col-md-4">
-                      <h3 class="box-title">Select Room</h3>
+                    <div class="col-md-3">
+                      {{-- <h3 class="box-title">Select Room</h3>
                       <select style="width: 50%;height: 30px; margin-left:20px" id="room">
                         <option>room</option>
                         @foreach($buildings as $building)
@@ -20,9 +20,10 @@
                         <option value="{{ $room->id }}">{{ $room->name }}</option>
                         @endforeach
                         @endforeach
-                    </select>
+                    </select> --}}
                 </div>
-                <div class="col-md-2 col-md-offset-6">
+                <div class="col-md-3 col-md-offset-6">
+                      <a href="{{ route('admin_schedule_suggest',['conference_id' => $conference->id]) }}" class="btn btn-primary">Suggest</a>
                       <a href="{{ route('admin_schedule_delete',['conference_id' => $conference->id]) }}" class="btn btn-info">Rearrange</a>
                 </div>
             </div>
@@ -33,6 +34,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th style="width: 600px;">Paper</th>
+                                <th>Session type</th>
+                                <th>Room</th>
                                 <th>Time block</th>
                             </tr>
                         </thead>

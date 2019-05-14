@@ -43,13 +43,6 @@
 				<li class="menu_item"><a href="">News</a></li>
 				<li class="menu_item"><a href="{{ route('conference_contact', $conference->path) }}">Contact</a></li>
 
-				<li class="menu_item"><a href="#">Home</a></li>
-				<li class="menu_item"><a href="#">About us</a></li>
-				<li class="menu_item"><a href="#">Speakers</a></li>
-				<li class="menu_item"><a href="#">Tickets</a></li>
-				<li class="menu_item"><a href="#">News</a></li>
-				<li class="menu_item"><a href="#">Contact</a></li>
-
 			</ul>
 		</div>
 		<div class="menu_social">

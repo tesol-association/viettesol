@@ -389,8 +389,12 @@ Route::group(['prefix'=>'admin/conf/{conference_id}'], function() {
 
         Route::get('/store','Admin\ConferenceManager\ScheduleController@addSchedule')->name('admin_schedule_store');
 
-        Route::get('/delete','Admin\ConferenceManager\ScheduleController@delete')->name('admin_schedule_delete');
-    });
+            Route::get('/delete','Admin\ConferenceManager\ScheduleController@delete')->name('admin_schedule_delete');
+
+            Route::get('/suggest','Admin\ConferenceManager\ScheduleController@suggestSchedule')->name('admin_schedule_suggest');
+
+            Route::post('/suggest/store','Admin\ConferenceManager\ScheduleController@storeScheduleSuggest')->name('admin_schedule_store_suggest');
+        });
 
     Route::group(['prefix'=>'/calendar'], function(){
         Route::get('/calendarPaper','Admin\ConferenceManager\CalendarController@index')->name('admin_calendar_list');
