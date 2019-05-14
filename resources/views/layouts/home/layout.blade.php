@@ -185,7 +185,7 @@
                     <!-- ad widget-->
                     <div class="aside-widget text-center">
                         <a href="{{ $partner->logo }}" style="display: inline-block;margin: auto;">
-                            <img class="img-responsive" src="{{ $partner->logo }}" alt="">
+                            <img class="img-responsive" src="{{ asset('/storage/'.$partner->logo) }}" alt="">
                         </a>
                     </div>
                     <!-- /ad widget -->
@@ -197,7 +197,7 @@
                     <!-- ad widget-->
                     <div class="aside-widget text-center">
                         <a href="{{ $adv->image }}" style="display: inline-block;margin: auto;">
-                            <img class="img-responsive" src="{{ $adv->image }}" alt="">
+                            <img class="img-responsive" src="{{ asset('/storage/'.$adv->image) }}" alt="">
                         </a>
                     </div>
                     <!-- /ad widget -->
