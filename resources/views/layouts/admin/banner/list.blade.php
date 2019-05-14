@@ -41,7 +41,7 @@ List banner
                    <td>{{ $banner->id }}</td>
                    <td>{{ $banner->title }}</td>
                    <td>
-                   	 <img src="{{ $banner->url }}" alt="" width="220px" height="110px">
+                   	 <img src="{{ asset('/storage/'.$banner->url) }}" alt="" width="220px" height="110px">
                    </td>
                    <td>
                    	<form method="post" action="{{ route('admin_banner_delete',['id'=> $banner->id ]) }}">

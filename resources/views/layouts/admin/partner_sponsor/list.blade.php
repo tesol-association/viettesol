@@ -45,7 +45,7 @@ List partner-sponsor
                 	<td>{{ $partner->name }}</td>
                 	<td>{{ $partner->description }}</td>
                 	<td>
-                     <img src="{{ $partner->logo }}" alt="" width="200px" height="160px">
+                     <img src="{{ asset('/storage/'.$partner->logo) }}" alt="" width="200px" height="160px">
                   </td>
                   <td>
                     {{ $partner->type }}
