@@ -77,7 +77,7 @@ class ScheduleController extends BaseConferenceController
 		foreach ($_papers as $keyPaper => $_paper) {
 			foreach ($sessionTypes as $sessionType) {
 				if($_paper['session_type_id'] == $sessionType['id']){
-					$paperAndSessionType[$keyPaper] = array(
+					$paperAndSessionType[] = array(
 						'id'        => $_paper['id'],
 						'title'     => $_paper['title'],
 						'duration'  => $sessionType['length']
@@ -92,12 +92,12 @@ class ScheduleController extends BaseConferenceController
 				'timeblock'     => $_timeBlocks,
 				'room'          => $buildingsAndRoom,
 				'conference_id' => $this->conferenceId
-			); 
+			);
 			echo json_encode($data);
 		}else{
 			$data=array(
 				'status' => false
-			); 
+			);
 			echo json_encode($data);
 		}
 		
