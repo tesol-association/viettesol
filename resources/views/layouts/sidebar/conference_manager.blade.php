@@ -92,61 +92,6 @@
         </ul>
     </li>
 
-    <li class="treeview">
-        <a href="#"><i class="fa fa-link"></i> <span>Proceeding Management</span>
-            <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-        </a>
-        <ul class="treeview-menu">
-            <li><a href="#">List Issue</a></li>
-            <li><a href="#">Create Issue</a></li>
-        </ul>
-    </li>
-
-    <li class="treeview">
-        <a href="#"><i class="fa fa-link"></i> <span>ISSUE 1</span>
-            <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-        </a>
-        <ul class="treeview-menu">
-            <li><a href="#">Announcement</a></li>
-            <li><a href="#">Sections</a></li>
-            <li class="treeview">
-                <a href="#"> <span>Review Form</span>
-                    <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#">Critea Review</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Prepaired email</a></li>
-            <li class="treeview">
-                <a href="#"><i class="fa fa-link"></i> <span>Paper Management</span>
-                    <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#">List Paper</a></li>
-                    <li><a href="#">Paper File</a></li>
-                    <li><a href="#">Paper author</a></li>
-                    <li><a href="#">Review Assignment</a></li>
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#"><i class="fa fa-link"></i> <span>ISSUE Role</span>
-                    <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                </a>
-            </li>
-        </ul>
-    </li>
-
     <li>
         <a href="{{ route('admin_conference_list') }}"><i class="fa fa-arrow-left"></i> <span>Back to MainMenu</span>
         </a>

@@ -97,7 +97,7 @@ class ScheduleController extends BaseConferenceController
 		}else{
 			$data=array(
 				'status' => false
-			); 
+			);
 			echo json_encode($data);
 		}
 		
