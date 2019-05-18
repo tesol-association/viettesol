@@ -26,7 +26,7 @@ class PaperFileRepository
             }
             $paperFile = PaperFile::where($conditions)->get();
         }
-        return $author;
+        return $paperFile;
     }
 
     public function create($data)

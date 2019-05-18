@@ -41,7 +41,7 @@ List advertisement
                 	<td>{{ $advertisement->id }}</td>
                 	<td>{{ $advertisement->name }}</td>
                 	<td>
-                     <img src="{{ $advertisement->image }}" alt="" width="200px" height="160px">
+                     <img src="{{ asset('/storage/'.$advertisement->image) }}" alt="" width="200px" height="160px">
                   </td>
                   <td>
                     <form method="post" action="{{ route('admin_advertisement_delete',['id'=> $advertisement->id ]) }}">

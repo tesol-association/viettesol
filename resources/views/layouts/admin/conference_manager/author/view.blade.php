@@ -1,4 +1,4 @@
-@extends('layouts.admin.layout')
+@extends('layouts.admin.conference_layout')
 @section('title','Author Management')
 
 @section('css')

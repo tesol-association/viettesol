@@ -14,7 +14,7 @@
 @endsection
 @section('content')
 
-<div id='calendar'"></div>
+<div id='calendar' data-conference_id = {{ $conference->id }}></div>
 @endsection
 @section('js')
 <script src='{{ asset('js/lib/calendar/moment.min.js') }}'></script>
