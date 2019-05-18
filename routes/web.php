@@ -370,6 +370,16 @@ Route::group(['prefix'=>'admin/conf/{conference_id}'], function() {
         Route::post('/decision/{id}', 'Admin\ConferenceManager\PaperController@decisionAjax')->name('admin_paper_decision');
     });
 
+    Route::group(['prefix'=>'/paper_file_managerment'], function() {
+        Route::get('view', 'Admin\ConferenceManager\PaperFileManagerController@show')->name('admin_paper_file_managerment_view');
+        Route::post('get_track', 'Admin\ConferenceManager\PaperFileManagerController@getTrack')->name('admin_paper_file_managerment_get_track');
+        Route::post('track/{id}/get_paper', 'Admin\ConferenceManager\PaperFileManagerController@getPaperOfTrack')->name('admin_paper_file_managerment_track_get_paper');
+        Route::post('track/{track_id}/paper/{paper_id}/get_author', 'Admin\ConferenceManager\PaperFileManagerController@getAuthorOfPaperOfTrack')->name('admin_paper_file_managerment_track_paper_get_author');
+        Route::post('track/{track_id}/paper/{paper_id}/get_reviewer', 'Admin\ConferenceManager\PaperFileManagerController@getReviewerOfPaperOfTrack')->name('admin_paper_file_managerment_track_paper_get_reviewer');
+        Route::post('track/{track_id}/paper/{paper_id}/author/{author_id}/get_attach_file', 'Admin\ConferenceManager\PaperFileManagerController@getAuthorFile')->name('admin_paper_file_managerment_get_author_file');
+        Route::post('track/{track_id}/paper/{paper_id}/reviewer/{reviewer_id}/get_attach_file', 'Admin\ConferenceManager\PaperFileManagerController@getReviewerFile')->name('admin_paper_file_managerment_get_reviewer_file');
+    });
+
     Route::group(['prefix'=>'/time_block'], function(){
         Route::get('/list','Admin\ConferenceManager\TimeBlockController@index')->name('admin_time_block_list');
 

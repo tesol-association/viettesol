@@ -29,7 +29,7 @@
         <ul class="treeview-menu">
             <li><a href="{{ route('admin_paper_list', ["conference_id" => $conference->id]) }}"><i class="fa fa-newspaper-o"></i> List Paper</a></li>
             <li><a href="{{ route('admin_author_paper_list', ['conference_id' => $conference->id]) }}"><i class="fa fa-user"></i> Paper author</a></li>
-            <li><a href="#">Paper File</a></li>
+            <li><a href="{{ route('admin_paper_file_managerment_view', ['conference_id' => $conference->id]) }}"><i class="fa fa-file-text-o"></i>Paper File</a></li>
             <li><a href="#">Review Assignment</a></li>
         </ul>
     </li>
