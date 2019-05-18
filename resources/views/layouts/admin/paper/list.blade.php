@@ -29,9 +29,8 @@
                                         <th>Track</th>
                                         <th>Status</th>
                                         <th>Created At</th>
-                                        <th>Assign</th>
-                                        <th>Action</th>
-                                        {{--<th>Delete</th>--}}
+                                        <th>View & Assign</th>
+                                        {{--<th>Action</th>--}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -48,41 +47,13 @@
                                         <td>{{ $paper->status }}</td>
                                         <td>{{ $paper->created_at }}</td>
                                         <td>
-                                            <a href="{{ route('admin_paper_submission', ["conference_id" => $conference->id, "id" => $paper->id]) }}" class="btn btn-primary">Assign</a>
+                                            <a href="{{ route('admin_paper_submission', ["conference_id" => $conference->id, "id" => $paper->id]) }}" class="btn btn-primary">View & Assign</a>
                                         </td>
-                                        <td>
-                                            <a href="{{ route('admin_paper_edit', ["conference_id" => $conference->id, "id" => $paper->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
-                                        {{--</td>--}}
-                                        {{--<td>--}}
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_paper_{{ $paper->id }}"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                        <!-- Start:: Delete Modal Conference -->
-                                        <div class="modal fade" id="delete_paper_{{ $paper->id }}" role="dialog">
-                                            <form method="post" action="{{ route('admin_paper_delete', [ "conference_id" => $conference->id, 'id'=> $paper->id ]) }}">
-                                                @csrf
-                                                <div class="modal-dialog">
-                                                 <!-- Modal content-->
-                                                 <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <h4 class="modal-title">Are you sure delete: {{ $paper->title }} ?</h4>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <!-- End:: Delete Modal Conference -->
                                     </tr>
                                 @endforeach
                                 </tbody>
                                 <tfoot class="filters">
                                     <tr>
-                                        <td></td>
-                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
