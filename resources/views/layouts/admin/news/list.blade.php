@@ -31,8 +31,8 @@
                                     <th>Status</th>
                                     <th>Last Updated</th>
                                     <th>Updated By</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>Action</th>
+                                    {{--<th>Delete</th>--}}
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -58,10 +58,10 @@
                                         <td>{{ $new->updated_at }}</td>
                                         <td>{{ $new->lastUpdatedBy->user_name }}</td>
                                         <td>
-                                            <a href="{{ route('admin_news_edit', ["id" => $new->id]) }}" class="btn btn-info">Edit</a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_news_{{ $new->id }}">Delete</button>
+                                            <a href="{{ route('admin_news_edit', ["id" => $new->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                                        {{--</td>--}}
+                                        {{--<td>--}}
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_news_{{ $new->id }}"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal News -->

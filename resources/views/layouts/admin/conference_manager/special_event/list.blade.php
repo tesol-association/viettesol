@@ -29,8 +29,7 @@
                                         <th>End time</th>
                                         <th>Room</th>
                                         <th>Description</th>
-	                                    <th>Edit</th>
-	                                    <th>Delete</th>
+	                                    <th>Action</th>
 	                                </tr>
                                 </thead>
                                 <tbody>
@@ -49,8 +48,6 @@
                                         <td>{{ $specialEvent->description }}</td>
                                         <td>
                                             <a href="{{ route('admin_special_event_edit', ['conference_id' => $conference_id, 'id' => $specialEvent->id]) }}" class="btn btn-info fa fa-edit"></a>
-                                        </td>
-                                        <td>
                                             <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_special_event_{{ $specialEvent->id }}"></button>
                                         </td>
                                     </tr>

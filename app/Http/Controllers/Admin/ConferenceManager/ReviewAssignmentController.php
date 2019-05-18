@@ -48,12 +48,34 @@ class ReviewAssignmentController extends BaseConferenceController
                 ->withErrors($validator)
                 ->withInput();
         }
-        $reviewAssignment = $this->reviewAssignments->assignReviewer($data);
+        $reviewAssignment = $this->reviewAssignments->assignReviewer($conferenceId,$data);
         event(new AssignReviewer($reviewAssignment));
         return redirect()->route('admin_paper_submission', [
             'conference_id' => $this->conferenceId,
             'paper_id' => $paperId
         ])->with('success', 'Assign Reviewer ' . $reviewAssignment->reviewer->first_name . ' ' . $reviewAssignment->reviewer->last_name . ' successful !');
+    }
+
+    public function changeDateDue(Request $request, $conferenceId, $paperId, $reviewAssignmentId)
+    {
+        $data = $request->all();
+        $data["date_due"] = date('Y-m-d', strtotime($data["date_due"]));
+        $validator = Validator::make($data, [
+            'date_due' => 'required|date',
+        ]);
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $reviewAssignment = $this->reviewAssignments->find($reviewAssignmentId);
+        $reviewAssignment->date_due = $data['date_due'];
+        $reviewAssignment->save();
+        return redirect()->route('admin_paper_submission', [
+            'conference_id' => $this->conferenceId,
+            'paper_id' => $paperId,
+        ])->with('success', 'change date due successful !');
     }
 
     public function edit($id)

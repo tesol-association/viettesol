@@ -27,9 +27,8 @@
                                     <th>Time</th>
                                     <th>Price Before Time</th>
                                     <th>Price After Time</th>
-                                    <th>Descrition</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>Description</th>
+                                    <th style="width: 150px">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,29 +41,27 @@
                                     <td>{{ $fee->price_after_time }}</td>
                                     <td>{{ $fee->description }}</td>
                                     <td>
-                                        <a href="{{ route('admin_fee_edit',['conference_id' => $conference->id, 'id'=>$fee->id] )}}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
-                                    </td>
-                                    <td>
+                                        <a href="{{ route('admin_fee_edit',['conference_id' => $conference->id, 'id'=>$fee->id] )}}" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_fee_{{ $fee->id }}"><i class="fa fa-trash"></i></button>
                                         <form method="post" action="{{ route('admin_fee_delete',['conference_id' => $conference->id, 'id'=> $fee->id ]) }}">
                                             @csrf
                                             <div class="modal fade" id="delete_fee_{{ $fee->id }}" role="dialog">
-                                              <div class="modal-dialog">
+                                                <div class="modal-dialog">
 
                                                 <!-- Modal content-->
-                                                <div class="modal-content">
-                                                  <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Are you sure delete fee {{ $fee->category }} ?</h4>
+                                                  <div class="modal-content">
+                                                    <div class="modal-header">
+                                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                      <h4 class="modal-title">Are you sure delete fee {{ $fee->category }} ?</h4>
                                                   </div>
-                                                  <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                    <div class="modal-footer">
+                                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      <button type="submit" class="btn btn-danger">Delete</button>
                                                   </div>
                                                 </div>
                                               </div>
                                             </div>
                                         </form>
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_fee_{{ $fee->id }}"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 @endforeach

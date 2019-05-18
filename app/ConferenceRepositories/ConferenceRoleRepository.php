@@ -10,6 +10,7 @@ namespace App\ConferenceRepositories;
 
 
 use App\Models\ConferenceRole;
+use Illuminate\Support\Facades\Config;
 
 class ConferenceRoleRepository
 {
@@ -47,7 +48,7 @@ class ConferenceRoleRepository
 
     public function getTrackDirectors($conferenceId)
     {
-        $trackDirectorRole = ConferenceRole::where('name', ConferenceRole::TRACK_DIRECTOR)->where('conference_id', $conferenceId)->first();
+        $trackDirectorRole = ConferenceRole::where('name', Config::get('constants.CONFERENCE_ROLE.TRACK_DIRECTOR'))->where('conference_id', $conferenceId)->first();
         if (!$trackDirectorRole) {
             return null;
         }
@@ -57,12 +58,32 @@ class ConferenceRoleRepository
 
     public function getReviewers($conferenceId)
     {
-        $reviewerRole = ConferenceRole::where('name', ConferenceRole::REVIEWER)->where('conference_id', $conferenceId)->first();
+        $reviewerRole = ConferenceRole::where('name', Config::get('constants.CONFERENCE_ROLE.REVIEWER'))->where('conference_id', $conferenceId)->first();
         if(!$reviewerRole){
             return null;
         }
         $reviewer = $reviewerRole->user;
         return $reviewer;
+    }
+
+    public function getDirectors($conferenceId)
+    {
+        $directorRole = ConferenceRole::where('name', Config::get('constants.CONFERENCE_ROLE.DIRECTOR'))->where('conference_id', $conferenceId)->first();
+        if (!$directorRole) {
+            return null;
+        }
+        $directors = $directorRole->user;
+        return $directors;
+    }
+
+    public function getAuthors($conferenceId)
+    {
+        $authorRole = ConferenceRole::where('name', Config::get('constants.CONFERENCE_ROLE.AUTHOR'))->where('conference_id', $conferenceId)->first();
+        if (!$authorRole) {
+            return null;
+        }
+        $authors = $authorRole->user;
+        return $authors;
     }
 
 }

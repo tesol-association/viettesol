@@ -27,8 +27,7 @@
                                         <th>Duration (minutes)</th>
                                         <th>Abstract lenght (words)</th>
                                         <th>Description</th>
-	                                    <th>Edit</th>
-	                                    <th>Delete</th>
+	                                    <th style="width: 150px">Action</th>
 	                                </tr>
                                 </thead>
                                 <tbody>
@@ -41,8 +40,6 @@
                                         <td>{{ $sessionType->description }}</td>
                                         <td>
                                             <a href="{{ route('admin_session_type_edit', ['conference_id' => $conference_id, 'id' => $sessionType->id]) }}" class="btn btn-info fa fa-edit"></a>
-                                        </td>
-                                        <td>
                                             <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_session_type_{{ $sessionType->id }}"></button>
                                         </td>
                                     </tr>
@@ -89,5 +86,5 @@
     <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
-    <script src="{{ asset('js/admin/session_types/list.js') }}"></script>
+    <script src="{{ asset('js/admin/session_type/list.js') }}"></script>
 @endsection

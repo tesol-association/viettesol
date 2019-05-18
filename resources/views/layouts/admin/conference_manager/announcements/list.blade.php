@@ -29,8 +29,7 @@
                                     <th>Description</th>
                                     <th>Expiry Date</th>
                                     <th>Status</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -54,8 +53,6 @@
                                             <a href="{{ route('admin_announcements_edit', ["conference_id" => $conference->id, "id" => $announcement->id]) }}" class="btn btn-info">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                        </td>
-                                        <td>
                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_announcements_{{ $announcement->id }}">
                                                 <i class="fa fa-trash"></i>
                                             </button>

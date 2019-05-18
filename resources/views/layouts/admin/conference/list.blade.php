@@ -30,11 +30,9 @@
                                     <th>End</th>
                                     <th>Venue</th>
                                     <th>Description</th>
-                                    <th>Attach File</th>
                                     <th>Created At</th>
-                                    <th>Detail</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>File</th>
+                                    <th>Aciton</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -48,19 +46,15 @@
                                         <td>{{ date('d/m/Y',strtotime( $conference->end_time)) }}</td>
                                         <td>{{ $conference->venue }}</td>
                                         <td>{{ $conference->description }}</td>
-                                        <td>
-                                            @if ($conference->attach_file)
-                                                <a target="_blank" href="{{ asset('/storage/' . $conference->attach_file) }}" class="btn btn-primary"><span class="fa fa-download"></span> Attach File</a>
-                                            @endif
-                                        </td>
                                         <td>{{ $conference->created_at }}</td>
                                         <td>
+                                            @if ($conference->attach_file)
+                                                <a target="_blank" href="{{ asset('/storage/' . $conference->attach_file) }}" class="btn btn-primary"><span class="fa fa-download"></span> </a>
+                                            @endif
+                                        </td>
+                                        <td>
                                             <a href="{{ route('admin_conference_view', ["id" => $conference->id]) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
-                                        </td>
-                                        <td>
                                             <a href="{{ route('admin_conference_edit', ["id" => $conference->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
-                                        </td>
-                                        <td>
                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_conference_{{ $conference->id }}"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>

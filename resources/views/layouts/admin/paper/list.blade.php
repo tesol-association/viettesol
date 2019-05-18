@@ -30,8 +30,8 @@
                                         <th>Status</th>
                                         <th>Created At</th>
                                         <th>Assign</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
+                                        <th>Action</th>
+                                        {{--<th>Delete</th>--}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -52,8 +52,8 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('admin_paper_edit', ["conference_id" => $conference->id, "id" => $paper->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
-                                        </td>
-                                        <td>
+                                        {{--</td>--}}
+                                        {{--<td>--}}
                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_paper_{{ $paper->id }}"><i class="fa fa-trash"></i></button>
                                         </td>
                                         <!-- Start:: Delete Modal Conference -->
