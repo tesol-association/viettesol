@@ -52,6 +52,9 @@
                                                 @case(Config::get('constants.PAPER_STATUS.REJECTED'))
                                                 <span class="label label-danger">Reject Paper</span>
                                                 @break
+                                                @default
+                                                waiting...
+                                                @break
                                             @endswitch
                                         </td>
                                         <td>
