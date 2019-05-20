@@ -47,4 +47,8 @@ $(document).ready(function() {
     $('#reviewer_registration_closed').on("dp.change", function (e) {
         $('#reviewer_registration_opened').data("DateTimePicker").maxDate(e.date);
     });
+
+    $('#review_deadline').datetimepicker({
+        'format': 'YYYY/MM/DD',
+    });
 });

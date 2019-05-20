@@ -26,9 +26,7 @@
 	                                    <th>Name</th>
 	                                    <th>Abbrev</th>
 	                                    <th>Description</th>
-	                                    <th>Edit</th>
-                                        <th>Rooms</th>
-	                                    <th>Delete</th>
+	                                    <th>Action</th>
 	                                </tr>
                                 </thead>
                                 <tbody>
@@ -39,12 +37,8 @@
                                         <td>{{ $building->abbrev }}</td>
                                         <td>{{ $building->description }}</td>
                                         <td>
-                                            <a href="{{ route('admin_buildings_edit', ["conference_id" => $conference->id, "id" => $building->id]) }}" class="btn btn-info fa fa-edit"></a>
-                                        </td>
-                                        <td>
                                             <a href="{{ route('admin_rooms_list', ["conference_id" => $conference->id, "building_id" => $building->id]) }}" class="btn btn-primary fa fa-eye"></a>
-                                        </td>
-                                        <td>
+                                            <a href="{{ route('admin_buildings_edit', ["conference_id" => $conference->id, "id" => $building->id]) }}" class="btn btn-info fa fa-edit"></a>
                                             <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_buildings_{{ $building->id }}"></button>
                                         </td>
                                     </tr>

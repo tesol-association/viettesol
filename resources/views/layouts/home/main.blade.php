@@ -9,7 +9,7 @@
 	<div class="slider">
 		@foreach($banners as $banner)
 		<div class="slider__item" style="height:450px; width: 800px;">
-			<img src="{{ $banner->url }}" alt="" style="height: 100%; width: 100%;">
+			<img src="{{ asset('/storage/'.$banner->url) }}" alt="" style="height: 100%; width: 100%;">
 		</div>
 		@endforeach
 	</div>

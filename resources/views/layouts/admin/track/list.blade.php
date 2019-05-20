@@ -31,12 +31,7 @@
                                     <th>Policy</th>
                                     <th>Review Form</th>
                                     <th>Created At</th>
-                                    @can('update-track')
-                                    <th>Edit</th>
-                                    @endcan
-                                    @can('delete-track')
-                                    <th>Delete</th>
-                                    @endcan
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -53,16 +48,14 @@
                                             @endif
                                         </td>
                                         <td>{{ $track->created_at }}</td>
-                                        @can('update-track')
                                         <td>
-                                            <a href="{{ route('admin_track_edit', ["conference_id" => $conference->id, "id" => $track->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                                            @can('update-track')
+                                                <a href="{{ route('admin_track_edit', ["conference_id" => $conference->id, "id" => $track->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                                            @endcan
+                                            @can('delete-track')
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_track_{{ $track->id }}"><i class="fa fa-trash"></i></button>
+                                            @endcan
                                         </td>
-                                        @endcan
-                                        @can('delete-track')
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_track_{{ $track->id }}"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                        @endcan
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->
                                     <div class="modal fade" id="delete_track_{{ $track->id }}" role="dialog">

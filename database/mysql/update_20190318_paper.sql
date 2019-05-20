@@ -60,3 +60,5 @@ ALTER TABLE `prepared_emails` CHANGE `body` `body` TEXT CHARACTER SET utf8 COLLA
 CREATE TABLE `viettesol`.`conference_permissions` ( `id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(255) NOT NULL , `description` TEXT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 ALTER TABLE `conference_permissions` ADD UNIQUE( `name`);
 CREATE TABLE `viettesol`.`conference_roles_permissions` ( `id` INT NOT NULL AUTO_INCREMENT , `conference_role_id` INT NOT NULL , `conference_permission_id` INT NOT NULL , `allowed` TINYINT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+/* 23/04/2019 */
+ALTER TABLE `conference_timeline` ADD `review_deadline` DATE NOT NULL AFTER `reviewer_registration_closed`;

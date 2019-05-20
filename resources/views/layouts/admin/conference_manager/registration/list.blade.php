@@ -41,7 +41,7 @@
                                     <td>{{ $register->email }}</td>
                                     <td>{{ $register->phone }}</td>
                                     <td>
-                                        <img src="{{ $register->payment_file_id }}" alt="" width="60%">
+                                        <img src="{{ asset('/storage/'.$register->payment_file_id) }}" alt="" width="60%">
                                     </td>
                                     <td>
                                         {{ $register->affiliation }}

@@ -9,6 +9,8 @@ use App\Models\Registration;
 use App\Models\ConferenceRole;
 use App\Models\Conference;
 use Session;
+use Illuminate\Support\Facades\Storage;
+
 
 class RegistrationController extends BaseConferenceController
 {
@@ -31,24 +33,28 @@ class RegistrationController extends BaseConferenceController
 			'role_id'        => 'required'
 		]);
 
+		// if ($request->hasFile('payment_file')) {
+		// 	if ($request->file('payment_file')->isValid()) {
+		// 		try {
+		// 			$file = $request->file('payment_file');
+		// 			$nameImage = $file->getClientOriginalName();
+
+		// 			$path = $file->move(self::UPLOAD_FOLDER, $nameImage);
+		// 		} catch (Illuminate\Filesystem\FileNotFoundException $e) {
+
+		// 		}
+		// 	}
+		// }
 		if ($request->hasFile('payment_file')) {
-			if ($request->file('payment_file')->isValid()) {
-				try {
-					$file = $request->file('payment_file');
-					$nameImage = $file->getClientOriginalName();
+            $path = Storage::disk('public')->put(self::UPLOAD_FOLDER, $request->payment_file);
+        }
 
-					$path = $file->move(self::UPLOAD_FOLDER, $nameImage);
-				} catch (Illuminate\Filesystem\FileNotFoundException $e) {
-
-				}
-			}
-		}
 		Registration::create([
 			'full_name'       => $request->name,
 			'organization'    => $request->organization,
 			'email'           => $request->email,
 			'phone'           => $request->phone,
-			'payment_file_id' => asset($path),
+			'payment_file_id' => $path ?? null,
 			'affiliation'     => $request->affiliation,
 			'status'          => $request->status,
 			'user_id'         => $request->user_id,

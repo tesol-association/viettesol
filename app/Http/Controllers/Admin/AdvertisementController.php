@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Advertisement;
 use Session;
+use Illuminate\Support\Facades\Storage;
 
 class AdvertisementController extends Controller
 {
@@ -45,22 +46,25 @@ class AdvertisementController extends Controller
            'upload_file'      => 'required|image'
         ]);
 
+        // if ($request->hasFile('upload_file')) {
+        //     if ($request->file('upload_file')->isValid()) {
+        //         try {
+        //             $file = $request->file('upload_file');
+        //             $nameImage = $file->getClientOriginalName();
+
+        //             $path = $file->move(self::UPLOAD_FOLDER, $nameImage);
+        //         } catch (Illuminate\Filesystem\FileNotFoundException $e) {
+
+        //         }
+        //     }
+        // }
         if ($request->hasFile('upload_file')) {
-            if ($request->file('upload_file')->isValid()) {
-                try {
-                    $file = $request->file('upload_file');
-                    $nameImage = $file->getClientOriginalName();
-
-                    $path = $file->move(self::UPLOAD_FOLDER, $nameImage);
-                } catch (Illuminate\Filesystem\FileNotFoundException $e) {
-
-                }
-            }
+            $path = Storage::disk('public')->put(self::UPLOAD_FOLDER, $request->upload_file);
         }
 
         Advertisement::create([
             'name'  => $request->name,
-            'image' => asset($path)
+            'image' => $path ?? null,
         ]);
         Session::flash('success','Thêm thành công !');
         return redirect()->route('admin_advertisement_list');

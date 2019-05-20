@@ -26,7 +26,7 @@
                                         <th>Track</th>
                                         <th>Status</th>
                                         <th>Created At</th>
-                                        <th>Assign</th>
+                                        <th>View & Assign</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="filters">
@@ -44,7 +44,7 @@
                                 @foreach($papers as $paper)
                                     <tr>
                                         <td>{{ $paper->id }}</td>
-                                        <td>{{ $paper->title }}</td>
+                                        <td><a target="_blank" href="{{ route('admin_author_paper_view', ['conference_id' => $conference->id, 'id' => $paper->id]) }}">{{ $paper->title }}</a></td>
                                         <td>
                                             @if ($paper->file_id)
                                                 <a target="_blank" href="{{ asset('/storage/' . $paper->attachFile->path) }}" class="btn btn-primary"><span class="fa fa-download"></span> {{ $paper->attachFile->original_file_name }}</a>
@@ -54,7 +54,7 @@
                                         <td>{{ $paper->status }}</td>
                                         <td>{{ $paper->created_at }}</td>
                                         <td>
-                                            <a href="{{ route('admin_paper_submission', ['conference_id'=>$conference->id, 'id'=>$paper->id]) }}" class="btn btn-primary">Assign</a>
+                                            <a href="{{ route('admin_paper_submission', ['conference_id'=>$conference->id, 'id'=>$paper->id]) }}" class="btn btn-primary">View & Assign</a>
                                         </td>
                                     </tr>
                                 @endforeach

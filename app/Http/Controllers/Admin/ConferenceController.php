@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Auth;
+use App\ConferenceRepositories\TrackRepository;
+use App\ConferenceRepositories\PaperRepository;
+use App\Models\Announcements;
+use App\Models\ConferenceTimeline;
 
 class ConferenceController extends Controller
 {
@@ -20,10 +26,147 @@ class ConferenceController extends Controller
         return view('layouts.admin.conference.list', ['conferences'=> $conferences]);
     }
 
-    public function view($id)
+    public function view($conferenceId)
     {
-        $conference = Conference::find($id);
-        return view('layouts.admin.conference_layout', ['conference'=> $conference]);
+        $conference = Conference::find($conferenceId);
+        $paperRepository = new PaperRepository();
+        $trackRepository = new TrackRepository();
+
+        //paper
+        $papers = $paperRepository->get($conferenceId);
+        $paperSubmitted = [];
+        $paperInReview = [];
+        $paperReviewResult = [];
+        $paperReJected = [];
+        $paperRevision = [];
+        $paperAccepted = [];
+        $paperUnscheduled = [];
+        $paperScheduled = [];
+        $paperAuthor = [];
+        $paperReviewerNoAnswer = [];
+        $paperReviewerAccept = [];
+        $paperReviewerReject = [];
+
+        //track
+        $tracks = $trackRepository->get(['conference_id'=>$conferenceId]);
+
+        //khai bao author, reviewer, review assignment
+        $author = [];
+        $reviewer = [];
+        $reviewerAssignment = [];
+        $reviewerAssignmentUnfinish = [];
+        $reviewerAssignmentCompleted = [];
+        $reviewerAssignmentDeadlive = [];
+
+        //loop get author, reviewer, review assignment, paper status
+        foreach ($papers as $paper) {
+
+            //author
+            foreach ($paper->authors as $authors) {
+                if($authors->pivot->seq == Config::get('constants.PAPER_AUTHOR.AUTHOR')){
+                    if(!in_array($authors->id, array_pluck($author, 'id'))){
+                        array_push($author, $authors);
+                    }
+                    if($authors->id == Auth::id()){
+                        array_push($paperAuthor, $paper);
+                    }
+                }
+            }
+
+            //reviewer
+            foreach ($paper->reviewers as $reviewers) {
+                if(!in_array($reviewers->id, array_pluck($reviewer, 'id'))){
+                    array_push($reviewer, $reviewers);
+                }
+            }
+
+            //review Asignment
+            array_push($reviewerAssignment, $paper->reviewAssignment);
+
+            //Review Asignment un finish, completed, deadlive
+            foreach ($paper->reviewAssignment as $reviewAssign) {
+                if(empty($reviewAssign->date_completed)){
+                    array_push($reviewerAssignmentUnfinish, $reviewAssign);
+                }else{
+                    if($reviewAssign->date_completed > $conference->timeline->review_deadline){
+                        array_push($reviewerAssignmentDeadlive, $reviewAssign);
+                    }else{
+                        array_push($reviewerAssignmentCompleted, $reviewAssign);
+                    }
+                }
+
+                //Paper Reviwer no answer, accept, reject
+                if($reviewAssign->reviewer_id == Auth::id()){
+                    if ($reviewAssign->declined == 1) {
+                        array_push($paperReviewerReject, $paper);
+                    }else{
+                        if(empty($reviewAssign->date_confirmed)){
+                            array_push($paperReviewerNoAnswer, $paper);
+                        }else{
+                            array_push($paperReviewerAccept, $paper);
+                        }
+                    }
+                }
+            }
+
+            //Paper status
+            if($paper->status == Config::get('constants.PAPER_STATUS.SUBMITTED')){
+                array_push($paperSubmitted, $paper);
+            }
+            if($paper->status == Config::get('constants.PAPER_STATUS.IN_REVIEW')){
+                array_push($paperInReview, $paper);
+            }
+            if($paper->status == Config::get('constants.PAPER_STATUS.ALL_REVIEWER_RECOMMENDATION')){
+                array_push($paperReviewResult, $paper);
+            }
+            if($paper->status == Config::get('constants.PAPER_STATUS.ACCEPTED')){
+                array_push($paperAccepted, $paper);
+            }
+            if($paper->status == Config::get('constants.PAPER_STATUS.REJECTED')){
+                array_push($paperReJected, $paper);
+            }
+            if($paper->status == Config::get('constants.PAPER_STATUS.REVISION')){
+                array_push($paperRevision, $paper);
+            }
+            if($paper->status == Config::get('constants.PAPER_STATUS.UNSCHEDULED')){
+                array_push($paperUnscheduled, $paper);
+            }
+            if($paper->status == Config::get('constants.PAPER_STATUS.SCHEDULED')){
+                array_push($paperScheduled, $paper);
+            }
+        }
+
+        //announcements
+        $announcements = Announcements::where('conference_id', $conferenceId)->get();
+
+        //Time line
+        $timeLine = ConferenceTimeline::where('conference_id', $conferenceId)->first();
+
+        return view('layouts.admin.conference.view', [
+            'conference'=> $conference,
+            'papers'=>$papers,
+            'tracks'=>$tracks,
+            'author'=>$author,
+            'reviewer'=>$reviewer,
+            'reviewerAssignment'=>$reviewerAssignment,
+            'announcements'=>$announcements,
+            'paperSubmitted'=>$paperSubmitted,
+            'paperInReview'=>$paperInReview,
+            'paperReviewResult'=>$paperReviewResult,
+            'paperAccepted'=>$paperAccepted,
+            'paperReJected'=>$paperReJected,
+            'paperRevision'=>$paperRevision,
+            'paperUnscheduled'=>$paperUnscheduled,
+            'paperScheduled'=>$paperScheduled,
+            'timeLine'=>$timeLine,
+            'reviewerAssignmentUnfinish'=>$reviewerAssignmentUnfinish,
+            'reviewerAssignmentCompleted'=>$reviewerAssignmentCompleted,
+            'reviewerAssignmentDeadlive'=>$reviewerAssignmentDeadlive,
+            'paperAuthor'=>$paperAuthor,
+            'paperReviewerAccept'=>$paperReviewerAccept,
+            'paperReviewerReject'=>$paperReviewerReject,
+            'paperReviewerNoAnswer'=>$paperReviewerNoAnswer,
+        ]);
     }
 
     /**

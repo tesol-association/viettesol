@@ -76,7 +76,44 @@
                                 </a>
                             @endif
                         </td>
-                        <td></td>
+                        <td>
+                            @if ($reviewAssignment->date_due)
+                                <span data-toggle="modal" data-target="#change_date_due{{ $reviewAssignment->id }}">{{ date('d/m/Y',strtotime($reviewAssignment->date_due)) }}</span>
+                            @else
+                                <span data-toggle="modal" data-target="#change_date_due{{ $reviewAssignment->id }}">___</span>
+                            @endif
+                            <!-- Start:: Change Date Due For Review Assignment -->
+                                <div class="modal" id="change_date_due{{ $reviewAssignment->id }}" role="dialog">
+                                    <form method="post" action="{{ route('track_director_review_assignment_change_date', ['conference_id' => $conference->id, 'paper_id' => $paper->id, 'review_assignment_id' => $reviewAssignment->id]) }}">
+                                        @csrf
+                                        <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Change Deadline for Assignment</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="review_deadline">Review Deadline:</label>
+                                                        <div class="input-group date">
+                                                            <div class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </div>
+                                                            <input type="text" required class="review_deadline form-control pull-right" name="date_due" value="{{ $reviewAssignment->date_due }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- End:: Change Date Due For Review Assignment -->
+                        </td>
                         <td>
                             @if ($reviewAssignment->date_confirmed)
                                 @if ($reviewAssignment->declined)

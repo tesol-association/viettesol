@@ -29,12 +29,7 @@
                                         <th>Duration (minutes)</th>
                                         <th>Abstract lenght (words)</th>
                                         <th>Description</th>
-                                        @can('update-session-type', \App\Models\SessionType::class)
-	                                        <th>Edit</th>
-                                        @endcan
-                                        @can('delete-session-type', \App\Models\SessionType::class)
-	                                        <th>Delete</th>
-                                        @endcan
+	                                    <th style="width: 150px">Action</th>
 	                                </tr>
                                 </thead>
                                 <tbody>
@@ -45,16 +40,14 @@
                                         <td>{{ $sessionType->length }}</td>
                                         <td>{{ $sessionType->abstract_length }}</td>
                                         <td>{{ $sessionType->description }}</td>
-                                        @can('update-session-type', \App\Models\SessionType::class)
                                         <td>
-                                            <a href="{{ route('admin_session_type_edit', ['conference_id' => $conference_id, 'id' => $sessionType->id]) }}" class="btn btn-info fa fa-edit"></a>
+                                            @can('update-session-type', \App\Models\SessionType::class)
+                                                <a href="{{ route('admin_session_type_edit', ['conference_id' => $conference_id, 'id' => $sessionType->id]) }}" class="btn btn-info fa fa-edit"></a>
+                                            @endcan
+                                            @can('delete-session-type', \App\Models\SessionType::class)
+                                                <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_session_type_{{ $sessionType->id }}"></button>
+                                            @endcan
                                         </td>
-                                        @endcan
-                                        @can('delete-session-type', \App\Models\SessionType::class)
-                                        <td>
-                                            <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_session_type_{{ $sessionType->id }}"></button>
-                                        </td>
-                                        @endcan
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->
                                     <div class="modal fade" id="delete_session_type_{{ $sessionType->id }}" role="dialog">
@@ -99,5 +92,5 @@
     <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
-    <script src="{{ asset('js/admin/session_types/list.js') }}"></script>
+    <script src="{{ asset('js/admin/session_type/list.js') }}"></script>
 @endsection
