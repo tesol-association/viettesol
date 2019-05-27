@@ -10,6 +10,11 @@ return [
         'ADMIN' => 1,
         'NO_ROLE' => 0
     ],
+    'CONFERENCE_REVIEW_TYPE' => [
+        'OPEN_REVIEW' => 'open_review',
+        'SINGLE_BLIND' => 'single_blind',
+        'DOUBLE_BLIND' => 'double_blind',
+    ],
     'CONFERENCE_ROLE' => [
         'DIRECTOR' => 'Director',
         'TRACK_DIRECTOR' => 'Track Director',
@@ -63,6 +68,7 @@ return [
         'ACCEPT_RECOMMENDATION' => 0,
         'REVISION_RECOMMENDATION' => 1,
         'REJECT_RECOMMENDATION' => 2,
+        'DECLINED' => 1,
     ],
     'PAPER_STATUS' => [
         'SUBMITTED' => 'submitted',

@@ -198,7 +198,7 @@ class ReviewAssignmentController extends BaseConferenceController
                 ->withErrors($validator)
                 ->withInput();
         }
-
+        $data['review_file_id'] = null;
         if ($request->hasFile('upload_file')){
             //set path
             $reviewAssignment = $this->reviewAssignments->find($assignmentId);
@@ -211,17 +211,16 @@ class ReviewAssignmentController extends BaseConferenceController
 
             //Save attach file
             $path = Storage::disk('public')->putFileAs($path, $request->upload_file, $fileName);
-
-            $riviewerFile['paper_id'] = $paper->id;
-            $riviewerFile['revision'] = null;
-            $riviewerFile['path'] = $path;
-            $riviewerFile['file_type'] = $request->file('upload_file')->getClientOriginalExtension();
-            $riviewerFile['file_size'] = $request->file('upload_file')->getSize();
-            $riviewerFile['original_file_name'] = $request->file('upload_file')->getClientOriginalName();
-            $riviewerFile['type'] = Config::get('constants.PAPER_FILE.REVIEW_FILE');
+            $reviewFile['paper_id'] = $paper->id;
+            $reviewFile['revision'] = null;
+            $reviewFile['path'] = $path;
+            $reviewFile['file_type'] = $request->file('upload_file')->getClientOriginalExtension();
+            $reviewFile['file_size'] = $request->file('upload_file')->getSize();
+            $reviewFile['original_file_name'] = $request->file('upload_file')->getClientOriginalName();
+            $reviewFile['type'] = Config::get('constants.PAPER_FILE.REVIEW_FILE');
 
             //Save paper_file
-            $paperFile = $this->paperFile->create($riviewerFile);
+            $paperFile = $this->paperFile->create($reviewFile);
             $data['review_file_id'] = $paperFile->id;
 
         }

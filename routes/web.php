@@ -595,6 +595,8 @@ Route::group(['prefix'=>'home'],function(){
     Route::group(['prefix'=>'profile'], function(){
         Route::get('/view','Home\UserProfileController@index')->name('home_profile_view');
 
+        Route::get('/show/{mail}','Home\UserProfileController@show')->name('home_profile_show_mail');
+
         Route::get('/edit/{id}','Home\UserProfileController@edit')->name('home_profile_edit');
         Route::post('/update/{id}','Home\UserProfileController@update')->name('home_profile_update');
     });

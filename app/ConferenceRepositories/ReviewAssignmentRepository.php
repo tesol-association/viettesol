@@ -117,7 +117,7 @@ class ReviewAssignmentRepository
                     });
                     foreach ($assignmentInConfences as $assignment) {
                         if (isset($assignment->date_completed) && isset($assignment->date_due)) {
-                            if (date('Y-m-d H:i:s', $assignment->date_completed) < date('Y-m-d H:i:s', $assignment->date_due)) {
+                            if (date('Y-m-d H:i:s', strtotime($assignment->date_completed)) < date('Y-m-d H:i:s', strtotime($assignment->date_due))) {
                                 $reviewerCriteria->score += $x3;
                             }
                         }

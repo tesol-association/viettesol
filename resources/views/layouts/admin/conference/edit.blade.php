@@ -66,6 +66,28 @@
                         @endif
                     </div>
 
+                    <div class="form-group {{ $errors->first('review_type') ? 'has-error' : ''}}">
+                        <label for="review_type">Review Process Type*</label>
+                        <select id="review_type" name="review_type" class="form-control" data-placeholder="Select a Review Process Type" style="width: 100%;">
+                            @if ($conference->review_type == Config::get('constants.CONFERENCE_REVIEW_TYPE.OPEN_REVIEW'))
+                                <option value="double_blind">Double Blind</option>
+                                <option value="single_blind">Single Blind</option>
+                                <option value="open_review" selected>Open Review</option>
+                            @elseif ($conference->review_type == Config::get('constants.CONFERENCE_REVIEW_TYPE.SINGLE_BLIND'))
+                                <option value="double_blind">Double Blind</option>
+                                <option value="single_blind" selected>Single Blind</option>
+                                <option value="open_review">Open Review</option>
+                            @else
+                                <option value="double_blind" selected>Double Blind</option>
+                                <option value="single_blind">Single Blind</option>
+                                <option value="open_review">Open Review</option>
+                            @endif
+                        </select>
+                        @if ($errors->has('review_type'))
+                            <span class="help-block">{{ $errors->first('review_type') }}</span>
+                        @endif
+                    </div>
+
                     <div class="form-group {{ $errors->first('description') ? 'has-error' : ''}}">
                         <label for="description">Description</label>
                         <textarea name="description" id="description" class="form-control" rows="3" placeholder="Enter Description ...">{{ $conference->description }}</textarea>

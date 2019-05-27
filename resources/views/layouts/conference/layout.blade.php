@@ -38,9 +38,9 @@
 			<ul>
 
 				<li class="menu_item"><a href="{{ route('conference_home', $conference->path) }}">Home</a></li>
-				<li class="menu_item"><a href="">Speakers</a></li>
+				<li class="menu_item"><a href="{{ route('conference_speakers', $conference->path) }}">Speakers</a></li>
 				<li class="menu_item"><a href="">Tickets</a></li>
-				<li class="menu_item"><a href="">News</a></li>
+				<li class="menu_item"><a href="{{ route('conference_news', $conference->path) }}">News</a></li>
 				<li class="menu_item"><a href="{{ route('conference_contact', $conference->path) }}">Contact</a></li>
 
 			</ul>
@@ -110,13 +110,14 @@
 											<nav class="main_nav">
 												<ul>
 													<li><a href="{{ route('conference_home',['conference_path'=>$conference->path]) }}">Home</a></li>
-													<li><a href="">Speakers</a></li>
+													<li><a href="{{ route('conference_speakers',['conference_path'=>$conference->path]) }}">Speakers</a></li>
 													<li><a href="{{ route('conference_news',['conference_path'=>$conference->path]) }}">News</a></li>
 													<li><a href="{{ route('conference_contact',[$conference->path]) }}">Contact</a></li>
 												</ul>
 											</nav>
 											<div class="header_extra ml-auto">
 												<div class="header_search"><i class="fa fa-search" aria-hidden="true"></i></div>
+												<div class="button header_button"><a href="{{ route('admin_conference_view',['conference_id'=>$conference->id]) }}">Dashboard</a></div>
 												<div class="button header_button"><a href="{{ route('admin_registration_create',['conference_id'=>$conference->id]) }}">Registration</a></div>
 											</div>
 										</div>

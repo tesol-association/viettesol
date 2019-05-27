@@ -9,6 +9,7 @@ use App\Events\PaperEvent\PaperSubmitted;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\Author;
 use App\ConferenceRepositories\PaperRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -64,6 +65,10 @@ class PaperController extends BaseConferenceController
                 ->withErrors($validator)
                 ->withInput();
         }
+
+        if ($this->afterSubmissionClosed()) {
+            return redirect()->back()->with('error', 'submission Closed At: ' . date('Y-m-d', strtotime($this->conference->timeline->submission_closed)));
+        }
         $authorData = $request->author;
         $paperData = $request->paper;
         $paper = $this->papers->createSubmittedPaper($paperData);
@@ -74,6 +79,13 @@ class PaperController extends BaseConferenceController
         }
         $author->papers()->attach($paper->id, ['seq' => Config::get('constants.PAPER_AUTHOR.AUTHOR')]);
         return redirect()->route('author_paper_list', ["conference_id" => $this->conferenceId])->with('success', 'Submission ' . $paper->title . ' successful !');
+    }
+
+    public function afterSubmissionClosed()
+    {
+        $today = Carbon::now();
+        $submissionClosed = $this->conference->timeline->submission_closed;
+        return ($today->format('Y-m-d') > date('Y-m-d', strtotime($submissionClosed))) ? true : false;
     }
 
     public function editPaper(Request $request,$conferenceId, $id)
@@ -97,6 +109,9 @@ class PaperController extends BaseConferenceController
             'paper.title' => 'required',
             'paper.abstract' => 'required',
         ]);
+        if ($this->afterSubmissionClosed()) {
+            return redirect()->back()->with('error', 'submission Closed At: ' . date('Y-m-d', strtotime($this->conference->timeline->submission_closed)));
+        }
         $paper = $this->papers->updatePaper($request->paper, $id);
         event(new PaperEditSubmissioned($paper));
         return redirect()->route('author_paper_list', ["conference_id" => $this->conferenceId])->with('success', 'Updated ' . $paper->title . ' successful !');

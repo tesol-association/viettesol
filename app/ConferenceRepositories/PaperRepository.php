@@ -19,7 +19,7 @@ class PaperRepository
 {
     public function find($paperId)
     {
-        $paper = Paper::with('track.users', 'sessionType', 'authors', 'attachFile', 'reviewAssignment')->where('id', $paperId)->first();
+        $paper = Paper::with('track.users', 'sessionType', 'authors', 'attachFile', 'reviewAssignment.reviewer')->where('id', $paperId)->first();
         if ($paper->track) {
             $paper->track->load('reviewForm.criteriaReviews');
         }
@@ -55,7 +55,7 @@ class PaperRepository
         $paper->track_id = $data['track_id'];
         $paper->session_type_id = $data['session_type_id'];
         $paper->status = Config::get('constants.PAPER_STATUS.SUBMITTED');
-        $paper->keywords = $data['keywords'];
+        $paper->keywords = $data['keywords'] ?? [];
         $paper->submission_by = Auth::id();
         $paper->save();
         $this->updateTrackKeywords($paper->track_id, $paper->keywords);
@@ -74,7 +74,7 @@ class PaperRepository
         $paper = Paper::find($id);
         $paper->title = $data['title'];
         $paper->abstract = $data['abstract'];
-        $paper->keywords = $data['keywords'];
+        $paper->keywords = $data['keywords'] ?? [];
         $paper->save();
         return $paper;
     }

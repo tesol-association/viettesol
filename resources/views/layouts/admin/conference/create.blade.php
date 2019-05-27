@@ -66,6 +66,18 @@
                         @endif
                     </div>
 
+                    <div class="form-group {{ $errors->first('review_type') ? 'has-error' : ''}}">
+                        <label for="review_type">Review Process Type*</label>
+                        <select id="review_type" name="review_type" class="form-control" data-placeholder="Select a Review Process Type" style="width: 100%;">
+                            <option value="double_blind">Double Blind</option>
+                            <option value="single_blind">Single Blind</option>
+                            <option value="open_review">Open Review</option>
+                        </select>
+                        @if ($errors->has('review_type'))
+                            <span class="help-block">{{ $errors->first('review_type') }}</span>
+                        @endif
+                    </div>
+
                     <div class="form-group {{ $errors->first('description') ? 'has-error' : ''}}">
                         <label for="description">Description</label>
                         <textarea name="description" id="description" class="form-control" rows="3" placeholder="Enter Description ...">{{ old('description') }}</textarea>

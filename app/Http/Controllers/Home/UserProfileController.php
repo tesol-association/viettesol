@@ -50,9 +50,13 @@ class UserProfileController extends HomeController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($email)
     {
-        //
+        $user = User::where('email', $email)->first();
+        if ($user == null) {
+            return redirect()->back()->with('error', 'User not Exist !');
+        }
+        return view('layouts.home.profile.view', compact('user'));
     }
 
     /**

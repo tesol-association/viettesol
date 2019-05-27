@@ -20,6 +20,15 @@
     <!-- /.box-header -->
     <div class="box-body">
         <dl class="dl-horizontal">
+            @if ($conference->review_type == \Config::get('constants.CONFERENCE_REVIEW_TYPE.OPEN_REVIEW')
+            || $conference->review_type == \Config::get('constants.CONFERENCE_REVIEW_TYPE.SINGLE_BLIND'))
+                <dt>Author</dt>
+                <dd>
+                    @foreach ($paper->authors as $author)
+                        <a href="{{ route('home_profile_show_mail', ['mail' => $author->email]) }}">{{ $author->full_name }} </a>,
+                    @endforeach
+                </dd>
+            @endif
             <dt>Title</dt>
             <dd>{{ $paper->title }}</dd>
             <dt>Track</dt>
@@ -92,7 +101,7 @@
     @endif
 </div>
 <!-- End: Paper Info-->
-@if ($reviewAssignment->date_confirmed)
+@if ($reviewAssignment->date_confirmed && $reviewAssignment->declined != \Config::get('constants.REVIEW_ASSIGNMENT.DECLINED'))
     @include('reviewer.paper.sub_view.review_form')
 @endif
 @endsection

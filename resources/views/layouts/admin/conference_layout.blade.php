@@ -234,11 +234,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </form>
             <!-- /.search form -->
             <!-- start::SIDEBAR ROLE -->
-            @if (Auth::user() != null)
-                @if (Auth::user()->is_admin == Config::get('constants.USER.ADMIN'))
+            @if (\App\Facades\CurrentUser::user() != null)
+                @if (\App\Facades\CurrentUser::user()->is_admin == Config::get('constants.USER.ADMIN'))
                     @include('layouts.sidebar.conference_manager', ['conference' => $conference])
-                    @if (Auth::user()->conferenceRoles)
-                        @foreach(Auth::user()->conferenceRoles as $conferenceRole)
+                    @if (\App\Facades\CurrentUser::user()->conferenceRoles)
+                        @foreach(\App\Facades\CurrentUser::user()->conferenceRoles as $conferenceRole)
                             @switch($conferenceRole->name)
                                 @case(Config::get('constants.CONFERENCE_ROLE.DIRECTOR'))
                                     @include('layouts.sidebar.director', ['conference' => $conference])

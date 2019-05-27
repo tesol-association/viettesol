@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\ConferenceRepositories\ConferenceRoleRepository;
+use App\Facades\CurrentUser;
 use App\Models\Conference;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,6 +15,7 @@ use App\ConferenceRepositories\TrackRepository;
 use App\ConferenceRepositories\PaperRepository;
 use App\Models\Announcements;
 use App\Models\ConferenceTimeline;
+use Illuminate\Validation\Rule;
 
 class ConferenceController extends Controller
 {
@@ -29,6 +31,16 @@ class ConferenceController extends Controller
 
     public function view($conferenceId)
     {
+        $user = CurrentUser::user();
+        if ($user->conferenceRoles->first()) {
+            $firstRole = $user->conferenceRoles->first()->name;
+            switch ($firstRole) {
+                case $firstRole == Config::get('constants.CONFERENCE_ROLE.AUTHOR'):
+                    return redirect()->route('admin_author_paper_list', ['conference_id' => $conferenceId]);
+                case $firstRole == Config::get('constants.CONFERENCE_ROLE.REVIEWER'):
+                    return redirect()->route('reviewer_paper_list', ['conference_id' => $conferenceId]);
+            }
+        }
         $conference = Conference::find($conferenceId);
         $paperRepository = new PaperRepository();
         $trackRepository = new TrackRepository();
@@ -199,6 +211,7 @@ class ConferenceController extends Controller
         $conference->start_time = new \DateTime($request->start_time);
         $conference->end_time = new \DateTime($request->end_time);
         $conference->venue = $request->venue;
+        $conference->review_type = $request->review_type;
         $conference->description = $request->description;
         if ($request->hasFile('attach_file')) {
             $url = Storage::disk('public')->put(self::UPLOAD_FOLDER, $request->attach_file);
@@ -286,6 +299,7 @@ class ConferenceController extends Controller
         $conference->start_time = new \DateTime($request->start_time);
         $conference->end_time = new \DateTime($request->end_time);
         $conference->venue = $request->venue;
+        $conference->review_type = $request->review_type;
         $conference->description = $request->description;
         $conference->save();
         return redirect()->route('admin_conference_list')->with('success', 'Update ' . $conference->title . ' successful !');
@@ -314,6 +328,14 @@ class ConferenceController extends Controller
             'venue' => 'required',
             'start_time' => 'required|date|before:end_time',
             'end_time' => 'required|date|after:start_time',
+            'review_type' => [
+                'required',
+                Rule::in([
+                    Config::get('constants.CONFERENCE_REVIEW_TYPE.OPEN_REVIEW'),
+                    Config::get('constants.CONFERENCE_REVIEW_TYPE.SINGLE_BLIND'),
+                    Config::get('constants.CONFERENCE_REVIEW_TYPE.DOUBLE_BLIND'),
+                ]),
+            ]
         ]);
     }
 

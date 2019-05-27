@@ -46,7 +46,9 @@
                 </div>
                 <div class="form-group">
                     @if ($reviewAssignment->date_completed)
+                        @if ($reviewAssignment->attachFile)
                         <a target="_blank" href="{{ asset('/storage/' . $reviewAssignment->attachFile->path) }}" class="btn btn-primary"><span class="fa fa-download"></span> Attach File</a>
+                        @endif
                     @else
                         <input type="file" id="upload_file" name="upload_file">
                     @endif

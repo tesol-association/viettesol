@@ -49,6 +49,19 @@
                     @endif
                 </div>
             </div>
+
+            @if ($conference->review_type == \Config::get('constants.CONFERENCE_REVIEW_TYPE.OPEN_REVIEW'))
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">REVIEWERS:</h3>
+                </div>
+                <div class="box-body">
+                    @foreach ($paper->reviewAssignment as $assignment)
+                        <a href="{{ route('home_profile_show_mail', ['mail' => $assignment->reviewer->email]) }}">{{ $assignment->reviewer->full_name }}, </a>
+                    @endforeach
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 @endsection
