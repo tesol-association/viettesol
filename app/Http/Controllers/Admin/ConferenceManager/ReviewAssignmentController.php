@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Admin\ConferenceManager;
 
+use App\ConferenceRepositories\ConferenceRoleRepository;
 use App\ConferenceRepositories\PaperRepository;
 use App\ConferenceRepositories\ReviewAssignmentRepository;
+use App\ConferenceRepositories\ReviewerCriteriaRepository;
 use App\ConferenceRepositories\TrackRepository;
 use App\ConferenceRepositories\PaperFileRepository;
 use App\Events\PaperEvent\AssignReviewer;
 use App\Events\PaperEvent\Unassigned;
 use App\Events\PaperEvent\SendReviewResult;
+use App\Models\Error;
+use App\Models\ReviewCriteria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -29,8 +33,37 @@ class ReviewAssignmentController extends BaseConferenceController
         $this->paperFile = $paperFileRepository;
     }
 
-    public function index()
+    public function autoAssign($conferenceId, $paperId, ReviewerCriteriaRepository $reviewerCriteriaRepository, ConferenceRoleRepository $conferenceRoleRepository)
     {
+        $paper = $this->papers->find($paperId);
+        $criterias = ReviewCriteria::where('conference_id', $conferenceId)->get();
+        $reviewerCriteriaIds = $criterias->pluck('user_id')->all();
+        $reviewers = $conferenceRoleRepository->getReviewers($this->conferenceId);
+        $reviewerNoCriterias = $reviewers->filter(function ($reviewer) use ($reviewerCriteriaIds) {
+            return !(in_array($reviewer->id, $reviewerCriteriaIds));
+        });
+        $noCriterias = [];
+        foreach ($reviewerNoCriterias as $reviewer) {
+            $criteria = new ReviewCriteria();
+            $criteria->user_id = $reviewer->id;
+            $criteria->conference_id = $conferenceId;
+            $criteria->slot = 2;
+            $criteria->keywords = [];
+            $noCriterias[] = $criteria;
+        }
+        $reviewerCriterias = $criterias->concat($noCriterias);
+        $reviewerAssignedIds = $paper->reviewAssignment->pluck('reviewer_id')->all();
+        $reviewerCriterias = $reviewerCriterias->filter(function($reviewerCriteria) use ($paper) {
+            return ($reviewerCriteria->user_id !== $paper->submission_by);
+        });
+        $reviewerCriterias = $reviewerCriterias->filter(function($reviewerCriteria) use ($reviewerAssignedIds) {
+            return !in_array($reviewerCriteria->user_id, $reviewerAssignedIds);
+        });
+        $result = $this->reviewAssignments->autoAssignment($conferenceId, $paper, $reviewerCriterias, $reviewerCriteriaRepository);
+        if ($result instanceof Error) {
+            return redirect()->back()->with('error', $result->getMessage());
+        }
+        return redirect()->back()->with('success', 'Auto Assign Successful');
     }
 
     /**

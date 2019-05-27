@@ -10,6 +10,8 @@ namespace App\ConferenceRepositories;
 
 
 use App\Models\ConferenceTimeline;
+use App\Models\Error;
+use App\Models\Paper;
 use App\Models\ReviewAssignment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
@@ -72,6 +74,69 @@ class ReviewAssignmentRepository
         $reviewAssignment->save();
         $reviewAssignment->load('reviewer', 'paper');
         return $reviewAssignment;
+    }
+
+    public function autoAssignment($conferenceId, $paper, $reviewerCriterias, ReviewerCriteriaRepository $reviewerCriteriaRepository)
+    {
+        try {
+            foreach ($reviewerCriterias as $reviewerCriteria) {
+                $reviewerCriteria->score = 0;
+            }
+            $paperKeywords = array_map('strtolower', $paper->keywords);
+            $track = $paper->track;
+//            $papersInTrack = $track->papers;
+//            $trackKeywords = [];
+//            $keywordInTrack = $papersInTrack->pluck('keywords')->all();
+//            foreach ($keywordInTrack as $keywords) {
+//                if (is_array($keywords)) {
+//                    $trackKeywords = array_merge($trackKeywords, $keywords);
+//                }
+//            }
+//            $trackKeywords = array_map('strtolower', array_unique($trackKeywords));
+            $trackKeywords = array_map('strtolower', array_unique($track->keywords));
+            $x1 = 10;
+            $x2 = (float)(count($paperKeywords) / count($trackKeywords)) * $x1;
+            $x3 = 0.5;
+            foreach ($reviewerCriterias as $reviewerCriteria) {
+                if ($reviewerCriteriaRepository->getSlotUnUsed($conferenceId, $reviewerCriteria) != 0) {
+                    $reviewerKeywords = array_map('strtolower', $reviewerCriteria->keywords);
+                    $reviewerPaperKeywords = array_intersect($reviewerKeywords, $paperKeywords);
+                    if (count($reviewerPaperKeywords)) {
+                        $reviewerCriteria->score += $x1 * count($reviewerPaperKeywords);
+                    } else {
+                        $reviewerTrackKeywords = array_intersect($reviewerKeywords, $trackKeywords);
+                        if (count($reviewerTrackKeywords)) {
+                            $reviewerCriteria->score += $x2 * count($reviewerTrackKeywords);
+                        }
+                    }
+                }
+                if ($reviewerCriteriaRepository->getSlotUsed($conferenceId, $reviewerCriteria) != 0) {
+                    $assignments = ReviewAssignment::where('reviewer_id', $reviewerCriteria->user_id)->get();
+                    $assignmentInConfences = $assignments->filter(function ($assignment) use ($conferenceId) {
+                        return $assignment->paper->track->conference->id == $conferenceId;
+                    });
+                    foreach ($assignmentInConfences as $assignment) {
+                        if (isset($assignment->date_completed) && isset($assignment->date_due)) {
+                            if (date('Y-m-d H:i:s', $assignment->date_completed) < date('Y-m-d H:i:s', $assignment->date_due)) {
+                                $reviewerCriteria->score += $x3;
+                            }
+                        }
+                    }
+                }
+            }
+            $sortedReviewer = $reviewerCriterias->sortBy('score')->all();
+            $reviewerMax = array_pop($sortedReviewer);
+            $data = [
+                'paper_id' => $paper->id,
+                'reviewer_id' => $reviewerMax->user_id,
+            ];
+            $reviewAssignment = $this->assignReviewer($conferenceId, $data);
+            return $reviewAssignment;
+        }catch(\Exception $exception) {
+            $error = new Error();
+            $error->setMessage('No Reviewer. Please choose using Assign Button');
+            return $error;
+        }
     }
 
     /**

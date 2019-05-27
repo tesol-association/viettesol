@@ -33,6 +33,7 @@
                             <span class="help-block">{{ $errors->first('description') }}</span>
                         @endif
                     </div>
+                    <input type="hidden" name="conference_id" value="{{ $conference->id }}">
 
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Create</button>

@@ -74,7 +74,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <a href="#">
                                             <div class="pull-left">
                                                 <!-- User Image -->
-                                                <img src="{{ asset('/storage/' . Auth::User()->image) }}" class="img-circle" alt="User Image">
+                                                @if (Auth::user())
+                                                    <img src="{{ asset('/storage/' . Auth::user()->image) }}" class="img-circle" alt="User Image">
+                                                @endif
                                             </div>
                                             <!-- Message title and timestamp -->
                                             <h4>
@@ -159,19 +161,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="{{ asset('/storage/' . Auth::User()->image) }}" class="user-image" alt="User Image">
-                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">{{Auth::User()->user_name}}</span>
+                            @if(Auth::user())
+                                <img src="{{ asset('/storage/' . Auth::User()->image) }}" class="user-image" alt="User Image">
+                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                <span class="hidden-xs">{{Auth::User()->user_name}}</span>
+                            @endif
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="{{ asset('/storage/' . Auth::User()->image) }}" class="img-circle" alt="User Image">
+                                @if(Auth::user())
+                                    <img src="{{ asset('/storage/' . Auth::User()->image) }}" class="img-circle" alt="User Image">
 
-                                <p>
-                                    {{Auth::User()->user_name}}
-                                    <small>Member since Nov. 2012</small>
-                                </p>
+                                    <p>
+                                        {{Auth::User()->user_name}}
+                                        <small>Member since Nov. 2012</small>
+                                    </p>
+                                @endif
                             </li>
                             <!-- Menu Body -->
                             <li class="user-body">
@@ -228,44 +234,46 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </form>
             <!-- /.search form -->
             <!-- start::SIDEBAR ROLE -->
-            @if (Auth::user()->is_admin == Config::get('constants.USER.ADMIN'))
-                @include('layouts.sidebar.conference_manager', ['conference' => $conference])
-                @if (Auth::user()->conferenceRoles)
-                    @foreach(Auth::user()->conferenceRoles as $conferenceRole)
-                        @switch($conferenceRole->name)
-                            @case(Config::get('constants.CONFERENCE_ROLE.DIRECTOR'))
-                                @include('layouts.sidebar.director', ['conference' => $conference])
-                                @break
-                            @case(Config::get('constants.CONFERENCE_ROLE.TRACK_DIRECTOR'))
-                                @include('layouts.sidebar.track_director', ['conference' => $conference])
-                                @break
-                            @case(Config::get('constants.CONFERENCE_ROLE.REVIEWER'))
-                                @include('layouts.sidebar.reviewer', ['conference' => $conference])
-                                @break
-                            @case(Config::get('constants.CONFERENCE_ROLE.AUTHOR'))
-                                @include('layouts.sidebar.author', ['conference' => $conference])
-                                @break
-                        @endswitch
-                    @endforeach
-                @endif
-            @else
-                @if (Auth::user()->conferenceRoles)
-                    @foreach(Auth::user()->conferenceRoles as $conferenceRole)
-                        @switch($conferenceRole->name)
-                            @case(Config::get('constants.CONFERENCE_ROLE.DIRECTOR'))
-                                @include('layouts.sidebar.director', ['conference' => $conference])
-                                @break
-                            @case(Config::get('constants.CONFERENCE_ROLE.TRACK_DIRECTOR'))
-                                @include('layouts.sidebar.track_director', ['conference' => $conference])
-                                @break
-                            @case(Config::get('constants.CONFERENCE_ROLE.REVIEWER'))
-                                @include('layouts.sidebar.reviewer', ['conference' => $conference])
-                                @break
-                            @case(Config::get('constants.CONFERENCE_ROLE.AUTHOR'))
-                                @include('layouts.sidebar.author', ['conference' => $conference])
-                                @break
-                        @endswitch
-                    @endforeach
+            @if (Auth::user() != null)
+                @if (Auth::user()->is_admin == Config::get('constants.USER.ADMIN'))
+                    @include('layouts.sidebar.conference_manager', ['conference' => $conference])
+                    @if (Auth::user()->conferenceRoles)
+                        @foreach(Auth::user()->conferenceRoles as $conferenceRole)
+                            @switch($conferenceRole->name)
+                                @case(Config::get('constants.CONFERENCE_ROLE.DIRECTOR'))
+                                    @include('layouts.sidebar.director', ['conference' => $conference])
+                                    @break
+                                @case(Config::get('constants.CONFERENCE_ROLE.TRACK_DIRECTOR'))
+                                    @include('layouts.sidebar.track_director', ['conference' => $conference])
+                                    @break
+                                @case(Config::get('constants.CONFERENCE_ROLE.REVIEWER'))
+                                    @include('layouts.sidebar.reviewer', ['conference' => $conference])
+                                    @break
+                                @case(Config::get('constants.CONFERENCE_ROLE.AUTHOR'))
+                                    @include('layouts.sidebar.author', ['conference' => $conference])
+                                    @break
+                            @endswitch
+                        @endforeach
+                    @endif
+                @else
+                    @if (Auth::user()->conferenceRoles)
+                        @foreach(Auth::user()->conferenceRoles as $conferenceRole)
+                            @switch($conferenceRole->name)
+                                @case(Config::get('constants.CONFERENCE_ROLE.DIRECTOR'))
+                                    @include('layouts.sidebar.director', ['conference' => $conference])
+                                    @break
+                                @case(Config::get('constants.CONFERENCE_ROLE.TRACK_DIRECTOR'))
+                                    @include('layouts.sidebar.track_director', ['conference' => $conference])
+                                    @break
+                                @case(Config::get('constants.CONFERENCE_ROLE.REVIEWER'))
+                                    @include('layouts.sidebar.reviewer', ['conference' => $conference])
+                                    @break
+                                @case(Config::get('constants.CONFERENCE_ROLE.AUTHOR'))
+                                    @include('layouts.sidebar.author', ['conference' => $conference])
+                                    @break
+                            @endswitch
+                        @endforeach
+                    @endif
                 @endif
             @endif
             <!-- end::SIDEBAR ROLE -->

@@ -70,6 +70,11 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Track', 'track_director', 'user_id', 'track_id');
     }
 
+    public function criteria()
+    {
+        return $this->hasMany('App\Models\ReviewCriteria');
+    }
+
     public function isSuperAdmin(): bool
     {
         if ($this->is_admin == 1) {

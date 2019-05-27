@@ -14,6 +14,14 @@
             </dd>
             <dt>Title</dt>
             <dd>{{ $paper->title }}</dd>
+            <dt>Keywords</dt>
+            <dd>
+                @if (count($paper->keywords))
+                    @foreach($paper->keywords as $keyword)
+                        {{ $keyword }} ,
+                    @endforeach
+                @endif
+            </dd>
             <dt>Track</dt>
             <dd>{{ $paper->track->name }}</dd>
             <dt>Review Form</dt>

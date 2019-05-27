@@ -123,6 +123,17 @@
                     <span class="help-block">{{ $errors->first('abstract') }}</span>
                 @endif
             </div>
+
+            <div class="form-group">
+                <label for="keywords">Keyword</label>
+                <select id="keywords" name="paper[keywords][]" class="form-control" multiple="multiple" data-placeholder="Fill keyword and press Enter" style="width: 100%;">
+                    @if (isset($paper->keywords) && count($paper->keywords))
+                        @foreach($paper->keywords as $keyword)
+                            <option value="{{ $keyword }}" selected>{{ $keyword }}</option>
+                        @endforeach
+                    @endif
+                </select>
+            </div>
         </div>
         <div class="box-footer">
             <button type="submit" class="btn btn-primary">Submit</button>

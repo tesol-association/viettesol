@@ -8,5 +8,9 @@ $(document).ready(function () {
 
     $('#abstract').summernote({
         height: 300
-    })
+    });
+
+    $('#keywords').select2({
+        tags: true,
+    });
 });

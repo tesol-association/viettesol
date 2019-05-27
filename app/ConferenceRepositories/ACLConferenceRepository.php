@@ -24,7 +24,7 @@ class ACLConferenceRepository
     {
         $allAccesses = ConferenceRolePermission::with('role')->get();
         $conferenceAccesses = $allAccesses->filter(function ($access) use ($conferenceId) {
-            return $access->role->conference_id == $conferenceId;
+            return ($access->role != null) && ($access->role->conference_id == $conferenceId);
         });
         if ($conferenceAccesses->count()) {
             $conferenceAccesses->load('permission');

@@ -11,6 +11,23 @@ class Paper extends Model
     const STATUS_SUBMITTED = 'submitted';
     protected $table = 'papers';
 
+    /**
+     * @param array $value
+     */
+    public function setKeywordsAttribute(array $value)
+    {
+        $this->attributes['keywords'] = json_encode($value);
+    }
+
+    /**
+     * @param $value
+     * @return array
+     */
+    public function getKeywordsAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
     public function track()
     {
         return $this->belongsTo('App\Models\Track', 'track_id');

@@ -9,6 +9,7 @@
 namespace App\ConferenceRepositories;
 
 
+use App\Models\ConferencePermission;
 use App\Models\ConferenceRole;
 use Illuminate\Support\Facades\Config;
 
@@ -23,9 +24,40 @@ class ConferenceRoleRepository
         return ConferenceRole::all();
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function find($id)
     {
         return ConferenceRole::find($id);
+    }
+
+    /**
+     * @param $data
+     * @return ConferenceRole
+     */
+    public function create($data)
+    {
+        $conferenceRole = new ConferenceRole();
+        $conferenceRole->name = $data['name'];
+        $conferenceRole->description = $data['description'];
+        $conferenceRole->conference_id = $data['conference_id'];
+        $conferenceRole->save();
+        //Add all permission for New Role
+        $permissions = ConferencePermission::all();
+        foreach ($permissions as $permission) {
+            $permission->roles()->attach($conferenceRole->id, ['allowed' => 0]);
+        }
+        return $conferenceRole;
+    }
+
+    public function accessPermissions(ConferenceRole $conferenceRole, array $permissionNames)
+    {
+        $permissions = ConferencePermission::whereIn('name', $permissionNames)->get();
+        $permissionIds = $permissions->pluck('id')->all();
+        $conferenceRole->permissions()->updateExistingPivot($permissionIds, ['allowed' => 1]);
+        return true;
     }
 
     /**

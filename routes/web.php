@@ -366,6 +366,7 @@ Route::group(['prefix'=>'admin/conf/{conference_id}'], function() {
         Route::post('/update/{id}', 'Admin\ConferenceManager\PaperController@update')->name('admin_paper_update');
         Route::post('/delete/{id}', 'Admin\ConferenceManager\PaperController@destroy')->name('admin_paper_delete');
         Route::get('/submission/{id}', 'Admin\ConferenceManager\PaperController@submission')->name('admin_paper_submission');
+        Route::post('/auto_assign_reviewer/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@autoAssign')->name('auto_assign_reviewer');
         //track director
         Route::post('/decision/{id}', 'Admin\ConferenceManager\PaperController@decisionAjax')->name('admin_paper_decision');
     });
@@ -467,6 +468,8 @@ Route::group(['prefix'=>'/conf/{conference_id}','middleware' => ['auth']], funct
         Route::post('/reject/{assignment_id}', 'Admin\ConferenceManager\ReviewAssignmentController@rejectAssignment')->name('reviewer_reject_assignment');
         Route::post('/accept/{assignment_id}', 'Admin\ConferenceManager\ReviewAssignmentController@acceptAssignment')->name('reviewer_accept_assignment');
         Route::post('/delete/{id}', 'Admin\ConferenceManager\ReviewAssignmentController@destroy')->name('reviewer_delete_assignment');
+        Route::get('/criteria', 'Admin\ConferenceManager\Reviewer\CriteriaController@show')->name('reviewer_criteria_show');
+        Route::post('/criteria/store', 'Admin\ConferenceManager\Reviewer\CriteriaController@store')->name('reviewer_criteria_store');
     });
 
     /*

@@ -6,13 +6,31 @@ use Illuminate\Database\Eloquent\Model;
 
 class Track extends Model
 {
-    protected $fillable = [
-        'name',
-        'abbrev',
-        'description',
-        'policy',
-        'conference_id'
-    ];
+//    protected $fillable = [
+//        'name',
+//        'abbrev',
+//        'description',
+//        'policy',
+//        'conference_id',
+//        'keywords'
+//    ];
+
+    /**
+     * @param array $value
+     */
+    public function setKeywordsAttribute(array $value)
+    {
+        $this->attributes['keywords'] = json_encode($value);
+    }
+
+    /**
+     * @param $value
+     * @return array
+     */
+    public function getKeywordsAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 
     public function papers()
     {

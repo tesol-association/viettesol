@@ -83,6 +83,16 @@
                             <span class="help-block">{{ $errors->first('body') }}</span>
                         @endif
                     </div>
+                    <div class="form-group">
+                        <label for="keywords">Choose Tags</label>
+                        <select id="keywords" name="keywords[]" class="form-control" multiple="multiple" data-placeholder="Fill keyword and press Enter" style="width: 100%;">
+                            @if (isset($track->keywords) && count($track->keywords))
+                                @foreach($track->keywords as $keyword)
+                                    <option value="{{ $keyword }}" selected>{{ $keyword }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
                     <input type="hidden" name="conference_id" value="{{ $conference->id }}"/>
                 </div>
 

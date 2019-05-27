@@ -12,9 +12,11 @@ class ConferenceTimelineController extends BaseConferenceController
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function view()
     {
+        $this->authorize('view-conference-timeline');
         $conference = Conference::find($this->conferenceId);
         $timeline = $conference->timeline;
         return view('layouts.admin.conference_timeline.view', ['conference' => $conference, 'timeline' => $timeline]);
@@ -22,14 +24,22 @@ class ConferenceTimelineController extends BaseConferenceController
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create-conference-timeline');
         return view('layouts.admin.conference_timeline.create');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function store(Request $request)
     {
+        $this->authorize('create-conference-timeline');
         $validator = $this->validateData($request->all());
         if ($validator->fails()) {
             return redirect()
@@ -56,20 +66,28 @@ class ConferenceTimelineController extends BaseConferenceController
     }
 
     /**
+     * @param $conferenceId
+     * @param $timeLineId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit($conferenceId, $timeLineId)
     {
+        $this->authorize('update-conference-timeline');
         $timeline = ConferenceTimeline::find($timeLineId);
         return view('layouts.admin.conference_timeline.edit', ["timeline" => $timeline]);
     }
 
     /**
      * @param Request $request
+     * @param $conferenceId
+     * @param $timeLineId
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, $conferenceId, $timeLineId)
     {
+        $this->authorize('update-conference-timeline');
         $validator = $this->validateData($request->all());
         if ($validator->fails()) {
             return redirect()

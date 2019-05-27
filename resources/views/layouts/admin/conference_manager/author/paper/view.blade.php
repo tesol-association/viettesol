@@ -37,6 +37,18 @@
                     @endif
                 </div>
             </div>
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">KEYWORDS:</h3>
+                </div>
+                <div class="box-body">
+                    @if (isset($paper->keywords) && count($paper->keywords))
+                        @foreach ($paper->keywords as $keyword)
+                            <span class="label label-success">{{ $keyword }}</span>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
 @endsection

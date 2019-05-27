@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ConferenceRepositories\ConferenceRoleRepository;
 use App\Models\Conference;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -182,7 +183,7 @@ class ConferenceController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function store(Request $request)
+    public function store(Request $request, ConferenceRoleRepository $conferenceRoleRepository)
     {
         $validator = $this->validateData($request->all());
         if ($validator->fails()) {
@@ -204,6 +205,50 @@ class ConferenceController extends Controller
             $conference->attach_file = $url;
         }
         $conference->save();
+        //CREATE ROLE DEFAULT
+        $author = $conferenceRoleRepository->create([
+            'name' => 'Author',
+            'description' => 'Tác giả của hội thảo',
+            'conference_id' => $conference->id,
+        ]);
+        $conferenceRoleRepository->accessPermissions($author,[
+            'send-paper',
+            'view-track',
+            'view-session-type',
+        ]);
+        $reviewer = $conferenceRoleRepository->create([
+            'name' => 'Reviewer',
+            'description' => 'Người phản biện',
+            'conference_id' => $conference->id,
+        ]);
+        $conferenceRoleRepository->accessPermissions($author,[
+            'view-track',
+            'view-session-type',
+        ]);
+        $trackDirector = $conferenceRoleRepository->create([
+            'name' => 'Track Director',
+            'description' => 'Người quản lý 1 chủ đề',
+            'conference_id' => $conference->id,
+        ]);
+        $conferenceRoleRepository->accessPermissions($author,[
+            'view-track',
+            'view-session-type',
+        ]);
+        $director = $conferenceRoleRepository->create([
+            'name' => 'Director',
+            'description' => 'Giám đốc hội thảo',
+            'conference_id' => $conference->id,
+        ]);
+        $conferenceRoleRepository->accessPermissions($author,[
+            'view-track',
+            'create-track',
+            'update-track',
+            'delete-track',
+            'view-session-type',
+            'create-session-type',
+            'update-session-type',
+            'delete-session-type'
+        ]);
         return redirect()->route('admin_conference_list')->with('success', 'Create ' . $conference->title . ' successful !');
     }
 

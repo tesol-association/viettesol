@@ -76,6 +76,12 @@
                         @endif
                     </div>
 
+                    <div class="form-group">
+                        <label for="keywords">Keyword</label>
+                        <select id="keywords" name="keywords[]" class="form-control" multiple="multiple" data-placeholder="Fill keyword and press Enter" style="width: 100%;">
+                        </select>
+                    </div>
+
                     <input type="hidden" name="conference_id" value="{{ $conference->id }}"/>
                 </div>
 

@@ -58,6 +58,9 @@ class TrackRepository
         $track->description = $data['description'];
         $track->conference_id = $data['conference_id'];
         $track->review_form_id = $data['review_form_id'];
+        if (isset($data['keywords']) && count($data['keywords'])) {
+            $track->keywords = $data['keywords'];
+        }
         $track->save();
         if (isset($data['user_id']) && count($data['user_id'])) {
             $track->users()->attach($data['user_id']);
@@ -78,6 +81,9 @@ class TrackRepository
         $track->policy = $data['policy'];
         $track->description = $data['description'];
         $track->review_form_id = $data['review_form_id'];
+        if (isset($data['keywords']) && count($data['keywords'])) {
+            $track->keywords = $data['keywords'];
+        }
         $track->save();
         if(isset($data['user_id'])){
             $track->users()->detach($track->users->pluck('id')->all());

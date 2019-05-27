@@ -15,7 +15,9 @@
                             <h3 class="box-title">Announcements List</h3>
                         </div>
                         <div class="col-md-2 col-md-offset-6">
+                            @can('create-announcement')
                             <a href="{{ route('admin_announcements_create', ['conference_id' => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add Announcements</a>
+                            @endcan
                         </div>
                     </div>
                     <div class="box-body">
@@ -50,12 +52,16 @@
                                             @endif
                                         </td>
                                         <td>
+                                            @can('update-announcement')
                                             <a href="{{ route('admin_announcements_edit', ["conference_id" => $conference->id, "id" => $announcement->id]) }}" class="btn btn-info">
                                                 <i class="fa fa-edit"></i>
                                             </a>
+                                            @endcan
+                                            @can('delete-announcement')
                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_announcements_{{ $announcement->id }}">
                                                 <i class="fa fa-trash"></i>
                                             </button>
+                                            @endcan
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal announcements -->

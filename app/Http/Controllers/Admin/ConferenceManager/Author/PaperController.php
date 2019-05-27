@@ -39,10 +39,18 @@ class PaperController extends BaseConferenceController
         $tracks = $this->conference->tracks;
         $sessionTypes = $this->conference->sessionTypes;
         $author = Auth::user();
+        $sugguestKeywords = [];
+        foreach ($this->conference->tracks as $track) {
+            if (is_array($track->keywords)) {
+                $sugguestKeywords = array_merge($sugguestKeywords, $track->keywords);
+            }
+        }
+        $sugguestKeywords = array_unique($sugguestKeywords);
         return view('author.paper.create', [
             'tracks' => $tracks,
             'sessionTypes' => $sessionTypes,
-            'author' => $author
+            'author' => $author,
+            'sugguestKeywords' => $sugguestKeywords
         ]);
     }
 

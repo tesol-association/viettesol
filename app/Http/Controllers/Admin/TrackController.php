@@ -38,7 +38,9 @@ class TrackController extends BaseConferenceController
     }
 
     /**
+     * @param $conferenceId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create($conferenceId)
     {
@@ -54,6 +56,7 @@ class TrackController extends BaseConferenceController
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request)
     {

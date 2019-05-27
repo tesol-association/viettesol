@@ -4,7 +4,13 @@
         <div class="col-md-4">
             <h3 class="box-title">Review Assignment</h3>
         </div>
-        <div class="col-md-2 col-md-offset-6">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="col-md-6">
+                <form method="POST" action="{{ route('auto_assign_reviewer', ['conference_id' => $conference->id, 'paper_id' => $paper->id]) }}">
+                    @csrf
+                    <button type="submit" class="btn btn-info" data-toggle="modal"><i class="fa fa-fighter-jet"></i> Auto Assign</button>
+                </form>
+            </div>
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#assign_reviewer"><i class="fa fa-plus"></i> Assign to Reviewer</button>
             <!-- Start:: Assign a Reviewer-->
             <div class="modal fade" id="assign_reviewer" role="dialog">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\ConferenceManager;
 
+use App\ConferenceRepositories\ConferenceRoleRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\ConferenceRole;
@@ -35,22 +36,14 @@ class ConferenceRoleController extends BaseConferenceController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $conferenceId)
+    public function store(Request $request, $conferenceId, ConferenceRoleRepository $conferenceRoleRepository)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255']
+            'name' => ['required', 'string', 'max:255'],
+            'conference_id' => ['numeric']
         ]);
-
-        $conferenceRole = new ConferenceRole();
-        $conferenceRole->name = $request->get('name');
-        $conferenceRole->description = $request->get('description');
-        $conferenceRole->conference_id = $conferenceId;
-
-        if ($conferenceRole->save()) {
-            return redirect()->route('admin_conference_roles_list', ['conference_id' => $conferenceId])->with('success', 'Conference Role has been added successfully');
-        } else{
-            return redirect()->back()->with('errors', 'Error');
-        }
+        $conferenceRole = $conferenceRoleRepository->create($request->all());
+        return redirect()->route('admin_conference_roles_list', ['conference_id' => $conferenceId])->with('success', 'Conference Role: '. $conferenceRole->name .' has been added successfully');
     }
 
     /**

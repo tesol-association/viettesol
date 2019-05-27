@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\ConferenceRole;
 use App\Models\User;
+use Illuminate\Support\Facades\Config;
 
 class UserConferenceRoleController extends BaseConferenceController
 {
@@ -80,7 +81,7 @@ class UserConferenceRoleController extends BaseConferenceController
     public function update(Request $request, $conferenceId, $id)
     {
         $user = User::find($id);
-        $data = $request->name;
+        $data = $request->name; // Conference Role Array
         $user->conferenceRoles()->detach();
         $user->conferenceRoles()->attach($data);
 
