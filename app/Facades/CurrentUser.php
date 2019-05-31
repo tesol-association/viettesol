@@ -15,14 +15,14 @@ class CurrentUser extends Auth
 {
     public static function user()
     {
-        $currentUser = Redis::get('user');
-        if (!$currentUser) {
+//        $currentUser = Redis::get('user');
+//        if (!$currentUser) {
             $currentUser = Auth::user();
             if ($currentUser->conferenceRoles) {
                 $currentUser->load('conferenceRoles');
             }
-            Redis::set('user', $currentUser);
-        }
+//            Redis::set('user', $currentUser);
+//        }
         return $currentUser;
     }
 }
