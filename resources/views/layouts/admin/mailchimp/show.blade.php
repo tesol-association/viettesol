@@ -3,10 +3,10 @@
 @section('css')
     <link href="{{ asset('js/lib/summernote/dist/summernote.css') }}" rel="stylesheet">
 @endsection
-@section('page-header') Prepared Email
+@section('page-header') Send Email to All User In MailChimp Contact
 @endsection
 @section('content')
-    <form method="POST" action="{{ $emailTemplate['form_url'] ?? null }}">
+    <form method="POST" action="{{ route('mail_chimp_store', ['conference_id' => $conference->id]) }}">
         @csrf
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -21,19 +21,15 @@
             <div class="box-body">
                 <div class="form-group">
                     <label for="email_from">From*</label>
-                    <input id="email_from" type="text" class="form-control" name="email_from" required value="{{ $emailTemplate['from'] ?? null }}">
-                </div>
-                <div class="form-group">
-                    <label for="email_to">To*</label>
-                    <input id="email_to" type="text" class="form-control" name="email_to" required value="{{ $emailTemplate['to'] ?? null }}">
+                    <input id="email_from" type="text" class="form-control" name="email_from" required value="{{ env('MAIL_FROM_ADDRESS') }}">
                 </div>
                 <div class="form-group">
                     <label for="email_subject">Subject*</label>
-                    <input id="email_subject" type="text" class="form-control" name="email_subject" required value="{{ $emailTemplate['subject'] ?? null }}">
+                    <input id="email_subject" type="text" class="form-control" name="email_subject" required>
                 </div>
                 <div class="form-group">
                     <label for="email_body">Body*</label>
-                    <textarea id="email_body" name="email_body" class="form-control" rows="10" placeholder="Enter Body ...">{{ $emailTemplate['body'] ?? null }}</textarea>
+                    <textarea id="email_body" name="email_body" class="form-control" rows="10" placeholder="Enter Body ..."></textarea>
                 </div>
             </div>
             <div class="box-footer">

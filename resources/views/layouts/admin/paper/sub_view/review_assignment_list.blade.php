@@ -76,10 +76,12 @@
                         <td>
                             @if ($reviewAssignment->date_notified)
                                 <i class="fa fa-check-circle"></i> Sented At {{ date('H:i d/m/Y',strtotime($reviewAssignment->date_notified)) }}
+                                <a title="Remind Reviewer" href="{{ route('email_reviewer_show', ['conference_id' => $conference->id, 'review_assignment_id' => $reviewAssignment->id]) . '?email_key=REVIEW_REMIND' }}"><i class="fa fa-envelope-o"></i></a>
                             @else
-                                <a href="{{ route('email_reviewer_request_show', ['conference_id' => $conference->id, 'review_assignment_id' => $reviewAssignment->id]) }}">
-                                    <i class="fa fa-envelope-o"> Send</i>
-                                </a>
+                                <form action="{{ route('email_reviewer_show', ['conference_id' => $conference->id, 'review_assignment_id' => $reviewAssignment->id]) }}" method="GET">
+                                    <input type="hidden" name="email_key" value="REVIEW_REQUEST">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"> Send</i></button>
+                                </form>
                             @endif
                         </td>
                         <td>

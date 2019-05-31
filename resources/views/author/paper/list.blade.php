@@ -30,9 +30,9 @@
                                         <th>Track</th>
                                         <th>Status</th>
                                         <th>Author</th>
-                                        <th>Created At</th>
-                                        <th>Edit</th>
+                                        <th>Submitted At</th>
                                         <th>Send Full Paper</th>
+                                        <th>Edit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,12 +65,9 @@
                                                     <span class="label label-primary">{{ $author->first_name }} {{ $author->middle_name }} {{ $author->last_name }}</span>
                                                 @endif
                                             @endforeach
-                                            @include('helper.authors.add_coauthor', ['paper' => $paper, 'conference' => $conference, 'name' => ''])
+{{--                                            @include('helper.authors.add_coauthor', ['paper' => $paper, 'conference' => $conference, 'name' => ''])--}}
                                         </td>
                                         <td>{{ $paper->created_at }}</td>
-                                        <td>
-                                            <a href="{{ route('author_paper_edit', ['conference_id' => $conference->id, 'id' => $paper->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
-                                        </td>
                                         <td>
                                             @if ( $paper->file_id )
                                                 <button type="button" data-toggle="modal" data-target="#update_attach_file_{{ $paper->id }}"class="btn btn-success"><i class="fa fa-eye"></i></button>
@@ -177,6 +174,9 @@
                                                     </form>
                                                 </div>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('author_paper_edit', ['conference_id' => $conference->id, 'id' => $paper->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -16,7 +16,7 @@
             <dd>{{ $paper->title }}</dd>
             <dt>Keywords</dt>
             <dd>
-                @if (count($paper->keywords))
+                @if (isset($paper->keywords) && count($paper->keywords))
                     @foreach($paper->keywords as $keyword)
                         {{ $keyword }} ,
                     @endforeach

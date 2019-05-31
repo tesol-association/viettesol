@@ -27,8 +27,7 @@
                                     <th>Id</th>
                                     <th>Name</th>
                                     <th>Abbrev</th>
-                                    <th>Description</th>
-                                    <th>Policy</th>
+                                    <th>Track Director</th>
                                     <th>Review Form</th>
                                     <th>Created At</th>
                                     <th>Action</th>
@@ -40,8 +39,13 @@
                                         <td>{{ $track->id }}</td>
                                         <td>{{ $track->name }}</td>
                                         <td>{{ $track->abbrev }}</td>
-                                        <td>{{ $track->description }}</td>
-                                        <td>{!! $track->policy !!}</td>
+                                        <td>
+                                            @if (!empty($track->users))
+                                                @foreach($track->users as $trackDirector)
+                                                    {{ $trackDirector->full_name }} <a title="" href=""><i class="fa fa-envelope-o"></i></a>
+                                                @endforeach
+                                            @endif
+                                        </td>
                                         <td>
                                             @if ($track->review_form_id)
                                                 {{ $track->reviewForm->name }}

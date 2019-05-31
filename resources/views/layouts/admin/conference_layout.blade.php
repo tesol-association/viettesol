@@ -42,11 +42,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="{{ route('admin_conference_view', ['conference_id' => $conference->id]) }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>A</b>LT</span>
+            <span class="logo-mini"><b>CCMS</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Admin</b>LTE</span>
+            <span class="logo-lg"><b>CCMS</b></span>
         </a>
 
         <!-- Header Navbar -->

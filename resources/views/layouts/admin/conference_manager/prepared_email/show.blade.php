@@ -6,8 +6,7 @@
 @section('page-header') Prepared Email
 @endsection
 @section('content')
-
-    <form method="POST" action="{{ route('email_reviewer_request_store', ['conference_id' => $conference->id, 'review_assignment_id' => $reviewAssignment->id]) }}">
+    <form method="POST" action="{{ $emailTemplate['form_url'] ?? null }}">
         @csrf
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -22,19 +21,19 @@
             <div class="box-body">
                 <div class="form-group">
                     <label for="email_from">From*</label>
-                    <input id="email_from" type="text" class="form-control" name="email_from" required value="{{ env('MAIL_FROM_ADDRESS') }}">
+                    <input id="email_from" type="text" class="form-control" name="email_from" required value="{{ $emailTemplate['from'] ?? null }}">
                 </div>
                 <div class="form-group">
                     <label for="email_to">To*</label>
-                    <input id="email_to" type="text" class="form-control" name="email_to" required value="{{ $reviewAssignment->reviewer->email }}">
+                    <input id="email_to" type="text" class="form-control" name="email_to" required value="{{ $emailTemplate['to'] ?? null }}">
                 </div>
                 <div class="form-group">
                     <label for="email_subject">Subject*</label>
-                    <input id="email_subject" type="text" class="form-control" name="email_subject" required value="{{ $emailReviewerRequest->subject }}">
+                    <input id="email_subject" type="text" class="form-control" name="email_subject" required value="{{ $emailTemplate['subject'] ?? null }}">
                 </div>
                 <div class="form-group">
                     <label for="email_body">Body*</label>
-                    <textarea id="email_body" name="email_body" class="form-control" rows="10" placeholder="Enter Body ...">{{ $emailReviewerRequest->body }}</textarea>
+                    <textarea id="email_body" name="email_body" class="form-control" rows="10" placeholder="Enter Body ...">{{ $emailTemplate['body'] ?? null }}</textarea>
                 </div>
             </div>
             <div class="box-footer">

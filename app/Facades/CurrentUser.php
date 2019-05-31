@@ -9,14 +9,19 @@
 namespace App\Facades;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 
 class CurrentUser extends Auth
 {
     public static function user()
     {
-        $currentUser = Auth::user();
-        if ($currentUser->conferenceRoles) {
-            $currentUser->load('conferenceRoles');
+        $currentUser = Redis::get('user');
+        if (!$currentUser) {
+            $currentUser = Auth::user();
+            if ($currentUser->conferenceRoles) {
+                $currentUser->load('conferenceRoles');
+            }
+            Redis::set('user', $currentUser);
         }
         return $currentUser;
     }

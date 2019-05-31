@@ -13,8 +13,9 @@
                     <div class="col-md-4">
                         <h3 class="box-title">User List</h3>
                     </div>
-                    <div class="col-md-2 col-md-offset-6">
+                    <div class="col-md-3 col-md-offset-5">
                         <a href="{{ route('admin_user_create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Create New User </a>
+                        <a href="{{ route('admin_export_user_list') }}" class="btn btn-primary"><i class="fa fa-file"></i> Export CSV </a>
                     </div>
                 </div>
                 <div class="box-body">

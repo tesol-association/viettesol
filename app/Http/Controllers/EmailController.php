@@ -2,12 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
-class EmailController extends Controller
+class EmailController extends BaseConferenceController
 {
-    public function notify(Request $request){
+    public function show()
+    {
+        return view('layouts.admin.mailchimp.show');
+    }
 
+    public function notification(Request $request){
+        $validator = $this->validateData($request->all());
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         //List ID from .env
         $listId = env('MAILCHIMP_LIST_ID');
 
@@ -17,21 +27,30 @@ class EmailController extends Controller
         //Create a Campaign $mailchimp->campaigns->create($type, $options, $content)
         $campaign = $mailchimp->campaigns->create('regular', [
             'list_id' => $listId,
-            'subject' => 'Test API MailChimp 11h04',
-            'from_email' => 'viettesol@gmail.com',
-            'from_name' => 'Viettesol',
-            'to_name' => 'Viettesol'
+            'subject' => $request->email_subject,
+            'from_email' => $request->email_from,
+            'from_name' => env('MAIL_FROM_NAME'),
+            'to_name' => env('MAIL_FROM_NAME')
 
         ], [
 //            'html' => $request->input('content'),
 //            'text' => strip_tags($request->input('content'))
-            'html' => '<p>Test API Mail Chimp</p>',
+            'html' => $request->email_body,
 //            'text' => strip_tags('ddddd')
         ]);
 
         //Send campaign
         $mailchimp->campaigns->send($campaign['id']);
 
-        return response()->json(['status' => 'Success']);
+        return redirect()->back()->with('success', 'Send All User Successful');
+    }
+
+    public function validateData($data)
+    {
+        return Validator::make($data, [
+            'email_from' => 'required',
+            'email_subject' => 'required',
+            'email_body' => 'required',
+        ]);
     }
 }
