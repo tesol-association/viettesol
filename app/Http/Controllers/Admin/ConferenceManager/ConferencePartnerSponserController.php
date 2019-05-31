@@ -18,6 +18,7 @@ class ConferencePartnerSponserController extends BaseConferenceController
      */
     public function index($conferenceId)
     {
+        $this->authorize('view-conference-gallery');
         $conferencePartnersSponsers = ConferencePartnerSponser::where('conference_id', $conferenceId)->get();
         return view('layouts.admin.conference_manager.conference_partner_sponser.list', ['conference_id' => $conferenceId, 'conferencePartnersSponsers' => $conferencePartnersSponsers]);
     }
@@ -29,6 +30,7 @@ class ConferencePartnerSponserController extends BaseConferenceController
      */
     public function create($conferenceId)
     {
+        $this->authorize('create-conference-gallery');
         return view('layouts.admin.conference_manager.conference_partner_sponser.create', ['conference_id' => $conferenceId]);
     }
 
@@ -40,6 +42,7 @@ class ConferencePartnerSponserController extends BaseConferenceController
      */
     public function store(Request $request, $conferenceId)
     {
+        $this->authorize('create-conference-gallery');
         $request->validate([
         	'name' => ['required', 'string', 'max:255'],
             'logo' => ['required', 'image'],
@@ -81,6 +84,7 @@ class ConferencePartnerSponserController extends BaseConferenceController
      */
     public function edit($conferenceId, $id)
     {
+        $this->authorize('update-conference-gallery');
         $conferencePartnersSponser = ConferencePartnerSponser::find($id);
         return view('layouts.admin.conference_manager.conference_partner_sponser.edit', ['conference_id' => $conferenceId, 'conferencePartnersSponser' => $conferencePartnersSponser]);
     }
@@ -94,6 +98,7 @@ class ConferencePartnerSponserController extends BaseConferenceController
      */
     public function update(Request $request, $conferenceId, $id)
     {
+        $this->authorize('update-conference-gallery');
         $request->validate([
         	'name' => ['required', 'string', 'max:255'],
             'type' => ['required', Rule::in(['partner', 'sponsor'])],
@@ -125,6 +130,7 @@ class ConferencePartnerSponserController extends BaseConferenceController
      */
     public function destroy($conferenceId, $id)
     {
+        $this->authorize('delete-conference-gallery');
        $conferencePartnersSponser = ConferencePartnerSponser::find($id);
 
        if($conferencePartnersSponser->delete()){

@@ -14,9 +14,11 @@
                         <div class="col-md-4">
                             <h3 class="box-title">Conference Partners Sponsers List</h3>
                         </div>
-                        <div class="col-md-3 col-md-offset-5">
-                            <a href="{{ route('admin_conference_partners_sponsers_create', ['conference_id' => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add Conference Partners Sponsers</a>
-                        </div>
+                        @can('create-conference-partner-sponser')
+                            <div class="col-md-3 col-md-offset-5">
+                                <a href="{{ route('admin_conference_partners_sponsers_create', ['conference_id' => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add Conference Partners Sponsers</a>
+                            </div>
+                        @endcan
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
@@ -42,12 +44,16 @@
                                         <td>{{ $conferencePartnersSponser->type }}</td>
                                         <td>{{ $conferencePartnersSponser->description }}</td>
                                         <td>
-                                            <a href="{{ route('admin_conference_partners_sponsers_edit', ['conference_id' => $conference->id, 'id' => $conferencePartnersSponser->id]) }}" class="btn btn-info">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_conference_partners_sponsers_{{ $conferencePartnersSponser->id }}">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
+                                            @can('update-conference-partner-sponser')
+                                                <a href="{{ route('admin_conference_partners_sponsers_edit', ['conference_id' => $conference->id, 'id' => $conferencePartnersSponser->id]) }}" class="btn btn-info">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            @endcan
+                                            @can('delete-conference-partner-sponser')
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_conference_partners_sponsers_{{ $conferencePartnersSponser->id }}">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            @endcan
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal ConferencePartnersSponsers -->

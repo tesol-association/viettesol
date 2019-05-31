@@ -17,9 +17,9 @@ class PaperPolicies
      * @param  \App\Paper  $paper
      * @return mixed
      */
-    public function view(User $user, Paper $paper)
+    public function view(User $user)
     {
-
+        return $user->hasAccess('view-paper');
     }
 
     /**
@@ -49,11 +49,10 @@ class PaperPolicies
      * Determine whether the user can delete the paper.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Paper  $paper
      * @return mixed
      */
-    public function delete(User $user, Paper $paper)
+    public function viewPaperUnSchedule(User $user)
     {
-        //
+        return $user->hasAccess('view-paper-un-schedule');
     }
 }

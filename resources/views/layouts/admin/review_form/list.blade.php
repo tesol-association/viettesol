@@ -13,9 +13,11 @@
                         <div class="col-md-4">
                             <h3 class="box-title">Review Form List</h3>
                         </div>
-                        <div class="col-md-2 col-md-offset-6">
-                            <a href="{{ route('admin_review_form_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add Review Form</a>
-                        </div>
+                        @can('create-review-form')
+                            <div class="col-md-2 col-md-offset-6">
+                                <a href="{{ route('admin_review_form_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add Review Form</a>
+                            </div>
+                        @endcan
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
@@ -49,15 +51,21 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin_criteria_review_list', ["conference_id" => $conference->id, "review_form_id" => $reviewForm->id]) }}" class="btn btn-primary">
-                                                <i class="fa fa-eye"></i>
-                                            </a>
-                                            <a href="{{ route('admin_review_form_edit', ["conference_id" => $conference->id, "id" => $reviewForm->id]) }}" class="btn btn-info">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_review_form_{{ $reviewForm->id }}">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
+                                            @can('view-review-form')
+                                                <a href="{{ route('admin_criteria_review_list', ["conference_id" => $conference->id, "review_form_id" => $reviewForm->id]) }}" class="btn btn-primary">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            @endcan
+                                            @can('update-review-form')
+                                                <a href="{{ route('admin_review_form_edit', ["conference_id" => $conference->id, "id" => $reviewForm->id]) }}" class="btn btn-info">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            @endcan
+                                            @can('delete-review-form')
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_review_form_{{ $reviewForm->id }}">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            @endcan
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->

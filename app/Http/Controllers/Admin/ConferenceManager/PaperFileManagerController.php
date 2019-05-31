@@ -20,6 +20,7 @@ class PaperFileManagerController extends BaseConferenceController
 
     public function show()
     {
+        $this->authorize('view-paper-file');
         $tracks = $this->tracks->get(['conference_id' => $this->conferenceId]);
         return view('layouts.admin.conference_manager.paper_file_manager.view', ['tracks' => $tracks]);
     }

@@ -23,8 +23,12 @@
                     </select> --}}
                 </div>
                 <div class="col-md-3 col-md-offset-6">
+                    @can('create-schedule')
                       <a href="{{ route('admin_schedule_suggest',['conference_id' => $conference->id]) }}" class="btn btn-primary">Suggest</a>
-                      <a href="{{ route('admin_schedule_delete',['conference_id' => $conference->id]) }}" class="btn btn-info">Rearrange</a>
+                    @endcan
+                    @can('delete-schedule')
+                        <a href="{{ route('admin_schedule_delete',['conference_id' => $conference->id]) }}" class="btn btn-info">Rearrange</a>
+                    @endcan
                 </div>
             </div>
             <div class="box-body list">

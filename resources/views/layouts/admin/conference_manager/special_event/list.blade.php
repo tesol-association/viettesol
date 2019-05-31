@@ -14,7 +14,9 @@
                             <h3 class="box-title">Special Event List</h3>
                         </div>
                         <div class="col-md-2 col-md-offset-6">
-                            <a href="{{ route('admin_special_event_create', ['conference_id' => $conference_id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add Special Event</a>
+                            @can('create-special-event')
+                                <a href="{{ route('admin_special_event_create', ['conference_id' => $conference_id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add Special Event</a>
+                            @endcan
                         </div>
                     </div>
                     <div class="box-body">
@@ -47,8 +49,12 @@
                                         @endif
                                         <td>{{ $specialEvent->description }}</td>
                                         <td>
-                                            <a href="{{ route('admin_special_event_edit', ['conference_id' => $conference_id, 'id' => $specialEvent->id]) }}" class="btn btn-info fa fa-edit"></a>
-                                            <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_special_event_{{ $specialEvent->id }}"></button>
+                                            @can('update-special-event')
+                                                <a href="{{ route('admin_special_event_edit', ['conference_id' => $conference_id, 'id' => $specialEvent->id]) }}" class="btn btn-info fa fa-edit"></a>
+                                            @endcan
+                                            @can('delete-special-event')
+                                                <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_special_event_{{ $specialEvent->id }}"></button>
+                                            @endcan
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->

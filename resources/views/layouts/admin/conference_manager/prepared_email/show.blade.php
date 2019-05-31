@@ -6,7 +6,6 @@
 @section('page-header') Prepared Email
 @endsection
 @section('content')
-
     <form method="POST" action="{{ route('email_reviewer_request_store', ['conference_id' => $conference->id, 'review_assignment_id' => $reviewAssignment->id]) }}">
         @csrf
         <div class="box box-primary">
@@ -38,7 +37,9 @@
                 </div>
             </div>
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-plane"></i> Send</button>
+                @can('send-prepair-email')
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-plane"></i> Send</button>
+                @endcan
                 <a type="button" class="btn btn-default" href="{{ URL::previous() }}">Cancel</a>
             </div>
         </div>

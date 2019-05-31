@@ -24,10 +24,12 @@ class CalendarController extends BaseConferenceController
 	}
 	public function index()
 	{
+        $this->authorize('view-calendar-for-paper');
 		return view('layouts.admin.conference_manager.calendar.paperCalendar',['conference_id'=>$this->conferenceId]);
 	}
 	public function getData()
 	{
+        $this->authorize('view-calendar-for-paper');
 		$papers = $this->papers->get($this->conferenceId, ['status' => Paper::STATUS_SCHEDULED]);
 
 		$_papers=array();
@@ -42,7 +44,7 @@ class CalendarController extends BaseConferenceController
 			foreach ($timeBlocks as $timeBlock) {
 				if($timeBlock['id'] == $schedule['time_block_id']){
 					$events[] = array(
-                        'paper_id'   => $schedule['paper_id'], 
+                        'paper_id'   => $schedule['paper_id'],
                         'room_id'    => $schedule['room_id'],
                         'start'      => $timeBlock['date'].'T'.$timeBlock['start_time'],
                         'end'        => $timeBlock['date'].'T'.$timeBlock['end_time']
@@ -66,7 +68,7 @@ class CalendarController extends BaseConferenceController
 				}
 			}
 		}
-		
+
 		$buildings = Buildings::where('conference_id', $this->conferenceId)->get()->toArray();
 		$rooms= Rooms::all()->toArray();
 		$roomConference=array();
@@ -91,10 +93,12 @@ class CalendarController extends BaseConferenceController
 	}
 	public function calendarConference()
 	{
+        $this->authorize('view-calendar-for-conference');
 		return view('layouts.admin.conference_manager.calendar.conferenceCalendar',['conference_id'=>$this->conferenceId]);
 	}
 	public function getDataConference()
 	{
+        $this->authorize('view-calendar-for-conference');
 		$dataConferences = Conference::where('id',$this->conferenceId)->get()->toArray();
 		$conference = array();
 
@@ -103,7 +107,7 @@ class CalendarController extends BaseConferenceController
                 'title' => $dataConference['title'],
                 'start' => $dataConference['start_time'],
                 'end'   => $dataConference['end_time']
-			); 
+			);
 		}
 
 		$conferenceTimelines= ConferenceTimeline::where('conference_id',$this->conferenceId)->get()->toArray();
@@ -128,7 +132,7 @@ class CalendarController extends BaseConferenceController
 			$conference[]=array(
                 'title'  => 'reviewer_registration',
                 'start'  => $conferenceTimeline['reviewer_registration_opened'],
-                'end'    => $conferenceTimeline['reviewer_registration_closed']  
+                'end'    => $conferenceTimeline['reviewer_registration_closed']
 			);
 		}
 
@@ -137,12 +141,12 @@ class CalendarController extends BaseConferenceController
                'status'     => true,
                'conference' => $conference
 			);
-			echo json_encode($data ,true) ; 
+			echo json_encode($data ,true) ;
 		}else {
 			$data = array(
                'status'   => false
 			);
-			echo json_encode($data ,true) ; 
+			echo json_encode($data ,true) ;
 		}
 	}
 }

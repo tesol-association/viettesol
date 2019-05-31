@@ -12,9 +12,6 @@
                     <div class="col-md-4">
                         <h3 class="box-title">Register List</h3>
                     </div>
-                    <div class="col-md-2 col-md-offset-6">
-
-                    </div>
                 </div>
                 <div class="box-body">
                     <div class="table-responsive">
@@ -50,11 +47,13 @@
                                         {{ $register->role_id }}
                                     </td>
                                     <td>
-                                        <select class="form-group" onchange="updateStatus(this)">
-                                            @foreach($status as $_status)
-                                                <option value="{{ $_status }}" @if($_status== $register->status) {{ 'selected' }} @endif>{{ $_status }}</option>
-                                            @endforeach
-                                        </select>
+                                        @can('update-register-conference')
+                                            <select class="form-group" onchange="updateStatus(this)">
+                                                @foreach($status as $_status)
+                                                    <option value="{{ $_status }}" @if($_status== $register->status) {{ 'selected' }} @endif>{{ $_status }}</option>
+                                                @endforeach
+                                            </select>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

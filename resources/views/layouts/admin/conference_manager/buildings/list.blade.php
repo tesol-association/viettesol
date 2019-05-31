@@ -14,7 +14,9 @@
                             <h3 class="box-title">Buildings List</h3>
                         </div>
                         <div class="col-md-2 col-md-offset-6">
-                            <a href="{{ route('admin_buildings_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add New Building</a>
+                            @can('create-building')
+                                <a href="{{ route('admin_buildings_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add New Building</a>
+                            @endcan
                         </div>
                     </div>
                     <div class="box-body">
@@ -37,9 +39,15 @@
                                         <td>{{ $building->abbrev }}</td>
                                         <td>{{ $building->description }}</td>
                                         <td>
-                                            <a href="{{ route('admin_rooms_list', ["conference_id" => $conference->id, "building_id" => $building->id]) }}" class="btn btn-primary fa fa-eye"></a>
-                                            <a href="{{ route('admin_buildings_edit', ["conference_id" => $conference->id, "id" => $building->id]) }}" class="btn btn-info fa fa-edit"></a>
-                                            <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_buildings_{{ $building->id }}"></button>
+                                            @can('view-room')
+                                                <a href="{{ route('admin_rooms_list', ["conference_id" => $conference->id, "building_id" => $building->id]) }}" class="btn btn-primary fa fa-eye"></a>
+                                            @endcan
+                                            @can('update-building')
+                                                <a href="{{ route('admin_buildings_edit', ["conference_id" => $conference->id, "id" => $building->id]) }}" class="btn btn-info fa fa-edit"></a>
+                                            @endcan
+                                            @can('delete-building')
+                                                <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_buildings_{{ $building->id }}"></button>
+                                            @endcan
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->

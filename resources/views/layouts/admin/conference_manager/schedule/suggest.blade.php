@@ -15,7 +15,9 @@
               </div>
               <div class="col-md-2 col-md-offset-6">
                 <button type="submit" class="btn btn-danger">Save</button>
-                <a href="{{ route('admin_schedule_delete',['conference_id' => $conference->id]) }}" class="btn btn-info">Rearrange</a>
+                @can('delete-schedule')
+                    <a href="{{ route('admin_schedule_delete',['conference_id' => $conference->id]) }}" class="btn btn-info">Rearrange</a>
+                @endcan
             </div>
         </div>
         <div class="box-body list">
@@ -37,7 +39,7 @@
               <td>{{ $paper['title'] }}</td>
               <td>{{ $paper['duration'] . ' min'}}</td>
               <td>
-                <select style='width: 115%;height: 40px; margin-left:-7px' name="room_id[]"> 
+                <select style='width: 115%;height: 40px; margin-left:-7px' name="room_id[]">
                     @foreach($buildings as $building)
                     @foreach($building->rooms as $room)
                     <option value="{{ $room->id }}" @if($room->id == $paper['room_id']) {{ 'selected' }} @endif>{{ $room->name }}</option>

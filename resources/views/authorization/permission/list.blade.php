@@ -14,7 +14,9 @@
                             <h3 class="box-title">Permission List</h3>
                         </div>
                         <div class="col-md-2 col-md-offset-6">
-                            <button class="btn btn-block btn-info" data-toggle="modal" data-target="#add_permission"><i class="fa fa-plus"></i> Add Permission</button>
+                            @can('create-conference-permission')
+                                <button class="btn btn-block btn-info" data-toggle="modal" data-target="#add_permission"><i class="fa fa-plus"></i> Add Permission</button>
+                            @endcan
                             <!-- Start:: Add Permission Modal -->
                             <form action="{{ route('conference_acl_permission_store', ['conference_id' => $conference->id]) }}" method="POST">
                                 @csrf
@@ -65,9 +67,11 @@
                                         <td>{{ $permission->name }}</td>
                                         <td>{{ $permission->description }}</td>
                                         <td>
-                                            <button class="btn btn-info" data-toggle="modal" data-target="#edit_permission{{ $permission->id }}">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
+                                            @can('update-conference-permission')
+                                                <button class="btn btn-info" data-toggle="modal" data-target="#edit_permission{{ $permission->id }}">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                            @endcan
                                             <!-- Start:: Update Permission Modal -->
                                             <form action="{{ route('conference_acl_permission_update', ['conference_id' => $conference->id, 'permission_id' => $permission->id]) }}" method="POST">
                                                 @csrf

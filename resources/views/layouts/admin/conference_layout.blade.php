@@ -252,6 +252,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 @case(Config::get('constants.CONFERENCE_ROLE.AUTHOR'))
                                     @include('layouts.sidebar.author', ['conference' => $conference])
                                     @break
+                                @default
+                                    @break
                             @endswitch
                         @endforeach
                     @endif
@@ -270,6 +272,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     @break
                                 @case(Config::get('constants.CONFERENCE_ROLE.AUTHOR'))
                                     @include('layouts.sidebar.author', ['conference' => $conference])
+                                    @break
+                                @default
+                                    @include('layouts.sidebar.conference_manager', ['conference' => $conference])
                                     @break
                             @endswitch
                         @endforeach

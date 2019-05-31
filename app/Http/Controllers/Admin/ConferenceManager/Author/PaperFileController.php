@@ -51,6 +51,7 @@ class PaperFileController extends BaseConferenceController
      */
     public function savePaper(Request $request, $conferenceId, $paperId)
     {
+        $this->authorize('update-paper');
         //save
         if ($request->hasFile('attach_file')){
             //set path
@@ -126,6 +127,7 @@ class PaperFileController extends BaseConferenceController
      */
     public function updatePaper(Request $request, $conferenceId, $paperId, $id)
     {
+        $this->authorize('update-paper');
         //Get paperFile
         $paperFile = $this->paperFile->find($id);
 
