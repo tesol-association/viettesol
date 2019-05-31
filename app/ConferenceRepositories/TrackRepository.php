@@ -34,13 +34,13 @@ class TrackRepository
     public function get($filters = null)
     {
         if (empty($filters)) {
-            $track = Track::with('conference')->get();
+            $track = Track::with('conference', 'reviewForm', 'users')->get();
         } else {
             $conditions = [];
             foreach ($filters as $key => $filter) {
                 $conditions[] = [$key, '=', $filter];
             }
-            $track = Track::with('conference')->where($conditions)->get();
+            $track = Track::with('conference', 'reviewForm', 'users')->where($conditions)->get();
         }
         return $track;
     }

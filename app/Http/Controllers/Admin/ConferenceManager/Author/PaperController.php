@@ -9,6 +9,7 @@ use App\Events\PaperEvent\PaperSubmitted;
 use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\Author;
 use App\ConferenceRepositories\PaperRepository;
+use App\Models\Error;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,9 +67,9 @@ class PaperController extends BaseConferenceController
                 ->withErrors($validator)
                 ->withInput();
         }
-
-        if ($this->afterSubmissionClosed()) {
-            return redirect()->back()->with('error', 'submission Closed At: ' . date('Y-m-d', strtotime($this->conference->timeline->submission_closed)));
+        $result = $this->checkValidTime();
+        if ($result instanceof Error) {
+            return redirect()->back()->with('error', $result->getMessage());
         }
         $authorData = $request->author;
         $paperData = $request->paper;
@@ -82,11 +83,19 @@ class PaperController extends BaseConferenceController
         return redirect()->route('author_paper_list', ["conference_id" => $this->conferenceId])->with('success', 'Submission ' . $paper->title . ' successful !');
     }
 
-    public function afterSubmissionClosed()
+    public function checkValidTime()
     {
         $today = Carbon::now();
+        $submissionAccepted = $this->conference->timeline->submission_accepted;
         $submissionClosed = $this->conference->timeline->submission_closed;
-        return ($today->format('Y-m-d') > date('Y-m-d', strtotime($submissionClosed))) ? true : false;
+        $submissionAccepted = date('Y-m-d', strtotime($submissionAccepted));
+        $submissionClosed = date('Y-m-d', strtotime($submissionClosed));
+        if(($today->format('Y-m-d') > $submissionAccepted) && ($today->format('Y-m-d') < $submissionClosed)) {
+            return true;
+        } else {
+            $error = new Error();
+            $error->setMessage('Submission accepted at: ' . $submissionAccepted . ' and closed at: ' . $submissionClosed);
+        }
     }
 
     public function editPaper(Request $request,$conferenceId, $id)
@@ -112,8 +121,9 @@ class PaperController extends BaseConferenceController
             'paper.title' => 'required',
             'paper.abstract' => 'required',
         ]);
-        if ($this->afterSubmissionClosed()) {
-            return redirect()->back()->with('error', 'submission Closed At: ' . date('Y-m-d', strtotime($this->conference->timeline->submission_closed)));
+        $result = $this->checkValidTime();
+        if ($result instanceof Error) {
+            return redirect()->back()->with('error', $result->getMessage());
         }
         $paper = $this->papers->updatePaper($request->paper, $id);
         event(new PaperEditSubmissioned($paper));

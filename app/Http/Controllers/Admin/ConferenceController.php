@@ -39,6 +39,8 @@ class ConferenceController extends Controller
                     return redirect()->route('admin_author_paper_list', ['conference_id' => $conferenceId]);
                 case $firstRole == Config::get('constants.CONFERENCE_ROLE.REVIEWER'):
                     return redirect()->route('reviewer_paper_list', ['conference_id' => $conferenceId]);
+                case $firstRole == Config::get('constants.CONFERENCE_ROLE.TRACK_DIRECTOR'):
+                    return redirect()->route('track_director_paper_list', ['conference_id' => $conferenceId]);
             }
         }
         $conference = Conference::find($conferenceId);

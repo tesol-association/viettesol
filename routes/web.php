@@ -60,6 +60,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']],function(){
     //User Manager
     Route::group(['prefix'=>'user'],function(){
         Route::get('/list','Admin\UserManagerController@index')->name('admin_user_list');
+        Route::get('/export_csv','Admin\UserManagerController@exportCSV')->name('admin_export_user_list');
 
         Route::get('/create','Admin\UserManagerController@create')->name('admin_user_create');
         Route::post('/store','Admin\UserManagerController@store')->name('admin_user_store');
@@ -256,6 +257,14 @@ Route::group(['prefix'=>'admin/conf/{conference_id}'], function() {
         Route::post('/delete/{id}', 'Admin\TrackController@destroy')->name('admin_track_delete');
     });
 
+    Route::group(['prefix'=>'/prepared_email'], function() {
+        Route::get('/list', 'Admin\ConferenceManager\PreparedEmailController@index')->name('admin_prepared_email_list');
+//        Route::get('/create', 'Admin\ConferenceManager\PreparedEmailController@create')->name('admin_prepared_email_create');
+//        Route::post('/store', 'Admin\ConferenceManager\PreparedEmailController@store')->name('admin_prepared_email_store');
+        Route::get('/edit/{id}', 'Admin\ConferenceManager\PreparedEmailController@edit')->name('admin_prepared_email_edit');
+        Route::post('/update/{id}', 'Admin\ConferenceManager\PreparedEmailController@update')->name('admin_prepared_email_update');
+    });
+
     Route::group(['prefix'=>'/buildings'], function(){
         Route::get('/list', 'Admin\ConferenceManager\BuildingsController@index')->name('admin_buildings_list');
         Route::get('/create', 'Admin\ConferenceManager\BuildingsController@create')->name('admin_buildings_create');
@@ -422,8 +431,10 @@ Route::group(['prefix'=>'admin/conf/{conference_id}'], function() {
     });
 
     Route::group(['prefix'=>'/emails'], function() {
-        Route::get('/{review_assignment_id}/reviewer_request/show', 'Admin\ConferenceManager\PreparedEmailController@showReviewerRequest')->name('email_reviewer_request_show');
-        Route::post('/{review_assignment_id}/reviewer_request/store', 'Admin\ConferenceManager\PreparedEmailController@storeReviewerRequest')->name('email_reviewer_request_store');
+        Route::get('/{review_assignment_id}/reviewer_request/show', 'Admin\ConferenceManager\PreparedEmailController@showReviewerRequest')->name('email_reviewer_show');
+        Route::post('/{review_assignment_id}/reviewer_request/store', 'Admin\ConferenceManager\PreparedEmailController@storeReviewerRequest')->name('email_reviewer_store');
+        Route::get('/{paper_id}/decided/show', 'Admin\ConferenceManager\PreparedEmailController@showDecidedForm')->name('email_author_show');
+        Route::post('/{paper_id}/decided/store', 'Admin\ConferenceManager\PreparedEmailController@storeDecidedForm')->name('email_author_store');
     });
 
     Route::group(['prefix'=>'/fee'], function(){
@@ -553,6 +564,12 @@ Route::group(['prefix'=>'/conf/{conference_id}','middleware' => ['auth']], funct
         Route::get('/access_list', 'Authorization\ACLConferenceController@accessList')->name('conference_acl_access_list');
         Route::post('/access_allow', 'Authorization\ACLConferenceController@switchAccessAllow');
     });
+
+    /**
+     * SEND MAIL USING MAILCHIMP
+     */
+    Route::get('/notification/show', 'EmailController@show')->name('mail_chimp_show');
+    Route::post('/notification/store', 'EmailController@notification')->name('mail_chimp_store');
 });
 
 /**
@@ -562,10 +579,6 @@ Auth::routes();
 Route::get('/login/magic_link', 'Auth\MagicController@show')->name('show_login_magic_link');
 Route::post('/login/magic_link', 'Auth\MagicController@sendToken')->name('send_magic_link');
 Route::get('/magic_link', 'Auth\MagicController@authenticate')->name('authenticate_using_token');
-/**
- * SEND MAIL USING MAILCHIMP
- */
-Route::get('/notify', 'EmailController@notify');
 
 Route::group(['prefix'=>'home'],function(){
     Route::get('/index','Home\MainController@index')->name('home_page');

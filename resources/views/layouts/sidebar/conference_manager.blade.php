@@ -35,6 +35,7 @@
             @can('view-prepair-email')
                 <li><a href="#"><i class="fa fa-envelope-o"></i> Prepaired email</a></li>
             @endcan
+            <li><a href="{{ route('mail_chimp_show', ['conference_id' => $conference->id]) }}"><i class="fa fa-envelope-o"></i> Send Email to All User</a></li>
         </ul>
     </li>
 

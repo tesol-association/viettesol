@@ -63,6 +63,7 @@ class ReviewAssignmentController extends BaseConferenceController
         if ($result instanceof Error) {
             return redirect()->back()->with('error', $result->getMessage());
         }
+        event(new AssignReviewer($result));
         return redirect()->back()->with('success', 'Auto Assign Successful');
     }
 

@@ -75,22 +75,22 @@
             </div>
 
             <div class="form-group">
-                <label for="author_registration_opened">Submissions accepted:</label>
+                <label for="submission_accepted">Submissions accepted:</label>
                 <div class="input-group date">
                     <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text" class="form-control pull-right" name="author_registration_opened" id="author_registration_opened" value="{{ $timeline ? date('Y/m/d', strtotime($timeline->author_registration_opened)) : "" }}" disabled>
+                    <input type="text" class="form-control pull-right" name="submission_accepted" id="submission_accepted" value="{{ $timeline ? date('Y/m/d', strtotime($timeline->submission_accepted)) : "" }}" disabled>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="author_registration_closed">Submissions closed:</label>
+                <label for="submission_closed">Submissions closed:</label>
                 <div class="input-group date">
                     <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text" class="form-control pull-right" name="author_registration_closed" id="author_registration_closed" value="{{ $timeline ? date('Y/m/d', strtotime($timeline->author_registration_closed)) : "" }}" disabled>
+                    <input type="text" class="form-control pull-right" name="submission_closed" id="submission_closed" value="{{ $timeline ? date('Y/m/d', strtotime($timeline->submission_closed)) : "" }}" disabled>
                 </div>
             </div>
 

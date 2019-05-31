@@ -33,6 +33,21 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#history">
                         <i class="fa fa-history"></i> history
                     </button>
+                    <span id="send_mail_author" data-link="{{ route('email_author_show', ['conference_id' => $conference->id, 'paper_id' => $paper->id]) }}">
+                        @if ($trackDecision = $trackDecisions->first())
+                            @switch($trackDecision->decision)
+                                @case(Config::get('constants.PAPER.ACCEPTED'))
+                                <a href="{{ route('email_author_show', ['conference_id' => $conference->id, 'paper_id' => $paper->id]) . '?email_key=SUBMISSION_PAPER_ACCEPT' }}"><button class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button></a>
+                                @break
+                                @case(Config::get('constants.PAPER.REVISION'))
+                                <a href="{{ route('email_author_show', ['conference_id' => $conference->id, 'paper_id' => $paper->id]) . '?email_key=SUBMISSION_ABSTRACT_REVISE' }}"><button class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button></a>
+                                @break
+                                @case(Config::get('constants.PAPER.REJECTED'))
+                                <a href="{{ route('email_author_show', ['conference_id' => $conference->id, 'paper_id' => $paper->id]) . '?email_key=SUBMISSION_ABSTRACT_DECLINE' }}"><button class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button></a>
+                                @break
+                            @endswitch
+                        @endif
+                    </span>
                     <div class="modal fade" id="history" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">

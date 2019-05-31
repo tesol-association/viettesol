@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\UserExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Maatwebsite\Excel\Facades\Excel;
 use Session;
 
 class UserManagerController extends Controller
@@ -184,5 +186,10 @@ class UserManagerController extends Controller
         }else{
             return redirect()->route('admin_user_list')->with('error', 'Error');
         }
+    }
+
+    public function exportCSV()
+    {
+        return Excel::download(new UserExport(), 'user_list.csv');
     }
 }
