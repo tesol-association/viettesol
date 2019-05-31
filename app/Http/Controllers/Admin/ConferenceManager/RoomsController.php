@@ -23,6 +23,7 @@ class RoomsController extends BaseConferenceController
      */
     public function index($conferenceId, $buildingId)
     {
+        $this->authorize('view-room');
         $building = Buildings::find($buildingId);
         $rooms = $this->roomRepository->get(['building_id' => $buildingId]);
         return view('layouts.admin.conference_manager.rooms.list', ["rooms" => $rooms, 'building_id' =>$buildingId, 'building'=>$building]);
@@ -35,6 +36,7 @@ class RoomsController extends BaseConferenceController
      */
     public function create($conferenceId, $buildingId)
     {
+        $this->authorize('create-room');
         return view('layouts.admin.conference_manager.rooms.create', ["conference_id" => $conferenceId, 'building_id' => $buildingId]);
     }
 
@@ -46,13 +48,14 @@ class RoomsController extends BaseConferenceController
      */
     public function store(Request $request, $conferenceId, $buildingId)
     {
+        $this->authorize('create-room');
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'abbrev' => ['required', 'string', 'max:45'],
         ]);
 
        $room = $this->roomRepository->create($request->all());
-        
+
         return redirect()->route('admin_rooms_list', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('success', 'Room has been added successfully');
     }
 
@@ -75,6 +78,7 @@ class RoomsController extends BaseConferenceController
      */
     public function edit($conferenceId, $buildingId, $id)
     {
+        $this->authorize('update-room');
         $room = Rooms::find($id);
 
         return view('layouts.admin.conference_manager.rooms.edit', ["room" => $room, "conference_id" => $conferenceId, 'building_id' => $buildingId]);
@@ -89,13 +93,14 @@ class RoomsController extends BaseConferenceController
      */
     public function update(Request $request, $conferenceId, $buildingId, $id)
     {
+        $this->authorize('update-room');
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'abbrev' => ['required', 'string', 'max:45'],
         ]);
 
         $room = $this->roomRepository->update($id, $request->all());
-            
+
         return redirect()->route('admin_rooms_list', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('success', 'Room has been update successfully');
     }
 
@@ -107,8 +112,9 @@ class RoomsController extends BaseConferenceController
      */
     public function destroy($conferenceId, $buildingId, $id)
     {
+        $this->authorize('delete-room');
         $room = $this->roomRepository->destroy($id);
-        
+
         return redirect()->route('admin_rooms_list', ["conference_id" => $conferenceId, 'building_id' => $buildingId])->with('success', 'Room has been deleted successfully');
     }
 }

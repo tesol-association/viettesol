@@ -40,7 +40,9 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#update_user_conference_role_{{ $user->id }}"></button>
+                                            @can('update-user-conference-role')
+                                                <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#update_user_conference_role_{{ $user->id }}"></button>
+                                            @endcan
                                         </td>
                                         <!-- Start:: Modal -->
                                         <div class="modal fade" id="update_user_conference_role_{{ $user->id }}" role="dialog">

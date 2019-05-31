@@ -16,6 +16,7 @@ class ConferenceRoleController extends BaseConferenceController
      */
     public function index($conferenceId)
     {
+        $this->authorize('view-conference-role');
         $conferenceRoles = ConferenceRole::where('conference_id', $conferenceId)->get();
         return view('layouts.admin.conference_manager.conference_role.list', compact('conferenceRoles'));
     }
@@ -27,6 +28,7 @@ class ConferenceRoleController extends BaseConferenceController
      */
     public function create($conferenceId)
     {
+        $this->authorize('create-conference-role');
         return view('layouts.admin.conference_manager.conference_role.create');
     }
 
@@ -38,6 +40,7 @@ class ConferenceRoleController extends BaseConferenceController
      */
     public function store(Request $request, $conferenceId, ConferenceRoleRepository $conferenceRoleRepository)
     {
+        $this->authorize('create-conference-role');
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'conference_id' => ['numeric']
@@ -65,6 +68,7 @@ class ConferenceRoleController extends BaseConferenceController
      */
     public function edit($conferenceId, $id)
     {
+        $this->authorize('update-conference-role');
         $conferenceRole = ConferenceRole::find($id);
         return view('layouts.admin.conference_manager.conference_role.edit', compact('conferenceRole'));
     }
@@ -78,6 +82,7 @@ class ConferenceRoleController extends BaseConferenceController
      */
     public function update(Request $request, $conferenceId, $id)
     {
+        $this->authorize('update-conference-role');
         $request->validate([
             'name' => ['required', 'string', 'max:255']
         ]);
@@ -85,7 +90,7 @@ class ConferenceRoleController extends BaseConferenceController
         $conferenceRole = ConferenceRole::find($id);
         $conferenceRole->name = $request->get('name');
         $conferenceRole->description = $request->get('description');
-        
+
         if ($conferenceRole->save()) {
             return redirect()->route('admin_conference_roles_list', ['conference_id' => $conferenceId])->with('success', 'Conference Role has been updated successfully');
         } else{
@@ -101,6 +106,7 @@ class ConferenceRoleController extends BaseConferenceController
      */
     public function destroy($conferenceId, $id)
     {
+        $this->authorize('delete-conference-role');
         $conferenceRole = ConferenceRole::find($id);
         if ($conferenceRole->delete()) {
             return redirect()->route('admin_conference_roles_list', ['conference_id' => $conferenceId])->with('success', 'Conference Role has been deleted successfully');

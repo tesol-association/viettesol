@@ -10,9 +10,13 @@
             </div>
             <div class="col-md-2 col-md-offset-6">
                 @if ($timeline)
-                    <a href="{{ route('admin_timeline_edit', ["conference_id" => $conference->id, 'id' => $timeline->id]) }}" class="btn btn-block btn-info"><i class="fa fa-edit"></i> Edit Timeline </a>
+                    @can('update-conference-timeline')
+                        <a href="{{ route('admin_timeline_edit', ["conference_id" => $conference->id, 'id' => $timeline->id]) }}" class="btn btn-block btn-info"><i class="fa fa-edit"></i> Edit Timeline </a>
+                    @endcan
                 @else ($timeline)
-                    <a href="{{ route('admin_timeline_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Create Timeline </a>
+                    @can('create-conference-timeline')
+                        <a href="{{ route('admin_timeline_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Create Timeline </a>
+                    @endcan
                 @endif
             </div>
         </div>

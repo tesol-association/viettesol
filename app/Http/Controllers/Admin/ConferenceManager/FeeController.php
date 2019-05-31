@@ -15,6 +15,7 @@ class FeeController extends BaseConferenceController
      */
     public function index()
     {
+        $this->authorize('view-fee');
         $fees = Fee::where('conference_id', $this->conferenceId)->get();
         return view('layouts.admin.conference_manager.fee.list', ['fees'=>$fees]);
     }
@@ -26,6 +27,7 @@ class FeeController extends BaseConferenceController
      */
     public function create()
     {
+        $this->authorize('create-fee');
         return view('layouts.admin.conference_manager.fee.create');
     }
 
@@ -37,6 +39,7 @@ class FeeController extends BaseConferenceController
      */
     public function store(Request $request)
     {
+        $this->authorize('create-fee');
         $request->validate([
             'time' => 'required|date',
             'category.*' =>'required',
@@ -76,6 +79,7 @@ class FeeController extends BaseConferenceController
      */
     public function edit($conferenceId, $id)
     {
+        $this->authorize('update-fee');
         $fee = Fee::find($id);
         return view('layouts.admin.conference_manager.fee.edit', ['fee' => $fee]);
     }
@@ -89,6 +93,7 @@ class FeeController extends BaseConferenceController
      */
     public function update(Request $request, $conferenceId, $id)
     {
+        $this->authorize('update-fee');
         $request->validate([
             'time' => 'required|date',
             'category' =>'required',
@@ -115,6 +120,7 @@ class FeeController extends BaseConferenceController
      */
     public function destroy($conferenceId, $id)
     {
+        $this->authorize('delete-fee');
         $fee = Fee::find($id);
         $fee->delete();
         return redirect()->route('admin_fee_list', $this->conferenceId)->with('success', 'Fee has been deleted successfully');

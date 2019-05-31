@@ -14,12 +14,14 @@ class ConferenceGalleryController extends BaseConferenceController
 
     public function index($conferenceId)
     {
+        $this->authorize('view-conference-gallery');
         $conferenceGallerys = ConferenceGallery::where('conference_id', $conferenceId)->get();
         return view('layouts.admin.conference_manager.conference_gallery.list', ['conferenceGallerys' => $conferenceGallerys, 'conference_id' => $conferenceId]);
     }
 
     public function store(Request $request, $conferenceId)
     {
+        $this->authorize('create-conference-gallery');
         $this->validate($request, [
             "image" => 'required|array',
             "image.*" => 'required|image'
@@ -41,6 +43,7 @@ class ConferenceGalleryController extends BaseConferenceController
 
     public function destroy($conferenceId, $id)
     {
+        $this->authorize('delete-conference-gallery');
         $conferenceGallery = ConferenceGallery::find($id);
         Storage::disk('public')->delete($conferenceGallery->image_url);
         $conferenceGallery->delete();

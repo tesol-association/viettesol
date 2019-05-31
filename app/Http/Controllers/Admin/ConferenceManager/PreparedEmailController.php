@@ -60,6 +60,7 @@ class PreparedEmailController extends BaseConferenceController
      */
     public function showReviewerRequest(Request $request,$conferenceId, $reviewAssignmentId, PreparedEmailRepository $preparedEmailRepository, ReviewAssignmentRepository $reviewAssignmentRepository)
     {
+        $this->authorize('view-prepair-email');
         $reviewAssignment = $reviewAssignmentRepository->find($reviewAssignmentId);
         if ($request->email_key == 'REVIEW_REQUEST') {
             $emailReviewerRequest = $preparedEmailRepository->findEmailKey('REVIEW_REQUEST');
@@ -118,6 +119,7 @@ class PreparedEmailController extends BaseConferenceController
      */
     public function storeReviewerRequest($conferenceId, $reviewAssignmentId, Request $request, ReviewAssignmentRepository $reviewAssignmentRepository)
     {
+        $this->authorize('send-prepair-email');
         $data = $request->all();
         $validator = $this->validateData($data);
         if ($validator->fails()) {

@@ -18,6 +18,7 @@ class SpeakersController extends BaseConferenceController
      */
     public function index($conferenceId)
     {
+        $this->authorize('view-speaker');
         $speakers = Speakers::where('conference_id', $conferenceId)->get();
         return view('layouts.admin.conference_manager.speaker.list', compact('speakers'));
     }
@@ -29,6 +30,7 @@ class SpeakersController extends BaseConferenceController
      */
     public function create($conferenceId)
     {
+        $this->authorize('create-speaker');
         return view('layouts.admin.conference_manager.speaker.create');
     }
 
@@ -40,6 +42,7 @@ class SpeakersController extends BaseConferenceController
      */
     public function store(Request $request, $conferenceId)
     {
+        $this->authorize('create-speaker');
         $request->validate([
             'image' => ['required', 'image'],
             'full_name' => ['required', 'string', 'max:255'],
@@ -65,7 +68,7 @@ class SpeakersController extends BaseConferenceController
             return redirect()->route('admin_speakers_list', ["conference_id" => $conferenceId])->with('success', 'Speaker has been add successfully');
         }else{
             return redirect()->back()->with('errors', 'Error');
-        } 
+        }
     }
 
     /**
@@ -76,6 +79,7 @@ class SpeakersController extends BaseConferenceController
      */
     public function show($conferenceId, $id)
     {
+        $this->authorize('view-speaker');
         $speaker = Speakers::find($id);
          return view('layouts.admin.conference_manager.speaker.view', ["conference_id" => $conferenceId, "speaker" => $speaker ]);
     }
@@ -88,6 +92,7 @@ class SpeakersController extends BaseConferenceController
      */
     public function edit($conferenceId, $id)
     {
+        $this->authorize('update-speaker');
         $speaker = Speakers::find($id);
         return view('layouts.admin.conference_manager.speaker.edit', ["conference_id" => $conferenceId, "speaker" => $speaker ]);
     }
@@ -101,6 +106,7 @@ class SpeakersController extends BaseConferenceController
      */
     public function update(Request $request, $conferenceId, $id)
     {
+        $this->authorize('update-speaker');
         $request->validate([
             'full_name' => ['required', 'string', 'max:255'],
             'affiliate' => ['required', 'string', 'max:255'],
@@ -128,7 +134,7 @@ class SpeakersController extends BaseConferenceController
             return redirect()->route('admin_speakers_view',  ["conference_id" => $conferenceId, "speaker" => $speaker])->with('success', 'Speaker has been update successfully');
         }else{
             return redirect()->back()->with('errors', 'Error');
-        } 
+        }
 
     }
 
@@ -140,6 +146,7 @@ class SpeakersController extends BaseConferenceController
      */
     public function destroy($conferenceId, $id)
     {
+        $this->authorize('delete-speaker');
         $speaker = Speakers::find($id);
 
          if($speaker->delete()){

@@ -13,6 +13,7 @@ class CriteriaController extends BaseConferenceController
 {
     public function show()
     {
+        $this->authorize('view-reviewer-criterial');
         $userId = Auth::id();
         $criteria = ReviewCriteria::where('user_id', $userId)->where('conference_id', $this->conferenceId)->first();
         return view('reviewer.criteria.show', ['criteria' => $criteria]);
@@ -20,6 +21,7 @@ class CriteriaController extends BaseConferenceController
 
     public function store(Request $request)
     {
+        $this->authorize('view-reviewer-criterial');
         $validator = $this->validateData($request->all());
         if ($validator->fails()) {
             return redirect()

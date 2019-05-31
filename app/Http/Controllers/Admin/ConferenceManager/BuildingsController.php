@@ -22,6 +22,7 @@ class BuildingsController extends BaseConferenceController
      */
     public function index()
     {
+        $this->authorize('view-building');
         $buildings = $this->buildingRepository->get(['conference_id'=>$this->conferenceId]);
         return view('layouts.admin.conference_manager.buildings.list', compact('buildings'));
     }
@@ -33,6 +34,7 @@ class BuildingsController extends BaseConferenceController
      */
     public function create()
     {
+        $this->authorize('create-building');
         return view('layouts.admin.conference_manager.buildings.create');
     }
 
@@ -44,6 +46,7 @@ class BuildingsController extends BaseConferenceController
      */
     public function store(Request $request, $conferenceId)
     {
+        $this->authorize('create-building');
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'abbrev' => ['required', 'string', 'max:45'],
@@ -74,6 +77,7 @@ class BuildingsController extends BaseConferenceController
      */
     public function edit($conferenceId, $id)
     {
+        $this->authorize('update-building');
         $building = Buildings::find($id);
         return view('layouts.admin.conference_manager.buildings.edit', ['building' => $building]);
     }
@@ -87,6 +91,7 @@ class BuildingsController extends BaseConferenceController
      */
     public function update(Request $request, $conferenceId, $id)
     {
+        $this->authorize('update-building');
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'abbrev' => ['required', 'string', 'max:45'],
@@ -105,6 +110,7 @@ class BuildingsController extends BaseConferenceController
      */
     public function destroy( $conferenceId, $id)
     {
+        $this->authorize('delete-building');
         $building = $this->buildingRepository->destroy($id);
 
         return redirect()->route('admin_buildings_list', $conferenceId)->with('success', 'Building has been deleted successfully');

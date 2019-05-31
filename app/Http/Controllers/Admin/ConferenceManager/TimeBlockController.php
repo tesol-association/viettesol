@@ -17,6 +17,7 @@ class TimeBlockController extends BaseConferenceController
      */
     public function index()
     {
+        $this->authorize('view-time-block');
         $timBlocks = TimeBlock::where('conference_id', $this->conferenceId)->get();
         return view('layouts.admin.conference_manager.time_block.list',['timeBlocks' => $timBlocks]);
     }
@@ -28,6 +29,7 @@ class TimeBlockController extends BaseConferenceController
      */
     public function create()
     {
+        $this->authorize('create-time-block');
         $conferenceId = $this->conferenceId;
         return view('layouts.admin.conference_manager.time_block.create',['conferenceId'=>$conferenceId]);
     }
@@ -40,21 +42,22 @@ class TimeBlockController extends BaseConferenceController
      */
     public function store(Request $request)
     {
-     $this->validate($request,[
-         'date'          => 'required',
-         'start_time'    => 'required',
-         'end_time'      => 'required'
-     ]);
+        $this->authorize('create-time-block');
+         $this->validate($request,[
+             'date'          => 'required',
+             'start_time'    => 'required',
+             'end_time'      => 'required'
+         ]);
 
-     TimeBlock::create([
-        'date'           => $request->date,
-        'start_time'     => $request->start_time,
-        'end_time'       => $request->end_time,
-        'conference_id'  => $request->conferenceId
-    ]);
-     Session::flash('success','Create successfully');
-     return redirect()->route('admin_time_block_list',['conference_id'=>$this->conferenceId]);
- }
+         TimeBlock::create([
+            'date'           => $request->date,
+            'start_time'     => $request->start_time,
+            'end_time'       => $request->end_time,
+            'conference_id'  => $request->conferenceId
+        ]);
+         Session::flash('success','Create successfully');
+         return redirect()->route('admin_time_block_list',['conference_id'=>$this->conferenceId]);
+     }
 
     /**
      * Display the specified resource.
@@ -75,6 +78,7 @@ class TimeBlockController extends BaseConferenceController
      */
     public function edit($conferenceId, $id)
     {
+        $this->authorize('update-time-block');
         $timeBlock = TimeBlock::find($id);
         return view('layouts.admin.conference_manager.time_block.edit', ['timeBlock' => $timeBlock]);
     }
@@ -88,6 +92,7 @@ class TimeBlockController extends BaseConferenceController
      */
     public function update(Request $request, $conferenceId, $id)
     {
+        $this->authorize('update-time-block');
         $request->validate([
             'date'       => 'required',
             'start_time' => 'required',
@@ -111,6 +116,7 @@ class TimeBlockController extends BaseConferenceController
      */
     public function destroy($conferenceId, $id)
     {
+        $this->authorize('delete-time-block');
         TimeBlock::destroy($id);
         Session::flash('success','Delete successfully');
         return redirect()->route('admin_time_block_list',['conference_id'=>$this->conferenceId]);

@@ -16,6 +16,7 @@ class SpecialEventController extends BaseConferenceController
      */
     public function index($conferenceId)
     {
+        $this->authorize('view-special-event');
         $specialEvents = SpecialEvent::where('conference_id', $conferenceId)->get();
         return view('layouts.admin.conference_manager.special_event.list', ['conference_id' => $conferenceId, 'specialEvents' => $specialEvents]);
     }
@@ -27,6 +28,7 @@ class SpecialEventController extends BaseConferenceController
      */
     public function create($conferenceId)
     {
+        $this->authorize('create-special-event');
         $rooms = Rooms::with('building.conference')->get();
         $rooms = $rooms->filter(function($room) use ($conferenceId) {
             return $room->building->conference->id == $conferenceId;
@@ -42,6 +44,7 @@ class SpecialEventController extends BaseConferenceController
      */
     public function store(Request $request, $conferenceId)
     {
+        $this->authorize('create-special-event');
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'date' => ['required', 'date'],
@@ -63,7 +66,7 @@ class SpecialEventController extends BaseConferenceController
             return redirect()->route('admin_special_event_list', ['conference_id' => $conferenceId])->with('success', 'Special Event has been add successfully');
         }else{
             return redirect()->back()->with('errors', 'Error');
-        } 
+        }
     }
 
     /**
@@ -85,6 +88,7 @@ class SpecialEventController extends BaseConferenceController
      */
     public function edit($conferenceId, $id)
     {
+        $this->authorize('update-special-event');
         $specialEvent = SpecialEvent::find($id);
         $rooms = Rooms::all();
         return view('layouts.admin.conference_manager.special_event.edit', ['conference_id' => $conferenceId, 'specialEvent' => $specialEvent, 'rooms' => $rooms]);
@@ -99,6 +103,7 @@ class SpecialEventController extends BaseConferenceController
      */
     public function update(Request $request, $conferenceId, $id)
     {
+        $this->authorize('update-special-event');
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'date' => ['required', 'date'],
@@ -119,7 +124,7 @@ class SpecialEventController extends BaseConferenceController
             return redirect()->route('admin_special_event_list', ['conference_id' => $conferenceId])->with('success', 'Special Event has been update successfully');
         }else{
             return redirect()->back()->with('errors', 'Error');
-        } 
+        }
     }
 
     /**
@@ -130,6 +135,7 @@ class SpecialEventController extends BaseConferenceController
      */
     public function destroy($conferenceId, $id)
     {
+        $this->authorize('delete-special-event');
         $specialEvent = SpecialEvent::find($id);
 
         if ($specialEvent->delete()) {

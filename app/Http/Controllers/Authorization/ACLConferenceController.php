@@ -21,6 +21,7 @@ class ACLConferenceController extends BaseConferenceController
      */
     public function permissionList()
     {
+        $this->authorize('view-conference-permission');
         $permissions = $this->aclConferences->allPermissions();
         return view('authorization.permission.list', [
             'permissions'=> $permissions
@@ -29,6 +30,7 @@ class ACLConferenceController extends BaseConferenceController
 
     public function accessList()
     {
+        $this->authorize('view-set-up-conference-permission');
         $accesses = $this->aclConferences->allAccesses($this->conferenceId);
         return view('authorization.access.list', [
             'accesses'=> $accesses
@@ -37,6 +39,7 @@ class ACLConferenceController extends BaseConferenceController
 
     public function switchAccessAllow(Request $request)
     {
+        $this->authorize('set-up-conference-permission');
         $data = $request->all();
         $access = $this->aclConferences->switchAccessAllow($data['access_id']);
         return $access;
@@ -49,6 +52,7 @@ class ACLConferenceController extends BaseConferenceController
      */
     public function storePermission(Request $request, $conferenceId)
     {
+        $this->authorize('create-conference-permission');
         $data = $request->all();
         $validator = $this->validateData($data);
         if ($validator->fails()) {
@@ -69,6 +73,7 @@ class ACLConferenceController extends BaseConferenceController
      */
     public function updatePermission(Request $request, $conferenceId, $permissionId)
     {
+        $this->authorize('update-conference-permission');
         $data = $request->all();
         $validator = $this->validateData($data);
         if ($validator->fails()) {

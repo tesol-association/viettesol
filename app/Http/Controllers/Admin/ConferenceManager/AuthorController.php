@@ -25,6 +25,7 @@ class AuthorController extends BaseConferenceController
      */
     public function index()
     {
+        $this->authorize('view-paper-author');
         $conferenceId = $this->conferenceId;
         $papers = $this->papers->get($conferenceId);
         $users = User::all();
@@ -72,6 +73,7 @@ class AuthorController extends BaseConferenceController
 
     public function showAuthor($conferenceId, $id)
     {
+        $this->authorize('view-paper-author');
         $author = $this->authors->find($id);
         if (!empty($author)) {
             $users = User::all();

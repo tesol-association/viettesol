@@ -14,7 +14,9 @@
                             <h3 class="box-title">TimeBlock List</h3>
                         </div>
                         <div class="col-md-2 col-md-offset-6">
-                            <a href="{{ route('admin_time_block_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add New time block</a>
+                            @can('create-time-block')
+                                <a href="{{ route('admin_time_block_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add New time block</a>
+                            @endcan
                         </div>
                     </div>
                     <div class="box-body">
@@ -37,8 +39,12 @@
                                         <td>{{ \Carbon\Carbon::createFromFormat('H:i:s',$timeBlock->start_time)->format('H:i') }}</td>
                                         <td>{{ \Carbon\Carbon::createFromFormat('H:i:s',$timeBlock->end_time)->format('H:i') }}</td>
                                         <td>
-                                            <a href="{{ route('admin_time_block_edit', ["conference_id" => $conference->id, "id" => $timeBlock->id]) }}" class="btn btn-info fa fa-edit"></a>
-                                            <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_time_block_{{ $timeBlock->id }}"></button>
+                                            @can('update-time-block')
+                                                <a href="{{ route('admin_time_block_edit', ["conference_id" => $conference->id, "id" => $timeBlock->id]) }}" class="btn btn-info fa fa-edit"></a>
+                                            @endcan
+                                            @can('delete-time-block')
+                                                <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_time_block_{{ $timeBlock->id }}"></button>
+                                            @endcan
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->

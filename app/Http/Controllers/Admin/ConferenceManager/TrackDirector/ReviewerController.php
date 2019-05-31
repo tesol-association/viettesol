@@ -18,6 +18,7 @@ class ReviewerController extends BaseConferenceController
 
     public function index($conferenceId)
     {
+        $this->authorize('view-reviewer');
         $reviewers = $this->conferenceRoles->getReviewers($conferenceId);
         return view('track_director.reviewer.list', ['conference_id'=>$conferenceId, 'reviewers'=>$reviewers]);
     }
