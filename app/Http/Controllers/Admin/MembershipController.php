@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Membership;
 use App\Models\MembershipType;
 use App\Models\Contact;
-use App\Models\MemberType;
 use Session;
 
 class MembershipController extends Controller
@@ -37,9 +36,6 @@ class MembershipController extends Controller
 
         $msTypes = MembershipType::all();
         return view("layouts.admin.membership.create", ['contacts' => $contacts, 'msTypes' => $msTypes]);
-
-        $memberTypes = MemberType::all();
-        return view("layouts.admin.membership.create", ['contacts' => $contacts], ['memberTypes' => $memberTypes]);
     }
 
     /**
@@ -107,9 +103,6 @@ class MembershipController extends Controller
         $msTypes = MembershipType::all();
 
         return view('layouts.admin.membership.edit', ['member' => $member, 'msTypes' => $msTypes]);
-
-        $memberTypes = MemberType::all();
-        return view('layouts.admin.membership.edit',['member' => $member], ['memberTypes' => $memberTypes]);
 
     }
 

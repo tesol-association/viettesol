@@ -122,7 +122,11 @@
                         </li>
                     @endforeach
                     <li>
-                        <a class="btn btn-primary" href="{{ route('home_donate_paypal') }}" role="button"><i class="fa fa-paypal"> Donate Now </i></a>
+                        <a class="btn btn-primary" href="{{ route('home_member_register') }}" role="button"> Member Register </a>
+                    </li>
+
+                    <li>
+                        <a class="btn btn-primary" href="{{ route('home_donate_paypal') }}" role="button"><i class="fa fa-paypal"> Donate </i></a>
                     </li>
                 </ul>
                 <!-- /nav -->

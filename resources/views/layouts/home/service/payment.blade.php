@@ -17,7 +17,7 @@
                     @csrf
                     <div class="box-body">
 
-                        <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                        <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                             <label for="email"> Email*: </label>
                             <input id="email" type="text" class="form-control" name="email" required value="{{ old('email')}}">
                             @if ($errors->has('email'))
@@ -28,8 +28,7 @@
                         <div class="form-group">
                             <label for="payfor"> Membership Type*:</label>
                             <select class="form-control" name="payfor">
-                                <option> Normal </option>
-                                <option> Premium </option>
+                                
                             </select>
                         </div>
 

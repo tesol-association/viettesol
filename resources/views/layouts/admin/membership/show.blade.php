@@ -22,12 +22,12 @@
                     <div class="box box-primary">
                         <div class="box-body box-profile">
                             <img class="profile-user-img img-responsive img-circle" src="http://viettesol.weebly.com/uploads/6/0/0/1/60017649/logo_orig.png" alt="VIETTESOL's Member">
-                            @if ( $member->memberType->name === "Premium" )
+                            @if ( $member->msType->name === "Premium" )
                             <h2 class="profile-username text-center"> <i class="fa fa-diamond"></i> Premium Membership <i class="fa fa-diamond"></i> </h2>
-                            @elseif ( $member->memberType->name === "Normal" )
+                            @elseif ( $member->msType->name === "Normal" )
                             <h2 class="profile-username text-center"> <i class="fa fa-check"></i> Normal Membership <i class="fa fa-check"></i> </h2>
                             @else
-                            <h2 class="profile-username text-center"> <i class="fa fa-certificate"></i> {{ $member->memberType->name }} Membership <i class="fa fa-certificate"></i> </h2>
+                            <h2 class="profile-username text-center"> <i class="fa fa-certificate"></i> {{ $member->msType->name }} Membership <i class="fa fa-certificate"></i> </h2>
                             @endif
 
                             @if ( $member->contact->contactType->name === "Individual" )
@@ -63,7 +63,7 @@
                                     Membership Type
                                 </strong>
                                 <p class="text-muted">
-                                    <b> {{ $member->memberType->name }} </b>
+                                    <b> {{ $member->msType->name }} </b>
                                 </p>
                                 <hr>
 

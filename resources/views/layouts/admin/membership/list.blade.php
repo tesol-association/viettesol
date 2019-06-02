@@ -38,8 +38,6 @@ All Members
                                 <td> ID </td>
                                 <td> Contact ID </td>
                                 <td> Name </td>
-
-                                <td> Type </td>
                                 <td> Secret Code </td>
 
                                 <td> Membership Type </td>
@@ -62,9 +60,8 @@ All Members
                                     <p> {{ $member->contact->organize_name }} </p>
                                     @endif
                                 </td>
-                                <td> {{ $member->msType->name }} </td>
                                 <td> {{ $member->mscode }} </td>
-                                <td><b> {{ $member->memberType->name }} </b></td>
+                                <td><b> {{ $member->msType->name }} </b></td>
                                 <td>
                                     <!--
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#view_membership{{ $member->id }}"> <i class="fa fa-eye">  </i>  </button>

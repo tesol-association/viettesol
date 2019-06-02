@@ -38,6 +38,7 @@ All Membership Type
                                 <td> ID </td>
                                 <td> Name </td>
                                 <td> Description </td>
+                                <td> Number of members </td>
                                 <td> Edit </td>
                                 <td> Delete </td>
                             </tr>
@@ -49,13 +50,14 @@ All Membership Type
                                 <td> {{ $type->id }} </td>
                                 <td> {{ $type->name }} </td>
                                 <td> {{ $type->description }} </td>
+                                <td> {{ count($type->membership) }} </td>
                                 <td>
-                                    @if ( ( $type->name != "Premium" ) && ( $type->name != "Normal" ) )
+                                    @if ( ( $type->name != "Premium" ) && ( $type->name != "Normal" ) && ( count($type->membership) == 0 ) )
                                     <a class="btn btn-primary" href="{{ route('admin_membertype_edit', ["id" => $type->id]) }}"> <i class="fa fa-edit"></i> </a>
                                     @endif
                                 </td>
                                 <td>
-                                    @if ( ( $type->name != "Premium" ) && ( $type->name != "Normal" ) )
+                                    @if ( ( $type->name != "Premium" ) && ( $type->name != "Normal" ) && ( count($type->membership) == 0 ) )
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_membertype{{ $type->id }}"> <i class="fa fa-trash">  </i> </button>
                                     @endif
 

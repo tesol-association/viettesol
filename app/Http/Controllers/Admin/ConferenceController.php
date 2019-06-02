@@ -13,6 +13,7 @@ use App\ConferenceRepositories\TrackRepository;
 use App\ConferenceRepositories\PaperRepository;
 use App\Models\Announcements;
 use App\Models\ConferenceTimeline;
+use App\Http\Controllers\Conference\ConferenceNotification;
 
 class ConferenceController extends Controller
 {
@@ -204,6 +205,9 @@ class ConferenceController extends Controller
             $conference->attach_file = $url;
         }
         $conference->save();
+
+        $noti = new ConferenceNotification($conference);
+
         return redirect()->route('admin_conference_list')->with('success', 'Create ' . $conference->title . ' successful !');
     }
 

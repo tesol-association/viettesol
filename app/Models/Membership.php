@@ -19,10 +19,4 @@ class Membership extends Model
     {
     	return $this->belongsTo('App\Models\MembershipType', 'type_id');
     }
-
-    public function memberType()
-    {
-    	return $this->belongsTo('App\Models\MemberType', 'type_id');
-
-    }
 }

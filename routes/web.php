@@ -25,6 +25,10 @@ Route::get('/test',function () {
     return view('layouts.admin.conference_layout');
 });
 
+Route::get('/', function(){
+    return redirect()->route('home-main');
+});
+
 //Contact Form
 Route::get('/home/contact_form/create','Home\ContactFormController@create')->name('home_contactForm_create');
 Route::post('/home/contact_form/store','Home\ContactFormController@store')->name('home_contactForm_store');
@@ -597,6 +601,13 @@ Route::group(['prefix'=>'home'],function(){
 
     Route::group(['prefix' => 'fee'], function() {
         Route::get('/payment', 'Home\PaymentController@getPaymentForm')->name('home_fee_payment');
+    });
+
+    //Membership Registration
+    Route::group(['prefix' => 'membership'], function() {
+        Route::get('/register', 'Home\MemberRegistration@create')->name('home_member_register');
+        Route::post('/store', 'Home\MemberRegistration@store')->name('home_member_save');
+        Route::get('/done', 'Home\MemberRegistration@index')->name('home_member_done');
     });
 });
 
