@@ -44,11 +44,13 @@ class MembershipTypeController extends Controller
         //
         $request->validate([
             'name' => 'required|unique:membership_types',
+            'fee' => 'required|integer'
         ]);
 
         $memberType = new MembershipType([
             'name' => $request->get('name'),
-            'description' => $request->get('description')
+            'description' => $request->get('description'),
+            'fee' => $request->get('fee')
         ]);
 
         $memberType->save();
@@ -95,6 +97,7 @@ class MembershipTypeController extends Controller
 
         $memberType->name = $request->get('name');
         $memberType->description = $request->get('description');
+        $memberType->fee = $request->get('fee');
 
         $memberType->save();
 

@@ -37,6 +37,9 @@ class ConferenceNotification extends Controller
                 'middle_name' => $contact->middle_name,
                 'last_name' => $contact->last_name,
                 'title' => $conf->title,
+                'start_time' => $conf->start_time,
+                'end_time' => $conf->end_time,
+                'venue' => $conf->venue,
                 'link' => $url,
                 'slogan' => $conf->slogan;
 			), 

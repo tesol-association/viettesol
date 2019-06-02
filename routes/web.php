@@ -601,6 +601,9 @@ Route::group(['prefix'=>'home'],function(){
 
     Route::group(['prefix' => 'fee'], function() {
         Route::get('/payment', 'Home\PaymentController@getPaymentForm')->name('home_fee_payment');
+        Route::post('/detail', 'Home\PaymentController@getPaymentDetail')->name('home_fee_detail');
+        Route::get('/deal/{id}', 'Home\PaymentController@getPaymentDealForm')->name('home_fee_deal');
+        Route::get('/done', 'Home\PaymentController@pay')->name('home_fee_done');
     });
 
     //Membership Registration

@@ -37,6 +37,14 @@ Create a New Membership Type
                 <label for="description">Description:</label>
                 <textarea id="description"  class="form-control" rows="3" placeholder="Enter ..." name="description"> {{ $memberType->description }} </textarea>
             </div>
+
+            <div class="form-group {{ $errors->has('fee') ? 'has-error' : '' }}">
+                <label for="fee"> Fee per Month*: </label>
+                <input id="fee" type="text" class="form-control" name="fee" required value="{{ $memberType->fee }}">
+                @if ($errors->has('fee'))
+                    <span class="help-block">{{ $errors->first('fee') }}</span>
+                @endif
+            </div>
         <div class="box-footer">
             <button type="submit" class="btn btn-primary"> Update </button>
         </div>

@@ -126,6 +126,10 @@
                     </li>
 
                     <li>
+                        <a class="btn btn-primary" href="{{ route('home_fee_payment') }}" role="button"> Member Fee </a>
+                    </li>
+
+                    <li>
                         <a class="btn btn-primary" href="{{ route('home_donate_paypal') }}" role="button"><i class="fa fa-paypal"> Donate </i></a>
                     </li>
                 </ul>

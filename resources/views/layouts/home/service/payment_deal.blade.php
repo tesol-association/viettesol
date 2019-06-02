@@ -13,17 +13,11 @@
                 <legend class="form-border">{{ __('Your Membership Maintainance Fee:') }}</legend>
                 <div class="box box-primary">
    
-                <form method="post" action="{{ route('home_fee_detail') }}">
+                <form method="post" action="{{ route('home_fee_done') }}">
                     @csrf
                     <div class="box-body">
 
-                        <div class="form-group">
-                            <label for="mscode"> Membership Code:</label>
-                            <input id="mscode" type="text" class="form-control" name="mscode" required value="{{ old('mscode')}}">
-                            @if ($errors->has('mscode'))
-                                <span class="help-block">{{ $errors->first('mscode') }}</span>
-                            @endif
-                        </div>
+                        <h2> Are you sure to make a-{{ $fee }}-USD deal, {{ $member->contact->first_name }}? </h2>
 
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary"> Submit </button>

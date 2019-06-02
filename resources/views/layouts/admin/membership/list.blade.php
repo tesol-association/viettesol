@@ -41,7 +41,7 @@ All Members
                                 <td> Secret Code </td>
 
                                 <td> Membership Type </td>
-
+                                <td> Maintainance </td>
                                 <td> View </td>
                                 <td> Edit </td>
                                 <td> Delete </td>
@@ -62,6 +62,13 @@ All Members
                                 </td>
                                 <td> {{ $member->mscode }} </td>
                                 <td><b> {{ $member->msType->name }} </b></td>
+                                <td>
+                                    @if( $member->is_paid == 0 )
+                                    <b style="color: red;"> Not paid </b>
+                                    @else
+                                    <i style="color: blue;"> Paid </i>
+                                    @endif
+                                </td>
                                 <td>
                                     <!--
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#view_membership{{ $member->id }}"> <i class="fa fa-eye">  </i>  </button>

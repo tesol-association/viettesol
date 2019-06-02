@@ -9,4 +9,8 @@
 		<li> Membership Code: {{ $mscode }} </li>
 		<li> Due Date: {{ $end_date }} </li>
 	</ul>
+	<p style="font-size: 16px;">
+		In order to maintain your membership, a maintainance fee has to be paid. We highly recommend you make the deal as soon as possible. Your contribution will help us a lot in improving more high quality service.
+		Go to our website, hit "Member Fee" to check it out with your Membership Code.
+	</p>
 </div>

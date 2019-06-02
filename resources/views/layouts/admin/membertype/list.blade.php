@@ -38,6 +38,7 @@ All Membership Type
                                 <td> ID </td>
                                 <td> Name </td>
                                 <td> Description </td>
+                                <td> Fee per month </td>
                                 <td> Number of members </td>
                                 <td> Edit </td>
                                 <td> Delete </td>
@@ -50,6 +51,7 @@ All Membership Type
                                 <td> {{ $type->id }} </td>
                                 <td> {{ $type->name }} </td>
                                 <td> {{ $type->description }} </td>
+                                <td> {{ $type->fee }} </td>
                                 <td> {{ count($type->membership) }} </td>
                                 <td>
                                     @if ( ( $type->name != "Premium" ) && ( $type->name != "Normal" ) && ( count($type->membership) == 0 ) )
