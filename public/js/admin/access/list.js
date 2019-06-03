@@ -32,7 +32,7 @@ $(document).ready(function() {
 
     var table = $('#access_list').DataTable({
         'order': [[1, 'desc']],
-        // responsive: true,s
+        responsive: true,s
         initComplete: function () {
             this.api().columns().every( function (i) {
                 if (i == 1){
