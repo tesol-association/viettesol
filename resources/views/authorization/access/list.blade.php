@@ -3,6 +3,7 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/bootstrap-toggle/css/bootstrap-toggle.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link href="{{ asset('admin/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
@@ -44,7 +45,13 @@
                                     </tr>
                                 @endforeach
                                 </tbody>
-                                <tfoot>
+                                <tfoot class="filters">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -63,5 +70,6 @@
     <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
+    <script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/admin/access/list.js') }}"></script>
 @endsection
