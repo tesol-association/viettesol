@@ -14,28 +14,28 @@ use Illuminate\Support\Facades\Redis;
 class CurrentUser extends Auth
 {
     // No Redis
-//    public static function user()
-//    {
-//            $currentUser = Auth::user();
-//            if ($currentUser->conferenceRoles) {
-//                $currentUser->load('conferenceRoles');
-//            }
-//        return $currentUser;
-//    }
-
     public static function user()
     {
-        $userId = Auth::id();
-        $currentUser = Redis::get('user:'. $userId);
-        if (!$currentUser) {
             $currentUser = Auth::user();
             if ($currentUser->conferenceRoles) {
                 $currentUser->load('conferenceRoles');
             }
-            Redis::set('user:' . $userId, serialize($currentUser));
-        } else {
-            $currentUser = unserialize($currentUser);
-        }
         return $currentUser;
     }
+// Redis
+//    public static function user()
+//    {
+//        $userId = Auth::id();
+//        $currentUser = Redis::get('user:'. $userId);
+//        if (!$currentUser) {
+//            $currentUser = Auth::user();
+//            if ($currentUser->conferenceRoles) {
+//                $currentUser->load('conferenceRoles');
+//            }
+//            Redis::set('user:' . $userId, serialize($currentUser));
+//        } else {
+//            $currentUser = unserialize($currentUser);
+//        }
+//        return $currentUser;
+//    }
 }

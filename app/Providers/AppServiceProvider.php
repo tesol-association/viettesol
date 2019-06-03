@@ -17,7 +17,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
          Schema::defaultStringLength(191);
-         Conference::observe(ConferenceObserver::class);
+         // Redis
+//         Conference::observe(ConferenceObserver::class);
     }
 
     /**
