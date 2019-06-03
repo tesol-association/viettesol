@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ConferenceManager\BaseConferenceController;
 use App\Models\Conference;
 use App\Models\Track;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 
 class TrackController extends BaseConferenceController

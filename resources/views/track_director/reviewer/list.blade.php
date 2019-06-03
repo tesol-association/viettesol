@@ -31,6 +31,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @if (!empty($reviewers))
                                 @foreach($reviewers as $reviewer)
                                     <tr>
                                         <td>
@@ -48,6 +49,7 @@
                                         <td>{{ $reviewer->country }}</td>
                                     </tr>
                                 @endforeach
+                                @endif
                                 </tbody>
                                 <tfoot>
                                 </tfoot>

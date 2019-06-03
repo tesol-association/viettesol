@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Conference;
+use App\Observers\ConferenceObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -15,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
          Schema::defaultStringLength(191);
+         Conference::observe(ConferenceObserver::class);
     }
 
     /**

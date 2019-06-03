@@ -174,6 +174,8 @@ class PreparedEmailController extends BaseConferenceController
                 $paper->authors->where('seq', 0)->first()->full_name,
                 $paper->title,
                 $this->conference->title,
+//                $this->conference->start_time->format('d/m/Y'),
+//                $this->conference->end_time->format('d/m/Y'),
                 $this->conference->start_time,
                 $this->conference->end_time,
                 $this->conference->venue,
