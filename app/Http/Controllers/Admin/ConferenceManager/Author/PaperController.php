@@ -29,6 +29,7 @@ class PaperController extends BaseConferenceController
 
     public function listPaper()
     {
+        $this->authorize('view-paper');
         $papers = $this->papers->get($this->conferenceId, ['submission_by' => Auth::id()]);
         return view('author.paper.list', [
             'papers'=> $papers
@@ -99,6 +100,7 @@ class PaperController extends BaseConferenceController
 
     public function editPaper(Request $request,$conferenceId, $id)
     {
+        $this->authorize('update-paper');
         $paper = $this->papers->find($id);
         $this->authorize('update-paper', $paper);
         $tracks = $this->conference->tracks;
@@ -112,6 +114,7 @@ class PaperController extends BaseConferenceController
 
     public function updatePaper(Request $request, $conferenceId, $id)
     {
+        $this->authorize('update-paper');
         $paper = $this->papers->find($id);
         $this->authorize('update-paper', $paper);
         $request->validate([

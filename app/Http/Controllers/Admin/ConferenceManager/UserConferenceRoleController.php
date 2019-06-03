@@ -17,6 +17,7 @@ class UserConferenceRoleController extends BaseConferenceController
      */
     public function index($conferenceId)
     {
+        $this->authorize('view-user-conference-role');
         $conferenceRoles = ConferenceRole::where('conference_id', $conferenceId)->get();
         $users = User::all();
         foreach ($users as $user) {
@@ -80,6 +81,7 @@ class UserConferenceRoleController extends BaseConferenceController
      */
     public function update(Request $request, $conferenceId, $id)
     {
+        $this->authorize('update-user-conference-role');
         $user = User::find($id);
         $data = $request->name; // Conference Role Array
         $user->conferenceRoles()->detach();

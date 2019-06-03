@@ -18,11 +18,13 @@ class RegistrationController extends BaseConferenceController
 
 	public function create()
 	{
+        $this->authorize('create-register-conference');
 		$roles = ConferenceRole::where('conference_id',$this->conferenceId)->get();
 		return view('layouts.admin.conference_manager.registration.create', ['roles'=> $roles]);
 	}
 	public function store(Request $request)
 	{
+        $this->authorize('create-register-conference');
 		$this->validate($request,[
 			'name'           => 'required',
 			'organization'   => 'required',
@@ -33,18 +35,6 @@ class RegistrationController extends BaseConferenceController
 			'role_id'        => 'required'
 		]);
 
-		// if ($request->hasFile('payment_file')) {
-		// 	if ($request->file('payment_file')->isValid()) {
-		// 		try {
-		// 			$file = $request->file('payment_file');
-		// 			$nameImage = $file->getClientOriginalName();
-
-		// 			$path = $file->move(self::UPLOAD_FOLDER, $nameImage);
-		// 		} catch (Illuminate\Filesystem\FileNotFoundException $e) {
-
-		// 		}
-		// 	}
-		// }
 		if ($request->hasFile('payment_file')) {
             $path = Storage::disk('public')->put(self::UPLOAD_FOLDER, $request->payment_file);
         }
@@ -59,7 +49,7 @@ class RegistrationController extends BaseConferenceController
 			'status'          => $request->status,
 			'user_id'         => $request->user_id,
 			'role_id'         => $request->role_id,
-			'conference_id'   => $request->conference_id 
+			'conference_id'   => $request->conference_id
 		]);
 		$conference = Conference::where('id',$this->conferenceId)->first();
 		Session::flash('success','Registration successfully !');
@@ -67,12 +57,14 @@ class RegistrationController extends BaseConferenceController
 	}
 	public function getList()
 	{
+        $this->authorize('view-register-conference');
 		$registers= Registration::where('conference_id',$this->conferenceId)->get();
 		$status= array('pending','approved');
 		return view('layouts.admin.conference_manager.registration.list',['registers'=>$registers,'status'=>$status]);
 	}
 	public function update(Request $request)
 	{
+        $this->authorize('update-register-conference');
 		$id= $request->id;
 		$status= $request->status;
 		$register= Registration::find($id);
@@ -80,12 +72,12 @@ class RegistrationController extends BaseConferenceController
 		if($register->save()){
 			$data=array(
 				'status' => true
-			); 
+			);
 			echo json_encode($data);
 		}else{
 			$data=array(
 				'status' => false
-			); 
+			);
 			echo json_encode($data);
 		}
 	}

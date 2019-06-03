@@ -37,7 +37,9 @@
                 </div>
             </div>
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-plane"></i> Send</button>
+                @can('send-prepair-email')
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-plane"></i> Send</button>
+                @endcan
                 <a type="button" class="btn btn-default" href="{{ URL::previous() }}">Cancel</a>
             </div>
         </div>

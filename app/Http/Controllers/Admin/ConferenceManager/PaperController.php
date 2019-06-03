@@ -34,6 +34,7 @@ class PaperController extends BaseConferenceController
      */
     public function index()
     {
+        $this->authorize('view-paper');
         $conferenceId = $this->conferenceId;
         $papers = $this->papers->get($conferenceId);
         return view('layouts.admin.paper.list', [
@@ -46,6 +47,7 @@ class PaperController extends BaseConferenceController
      */
     public function create()
     {
+        $this->authorize('send-paper');
         $tracks = $this->conference->tracks;
         $sessionTypes = $this->conference->sessionTypes;
         $author = Auth::user();
@@ -58,6 +60,7 @@ class PaperController extends BaseConferenceController
 
     public function store(Request $request)
     {
+        $this->authorize('send-paper');
         $validator = $this->validateData($request->all());
         if ($validator->fails()) {
             return redirect()

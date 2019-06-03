@@ -14,7 +14,9 @@
                             <h3 class="box-title">Conference Roles List</h3>
                         </div>
                         <div class="col-md-3 col-md-offset-5">
-                            <a href="{{ route('admin_conference_roles_create', ['conference_id' => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add New Conference Role</a>
+                            @can('create-conference-role')
+                                <a href="{{ route('admin_conference_roles_create', ['conference_id' => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add New Conference Role</a>
+                            @endcan
                         </div>
                     </div>
                     <div class="box-body">
@@ -35,8 +37,12 @@
                                         <td>{{ $conferenceRole->name }}</td>
                                         <td>{{ $conferenceRole->description }}</td>
                                         <td>
-                                            <a href="{{ route('admin_conference_roles_edit', ['conference_id' => $conference->id, 'id' => $conferenceRole->id]) }}" class="btn btn-info fa fa-edit"></a>
-                                            <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_conference_roles_{{ $conferenceRole->id }}"></button>
+                                            @can('update-conference-role')
+                                                <a href="{{ route('admin_conference_roles_edit', ['conference_id' => $conference->id, 'id' => $conferenceRole->id]) }}" class="btn btn-info fa fa-edit"></a>
+                                            @endcan
+                                            @can('delete-conference-role')
+                                                <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_conference_roles_{{ $conferenceRole->id }}"></button>
+                                            @endcan
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal Conference Role -->

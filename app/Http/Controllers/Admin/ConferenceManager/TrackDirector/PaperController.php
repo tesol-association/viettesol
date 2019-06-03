@@ -29,6 +29,7 @@ class PaperController extends BaseConferenceController
      */
     public function index($conferenceId)
     {
+        $this->authorize('view-paper');
         $trackIds = Auth::user()->tracks->pluck('id')->all();
         $papers = $this->papers->get($conferenceId, ['track_id' => $trackIds]);
         return view('track_director.paper.list', [

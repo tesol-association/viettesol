@@ -13,9 +13,11 @@
                         <div class="col-md-4">
                             <h3 class="box-title">Speakers List</h3>
                         </div>
-                        <div class="col-md-2 col-md-offset-6">
-                            <a href="{{ route('admin_speakers_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add New Speaker</a>
-                        </div>
+                        @can('create-speaker')
+                            <div class="col-md-2 col-md-offset-6">
+                                <a href="{{ route('admin_speakers_create', ["conference_id" => $conference->id]) }}" class="btn btn-block btn-info"><i class="fa fa-plus"></i> Add New Speaker</a>
+                            </div>
+                        @endcan
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
@@ -37,9 +39,15 @@
                                         <td><img class="img-circle" src="{{ asset('/storage/' . $speaker->image) }}" alt="Avatar" height="50" width="50"></td>
                                         <td>{{ $speaker->affiliate }}</td>
                                         <td>
+                                        @can('view-speaker')
                                             <a href="{{ route('admin_speakers_view', ["conference_id" => $conference->id, "speaker_id" => $speaker->id]) }}" class="btn btn-primary fa fa-eye"></a>
+                                        @endcan
+                                        @can('update-speaker')
                                             <a href="{{ route('admin_speakers_edit', ["conference_id" => $conference->id, "id" => $speaker->id]) }}" class="btn btn-info fa fa-edit"></a>
+                                        @endcan
+                                        @can('delete-speaker')
                                             <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#delete_speakers_{{ $speaker->id }}"></button>
+                                        @endcan
                                         </td>
                                     </tr>
                                     <!-- Start:: Delete Modal Conference -->

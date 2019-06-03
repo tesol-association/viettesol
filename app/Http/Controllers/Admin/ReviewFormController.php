@@ -22,6 +22,7 @@ class ReviewFormController extends BaseConferenceController
      */
     public function index()
     {
+        $this->authorize('view-review-form');
         $reviewForms = $this->reviewForms->all();
         return view('layouts.admin.review_form.list', [
             'reviewForms'=> $reviewForms
@@ -33,6 +34,7 @@ class ReviewFormController extends BaseConferenceController
      */
     public function create()
     {
+        $this->authorize('create-review-form');
         return view('layouts.admin.review_form.create');
     }
 
@@ -42,6 +44,7 @@ class ReviewFormController extends BaseConferenceController
      */
     public function store(Request $request)
     {
+        $this->authorize('create-review-form');
         $validator = $this->validateData($request->all());
         if ($validator->fails()) {
             return redirect()
@@ -60,6 +63,7 @@ class ReviewFormController extends BaseConferenceController
      */
     public function edit($conferenceId, $reviewFormId)
     {
+        $this->authorize('update-review-form');
         $reviewForm = $this->reviewForms->find($reviewFormId);
         return view('layouts.admin.review_form.edit', ['reviewForm' => $reviewForm]);
     }
@@ -70,6 +74,7 @@ class ReviewFormController extends BaseConferenceController
      */
     public function update(Request $request, $conferenceId, $reviewFormId)
     {
+        $this->authorize('update-review-form');
         $validator = $this->validateData($request->all());
         if ($validator->fails()) {
             return redirect()

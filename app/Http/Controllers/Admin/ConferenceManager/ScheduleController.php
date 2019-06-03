@@ -25,6 +25,7 @@ class ScheduleController extends BaseConferenceController
 	}
 	public function index()
 	{
+        $this->authorize('view-schedule');
 		$buildings = Buildings::where('conference_id', $this->conferenceId)->get();
 		return view('layouts.admin.conference_manager.schedule.list',['buildings'=>$buildings]);
 	}
@@ -47,7 +48,7 @@ class ScheduleController extends BaseConferenceController
 				);
 			}
 		}
-		
+
 		$timeBlocks=TimeBlock::where('conference_id', $this->conferenceId)->get()->toArray();
 
 		$_timeBlocks=array();
@@ -100,10 +101,11 @@ class ScheduleController extends BaseConferenceController
 			);
 			echo json_encode($data);
 		}
-		
+
 	}
 	public function addSchedule(Request $request)
 	{
+        $this->authorize('create-schedule');
 		$paperId = $request->paperId;
 		$timeBlockId = $request->timeBlockId;
 		$roomId  = $request->roomId;
@@ -116,7 +118,7 @@ class ScheduleController extends BaseConferenceController
 		$i= 0 ;
 		if(!empty($papers)){
 			foreach ($papers as $paper) {
-				$author_id=  PaperAuthor::where(['paper_id' => $paper->paper_id, 'seq'=>0 ])->first()->author_id;	
+				$author_id=  PaperAuthor::where(['paper_id' => $paper->paper_id, 'seq'=>0 ])->first()->author_id;
 				if($authorId == $author_id){
 					$i++;
 				}
@@ -133,20 +135,20 @@ class ScheduleController extends BaseConferenceController
 			$data=array(
 				'status' => false,
 				'notify' => 'Please choose room'
-			); 
+			);
 			echo json_encode($data);
 		}else{
 			if($count > 0) {
 				$data=array(
 					'status' => false,
 					'notify' => 'This paper cannot be placed in the room you choose because there were other paper presented there.Please choose again !'
-				); 
+				);
 				echo json_encode($data);
 			}elseif ($i >0) {
 				$data=array(
 					'status' => false,
 					'notify' => 'The author of this article cannot present in the time block you choose.Please choose again !'
-				); 
+				);
 				echo json_encode($data);
 			}
 			else{
@@ -163,26 +165,27 @@ class ScheduleController extends BaseConferenceController
 					if($paper->save()){
 						$data=array(
 							'status' => true
-						); 
+						);
 						echo json_encode($data);
 					}else{
 						$data=array(
 							'status' => false
-						); 
+						);
 						echo json_encode($data);
 					}
 				}else{
 					$data=array(
 						'status' => false
-					); 
+					);
 					echo json_encode($data);
 				}
-			} 
-		} 
-		
+			}
+		}
+
 	}
 	public function delete()
 	{
+        $this->authorize('delete-schedule');
 		foreach ($this->conference->tracks as $track) {
 			Paper::where('track_id', '=', $track->id)
 			->update(['status' => 'unscheduled']);
@@ -193,6 +196,7 @@ class ScheduleController extends BaseConferenceController
 	}
 	public function suggestSchedule()
 	{
+        $this->authorize('create-schedule');
 		$buildings = Buildings::where('conference_id', $this->conferenceId)->get();
 		$timeBlocks=TimeBlock::where('conference_id', $this->conferenceId)->get()->toArray();
 		$papers = $this->papers->get($this->conferenceId, ['status' => Paper::STATUS_UNSCHEDULED]);
@@ -277,6 +281,7 @@ class ScheduleController extends BaseConferenceController
 	}
 	public function storeScheduleSuggest(Request $request)
 	{
+        $this->authorize('create-schedule');
 		$paperIds= $request->paper_id;
 		$roomIds= $request->room_id;
 		$timeBlockIds= $request->timeblock_id;
@@ -290,7 +295,7 @@ class ScheduleController extends BaseConferenceController
 			$i= 0 ;
 			if(!empty($papers)){
 				foreach ($papers as $paper) {
-					$author_id=  PaperAuthor::where(['paper_id' => $paper->paper_id, 'seq'=>0 ])->first()->author_id;	
+					$author_id=  PaperAuthor::where(['paper_id' => $paper->paper_id, 'seq'=>0 ])->first()->author_id;
 					if($authorId == $author_id){
 						$i++;
 					}

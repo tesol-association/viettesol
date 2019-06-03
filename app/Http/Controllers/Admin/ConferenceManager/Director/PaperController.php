@@ -19,6 +19,7 @@ class PaperController extends BaseConferenceController
 
     public function showPaperUnSchedule()
     {
+        $this->authorize('view-paper-un-schedule');
         $paperResults = $this->papers->get($this->conferenceId, ['status' => [Config::get('constants.PAPER_STATUS.ACCEPTED'), Config::get('constants.PAPER_STATUS.REJECTED'), Config::get('constants.PAPER_STATUS.REVISION')]]);
         $paperUnschedules = $this->papers->get($this->conferenceId, ['status' => Config::get('constants.PAPER_STATUS.UNSCHEDULED')]);
         return view('director.paper.show_paper_un_schedule', [

@@ -33,11 +33,13 @@
                                         <td>{{ $access->role->name }}</td>
                                         <td>{{ $access->permission->name }}</td>
                                         <td>
-                                            @if ($access->allowed == 1)
-                                                <input class="allow_btn" type="checkbox" checked data-toggle="toggle" data-access-id="{{ $access->id }}">
-                                            @else
-                                                <input class="allow_btn" type="checkbox" data-toggle="toggle" data-access-id="{{ $access->id }}">
-                                            @endif
+                                            @can('set-up-conference-permission')
+                                                @if ($access->allowed == 1)
+                                                    <input class="allow_btn" type="checkbox" checked data-toggle="toggle" data-access-id="{{ $access->id }}">
+                                                @else
+                                                    <input class="allow_btn" type="checkbox" data-toggle="toggle" data-access-id="{{ $access->id }}">
+                                                @endif
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
