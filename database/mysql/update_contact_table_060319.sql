@@ -1,1 +1,0 @@
-ALTER TABLE `contacts` CHANGE `type` `type_id` INT NOT NULL;

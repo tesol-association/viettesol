@@ -1,1 +1,0 @@
-ALTER TABLE `contact_form` ADD `subject` VARCHAR(255) NOT NULL AFTER `email`;
