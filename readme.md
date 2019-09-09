@@ -64,12 +64,13 @@ Run
 ```bash
 php artisan key:generate
 ```
-Run
-```bash
-php artisan serve
-```
+Import Database in database/mysql/viettesol.sql
+Config XAMPP Virtual Host has url viettesol-dev.test
+https://ultimatefosters.com/hosting/setup-a-virtual-host-in-windows-with-xampp-server/
 
-Go to 
+Open Browser type
 ```bash
-localhost:8000
+viettesol-dev.test/login
 ```
+Acc: admin@gmail.com
+pass: 1234567
