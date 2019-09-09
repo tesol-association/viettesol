@@ -42,7 +42,7 @@ https://getcomposer.org/download/
 
 ## Installation
 
-Clone Project
+Clone Project In htdocs in XAMPP
 ```bash
 git clone https://github.com/tesol-association/viettesol.git
 ```
