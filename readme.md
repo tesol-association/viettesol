@@ -69,4 +69,4 @@ viettesol-dev.test/login or localhost:8000/login
 ```
 Acc: admin@gmail.com  
 pass: 1234567  
-use route: http://localhost:8000/admin/conference/create to create a new Conference
+use route: localhost:8000/admin/conference/create to create a new Conference
