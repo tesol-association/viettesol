@@ -22,6 +22,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
 
 ## Viettesol WepApp
+ Viettesol is Conference Manager System. It's has create new conference, set up conference timeline, conference announcement and manager paper, abstract and author. It's provide many way to review abstract: open review, single blind review, double blind review. 
 ## Pre-require
 
 Install XAMPP PHP 7.2
